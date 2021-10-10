@@ -18,6 +18,6 @@ namespace Targil0
             Console.WriteLine("{0}, welcome to my first console application", Welcome2346);
         }
         static partial void Welcome0286();
-        
+        static partial void Welcome();
     }
 }
