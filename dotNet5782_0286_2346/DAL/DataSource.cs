@@ -16,14 +16,13 @@ namespace DalObject
             internal static int cntStation = 0;
             internal static int cntCustomer = 0;
             internal static int cntDroneCharge = 0;
-            //need to add a field for parcels
+            internal static int codeOfParcel=0;//i dont know if this field need to look like that
         }
 
         internal static Drone[] drones = new Drone[10];
         internal static Station[] stations = new Station[5];
         internal static Customer[] customers = new Customer[100];
-
-        internal static Parcel[] parcels = new Parcel[10];
+        internal static Parcel[] parcels = new Parcel[1000];
 
         static Random rand = new Random(DateTime.Now.Millisecond);
         //current time
@@ -31,7 +30,7 @@ namespace DalObject
         {
             for (int i = 0; i < num; i++)
             {
-                drones[0] = new Drone()
+                drones[i] = new Drone()
                 {
                     Id = rand.Next(100, 200),
                     MaxWeight = (WeightCategories)rand.Next(3),
