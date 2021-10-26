@@ -1,4 +1,5 @@
-﻿using IDAL.DO;
+﻿
+using IDAL.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace DalObject
         }
 
         internal static Drone[] drones = new Drone[10];
+
+        internal static Parcel[] parcels = new Parcel[10];
 
         static Random rand = new Random();//current time
         private static void createDrones(int num)
