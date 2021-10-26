@@ -13,8 +13,10 @@ namespace IDAL
             public override string ToString()
             {
                 return @$"Drone
-                           Id:{Id}
-                           Model:{Model}";
+                          Id:{Id}
+                          Model:{Model}
+                          MaxWheight:{MaxWeight}
+                          Status:{Status}";
             }
         }
     }
