@@ -18,9 +18,11 @@ namespace ConsoleUI
         void PrintMenue()
         {
             MenuOptions mo;
-            int opt;
+            string userChoise=Console.ReadLine();
+            mo = (MenuOptions)int.Parse(userChoise);
+           /* int opt;
             bool b = int.TryParse(Console.ReadLine(), out opt);
-            mo = (MenuOptions)opt;
+            mo = (MenuOptions)opt;the lecturer offer*/
             switch (mo)
             {
                 case MenuOptions.Exit:
@@ -36,6 +38,8 @@ namespace ConsoleUI
                 default:
                     break;
             }
+            Console.ReadLine();
+
         }
     }
     
