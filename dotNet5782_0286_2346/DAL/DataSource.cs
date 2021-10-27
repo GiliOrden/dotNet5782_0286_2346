@@ -40,9 +40,42 @@ namespace DalObject
             }
         }
 
-       public static void Initialize ()
+        private static void createStations(int num)
+        {
+            for (int i = 0; i < num; i++)
+            {
+                stations[i] = new Station()
+                {
+                    Id = rand.Next(1, 100),
+                    Name = string.Format($"{(Streets)rand.Next(8)} {i}"),
+                    ChargeSlots = rand.Next(3, 10),//need checking!!, supposed to be randomal?
+                    Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
+                    Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
+                 };
+                Config.cntStation++;
+            }
+        }
+
+        private static void createCustomers(int num)
+        {
+            for (int i = 0; i < num; i++)
+            {
+                customers[i] = new Customer()
+                {
+                    Id = rand.Next(100, 1000),
+                    Name=string.Format($"{(Names)rand.Next(12)}"),// 
+                    Phone = string.Format($"0{ 0 }",rand.Next(510000000, 529999999)),
+                    Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
+                    Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
+                };
+                Config.cntCustomer++;
+            }
+        }
+
+        public static void Initialize ()
         {
             createDrones(rand.Next(5, 8));
         }
+       
     }
 }
