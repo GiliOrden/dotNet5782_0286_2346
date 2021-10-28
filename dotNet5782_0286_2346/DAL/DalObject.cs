@@ -26,7 +26,7 @@ namespace DalObject
 
         public static void AddStation(Station[] stations)
         {
-            Console.WriteLine(@"Enter id, name, chargeSlots, Longitude and  Latitude"+
+            Console.WriteLine("Enter id, name, chargeSlots, Longitude and  Latitude" + 
                 " of the station (Do enter after each one of them)");
             stations[stations.Length - 1] = new Station()
             {
@@ -40,6 +40,25 @@ namespace DalObject
             Config.cntStation++;
 
         }
+
+        public static void AddCustomer(Customer[] customers)
+        {
+            Console.WriteLine("Enter id, name, Phone, Longitude and  Latitude" +
+                " of the customer (Do enter after each one of them)");
+            customers[customers.Length - 1] = new Customer()
+            {
+                Id = int.Parse(Console.ReadLine()),
+                Name = Console.ReadLine(),
+                Phone = Console.ReadLine(),
+                Longitude = int.Parse(Console.ReadLine()),
+                Latitude = int.Parse(Console.ReadLine()),
+            };
+            Config.cntCustomer++;
+
+        }
+
+
+
 
     }
 }

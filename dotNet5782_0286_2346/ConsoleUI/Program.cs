@@ -12,11 +12,11 @@ namespace ConsoleUI
             Drone d = new Drone();
             d.MaxWeight = WeightCategories.Heavy;
 
-        }
+        
             // d1.AddDrone(d);
             //print menue according to user instructions
         enum MenuOptions { Exit, ADD, Update, ShowOne, ShowList }
-        enum AddOptions { Exit, AddDrone, AddStation }//sub-menue
+        enum AddOptions { Exit, AddDrone, AddStation, AddCustomer }//sub-menue
         void PrintMenue()
         {
             MenuOptions mo;
@@ -57,7 +57,6 @@ namespace ConsoleUI
         
         
         
-        
         public void addingOptions()
         {
             AddOptions add;
@@ -73,9 +72,12 @@ namespace ConsoleUI
                    
                     break;
                 case AddOptions.AddStation:
-                    Station.AddStation(stations);
+                    DalObject.AddStation(stations);
                     break;
-                
+                case AddOptions.AddCustomer:
+                    DalObject.AddCustomer(customers);
+                    break;
+
                 default:
 
                     break;
