@@ -16,7 +16,8 @@ namespace DalObject
             internal static int cntStation = 0;
             internal static int cntCustomer = 0;
             internal static int cntDroneCharge = 0;
-            internal static int codeOfParcel=0;//i dont know if this field need to look like that
+            internal static int cntParcels = 0;
+            internal static int codeOfParcel=0;
         }
 
         internal static Drone[] drones = new Drone[10];

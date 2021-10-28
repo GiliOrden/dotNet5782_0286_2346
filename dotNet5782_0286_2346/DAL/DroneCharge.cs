@@ -10,13 +10,13 @@ namespace IDAL
     {
         class DroneCharge
         {
-            public int Proneld { get; set; }
-            public int Stationld { get; set; }
+            public int DroneId { get; set; }
+            public int StationId { get; set; }
             public override string ToString()
             {
                 return @$"DroneCharge
-                          Proneld:{Proneld}
-                          Stationld:{Stationld}";
+                          Droneld:{DroneId}
+                          Stationld:{StationId}";
 
             }
         }
