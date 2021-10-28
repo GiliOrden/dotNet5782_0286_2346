@@ -26,7 +26,7 @@ namespace DalObject
 
         public static void AddStation(Station[] stations)
         {
-            Console.WriteLine("Enter id, name, chargeSlots, Longitude and  Latitude" +
+            Console.WriteLine(@"Enter id, name, chargeSlots, Longitude and  Latitude"+
                 " of the station (Do enter after each one of them)");
             stations[stations.Length - 1] = new Station()
             {

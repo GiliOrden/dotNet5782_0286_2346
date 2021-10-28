@@ -31,6 +31,7 @@ namespace ConsoleUI
 
                     break;
                 case MenuOptions.ADD:
+
                     addingOptions();
                     break;
                 case MenuOptions.Update:

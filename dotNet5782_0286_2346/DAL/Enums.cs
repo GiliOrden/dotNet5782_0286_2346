@@ -12,7 +12,9 @@ namespace IDAL
 
         public enum DroneStatuses { Available, Delivery, Maintenance }
         public enum Priorities { Regular, Fast,Emergency }
-        public enum Names { Brurya,Ron,Shmulik,Tzuki,Mahmud,Dorit,Dubi,Kobi,Avrum,Shoshana,Gili,Rivki }
+        public enum Names { Brurya,Ron,Shmulik,Tzuki,Mahmud,Dorit,Dubi,Kobi,Avrum,Shoshana,Gili,Rivki }//avrum&shoshana x) :)
+        /// 
+        /// </summary>
         public enum Streets { Degel,Petach,Tikva,Trumpel,Zabutinski,Yaalom,Dov,lion }
     }
 }
