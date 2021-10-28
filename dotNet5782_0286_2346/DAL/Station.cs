@@ -27,22 +27,7 @@ namespace IDAL
             }
 
 
-            public static void AddStation(Station[] stations)
-            {
-                Console.WriteLine("Enter id, name, chargeSlots, Longitude and  Latitude" +
-                    " of the station (Do enter after each one of them)");
-                stations[stations.Length-1] = new Station()
-                {
-                    
-                    Id = int.Parse(Console.ReadLine()),
-                    Name = Console.ReadLine(),
-                    ChargeSlots = int.Parse(Console.ReadLine()),
-                    Longitude = int.Parse(Console.ReadLine()),
-                    Latitude = int.Parse(Console.ReadLine())
-                };
-                DalObject.DataSource.Config.cntStation++;
-
-            }
+           
 
         }
     }
