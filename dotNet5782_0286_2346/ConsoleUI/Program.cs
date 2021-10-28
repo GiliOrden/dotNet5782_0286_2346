@@ -1,5 +1,6 @@
 ﻿using System;
 using IDAL.DO;
+
 namespace ConsoleUI
 {
     class Program
@@ -15,7 +16,7 @@ namespace ConsoleUI
         
             // d1.AddDrone(d);
             //print menue according to user instructions
-        enum MenuOptions { Exit, ADD, Update, ShowOne, ShowList }
+        enum MenuOptions {  Add, Update, ShowOne, ShowList, Exit }
         enum AddOptions { Exit, AddDrone, AddStation, AddCustomer }//sub-menue
         void PrintMenue()
         {
@@ -27,12 +28,10 @@ namespace ConsoleUI
              mo = (MenuOptions)opt;the lecturer offer*/
             switch (mo)
             {
-                case MenuOptions.Exit:
+                
+                case MenuOptions.Add:
 
-                    break;
-                case MenuOptions.ADD:
-
-                    addingOptions();
+                    AddingOptions();
                     break;
                 case MenuOptions.Update:
 
@@ -43,6 +42,10 @@ namespace ConsoleUI
                     break;
                 case MenuOptions.ShowList:
 
+                    break;
+
+                case MenuOptions.Exit:
+                    
                     break;
                 default:
 
@@ -57,7 +60,7 @@ namespace ConsoleUI
         
         
         
-        public void addingOptions()
+        public  void AddingOptions()
         {
             AddOptions add;
             string userChoise = Console.ReadLine();
@@ -75,12 +78,17 @@ namespace ConsoleUI
                     DalObject.AddStation(stations);
                     break;
                 case AddOptions.AddCustomer:
-                    DalObject.AddCustomer(customers);
+                    NewMethod();
                     break;
 
                 default:
 
                     break;
+            }
+
+            static void NewMethod()
+            {
+                AddCustomer(customers);
             }
         }
     
