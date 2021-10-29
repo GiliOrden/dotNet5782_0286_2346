@@ -12,7 +12,7 @@ namespace DalObject
     {
         public DalObject()//ctor
         {
-          //  DataSource.Initialize();//actually produce the data base 
+           DataSource.Initialize();//actually produce the data base 
         }
        public void AddDrone(int Id)
        {
@@ -24,40 +24,50 @@ namespace DalObject
        }
        UpDateStation(){}*/
 
-        public static void AddStation(Station[] stations)
+        public void AddStation(Station[] stations)
         {
-            Console.WriteLine("Enter id, name, chargeSlots, Longitude and  Latitude" + 
-                " of the station (Do enter after each one of them)");
-            stations[stations.Length - 1] = new Station()
+            Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude" + 
+                " of the station (Press enter after each one of them)");
+            stations[stations.Length] = new Station()
             {
 
                 Id = int.Parse(Console.ReadLine()),
                 Name = Console.ReadLine(),
                 ChargeSlots = int.Parse(Console.ReadLine()),
-                Longitude = int.Parse(Console.ReadLine()),
-                Latitude = int.Parse(Console.ReadLine())
+                Longitude = double.Parse(Console.ReadLine()),
+                Latitude = double.Parse(Console.ReadLine())
             };
-            Config.cntStation++;
+            Config.CntStation++;
 
         }
 
-        public static void AddCustomer(Customer[] customers)
+        public  void AddCustomer(Customer[] customers)
         {
-            Console.WriteLine("Enter id, name, Phone, Longitude and  Latitude" +
-                " of the customer (Do enter after each one of them)");
-            customers[customers.Length - 1] = new Customer()
+            Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude" +
+                " of the customer (Press enter after each one of them)");
+            customers[customers.Length] = new Customer()
             {
                 Id = int.Parse(Console.ReadLine()),
                 Name = Console.ReadLine(),
                 Phone = Console.ReadLine(),
-                Longitude = int.Parse(Console.ReadLine()),
-                Latitude = int.Parse(Console.ReadLine()),
+                Longitude = double.Parse(Console.ReadLine()),
+                Latitude = double.Parse(Console.ReadLine()),
             };
-            Config.cntCustomer++;
+            Config.CntCustomer++;
 
         }
 
+        public void AddDrone(Drone[]drones)
+        {
+            Console.WriteLine("Enter ID, model and maximum weight-0 for light,1 for medium,2 for heavy(Press enter after each one of them)");
+            drones[drones.Length] = new Drone()
+            {
+                Id = int.Parse(Console.ReadLine()),
+                Model=Console.ReadLine(),
 
+                MaxWeight=(WeightCategories)int.Parse(Console.ReadLine())
+            };
+        }
 
 
     }

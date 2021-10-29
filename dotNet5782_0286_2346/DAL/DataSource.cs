@@ -12,12 +12,12 @@ namespace DalObject
     {
          internal class Config
         {
-            internal static int cntDrone = 0;
-            internal static int cntStation = 0;
-            internal static int cntCustomer = 0;
-            internal static int cntDroneCharge = 0;
-            internal static int cntParcels = 0;
-            internal static int codeOfParcel=0;
+            internal static int CntDrone = 0;
+            internal static int CntStation = 0;
+            internal static int CntCustomer = 0;
+            internal static int CntDroneCharge = 0;
+            internal static int CntParcels = 0;
+            internal static int CodeOfParcel=0;
         }
 
         internal static Drone[] drones = new Drone[10];
@@ -37,7 +37,7 @@ namespace DalObject
                     MaxWeight = (WeightCategories)rand.Next(3),
                     Status = (DroneStatuses)rand.Next(3)
                 };
-                Config.cntDrone++;
+                Config.CntDrone++;
             }
         }
 
@@ -48,12 +48,12 @@ namespace DalObject
                 stations[i] = new Station()
                 {
                     Id = rand.Next(1, 100),
-                    Name = string.Format($"{(Streets)rand.Next(8)} {i}"),
+                    Name = string.Format($"{(Addresses)rand.Next(8)} {i}"),
                     ChargeSlots = rand.Next(3, 10),//need checking!!, supposed to be randomal?
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
                  };
-                Config.cntStation++;
+                Config.CntStation++;
             }
         }
 
@@ -63,19 +63,42 @@ namespace DalObject
             {
                 customers[i] = new Customer()
                 {
-                    Id = rand.Next(100, 1000),
-                    Name=string.Format($"{(Names)rand.Next(12)}"),// 
-                    Phone = string.Format($"0{ 0 }",rand.Next(510000000, 529999999)),
+                    Id = rand.Next(100000000, 999999999),
+                    Name=string.Format($"{(NamesOfCustomers)rand.Next(13)}"),// 
+                    Phone = string.Format($"0{ 0 }",rand.Next(510000000, 589999999)),
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
                 };
-                Config.cntCustomer++;
+                Config.CntCustomer++;
             }
         }
-
-        public static void Initialize ()
+        private static void createParcels(int num)
+        {
+            for(int i=0;i<num;i++)
+            {
+                parcels[i] = new Parcel()
+                {
+                    Id = Config.CodeOfParcel++,
+                    SenderId = customers[rand.Next(customers.Length)].Id,//i'm not sure it sould look like that
+                    TargetId = customers[rand.Next(customers.Length)].Id,
+                    Weight = (WeightCategories)rand.Next(3),
+                    Priority = (Priorities)rand.Next(3),
+                    Requested = DateTime.Now,
+                    DroneId = 0,//i understood from whatapp that we should do it like that 
+                    /*Scheduled=//maybe we have to assume how long it will take for the package according to
+                     * the distance between the sender and the destination but in the instructions it not look like that
+                    PickedUp=
+                    Delivered*/
+                };
+                Config.CntParcels++;
+            }
+        }
+        public static void Initialize()
         {
             createDrones(rand.Next(5, 8));
+            createStations(rand.Next(2, 4));
+            createCustomers(rand.Next(10, 13));
+            createParcels(rand.Next(10, 100));
         }
        
     }

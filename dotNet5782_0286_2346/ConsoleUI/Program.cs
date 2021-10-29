@@ -9,7 +9,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-            DalObject.DalObject d1 = new DalObject.DalObject();//it will produce the data base
+            DalObject.DalObject d1 = new DalObject.DalObject();//it will produce the data base and the methods that related to it
             Drone d = new Drone();
             d.MaxWeight = WeightCategories.Heavy;
 
