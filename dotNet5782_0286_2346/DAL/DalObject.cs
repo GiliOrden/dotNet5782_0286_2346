@@ -37,35 +37,43 @@ namespace DalObject
                 Longitude = double.Parse(Console.ReadLine()),
                 Latitude = double.Parse(Console.ReadLine())
             };
-            Config.CntStation++;
 
         }
 
-        public  void AddCustomer(Customer[] customers)
+        public  void AddCustomer(List<Customer> customers)
         {
             Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude" +
                 " of the customer (Press enter after each one of them)");
-            customers[customers.Length] = new Customer()
+            customers.Add(new Customer()
             {
                 Id = int.Parse(Console.ReadLine()),
                 Name = Console.ReadLine(),
                 Phone = Console.ReadLine(),
                 Longitude = double.Parse(Console.ReadLine()),
                 Latitude = double.Parse(Console.ReadLine()),
-            };
-            Config.CntCustomer++;
+            });
 
         }
 
         public void AddDrone(Drone[]drones)
         {
+
+            Console.WriteLine("Enter ID, model and maximum weight-0 for light,1 for medium,2 for heavy(Press enter after each one of them)");
+            string val;
+            int x;
+            int.TryParse(Console.ReadLine(), out x);
+            val = Console.ReadLine();
+            int res;
+            res = Convert.ToInt32(val);
+            WeightCategories w = (WeightCategories)x;
+            WeightCategories w = WeightCategories.TryParse(Console.ReadLine(),res);
             Console.WriteLine("Enter ID, model and maximum weight-0 for light,1 for medium,2 for heavy(Press enter after each one of them)");
             drones[drones.Length] = new Drone()
             {
                 Id = int.Parse(Console.ReadLine()),
-                Model=Console.ReadLine(),
-
-                MaxWeight=(WeightCategories)int.Parse(Console.ReadLine())
+                Model = Console.ReadLine(),
+               MaxWeight= (WeightCategories)int.Parse( res),
+            
             };
         }
 
