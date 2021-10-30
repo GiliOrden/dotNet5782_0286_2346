@@ -74,8 +74,8 @@ namespace DalObject
                 parcels[i] = new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
-                    SenderId = customers[rand.Next(customers.Length)].Id,//i'm not sure it sould look like that
-                    TargetId = customers[rand.Next(customers.Length)].Id,
+                    SenderId = customers[i].Id,//i'm not sure it sould look like that
+                    TargetId = customers[i].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Requested = DateTime.Now,

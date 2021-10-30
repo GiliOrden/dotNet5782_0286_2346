@@ -55,28 +55,18 @@ namespace DalObject
 
         }
 
-        public void AddDrone(Drone[]drones)
+        public void AddDrone(List<Drone> drones)
         {
-
-            Console.WriteLine("Enter ID, model and maximum weight-0 for light,1 for medium,2 for heavy(Press enter after each one of them)");
-            string val;
-            int x;
-            int.TryParse(Console.ReadLine(), out x);
-            val = Console.ReadLine();
-            int res;
-            res = Convert.ToInt32(val);
-            WeightCategories w = (WeightCategories)x;
-            WeightCategories w = WeightCategories.TryParse(Console.ReadLine(),res);
-            Console.WriteLine("Enter ID, model and maximum weight-0 for light,1 for medium,2 for heavy(Press enter after each one of them)");
-            drones[drones.Length] = new Drone()
-            {
-                Id = int.Parse(Console.ReadLine()),
-                Model = Console.ReadLine(),
-               MaxWeight= (WeightCategories)int.Parse( res),
-            
-            };
+            Console.WriteLine("Enter ID, model and maximum weight(Press enter after each one of them)");
+            Drone d= new();
+            d.Id= int.Parse(Console.ReadLine());
+            d.Model = Console.ReadLine();
+            int ans;
+            WeightCategories.TryParse(Console.ReadLine(),out ans);
+            d.MaxWeight =(WeightCategories)ans;
+            WeightCategories.TryParse(Console.ReadLine(), out ans);
+            d.Status =(DroneStatuses)ans;
+            drones.Add(d);
         }
-
-
     }
 }
