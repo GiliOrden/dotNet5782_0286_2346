@@ -15,12 +15,6 @@ namespace DalObject
             DataSource.Initialize();//actually produce the data base 
         }
 
-        /*
-       void deleteStation()
-       {
-       }
-       UpDateStation(){}*/
-
         public void AddStation(Station s)
         {
             stations.Add(s);
@@ -80,6 +74,19 @@ namespace DalObject
             //i think we should do something to the baterry but i dont no where
         }
         public void SupplyDeliveryToCustomer(int id)
+        {
+            Parcel p;
+            foreach(Parcel parcel in parcels)
+            {
+                if(parcel.Id==id)
+                {
+                    p = parcel;
+                    p.Delivered = DateTime.Now;
+                }
+            }
+            //i think we should do something to the baterry but i dont no where 
+        }
+        public void SendDroneToCharge()
         {
 
         }

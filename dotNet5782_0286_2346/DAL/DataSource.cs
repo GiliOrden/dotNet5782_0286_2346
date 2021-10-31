@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public class DataSource
+    class DataSource
     {
         internal class Config
         {
