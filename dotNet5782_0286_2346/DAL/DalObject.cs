@@ -24,23 +24,12 @@ namespace DalObject
        }
        UpDateStation(){}*/
 
-        public void AddStation(List<Station> stations)
+        public void AddStation(Station s)
         {
-            Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude" + 
-                " of the station (Press enter after each one of them)");
-            stations.Add(new Station()
-            {
-
-                Id = int.Parse(Console.ReadLine()),
-                Name = Console.ReadLine(),
-                ChargeSlots = int.Parse(Console.ReadLine()),
-                Longitude = double.Parse(Console.ReadLine()),
-                Latitude = double.Parse(Console.ReadLine())
-            });
-
+            stations.Add(s);
         }
 
-        public  void AddCustomer(List<Customer> customers)
+        public  void AddCustomer()
         {
             Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude" +
                 " of the customer (Press enter after each one of them)");
@@ -55,7 +44,7 @@ namespace DalObject
 
         }
 
-        public void AddDrone(List<Drone> drones)
+        public void AddDrone()
         {
             Console.WriteLine("Enter ID, model and maximum weight(Press enter after each one of them)");
             Drone d= new();
@@ -68,7 +57,7 @@ namespace DalObject
             d.Status =(DroneStatuses)ans;
             drones.Add(d);
         }
-        public void AddParcel(List<Parcel>parcels)
+        public void AddParcel()
         {
             int ans;
             Console.WriteLine("Enter ID, senderId, targetId, weight and priority of your parcel(Press enter after each one of them)");
@@ -83,6 +72,10 @@ namespace DalObject
             p.DroneId = 0;
             p.Requested = DateTime.Now;
             parcels.Add(p);
+        }
+        public void AssignParcelToDrone()
+        {
+            Console.WriteLine();
         }
     }
 }

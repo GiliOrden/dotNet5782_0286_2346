@@ -5,32 +5,23 @@ namespace ConsoleUI
 {
     class Program
     {
+        private object d1;
 
         static void Main(string[] args)
         {
-
             DalObject.DalObject d1 = new DalObject.DalObject();//it will produce the data base and the methods that related to it
-            Drone d = new Drone();
-            d.MaxWeight = WeightCategories.Heavy;
-
-        
-            // d1.AddDrone(d);
-            //print menue according to user instructions
-        enum MenuOptions {  Add, Update, ShowOne, ShowList, Exit }
-        enum AddOptions { Exit, AddDrone, AddStation, AddCustomer }//sub-menue
+           // print menue according to user instructions
+        enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
+        enum AddOptions { AddDrone, AddStation, AddCustomer, Exit }//sub-menue
         void PrintMenue()
         {
             MenuOptions mo;
-            string userChoise = Console.ReadLine();
-            mo = (MenuOptions)int.Parse(userChoise);
-            /* int opt;
-             bool b = int.TryParse(Console.ReadLine(), out opt);
-             mo = (MenuOptions)opt;the lecturer offer*/
+            int userChoise;
+            int.TryParse(Console.ReadLine(), out userChoise);
+            mo = (MenuOptions)userChoise;
             switch (mo)
             {
-                
                 case MenuOptions.Add:
-
                     AddingOptions();
                     break;
                 case MenuOptions.Update:
@@ -45,7 +36,7 @@ namespace ConsoleUI
                     break;
 
                 case MenuOptions.Exit:
-                    
+
                     break;
                 default:
 
@@ -54,44 +45,42 @@ namespace ConsoleUI
             Console.ReadLine();
 
         }
+    
 
 
 
-        
-        
-        
-        public  void AddingOptions()
+    
+        public void AddingOptions()
         {
             AddOptions add;
             string userChoise = Console.ReadLine();
             add = (AddOptions)int.Parse(userChoise);
-            
             switch (add)
             {
-                case AddOptions.Exit:
-
-                    break;
                 case AddOptions.AddDrone:
-                   
+                    
                     break;
                 case AddOptions.AddStation:
-                    DalObject.AddStation(stations);
+                    Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude of the station (Press enter after each one of them)");
+                   Station s= new Station()
+                    {
+
+                        Id = int.Parse(Console.ReadLine()),
+                        Name = Console.ReadLine(),
+                        ChargeSlots = int.Parse(Console.ReadLine()),
+                        Longitude = double.Parse(Console.ReadLine()),
+                        Latitude = double.Parse(Console.ReadLine())
+                    };
+                    d1.AddStation(s);
                     break;
                 case AddOptions.AddCustomer:
-                    NewMethod();
                     break;
-
+                case AddOptions.Exit:
+                    break;
                 default:
-
                     break;
-            }
-
-            static void NewMethod()
-            {
-                AddCustomer(customers);
             }
         }
-    
+
     }
-    
 }

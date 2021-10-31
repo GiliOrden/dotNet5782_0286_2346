@@ -30,7 +30,8 @@ namespace DalObject
                 {
                     Id = rand.Next(100, 200),
                     MaxWeight = (WeightCategories)rand.Next(3),
-                    Status = (DroneStatuses)rand.Next(3)
+                    Status = (DroneStatuses)rand.Next(3),
+                    Battery=rand.NextDouble()*100
                 });
             }
         }
