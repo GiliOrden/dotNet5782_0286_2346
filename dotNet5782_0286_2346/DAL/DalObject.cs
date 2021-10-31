@@ -38,7 +38,22 @@ namespace DalObject
         {
             parcels.Add(p);
         }
-        public void AssignParcelToDrone(int id)
+        public static void AssignParcelToDrone()//I assumed the drone and parcel are now at the end of the list because they only created now
+        {
+            
+            drones.[drones.Count - 1].Status = (DroneStatuses)1;
+            parcels.[parcels.Count - 1].DroneId = drones.[drones.Count - 1].Id;
+            parcels.[parcels.Count - 1].Delivered = DateTime.Now;
+
+
+            foreach (Drone d in drones)
+            {
+                if (d.Id == "height")
+                    d.Status = (DroneStatuses)1;
+            }
+            drones = drones.Where(w => w.Id == "height").Select(s => { s.Value = 30; return s; }).ToList();
+        }
+        public static void CollectingParcelByDrone(Parcel parcel, Drone drone)
         {
             foreach (Parcel package in parcels)
             {
