@@ -121,7 +121,8 @@ namespace ConsoleUI
             switch (update)
             {
                 case UpdateOptions.AssignParcelToDrone:
-
+                   
+                    AssignParcelToDrone();
 
                    break;
                 case UpdateOptions.CollectParcelByDrone:
