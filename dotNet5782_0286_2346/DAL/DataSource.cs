@@ -74,12 +74,12 @@ namespace DalObject
                 parcels[i] = new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
-                    SenderId = customers[i].Id,//i'm not sure it sould look like that
-                    TargetId = customers[i].Id,
-                    Weight = (WeightCategories)rand.Next(3),
+                    SenderId = rand.Next(100000000, 999999999),//someone tells me it sould look like that
+                    TargetId = rand.Next(100000000, 999999999),
+                    Weight=(WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Requested = DateTime.Now,
-                    DroneId = 0,//i understood from whatapp that we should do it like that 
+                    DroneId = 0,
                     /*Scheduled=//maybe we have to assume how long it will take for the package according to
                      * the distance between the sender and the destination but in the instructions it not look like that
                     PickedUp=
