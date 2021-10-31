@@ -55,7 +55,13 @@ namespace DalObject
         }
         public static void CollectingParcelByDrone(Parcel parcel, Drone drone)
         {
-            parcel.PickedUp = DateTime.Now;
+            foreach (Parcel package in parcels)
+            {
+
+            }
+            drone.Status = ;
+            parcel.DroneId = drone.Id;
+            parcel.Delivered = DateTime.Now;
 
         }
     }
