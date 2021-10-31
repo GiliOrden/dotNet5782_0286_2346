@@ -29,7 +29,7 @@ namespace DalObject
             stations.Add(s);
         }
 
-        public  void AddCustomer()
+        /*public  void AddCustomer()
         {
             Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude" +
                 " of the customer (Press enter after each one of them)");
@@ -42,8 +42,7 @@ namespace DalObject
                 Latitude = double.Parse(Console.ReadLine()),
             });
 
-        }
-
+        }*/
         public void AddDrone()
         {
             Console.WriteLine("Enter ID, model and maximum weight(Press enter after each one of them)");

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
+using DalObject;
 namespace ConsoleUI
 {
     class p
@@ -11,6 +12,7 @@ namespace ConsoleUI
         enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
         enum AddOptions { AddDrone, AddStation, AddCustomer, Exit }
 
+        DalObject.DalObject d1 = new DalObject.DalObject();
         void PrintMenue()
         {
             MenuOptions mo;
@@ -64,7 +66,7 @@ namespace ConsoleUI
                         Longitude = double.Parse(Console.ReadLine()),
                         Latitude = double.Parse(Console.ReadLine())
                     };
-                    // d1.AddStation(s);
+                     d1.AddStation(s);
                     break;
                 case AddOptions.AddCustomer:
                     break;
@@ -76,7 +78,6 @@ namespace ConsoleUI
         }
         static void Main(string[] args)
         {
-            DalObject.DalObject d1 = new DalObject.DalObject();
         }
     }
 }
