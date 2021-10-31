@@ -30,7 +30,7 @@ namespace DalObject
         {
             customers.Add(c);
         }
-        public static void AddDrone(Drone d)
+        public  void AddDrone(Drone d)
         {
             drones.Add(d);
         }
@@ -38,57 +38,51 @@ namespace DalObject
         {
             parcels.Add(p);
         }
-        public static void AssignParcelToDrone(int parcelId, int droneId)
-        {
-
-            // drones.[drones.Count - 1].Status = (DroneStatuses)1;
-            //parcels.[parcels.Count - 1].DroneId = drones.[drones.Count - 1].Id;
-            //parcels.[parcels.Count - 1].Delivered = DateTime.Now;
+        public  void AssignParcelToDrone(int parcelId, int droneId)
+        { 
             foreach (Drone drone in drones)
             {
                 if (drone.Id == droneId)
                 {
+                    Drone d = drone;
+                    d.Status = DroneStatuses.Delivery;
                     drones.Remove(drone);
                     break;
                 }
             }
-            drones.Add(new Drone() {
-            Id:
-            });
 
-
-            Drone d = new();
-            d.Id = int.Parse(Console.ReadLine());
-            d.Model = Console.ReadLine();
-            WeightCategories.TryParse(Console.ReadLine(), out ans);
-            d.MaxWeight = (WeightCategories)ans;
-            WeightCategories.TryParse(Console.ReadLine(), out ans);
-            d.Status = (DroneStatuses)ans;
-            d.Battery = 100;
-            d1.AddDrone(d);
-
-
-            foreach (Parcel package in parcels)
+            foreach (Parcel parcel in parcels)
             {
-                if (package.Id == parcelId)
+                if (parcel.Id == parcelId)
                 {
-                    
+                    Parcel p = parcel;
+                    p.DroneId = drones[drones.Count - 1].Id;
+                    p.Scheduled = DateTime.Now;
+                    parcels.Remove(parcel);
+                    break;
                 }
             }
-
         }  
-        public static void CollectingParcelByDrone(Parcel parcel, Drone drone)
+        public  void CollectParcelByDrone(int id)
         {
-            foreach (Parcel package in parcels)
+            Parcel p;
+            foreach (Parcel parcel in parcels)
             {
-
+              if(parcel.Id==id)
+                {
+                    p = parcel;
+                    p.PickedUp = DateTime.Now;
+                    parcels.Add(p);
+                    parcels.Remove(parcel);
+                    break;
+                }
             }
-            drone.Status = ;
-            parcel.DroneId = drone.Id;
-            parcel.Delivered = DateTime.Now;
+            //i think we should do something to the baterry but i dont no where
+        }
+        public void SupplyDeliveryToCustomer(int id)
+        {
 
         }
-
         public void DisplayBaseStation(int id)
         {
             foreach (Station baseStaion in stations)

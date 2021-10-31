@@ -82,24 +82,31 @@ namespace ConsoleUI
         /// <summary>
         /// the function
         /// </summary>
-        public static void UpdatingOptions()
+        public  void UpdatingOptions()
         {
             
             UpdateOptions update;
             int userChoise;
+            int id1,id2;
             int.TryParse(Console.ReadLine(),out userChoise);//i change it because they wrote to use tryParse
             update = (UpdateOptions)userChoise;
             switch (update)
             {
-                case UpdateOptions.AssignParcelToDrone:
-                    Console.WriteLine("Please enter the parcel Id");
-                    int.TryParse(Console.ReadLine(), out userChoise);  
-                   
+                case UpdateOptions.AssignParcelToDrone://question:Should it look like this?with 2 id that are sent as parameters?
+                    Console.WriteLine("Please enter the ID of the parcel and the ID of the drone");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    int.TryParse(Console.ReadLine(), out id2);
+                    d1.AssignParcelToDrone(id1, id2);
                         break;
                 case UpdateOptions.CollectParcelByDrone:
+                    Console.WriteLine("Please enter the parcel ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    d1.CollectParcelByDrone(id1);
                     break;
                 case UpdateOptions.SupplyDeliveryToCustomer:
-                    Console.WriteLine();
+                    Console.WriteLine("Please enter th parcel ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    d1.SupplyDeliveryToCustomer(id1);
                     break;
                 case UpdateOptions.SendDroneToCharge:
                     break;
