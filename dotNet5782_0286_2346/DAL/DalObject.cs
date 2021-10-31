@@ -38,21 +38,45 @@ namespace DalObject
         {
             parcels.Add(p);
         }
-        public static void AssignParcelToDrone()//I assumed the drone and parcel are now at the end of the list because they only created now
+        public static void AssignParcelToDrone(int parcelId, int droneId)
         {
-            
-            drones.[drones.Count - 1].Status = (DroneStatuses)1;
-            parcels.[parcels.Count - 1].DroneId = drones.[drones.Count - 1].Id;
-            parcels.[parcels.Count - 1].Delivered = DateTime.Now;
 
-
-            foreach (Drone d in drones)
+            // drones.[drones.Count - 1].Status = (DroneStatuses)1;
+            //parcels.[parcels.Count - 1].DroneId = drones.[drones.Count - 1].Id;
+            //parcels.[parcels.Count - 1].Delivered = DateTime.Now;
+            foreach (Drone drone in drones)
             {
-                if (d.Id == "height")
-                    d.Status = (DroneStatuses)1;
+                if (drone.Id == droneId)
+                {
+                    drones.Remove(drone);
+                    break;
+                }
             }
-            drones = drones.Where(w => w.Id == "height").Select(s => { s.Value = 30; return s; }).ToList();
-        }
+            drones.Add(new Drone() {
+            Id:
+            });
+
+
+            Drone d = new();
+            d.Id = int.Parse(Console.ReadLine());
+            d.Model = Console.ReadLine();
+            WeightCategories.TryParse(Console.ReadLine(), out ans);
+            d.MaxWeight = (WeightCategories)ans;
+            WeightCategories.TryParse(Console.ReadLine(), out ans);
+            d.Status = (DroneStatuses)ans;
+            d.Battery = 100;
+            d1.AddDrone(d);
+
+
+            foreach (Parcel package in parcels)
+            {
+                if (package.Id == parcelId)
+                {
+                    
+                }
+            }
+
+        }  
         public static void CollectingParcelByDrone(Parcel parcel, Drone drone)
         {
             foreach (Parcel package in parcels)
@@ -64,6 +88,7 @@ namespace DalObject
             parcel.Delivered = DateTime.Now;
 
         }
+
         public void DisplayBaseStation(int id)
         {
             foreach (Station baseStaion in stations)
