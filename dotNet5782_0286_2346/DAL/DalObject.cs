@@ -38,8 +38,12 @@ namespace DalObject
         {
             parcels.Add(p);
         }
-        public void AssignParcelToDrone(Parcel parcel, Drone drone)
+        public void AssignParcelToDrone(int id)
         {
+            foreach (Parcel package in parcels)
+            {
+
+            }
             drone.Status = ;
             parcel.DroneId = drone.Id;
             parcel.Delivered = DateTime.Now;

@@ -124,10 +124,7 @@ namespace ConsoleUI
                 case UpdateOptions.AssignParcelToDrone:
                     Console.WriteLine("Please enter the parcel Id");
                     int.TryParse(Console.ReadLine(), out userChoise);  
-                    foreach(Parcel parcel in parcels)
-                    {
-
-                    }
+                   
                         break;
                 case UpdateOptions.CollectParcelByDrone:
                     break;
