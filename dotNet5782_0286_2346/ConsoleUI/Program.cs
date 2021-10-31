@@ -9,8 +9,8 @@ namespace ConsoleUI
     class p
     {
         enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
-        enum AddOptions { AddDrone, AddStation, AddCustomer, Exit }
-
+        enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
+        DalObject.DalObject d1 = new DalObject.DalObject();
         void PrintMenue()
         {
             MenuOptions mo;
@@ -20,7 +20,7 @@ namespace ConsoleUI
             switch (mo)
             {
                 case MenuOptions.Add:
-
+                    AddingOptions();
                     break;
                 case MenuOptions.Update:
 
@@ -45,13 +45,24 @@ namespace ConsoleUI
         }
         public void AddingOptions()
         {
+            int ans;
             AddOptions add;
             string userChoise = Console.ReadLine();
             add = (AddOptions)int.Parse(userChoise);
             switch (add)
             {
                 case AddOptions.AddDrone:
-
+                    Console.WriteLine("Enter ID, model, maximum weight(Press enter after each one of them)");
+                    Drone d = new();
+                    d.Id = int.Parse(Console.ReadLine());
+                    d.Model = Console.ReadLine();
+                    
+                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+                    d.MaxWeight = (WeightCategories)ans;
+                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+                    d.Status = (DroneStatuses)ans;
+                    d.Battery = 100;
+                    d1.AddDrone(d);
                     break;
                 case AddOptions.AddStation:
                     Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude of the station (Press enter after each one of them)");
@@ -67,14 +78,38 @@ namespace ConsoleUI
                     d1.AddStation(s);
                     break;
                 case AddOptions.AddCustomer:
+                    Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude of the customer (Press enter after each one of them)");
+                    Customer c=new Customer()
+                    {
+                        Id = int.Parse(Console.ReadLine()),
+                        Name = Console.ReadLine(),
+                        Phone = Console.ReadLine(),
+                        Longitude = double.Parse(Console.ReadLine()),
+                        Latitude = double.Parse(Console.ReadLine()),
+                    };
+                    d1.AddCustomer(c);
+                    break;
+                case AddOptions.AddParcel:
+                    Console.WriteLine("Enter ID, senderId, targetId, weight and priority of your parcel(Press enter after each one of them)");
+                    Parcel p = new Parcel();
+                    p.Id = int.Parse(Console.ReadLine());
+                    p.SenderId = int.Parse(Console.ReadLine());
+                    p.TargetId = int.Parse(Console.ReadLine());
+                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+                    p.Weight = (WeightCategories)ans;
+                    Priorities.TryParse(Console.ReadLine(), out ans);
+                    p.Priority = (Priorities)ans;
+                    p.DroneId = 0;
+                    p.Requested = DateTime.Now;
+                    d1.AddParcel(p);
                     break;
                 case AddOptions.Exit:
+                    return;
                     break;
                 default:
                     break;
             }
         }
-        DalObject.DalObject d1 = new DalObject.DalObject();
         static void Main(string[] args)
         {
 
