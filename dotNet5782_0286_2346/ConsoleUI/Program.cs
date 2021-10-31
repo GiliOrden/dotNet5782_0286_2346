@@ -5,16 +5,18 @@ namespace ConsoleUI
 {
     class Program
     {
-        private object d1;
+        
 
         static void Main(string[] args)
-        {
+        { }
             DalObject.DalObject d1 = new DalObject.DalObject();//it will produce the data base and the methods that related to it
            // print menue according to user instructions
-        enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
-        enum AddOptions { AddDrone, AddStation, AddCustomer, Exit }//sub-menue
-        void PrintMenue()
-        {
+             enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
+        enum AddOptions { AddDrone, AddStation, AddCustomer, Exit }
+                                                            //sub-menu
+    
+             void PrintMenue()
+            {
             MenuOptions mo;
             int userChoise;
             int.TryParse(Console.ReadLine(), out userChoise);
@@ -45,9 +47,9 @@ namespace ConsoleUI
             Console.ReadLine();
 
         }
+
+
     
-
-
 
     
         public void AddingOptions()
@@ -71,7 +73,7 @@ namespace ConsoleUI
                         Longitude = double.Parse(Console.ReadLine()),
                         Latitude = double.Parse(Console.ReadLine())
                     };
-                    d1.AddStation(s);
+                  d1.AddStation(s);
                     break;
                 case AddOptions.AddCustomer:
                     break;
