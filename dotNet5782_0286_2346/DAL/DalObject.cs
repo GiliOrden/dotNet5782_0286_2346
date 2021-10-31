@@ -40,7 +40,7 @@ namespace DalObject
         }
         public void AssignParcelToDrone(Parcel parcel, Drone drone)
         {
-            drone.Status = (DroneStatuses)1;
+            drone.Status = ;
             parcel.DroneId = drone.Id;
             parcel.Delivered = DateTime.Now;
 

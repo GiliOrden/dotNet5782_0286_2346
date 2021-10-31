@@ -11,7 +11,7 @@ namespace ConsoleUI
         enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
         enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
 
-        enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, ,Exit }
+        enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge,Exit }
         DalObject.DalObject d1 = new DalObject.DalObject();
         void PrintMenue()
         {
@@ -49,8 +49,8 @@ namespace ConsoleUI
         {
             int ans;
             AddOptions add;
-            string userChoise = Console.ReadLine();
-            add = (AddOptions)int.Parse(userChoise);
+            int.TryParse(Console.ReadLine( ),out ans);
+            add = (AddOptions)ans;
             switch (add)
             {
                 case AddOptions.AddDrone:
@@ -116,20 +116,31 @@ namespace ConsoleUI
         {
             
             UpdateOptions update;
-            string userChoise = Console.ReadLine();
-            update = (UpdateOptions)int.Parse(userChoise);
+            int userChoise;
+            int.TryParse(Console.ReadLine(),out userChoise);//i change it because they wrote to use tryParse
+            update = (UpdateOptions)userChoise;
             switch (update)
             {
                 case UpdateOptions.AssignParcelToDrone:
+                    Console.WriteLine("Please enter the parcel Id");
+                    int.TryParse(Console.ReadLine(), out userChoise);  
+                    foreach(Parcel parcel in parcels)
+                    {
 
-
-                   break;
+                    }
+                        break;
                 case UpdateOptions.CollectParcelByDrone:
-
-
                     break;
-
-
+                case UpdateOptions.SupplyDeliveryToCustomer:
+                    break;
+                case UpdateOptions.SendDroneToCharge:
+                    break;
+                case UpdateOptions.ReleaseDroneFromCharge:
+                    break;
+                case UpdateOptions.Exit:
+                    break;
+                default:
+                    break;
             }
         }
         static void Main(string[] args)
