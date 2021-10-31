@@ -72,9 +72,12 @@ namespace DalObject
             p.Requested = DateTime.Now;
             parcels.Add(p);
         }
-        public void AssignParcelToDrone()
+        public void AssignParcelToDrone(Parcel parcel, Drone drone)
         {
-            Console.WriteLine();
+            drone.Status = (DroneStatuses)1;
+            parcel.DroneId = drone.Id;
+            parcel.Delivered = DateTime.Now;
+
         }
     }
 }
