@@ -6,46 +6,15 @@ using System.Threading.Tasks;
 using IDAL.DO;
 namespace ConsoleUI
 {
-    class p
+    class Program
     {
-        enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
+        enum MenuOptions { Add, Update, Display, ShowList, Exit }
         enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
-
         enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge,Exit }
+        enum DisplayOptions { BaseStationDisplay,DroneDisplay,CustomerDisplay,ParcelDisplay}
+
         DalObject.DalObject d1 = new DalObject.DalObject();
-        void PrintMenue()
-        {
-            MenuOptions mo;
-            int userChoise;
-            int.TryParse(Console.ReadLine(), out userChoise);
-            mo = (MenuOptions)userChoise;
-            switch (mo)
-            {
-                case MenuOptions.Add:
-                    AddingOptions();
-                    break;
-                case MenuOptions.Update:
-                    UpdatingOptions();
-                    break;
-                case MenuOptions.ShowOne:
-
-
-                    break;
-                case MenuOptions.ShowList:
-
-                    break;
-
-                case MenuOptions.Exit:
-
-                    break;
-                default:
-
-                    break;
-            }
-            Console.ReadLine();
-
-        }
-        public void AddingOptions()
+        public  void AddingOptions()
         {
             int ans;
             AddOptions add;
@@ -58,7 +27,6 @@ namespace ConsoleUI
                     Drone d = new();
                     d.Id = int.Parse(Console.ReadLine());
                     d.Model = Console.ReadLine();
-                    
                     WeightCategories.TryParse(Console.ReadLine(), out ans);
                     d.MaxWeight = (WeightCategories)ans;
                     WeightCategories.TryParse(Console.ReadLine(), out ans);
@@ -111,7 +79,9 @@ namespace ConsoleUI
                     break;
             }
         }
-
+        /// <summary>
+        /// the function
+        /// </summary>
         public static void UpdatingOptions()
         {
             
@@ -129,6 +99,7 @@ namespace ConsoleUI
                 case UpdateOptions.CollectParcelByDrone:
                     break;
                 case UpdateOptions.SupplyDeliveryToCustomer:
+                    Console.WriteLine();
                     break;
                 case UpdateOptions.SendDroneToCharge:
                     break;
@@ -140,9 +111,69 @@ namespace ConsoleUI
                     break;
             }
         }
+        public void DisplayObject()
+        {
+            int ans;
+            DisplayOptions show;
+            int id;
+            DisplayOptions.TryParse(Console.ReadLine(), out ans);
+            show = (DisplayOptions)ans;
+            switch (show)
+            {
+                case DisplayOptions.BaseStationDisplay:
+                    Console.WriteLine("Please enter the staion ID");
+                    int.TryParse(Console.ReadLine(), out id);
+                    d1.DisplayBaseStation(id);
+                    break;
+                case DisplayOptions.DroneDisplay:
+                    Console.WriteLine("Please enter the Drone ID");
+                    int.TryParse(Console.ReadLine(), out id);
+                    d1.DisplayDrone(id);
+                    break;
+                case DisplayOptions.CustomerDisplay:
+                    Console.WriteLine("Please enter the customer ID");
+                    int.TryParse(Console.ReadLine(), out id);
+                    d1.DisplayCustomer(id);
+                    break;
+                case DisplayOptions.ParcelDisplay:
+                    Console.WriteLine("Please enter the parcel ID");
+                    int.TryParse(Console.ReadLine(), out id);
+                    d1.DisplayParcel(id);
+                    break;
+                default:
+                    break;
+            }
+        }
         static void Main(string[] args)
         {
+            MenuOptions mo;
+            int userChoise;
+            int.TryParse(Console.ReadLine(), out userChoise);
+            mo = (MenuOptions)userChoise;
+            switch (mo)
+            {
+                case MenuOptions.Add:
+                    AddingOptions();
+                    break;
+                case MenuOptions.Update:
+                    UpdatingOptions();
+                    break;
+                case MenuOptions.Display:
 
+
+                    break;
+                case MenuOptions.ShowList:
+
+                    break;
+
+                case MenuOptions.Exit:
+
+                    break;
+                default:
+
+                    break;
+            }
+            Console.ReadLine();
         }
     }
 }
