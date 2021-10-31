@@ -10,6 +10,8 @@ namespace ConsoleUI
     {
         enum MenuOptions { Add, Update, ShowOne, ShowList, Exit }
         enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
+
+        enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, ,Exit }
         DalObject.DalObject d1 = new DalObject.DalObject();
         void PrintMenue()
         {
@@ -23,7 +25,7 @@ namespace ConsoleUI
                     AddingOptions();
                     break;
                 case MenuOptions.Update:
-
+                    UpdatingOptions();
                     break;
                 case MenuOptions.ShowOne:
 
@@ -105,9 +107,29 @@ namespace ConsoleUI
                     break;
                 case AddOptions.Exit:
                     return;
-                    break;
                 default:
                     break;
+            }
+        }
+
+        public static void UpdatingOptions()
+        {
+            
+            UpdateOptions update;
+            string userChoise = Console.ReadLine();
+            update = (UpdateOptions)int.Parse(userChoise);
+            switch (update)
+            {
+                case UpdateOptions.AssignParcelToDrone:
+
+
+                   break;
+                case UpdateOptions.CollectParcelByDrone:
+
+
+                    break;
+
+
             }
         }
         static void Main(string[] args)
