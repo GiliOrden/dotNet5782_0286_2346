@@ -24,11 +24,11 @@ namespace DalObject
        }
        UpDateStation(){}*/
 
-        public void AddStation(Station[] stations)
+        public void AddStation(List<Station> stations)
         {
             Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude" + 
                 " of the station (Press enter after each one of them)");
-            stations[stations.Length] = new Station()
+            stations.Add(new Station()
             {
 
                 Id = int.Parse(Console.ReadLine()),
@@ -36,7 +36,7 @@ namespace DalObject
                 ChargeSlots = int.Parse(Console.ReadLine()),
                 Longitude = double.Parse(Console.ReadLine()),
                 Latitude = double.Parse(Console.ReadLine())
-            };
+            });
 
         }
 
@@ -67,6 +67,22 @@ namespace DalObject
             WeightCategories.TryParse(Console.ReadLine(), out ans);
             d.Status =(DroneStatuses)ans;
             drones.Add(d);
+        }
+        public void AddParcel(List<Parcel>parcels)
+        {
+            int ans;
+            Console.WriteLine("Enter ID, senderId, targetId, weight and priority of your parcel(Press enter after each one of them)");
+            Parcel p = new Parcel();
+            p.Id = int.Parse(Console.ReadLine());
+            p.SenderId = int.Parse(Console.ReadLine());
+            p.TargetId = int.Parse(Console.ReadLine());
+            WeightCategories.TryParse(Console.ReadLine(),out ans);
+            p.Weight = (WeightCategories)ans;
+            Priorities.TryParse(Console.ReadLine(), out ans);
+            p.Priority = (Priorities)ans;
+            p.DroneId = 0;
+            p.Requested = DateTime.Now;
+            parcels.Add(p);
         }
     }
 }
