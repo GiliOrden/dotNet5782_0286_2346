@@ -26,13 +26,14 @@ namespace DalObject
         {
             for (int i = 0; i < num; i++)
             {
-                drones.Add( new Drone()
+                drones.Add(new Drone()
                 {
                     Id = rand.Next(100, 200),
                     MaxWeight = (WeightCategories)rand.Next(3),
                     Status = (DroneStatuses)rand.Next(3),
-                    Battery=rand.NextDouble()*100
-                });
+                    Battery = rand.NextDouble() * 100,
+                    Model = string.Format("Drony{0}", i)
+                }); 
             }
         }
 
@@ -95,3 +96,4 @@ namespace DalObject
        
     }
 }
+
