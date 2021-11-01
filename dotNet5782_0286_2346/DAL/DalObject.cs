@@ -109,6 +109,7 @@ namespace DalObject
                     d = drone;
                     d.Status = DroneStatuses.Maintenance;
                     dc.DroneId = d.Id;
+                    dc.StationId = id2;
                     drones.Add(d);
                     drones.Remove(drone);
                     break;
@@ -161,6 +162,54 @@ namespace DalObject
                 {
                     parcel.ToString();
                     break;
+                }
+            }
+        }
+
+        public void ListOfBaseStations()
+        {
+            foreach (Station allStaions in stations)
+                allStaions.ToString();
+        }
+
+        public void ListOfDrones()
+        {
+            foreach (Drone allDrones in drones)
+                allDrones.ToString();
+        }
+
+        public void ListOfCustomers()
+        {
+            foreach (Customer customer in customers)
+                customer.ToString();
+        }
+
+        public void ListOfParcels()
+        {
+            foreach (Parcel allParcel in parcels)
+                allParcel.ToString();
+        }
+
+        public void ListOfNotAssociatedParsels()
+        {
+            foreach (Parcel parcel in parcels)
+            {
+                if (parcel.DroneId == 0)
+                    parcel.ToString();
+            }
+        }
+
+        public void ListOfAvailableChargingStations()
+        {
+            foreach (Station baseStaion in stations)
+            {
+                foreach(DroneCharge droneCharge in  )
+                {
+                    if (baseStaion.Id == droneCharge.StationId)
+                    {
+                        baseStaion.ToString();
+
+                    }
                 }
             }
         }

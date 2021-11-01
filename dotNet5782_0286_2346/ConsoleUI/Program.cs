@@ -12,6 +12,7 @@ namespace ConsoleUI
         enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
         enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge}
         enum DisplayOptions { BaseStationDisplay,DroneDisplay,CustomerDisplay,ParcelDisplay}
+        enum DisplayListsOptions { BaseStationList, DroneList, CustomerList, ParcelList, ParselsNotAssociatedWithDrones, StationsWithAvailableChargings }
 
        static DalObject.DalObject d1 = new DalObject.DalObject();
         public static void AddingOptions()
@@ -111,7 +112,7 @@ namespace ConsoleUI
                 case UpdateOptions.SendDroneToCharge:
                     Console.WriteLine("Please enter the drone ID");
                     int.TryParse(Console.ReadLine(), out id1);
-                    d1.SendDroneToCharge(id1,id2)
+                    d1.SendDroneToCharge(id1, id2);
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
                     break;
@@ -152,7 +153,39 @@ namespace ConsoleUI
                     break;
             }
         }
-        static void Main(string[] args)
+
+        public static void DisplayingListsOptions()
+        {
+            int ans;
+            DisplayListsOptions.TryParse(Console.ReadLine(), out ans);
+            DisplayListsOptions choise = (DisplayListsOptions)ans;
+            switch (choise)
+            {
+                case DisplayListsOptions.BaseStationList:
+                    d1.ListOfBaseStations();
+                    break;
+                case DisplayListsOptions.DroneList:
+                    d1.ListOfDrones();
+                    break;
+                case DisplayListsOptions.CustomerList:
+                    d1.ListOfCustomers();
+                    break;
+                case DisplayListsOptions.ParcelList:
+                    d1.ListOfParcels();
+                    break;
+                case DisplayListsOptions.ParselsNotAssociatedWithDrones:
+                    d1.ListOfNotAssociatedParsels();
+                    break;
+                case DisplayListsOptions.StationsWithAvailableChargings:
+                    d1.ListOfAvailableChargingStations();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+            static void Main(string[] args)
         {
             MenuOptions mo;
             int userChoise;
