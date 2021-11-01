@@ -226,14 +226,10 @@ namespace DalObject
         {
             foreach (Station baseStaion in stations)
             {
-                foreach(DroneCharge droneCharge in  )
-                {
-                    if (baseStaion.Id == droneCharge.StationId)
-                    {
-                        baseStaion.ToString();
+                if(baseStaion.ChargeSlots!=0)
+                     baseStaion.ToString();
 
-                    }
-                }
+                    
             }
         }
     }
