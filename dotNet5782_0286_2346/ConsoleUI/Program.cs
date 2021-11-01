@@ -13,8 +13,8 @@ namespace ConsoleUI
         enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge}
         enum DisplayOptions { BaseStationDisplay,DroneDisplay,CustomerDisplay,ParcelDisplay}
 
-        DalObject.DalObject d1 = new DalObject.DalObject();
-        public  void AddingOptions()
+       static DalObject.DalObject d1 = new DalObject.DalObject();
+        public static void AddingOptions()
         {
             int ans;
             AddOptions add;
@@ -82,7 +82,7 @@ namespace ConsoleUI
         /// <summary>
         /// the function
         /// </summary>
-        public  void UpdatingOptions()
+        public static void UpdatingOptions()
         {
             
             UpdateOptions update;
@@ -116,7 +116,7 @@ namespace ConsoleUI
                     break;
             }
         }
-        public void DisplayObject()
+        public static void DisplayObject()
         {
             int ans;
             DisplayOptions show;
@@ -158,14 +158,13 @@ namespace ConsoleUI
             switch (mo)
             {
                 case MenuOptions.Add:
-                    //AddingOptions();
+                    AddingOptions();
                     break;
                 case MenuOptions.Update:
-                   // UpdatingOptions();
+                   UpdatingOptions();
                     break;
                 case MenuOptions.Display:
-
-
+                    DisplayObject();
                     break;
                 case MenuOptions.ShowList:
 

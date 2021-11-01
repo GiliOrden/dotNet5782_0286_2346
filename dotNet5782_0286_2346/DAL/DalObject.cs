@@ -86,7 +86,11 @@ namespace DalObject
             }
             //i think we should do something to the baterry but i dont no where 
         }
-        public void SendDroneToCharge()
+        public void SendDroneToCharge(int id)
+        {
+
+        }
+        public void ReleaseDroneFromCharge()
         {
 
         }
