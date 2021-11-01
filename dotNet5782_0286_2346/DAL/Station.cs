@@ -25,8 +25,12 @@ namespace IDAL
                           Latitude:   {Latitude,15}";
 
             }
+            public string Distunce(int longitude2, int latitude2)
+            {
+                return @$"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}";
 
-           
+            }
+
         }
     }
 }

@@ -227,11 +227,37 @@ namespace DalObject
             foreach (Station baseStaion in stations)
             {
                 if(baseStaion.ChargeSlots!=0)
-                     baseStaion.ToString();
-
-                    
+                     baseStaion.ToString();       
             }
         }
+
+        public void DistanceFromCustomer(int longitude, int latitude, string name)
+        {
+            foreach (Customer customer in customers)
+            {
+                if (customer.Name==name)
+                {
+                    customer.Distunce(longitude, latitude);
+                    break;
+                }
+            }
+            
+        }
+
+        public void DistanceFromStation(int longitude, int latitude, int id)
+        {
+            foreach (Station station in stations)
+            {
+                if (station.Id==id)
+                {
+                    station.Distunce(longitude, latitude);
+                    break;
+                }
+            }
+        }
+
+
+
     }
 }
 /*DmsLocation Convert(double decimalLongitue ,double decimalLotitude)

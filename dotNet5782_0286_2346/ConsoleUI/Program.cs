@@ -8,13 +8,14 @@ namespace ConsoleUI
 {
     class Program
     {
-        enum MenuOptions { Add, Update, Display, ShowList, Exit }
+        enum MenuOptions { Add, Update, Display, ShowList, FindDistance, Exit }
         enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
         enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge}
         enum DisplayOptions { BaseStationDisplay,DroneDisplay,CustomerDisplay,ParcelDisplay}
         enum DisplayListsOptions { BaseStationList, DroneList, CustomerList, ParcelList, ParselsNotAssociatedWithDrones, StationsWithAvailableChargings }
+        enum FindDistances { CustomerDistance, StationDistance }
 
-       static DalObject.DalObject d1 = new DalObject.DalObject();
+        static DalObject.DalObject d1 = new DalObject.DalObject();
         public static void AddingOptions()
         {
             int ans;
@@ -190,6 +191,39 @@ namespace ConsoleUI
             }
         }
 
+        public static void FindingDistance()
+        {
+            int ans,longitude,latitude,id;
+            string name;
+            bool check;
+            FindDistances.TryParse(Console.ReadLine(), out ans);
+            FindDistances choise = (FindDistances)ans;
+            switch (choise)
+            {
+                case FindDistances.CustomerDistance:
+                    Console.WriteLine("Enter the location (longitude & latitude) ");
+                    check=int.TryParse(Console.ReadLine(), out longitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    check = int.TryParse(Console.ReadLine(), out latitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    Console.WriteLine("Enter your name");
+                    name = Console.ReadLine();
+                    d1.DistanceFromCustomer(longitude, latitude, name);
+                    break;
+                case FindDistances.StationDistance:
+                    Console.WriteLine("Enter the location (longitude & latitude) ");
+                    check = int.TryParse(Console.ReadLine(), out longitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    check = int.TryParse(Console.ReadLine(), out latitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    Console.WriteLine("Enter the station's Id");
+                    int.TryParse(Console.ReadLine(), out id);
+                    d1.DistanceFromStation(longitude, latitude, id);
+                    break;
+                default:
+                    break;
+            }
+        }
 
             static void Main(string[] args)
         {
@@ -209,12 +243,16 @@ namespace ConsoleUI
                     DisplayObject();
                     break;
                 case MenuOptions.ShowList:
-
+                    DisplayingListsOptions();
+                    break;
+                case MenuOptions.FindDistance:
+                    FindingDistance();
                     break;
 
                 case MenuOptions.Exit:
 
                     break;
+
                 default:
 
                     break;
