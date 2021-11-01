@@ -46,7 +46,7 @@ namespace DalObject
                 {
                     Id = rand.Next(1, 100),
                     Name =addresses[i],
-                    ChargeSlots = rand.Next(3, 10),//need checking!!, supposed to be randomal?
+                    ChargeSlots = rand.Next(2,5),//need checking!!, supposed to be randomal?
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
                  });

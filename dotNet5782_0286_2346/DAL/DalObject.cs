@@ -101,7 +101,8 @@ namespace DalObject
         public void SendDroneToCharge(int id ,int id2)
         {
             Drone d;
-            DroneCharge dc = new DroneCharge();
+            Station s;
+            DroneCharge dc = new DroneCharge();//question:is it should look like that?
             foreach(Drone drone in drones)
             {
                 if(drone.Id==id)
@@ -109,16 +110,39 @@ namespace DalObject
                     d = drone;
                     d.Status = DroneStatuses.Maintenance;
                     dc.DroneId = d.Id;
+                    dc.StationId = id2;
                     drones.Add(d);
                     drones.Remove(drone);
                     break;
                 }
-
+            }
+            foreach(Station station in stations)
+            {
+                if(station.Id==id2)
+                {
+                    s = station;
+                    s.ChargeSlots = s.ChargeSlots - 1;
+                    stations.Add(s);
+                    stations.Remove(station);
+                    break;
+                }
             }
         }
-        public void ReleaseDroneFromCharge()
+        public void ReleaseDroneFromCharge(int id)
         {
-
+            Drone d;
+            foreach(Drone drone in drones)
+            {
+                if(drone.Id==id)
+                {
+                    d = drone;
+                    d.Battery = 100;
+                    d.Status = DroneStatuses.Available;
+                    drones.Add(d);
+                    drones.Remove(drone);
+                    break;
+                }
+            }
         }
         public void DisplayBaseStation(int id)
         {

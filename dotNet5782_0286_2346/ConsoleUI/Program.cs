@@ -109,11 +109,17 @@ namespace ConsoleUI
                     d1.SupplyDeliveryToCustomer(id1);
                     break;
                 case UpdateOptions.SendDroneToCharge:
-                    Console.WriteLine("Please enter the drone ID");
+                    Console.WriteLine("Please enter the drone ID ");
                     int.TryParse(Console.ReadLine(), out id1);
-                    d1.SendDroneToCharge(id1,id2)
+                    Console.WriteLine("Please enter the station ID from the list of stations");
+                    //here should be a call to function that show the lists
+                    int.TryParse(Console.ReadLine(), out id2);
+                    d1.SendDroneToCharge(id1, id2);
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
+                    Console.WriteLine("Please enter the drone ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    d1.ReleaseDroneFromCharge(id1);
                     break;
                 default:
                     break;
