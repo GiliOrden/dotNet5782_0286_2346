@@ -13,8 +13,8 @@ namespace ConsoleUI
         enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge}
         enum DisplayOptions { BaseStationDisplay,DroneDisplay,CustomerDisplay,ParcelDisplay}
 
-        DalObject.DalObject d1 = new DalObject.DalObject();
-        public  void AddingOptions()
+       static DalObject.DalObject d1 = new DalObject.DalObject();
+        public static void AddingOptions()
         {
             int ans;
             AddOptions add;
@@ -82,7 +82,7 @@ namespace ConsoleUI
         /// <summary>
         /// the function
         /// </summary>
-        public  void UpdatingOptions()
+        public static void UpdatingOptions()
         {
             
             UpdateOptions update;
@@ -104,11 +104,14 @@ namespace ConsoleUI
                     d1.CollectParcelByDrone(id1);
                     break;
                 case UpdateOptions.SupplyDeliveryToCustomer:
-                    Console.WriteLine("Please enter th parcel ID");
+                    Console.WriteLine("Please enter the parcel ID");
                     int.TryParse(Console.ReadLine(), out id1);
                     d1.SupplyDeliveryToCustomer(id1);
                     break;
                 case UpdateOptions.SendDroneToCharge:
+                    Console.WriteLine("Please enter the drone ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    d1.SendDroneToCharge(id1,id2)
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
                     break;
@@ -116,7 +119,7 @@ namespace ConsoleUI
                     break;
             }
         }
-        public void DisplayObject()
+        public static void DisplayObject()
         {
             int ans;
             DisplayOptions show;
@@ -158,14 +161,13 @@ namespace ConsoleUI
             switch (mo)
             {
                 case MenuOptions.Add:
-                    //AddingOptions();
+                    AddingOptions();
                     break;
                 case MenuOptions.Update:
-                   // UpdatingOptions();
+                   UpdatingOptions();
                     break;
                 case MenuOptions.Display:
-                    //DisplayObject();
-
+                    DisplayObject();
                     break;
                 case MenuOptions.ShowList:
 
