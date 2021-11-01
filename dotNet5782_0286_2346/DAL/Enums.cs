@@ -12,6 +12,11 @@ namespace IDAL
 
         public enum DroneStatuses { Available, Delivery, Maintenance }
         public enum Priorities { Regular, Fast,Emergency }
+        enum PointType
+        {
+            Lat,
+            Lon
+        }
         /// 
         /// </summary>
     }
