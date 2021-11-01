@@ -82,13 +82,39 @@ namespace DalObject
                 {
                     p = parcel;
                     p.Delivered = DateTime.Now;
+                    foreach (Drone drone in drones)
+                    {
+                        if (drone.Id == p.DroneId)
+                        {
+                            Drone d = drone;
+                            d.Battery = 20;
+                            drones.Add(d);
+                            drones.Remove(drone);
+                            break;
+                        }
+                    }
+                    parcels.Remove(parcel);
+                    break;
                 }
             }
-            //i think we should do something to the baterry but i dont no where 
         }
-        public void SendDroneToCharge(int id)
+        public void SendDroneToCharge(int id ,int id2)
         {
+            Drone d;
+            DroneCharge dc = new DroneCharge();
+            foreach(Drone drone in drones)
+            {
+                if(drone.Id==id)
+                {
+                    d = drone;
+                    d.Status = DroneStatuses.Maintenance;
+                    dc.DroneId = d.Id;
+                    drones.Add(d);
+                    drones.Remove(drone);
+                    break;
+                }
 
+            }
         }
         public void ReleaseDroneFromCharge()
         {

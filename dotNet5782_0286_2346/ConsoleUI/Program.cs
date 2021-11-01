@@ -104,11 +104,14 @@ namespace ConsoleUI
                     d1.CollectParcelByDrone(id1);
                     break;
                 case UpdateOptions.SupplyDeliveryToCustomer:
-                    Console.WriteLine("Please enter th parcel ID");
+                    Console.WriteLine("Please enter the parcel ID");
                     int.TryParse(Console.ReadLine(), out id1);
                     d1.SupplyDeliveryToCustomer(id1);
                     break;
                 case UpdateOptions.SendDroneToCharge:
+                    Console.WriteLine("Please enter the drone ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    d1.SendDroneToCharge(id1,id2)
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
                     break;
