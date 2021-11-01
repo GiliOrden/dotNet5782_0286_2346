@@ -164,7 +164,7 @@ namespace ConsoleUI
                    // UpdatingOptions();
                     break;
                 case MenuOptions.Display:
-
+                    //DisplayObject();
 
                     break;
                 case MenuOptions.ShowList:

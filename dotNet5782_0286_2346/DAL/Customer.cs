@@ -18,11 +18,11 @@ namespace IDAL
             public override string ToString()
             {
                 return @$"Customer
-                          Id:{Id}
-                          Name:{Name} 
-                          Phone:{Phone}
-                          Longitude:{Longitude}
-                          Latitude:{Latitude}";
+                          Id:       {Id,15}
+                          Name:     {Name,30} 
+                          Phone:    {Phone,15}
+                          Longitude:{Longitude,15}
+                          Latitude: {Latitude,15}";
 
             }
 
