@@ -59,6 +59,12 @@ namespace ConsoleUI
                         Console.WriteLine("Wrong number");
                         break;
                 }
+                Console.WriteLine("press 1 to add an item");
+                Console.WriteLine("press 2 to update an item");
+                Console.WriteLine("press 3 to display an item");
+                Console.WriteLine("press 4 to display a list of specific item");
+                Console.WriteLine("Press 5 to find a distance of base or customer from a coordinate");
+                Console.WriteLine("press 0 to exit");
                 int.TryParse(Console.ReadLine(), out userChoise);
                 mo = (MenuOptions)userChoise;
             }
@@ -81,11 +87,12 @@ namespace ConsoleUI
             switch (add)
             {
                 case AddOptions.AddDrone:
-                    Console.WriteLine("Enter ID, model, maximum weight(Press enter after each one of them)");
+                    Console.WriteLine("Enter ID & model(Press enter after each one of them)");
                     Drone d = new();
                     int.TryParse(Console.ReadLine(),out ans);
                     d.Id = ans;
                     d.Model = Console.ReadLine();
+                    Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
                     d.MaxWeight = (WeightCategories)ans;
                     d.Status = DroneStatuses.Available;
@@ -120,7 +127,7 @@ namespace ConsoleUI
                     DalObject.DalObject.AddCustomer(c);
                     break;
                 case AddOptions.AddParcel:
-                    Console.WriteLine("Enter ID, senderId, targetId, weight and priority of your parcel(Press enter after each one of them)");
+                    Console.WriteLine("Enter ID, senderId and targetId (Press enter after each one of them)");
                     Parcel p = new Parcel();
                     int.TryParse(Console.ReadLine(),out ans);
                     p.Id = ans;
@@ -128,8 +135,10 @@ namespace ConsoleUI
                     p.SenderId = ans;
                     int.TryParse(Console.ReadLine(), out ans);
                     p.TargetId = ans;
+                    Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Weight = (WeightCategories)ans;
+                    Console.WriteLine("Choose priority: 0 for Regular, 1 for Fast, 2 for Emergency ");
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Priority = (Priorities)ans;
                     p.DroneId = 0;
