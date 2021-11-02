@@ -10,15 +10,15 @@ namespace DalObject
 {
     class DataSource
     {
-        internal class Config
+        internal class Config//using as Id for parcels
         {
             internal static int CodeOfParcel = 0;
         }
 
-        internal static List<Drone>drones = new List<Drone>();
-        internal static List<Station>stations = new List<Station>();
-        internal static List<Customer>customers = new List<Customer>();
-        internal static List<Parcel> parcels = new List<Parcel>();
+        internal static List<Drone>drones = new List<Drone>();//creat list of drones
+        internal static List<Station>stations = new List<Station>();//creat list of stations
+        internal static List<Customer>customers = new List<Customer>();//creat list of customers
+        internal static List<Parcel> parcels = new List<Parcel>();//creat list of parcels
 
         static Random rand = new Random(DateTime.Now.Millisecond);
         //current time
@@ -88,7 +88,7 @@ namespace DalObject
                     Priority = (Priorities)rand.Next(3),
                     Requested = DateTime.Now,
                     DroneId = 0
-                    /*maybe there are missing fields*/
+                   
                 });
                 
             }

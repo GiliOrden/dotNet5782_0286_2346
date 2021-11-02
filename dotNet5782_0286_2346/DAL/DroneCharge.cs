@@ -10,9 +10,9 @@ namespace IDAL
     {
         class DroneCharge
         {
-            public int DroneId { get; set; }
-            public int StationId { get; set; }
-            public override string ToString()
+            public int DroneId { get; set; }//property
+            public int StationId { get; set; }//property
+            public override string ToString()//Print all the fields (Override the Object's 'ToString()')
             {
                 return @$"DroneCharge
                           Droneld:  {DroneId}

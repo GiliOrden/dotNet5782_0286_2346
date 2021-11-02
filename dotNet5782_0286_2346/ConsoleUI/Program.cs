@@ -169,7 +169,6 @@ namespace ConsoleUI
             switch (choise)
             {
                 case DisplayListsOptions.BaseStationList:
-                    Console.WriteLine("Stations: Id:           Name:                      ChargeSlots:   Longitude:               Latitude:");
                     DalObject.DalObject.ListOfBaseStations();
                     break;
                 case DisplayListsOptions.DroneList:
@@ -210,7 +209,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
-                    DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name);
+                    Console.WriteLine(DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name).Distunce(longitude, latitude));
                     break;
                 case FindDistances.StationDistance:
                     Console.WriteLine("Enter the location (longitude & latitude) ");
@@ -220,7 +219,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DistanceFromStation(longitude, latitude, id);
+                    Console.WriteLine(DalObject.DalObject.DistanceFromStation(longitude, latitude, id).Distunce(longitude, latitude));
                     break;
                 default:
                     break;

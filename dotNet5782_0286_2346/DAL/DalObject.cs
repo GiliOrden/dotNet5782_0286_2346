@@ -151,7 +151,7 @@ namespace DalObject
             {
                 if (baseStaion.Id == id)
                 {
-                    baseStaion.ToString();
+                    Console.WriteLine(baseStaion.ToString());
                     break;
                 }
             }
@@ -162,7 +162,7 @@ namespace DalObject
             {
                 if(drone.Id==id)
                 {
-                    drone.ToString();
+                    Console.WriteLine(drone.ToString());
                     break;
                 }
             }
@@ -173,7 +173,7 @@ namespace DalObject
             {
                 if(customer.Id==id)
                 {
-                    customer.ToString();
+                    Console.WriteLine(customer.ToString());
                     break;
                 }
             }
@@ -184,7 +184,7 @@ namespace DalObject
             {
                 if(parcel.Id==id)
                 {
-                    parcel.ToString();
+                    Console.WriteLine(parcel.ToString());
                     break;
                 }
             }
@@ -194,11 +194,7 @@ namespace DalObject
         {
            
             foreach (Station allStaions in stations)
-            {
-
-                allStaions.Print2();
-            }
-               
+                Console.WriteLine(allStaions.ToString());
         }
 
         public static void ListOfDrones()
@@ -237,33 +233,34 @@ namespace DalObject
             }
         }
 
-        public static void DistanceFromCustomer(int longitude, int latitude, string name)
+        public static Customer DistanceFromCustomer(int longitude, int latitude, string name)
         {
+            Customer c = new Customer();
             foreach (Customer customer in customers)
             {
                 if (customer.Name==name)
                 {
-                    customer.Distunce(longitude, latitude);
-                    break;
+                    return customer;
+                    
                 }
 
             }
-            
-
-
+            return c;
         }
 
-        public static void DistanceFromStation(int longitude, int latitude, int id)
+        public static Station DistanceFromStation(int longitude, int latitude, int id)
         {
+            Station s = new Station();
             foreach (Station station in stations)
             {
             
                 if (station.Id==id)
                 {
-                    station.Distunce(longitude, latitude);
-                    break;
+                    return station;
+                    
                 }
             }
+            return s;
         }
 
 
