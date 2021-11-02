@@ -12,27 +12,28 @@ namespace DalObject
     {
         public DalObject()//ctor
         {
+            Console.WriteLine(" be here");
             DataSource.Initialize();//actually produce the data base 
         }
 
-        public void AddStation(Station s)
+        public static void AddStation(Station s)
         {
             stations.Add(s);
         }
 
-        public void AddCustomer(Customer c)
+        public static void AddCustomer(Customer c)
         {
             customers.Add(c);
         }
-        public  void AddDrone(Drone d)
+        public static void AddDrone(Drone d)
         {
             drones.Add(d);
         }
-        public void AddParcel(Parcel p)
+        public static void AddParcel(Parcel p)
         {
             parcels.Add(p);
         }
-        public  void AssignParcelToDrone(int parcelId, int droneId)
+        public static void AssignParcelToDrone(int parcelId, int droneId)
         { 
             foreach (Drone drone in drones)
             {
@@ -57,7 +58,7 @@ namespace DalObject
                 }
             }
         }  
-        public  void CollectParcelByDrone(int id)
+        public static void CollectParcelByDrone(int id)
         {
             Parcel p;
             foreach (Parcel parcel in parcels)
@@ -73,7 +74,7 @@ namespace DalObject
             }
             //i think we should do something to the baterry but i dont no where
         }
-        public void SupplyDeliveryToCustomer(int id)
+        public static void SupplyDeliveryToCustomer(int id)
         {
             Parcel p;
             foreach(Parcel parcel in parcels)
@@ -98,7 +99,7 @@ namespace DalObject
                 }
             }
         }
-        public void SendDroneToCharge(int id ,int id2)
+        public static void SendDroneToCharge(int id ,int id2)
         {
             Drone d;
             Station s;
@@ -128,7 +129,7 @@ namespace DalObject
                 }
             }
         }
-        public void ReleaseDroneFromCharge(int id)
+        public static void ReleaseDroneFromCharge(int id)
         {
             Drone d;
             foreach(Drone drone in drones)
@@ -144,7 +145,7 @@ namespace DalObject
                 }
             }
         }
-        public void DisplayBaseStation(int id)
+        public static void DisplayBaseStation(int id)
         {
             foreach (Station baseStaion in stations)
             {
@@ -155,7 +156,7 @@ namespace DalObject
                 }
             }
         }
-        public void DisplayDrone(int id)
+        public static void DisplayDrone(int id)
         {
             foreach(Drone drone in drones)
             {
@@ -166,7 +167,7 @@ namespace DalObject
                 }
             }
         }
-        public void DisplayCustomer(int id)
+        public static void DisplayCustomer(int id)
         {
             foreach(Customer customer in  customers)
             {
@@ -177,7 +178,7 @@ namespace DalObject
                 }
             }
         }
-        public void DisplayParcel(int id)
+        public static void DisplayParcel(int id)
         {
             foreach(Parcel parcel in parcels)
             {
@@ -189,31 +190,36 @@ namespace DalObject
             }
         }
 
-        public void ListOfBaseStations()
+        public static void ListOfBaseStations()
         {
+           
             foreach (Station allStaions in stations)
-                allStaions.ToString();
+            {
+               
+                allStaions.Print2();
+            }
+               
         }
 
-        public void ListOfDrones()
+        public static void ListOfDrones()
         {
             foreach (Drone allDrones in drones)
                 allDrones.ToString();
         }
 
-        public void ListOfCustomers()
+        public static void ListOfCustomers()
         {
             foreach (Customer customer in customers)
                 customer.ToString();
         }
 
-        public void ListOfParcels()
+        public static void ListOfParcels()
         {
             foreach (Parcel allParcel in parcels)
                 allParcel.ToString();
         }
 
-        public void ListOfNotAssociatedParsels()
+        public static void ListOfNotAssociatedParsels()
         {
             foreach (Parcel parcel in parcels)
             {
@@ -222,7 +228,7 @@ namespace DalObject
             }
         }
 
-        public void ListOfAvailableChargingStations()
+        public static void ListOfAvailableChargingStations()
         {
             foreach (Station baseStaion in stations)
             {
@@ -231,7 +237,7 @@ namespace DalObject
             }
         }
 
-        public void DistanceFromCustomer(int longitude, int latitude, string name)
+        public static void DistanceFromCustomer(int longitude, int latitude, string name)
         {
             foreach (Customer customer in customers)
             {
@@ -244,10 +250,11 @@ namespace DalObject
             
         }
 
-        public void DistanceFromStation(int longitude, int latitude, int id)
+        public static void DistanceFromStation(int longitude, int latitude, int id)
         {
             foreach (Station station in stations)
             {
+            
                 if (station.Id==id)
                 {
                     station.Distunce(longitude, latitude);

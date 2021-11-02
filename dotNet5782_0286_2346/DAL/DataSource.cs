@@ -24,20 +24,23 @@ namespace DalObject
         //current time
         private static void createDrones(int num)
         {
+            
             for (int i = 0; i < num; i++)
             {
                 drones.Add(new Drone()
                 {
+
                     Id = rand.Next(100, 200),
                     MaxWeight = (WeightCategories)rand.Next(3),
                     Status = (DroneStatuses)rand.Next(3),
                     Battery = rand.NextDouble() * 100,
                     Model = string.Format("Drony{0}", i)
-                }); 
+                });
+                
             }
         }
 
-        private static void createStations(int num)
+        private static void CreateStations(int num)
         {
 
             string[] addresses = new string[] { "DegelReuven7Haifa", "Hatikva6Jerusalem", "Jabotinsky174PetachTikwa", "Yaalom18BeerSheva" };
@@ -47,33 +50,36 @@ namespace DalObject
                 {
                     Id = rand.Next(1, 100),
                     Name =addresses[i],
-                    ChargeSlots = rand.Next(2,5),//need checking!!, supposed to be randomal?
+                    ChargeSlots = rand.Next(2,5),
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
                  });
+                
             }
         }
 
         private static void createCustomers(int num)
         {
+            
             string[] names = new string[] { "Brurya", "Ron", "Shmulik", "Tzuki", "Mahmud","Dorit", "Greg", "CafeNeheman", "BurgersBar", "Avrum", "Shoshana", "Gili"," Rivki" };
             for (int i = 0; i < num; i++)
             {
-                customers[i] = new Customer()
+                customers.Add ( new Customer()
                 {
                     Id = rand.Next(100000000, 999999999),
                     Name=names[i],
                     Phone = string.Format($"0{ 0 }",rand.Next(510000000, 589999999)),
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
-                };
+                });
+               
             }
         }
         private static void createParcels(int num)
         {
             for(int i=0;i<num;i++)
             {
-                parcels[i] = new Parcel()
+                parcels.Add(new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
                     SenderId = rand.Next(100000000, 999999999),//someone tells me it sould look like that
@@ -83,15 +89,18 @@ namespace DalObject
                     Requested = DateTime.Now,
                     DroneId = 0
                     /*maybe there are missing fields*/
-                };
+                });
+                
             }
         }
         public static void Initialize()
         {
+            
             createDrones(rand.Next(5, 8));
-            createStations(rand.Next(2,4));
+            CreateStations(rand.Next(2,4));
             createCustomers(rand.Next(10, 14));
             createParcels(rand.Next(10, 100));
+            
         }
        
     }
