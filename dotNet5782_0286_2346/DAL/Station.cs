@@ -28,9 +28,14 @@ namespace IDAL
             public string Distunce(int longitude2, int latitude2)
             {
                 return @$"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}";
-
             }
 
+            public void Print2()
+            {
+                Console.WriteLine($"          {Id,-14}{Name,-27}{ChargeSlots,-15}{Longitude,-25}{Latitude,-25}");
+
+
+            }
         }
     }
 }
