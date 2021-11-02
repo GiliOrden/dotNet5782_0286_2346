@@ -145,49 +145,53 @@ namespace DalObject
                 }
             }
         }
-        public static void DisplayBaseStation(int id)
+        public static Station DisplayBaseStation(int id)
         {
+            Station s = new Station();
             foreach (Station baseStaion in stations)
             {
                 if (baseStaion.Id == id)
                 {
-                    Console.WriteLine(baseStaion.ToString());
-                    break;
+                    return baseStaion;
                 }
             }
+            return s;
         }
-        public static void DisplayDrone(int id)
+        public static Drone DisplayDrone(int id)
         {
+            Drone d = new Drone();
             foreach(Drone drone in drones)
             {
                 if(drone.Id==id)
                 {
-                    Console.WriteLine(drone.ToString());
-                    break;
+                    return drone;
                 }
             }
+            return d;
         }
-        public static void DisplayCustomer(int id)
+        public static Customer DisplayCustomer(int id)
         {
+            Customer c = new Customer();
             foreach(Customer customer in  customers)
             {
                 if(customer.Id==id)
                 {
-                    Console.WriteLine(customer.ToString());
-                    break;
+                    return customer;
                 }
             }
+            return c;
         }
-        public static void DisplayParcel(int id)
+        public static Parcel DisplayParcel(int id)
         {
-            foreach(Parcel parcel in parcels)
+            Parcel p = new Parcel();
+            foreach (Parcel parcel in parcels)
             {
                 if(parcel.Id==id)
                 {
-                    Console.WriteLine(parcel.ToString());
-                    break;
+                    return parcel;
                 }
             }
+            return p;
         }
 
         public static void ListOfBaseStations()

@@ -139,22 +139,22 @@ namespace ConsoleUI
                 case DisplayOptions.BaseStationDisplay:
                     Console.WriteLine("Please enter the staion ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayBaseStation(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayBaseStation(id)); 
                     break;
                 case DisplayOptions.DroneDisplay:
                     Console.WriteLine("Please enter the Drone ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayDrone(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayDrone(id));
                     break;
                 case DisplayOptions.CustomerDisplay:
                     Console.WriteLine("Please enter the customer ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayCustomer(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayCustomer(id));
                     break;
                 case DisplayOptions.ParcelDisplay:
                     Console.WriteLine("Please enter the parcel ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayParcel(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayParcel(id));
                     break;
                 default:
                     break;
