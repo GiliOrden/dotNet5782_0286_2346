@@ -257,6 +257,7 @@ namespace DalObject
         /// <returns>list of stations </returns>
         public static List<Station> ListOfBaseStations()
         {
+            List<Station> s = stations;
            return stations;
         }
         /// <summary>
@@ -265,7 +266,8 @@ namespace DalObject
         /// <returns></returns>
         public static List<Drone> ListOfDrones()
         {
-            return drones;
+            List<Drone> d = drones;
+            return d;
         }
         /// <summary>
         ///  this function returns list of customers
@@ -273,7 +275,8 @@ namespace DalObject
         /// <returns></returns>
         public static List<Customer> ListOfCustomers()
         {
-            return customers;
+            List<Customer> c = customers;
+            return c;
         }
         /// <summary>
         /// this function returns list of parcels
@@ -281,7 +284,8 @@ namespace DalObject
         /// <returns></returns>
         public static List<Parcel> ListOfParcels()
         {
-            return parcels;
+            List<Parcel> p = parcels;
+            return p;
         }
         /// <summary>
         /// this function returns list of all the parsels which aren't associated to drones
