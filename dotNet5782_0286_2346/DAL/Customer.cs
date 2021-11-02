@@ -17,12 +17,19 @@ namespace IDAL
             public double Latitude { get; set; }
             public override string ToString()
             {
+                string longitude, latitude;
+                double absValOfDegree = Math.Abs(Longitude);
+                double minute = (absValOfDegree - (int)absValOfDegree) * 60;
+                longitude = string.Format("{0}°{1}\' {2}\"{3}",(int)Longitude, (int)(minute),Math.Round((minute-(int)minute)*60) ,Longitude < 0 ? "S" : "N");
+                absValOfDegree = Math.Abs(Latitude);
+                minute= (absValOfDegree - (int)absValOfDegree) * 60;
+                latitude= string.Format("{0}°{1}\' {2}\"{3}", (int)Latitude, (int)(minute), Math.Round((minute - (int)minute) * 60), Latitude < 0 ? "W" : "E");
                 return @$"Customer
                           Id:       {Id}
                           Name:     {Name} 
                           Phone:    {Phone}
-                          Longitude:{Longitude}
-                          Latitude: {Latitude}";
+                          Longitude:{longitude}
+                          Latitude: {latitude}";
 
             }
             public void Distunce(int longitude2, int latitude2)

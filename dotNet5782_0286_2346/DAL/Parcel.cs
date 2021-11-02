@@ -23,6 +23,7 @@ namespace IDAL
             public DateTime Delivered { get; set; }
             public override string ToString()
             {
+                
                 return @$"Parcel
                           Id:        {Id,-15}
                           SenderId:  {SenderId,-15} 

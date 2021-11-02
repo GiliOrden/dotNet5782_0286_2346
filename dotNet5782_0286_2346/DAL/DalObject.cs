@@ -145,16 +145,20 @@ namespace DalObject
                 }
             }
         }
-        public static void DisplayBaseStation(int id)
+        public static Station DisplayBaseStation(int id)
         {
+            Station s=new Station();
             foreach (Station baseStaion in stations)
             {
                 if (baseStaion.Id == id)
                 {
-                    baseStaion.ToString();
-                    break;
+                    return baseStaion;
+                   /* baseStaion.ToString();
+                    break;*/
                 }
             }
+            return s;
+
         }
         public static void DisplayDrone(int id)
         {
@@ -201,10 +205,11 @@ namespace DalObject
                
         }
 
-        public static void ListOfDrones()
+        public static List<Drone> ListOfDrones()
         {
-            foreach (Drone allDrones in drones)
-                Console.WriteLine(allDrones.ToString());
+            /* foreach (Drone allDrones in drones)
+                 Console.WriteLine(allDrones.ToString());*/
+            return drones;
         }
 
         public static void ListOfCustomers()

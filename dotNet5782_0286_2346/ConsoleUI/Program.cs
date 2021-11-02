@@ -139,11 +139,13 @@ namespace ConsoleUI
                 case DisplayOptions.BaseStationDisplay:
                     Console.WriteLine("Please enter the staion ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayBaseStation(id);
+                    Station s = DalObject.DalObject.DisplayBaseStation(id);
+                    s.ToString();
                     break;
                 case DisplayOptions.DroneDisplay:
                     Console.WriteLine("Please enter the Drone ID");
                     int.TryParse(Console.ReadLine(), out id);
+                    
                     DalObject.DalObject.DisplayDrone(id);
                     break;
                 case DisplayOptions.CustomerDisplay:
@@ -173,7 +175,11 @@ namespace ConsoleUI
                     DalObject.DalObject.ListOfBaseStations();
                     break;
                 case DisplayListsOptions.DroneList:
-                    DalObject.DalObject.ListOfDrones();
+                    List<Drone> dor =DalObject.DalObject.ListOfDrones();
+                    foreach(Drone drone in dor)
+                    {
+
+                    }
                     break;
                 case DisplayListsOptions.CustomerList:
                     DalObject.DalObject.ListOfCustomers();
@@ -226,9 +232,10 @@ namespace ConsoleUI
                     break;
             }
         }
+       
 
             static void Main(string[] args)
-        {
+            { 
             DalObject.DalObject d1 = new DalObject.DalObject();
             MenuOptions mo;
             int userChoise;
