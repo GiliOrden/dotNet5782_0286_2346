@@ -22,6 +22,7 @@ namespace DalObject
         internal static List<Station>stations = new List<Station>();//creat list of stations
         internal static List<Customer>customers = new List<Customer>();//creat list of customers
         internal static List<Parcel> parcels = new List<Parcel>();//creat list of parcels
+        internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
         /// <summary>
         /// current time
         /// </summary>

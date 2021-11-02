@@ -153,6 +153,7 @@ namespace DalObject
                     drones.Remove(drone);
                     break;
                 }
+                droneCharges.Add(dc);
             }
             foreach(Station station in stations)
             {
@@ -184,6 +185,25 @@ namespace DalObject
                     drones.Remove(drone);
                     break;
                 }
+            }
+            foreach(DroneCharge charger in droneCharges)
+            {
+                Station s;
+                if(charger.DroneId==id)
+                {
+                    foreach(Station station in stations)
+                    {
+                        if(charger.StationId==station.Id)
+                        {
+                            s = station;
+                            s.ChargeSlots++;
+                            stations.Add(s);
+                            stations.Remove(station);
+                            break;
+                        }
+                    }
+                }
+                droneCharges.Remove(charger);
             }
         }
         /// <summary>
