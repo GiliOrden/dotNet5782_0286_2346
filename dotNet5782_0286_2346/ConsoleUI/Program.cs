@@ -116,6 +116,7 @@ namespace ConsoleUI
                     Console.WriteLine("Please enter the station ID from the list of stations");
                     d1.ListOfAvailableChargingStations();
                     int.TryParse(Console.ReadLine(), out id2);
+
                     d1.SendDroneToCharge(id1, id2);
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
