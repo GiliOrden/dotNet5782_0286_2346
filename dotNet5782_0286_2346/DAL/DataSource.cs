@@ -22,6 +22,7 @@ namespace DalObject
 
         static Random rand = new Random(DateTime.Now.Millisecond);
         //current time
+
         private static void createDrones(int num)
         {
             

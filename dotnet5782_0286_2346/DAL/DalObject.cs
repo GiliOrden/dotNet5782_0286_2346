@@ -198,22 +198,26 @@ namespace DalObject
 
         public static List<Station> ListOfBaseStations()
         {
+            List<Station> s = stations;
            return stations;
         }
 
         public static List<Drone> ListOfDrones()
         {
-            return drones;
+            List<Drone> d = drones;
+            return d;
         }
 
         public static List<Customer> ListOfCustomers()
         {
-            return customers;
+            List<Customer> c = customers;
+            return c;
         }
 
         public static List<Parcel> ListOfParcels()
         {
-            return parcels;
+            List<Parcel> p = parcels;
+            return p;
         }
 
         public static List<Parcel> ListOfNotAssociatedParsels()
@@ -272,24 +276,3 @@ namespace DalObject
 
     }
 }
-/*DmsLocation Convert(double decimalLongitue ,double decimalLotitude)
-{
-
-    return new DmsLocation
-        {
-            Latitude = new DmsPoint
-                {
-                    Degrees = ExtractDegrees(decimalLocation.Latitude),
-                    Minutes = ExtractMinutes(decimalLocation.Latitude),
-                    Seconds = ExtractSeconds(decimalLocation.Latitude),
-                    Type = PointType.Lat
-                },
-            Longitude = new DmsPoint
-                {
-                    Degrees = ExtractDegrees(decimalLocation.Longitude),
-                    Minutes = ExtractMinutes(decimalLocation.Longitude),
-                    Seconds = ExtractSeconds(decimalLocation.Longitude),
-                    Type = PointType.Lon
-                }
-        };
-}*/
