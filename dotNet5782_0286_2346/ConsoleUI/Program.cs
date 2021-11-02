@@ -16,7 +16,10 @@ namespace ConsoleUI
         enum FindDistances { CustomerDistance=1, StationDistance }
 
         static DalObject.DalObject mydal;
-
+        /// <summary>
+        /// the main function -prints menu
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             mydal = new DalObject.DalObject();
@@ -61,6 +64,9 @@ namespace ConsoleUI
             }
             return;
         }
+        /// <summary>
+        /// the function adds items according to user request
+        /// </summary>
         public static void AddingOptions()
         {
             int ans;
@@ -135,7 +141,7 @@ namespace ConsoleUI
             }
         }
         /// <summary>
-        /// the function
+        /// the function updates items according to user request
         /// </summary>
         public static void UpdatingOptions()
         {
@@ -185,6 +191,9 @@ namespace ConsoleUI
                     break;
             }
         }
+        /// <summary>
+        /// the function display an object according to user request
+        /// </summary>
         public static void DisplayObject()
         {
             int ans;
@@ -222,7 +231,9 @@ namespace ConsoleUI
                     break;
             }
         }
-        
+        /// <summary>
+        /// the function show lists of items according to user request
+        /// </summary>
         public static void DisplayingListsOptions()
         {
             int ans;
@@ -265,7 +276,9 @@ namespace ConsoleUI
                     break;
             }
         }
-
+        /// <summary>
+        /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
+        /// </summary>
         public static void FindingDistance()
         {
             int ans,longitude,latitude,id;
