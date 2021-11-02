@@ -116,9 +116,9 @@ namespace ConsoleUI
                     p.Id = int.Parse(Console.ReadLine());
                     p.SenderId = int.Parse(Console.ReadLine());
                     p.TargetId = int.Parse(Console.ReadLine());
-                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+                    int.TryParse(Console.ReadLine(), out ans);
                     p.Weight = (WeightCategories)ans;
-                    Priorities.TryParse(Console.ReadLine(), out ans);
+                    int.TryParse(Console.ReadLine(), out ans);
                     p.Priority = (Priorities)ans;
                     p.DroneId = 0;
                     p.Requested = DateTime.Now;
@@ -262,7 +262,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
-                    Customer c = DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name);
+                    Customer c = DalObject.DalObject.DistanceFromCustomer(name);
                     Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
                     break;
                 case FindDistances.StationDistance:
@@ -273,7 +273,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    Station s=DalObject.DalObject.DistanceFromStation(longitude, latitude, id);
+                    Station s=DalObject.DalObject.DistanceFromStation(id);
                     Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
                     break;
                 default:

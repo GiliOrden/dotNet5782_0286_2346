@@ -10,7 +10,10 @@ namespace DalObject
 {
     class DataSource
     {
-        internal class Config//using as Id for parcels
+        /// <summary>
+        /// using as Id for parcels
+        /// </summary>
+        internal class Config
         {
             internal static int CodeOfParcel = 0;
         }
@@ -19,9 +22,14 @@ namespace DalObject
         internal static List<Station>stations = new List<Station>();//creat list of stations
         internal static List<Customer>customers = new List<Customer>();//creat list of customers
         internal static List<Parcel> parcels = new List<Parcel>();//creat list of parcels
-
+        /// <summary>
+        /// current time
+        /// </summary>
         static Random rand = new Random(DateTime.Now.Millisecond);
-        //current time
+        /// <summary>
+        /// creates randomal drones
+        /// </summary>
+        /// <param name="num">number of drones to add</param>
         private static void createDrones(int num)
         {
             
@@ -39,7 +47,10 @@ namespace DalObject
                 
             }
         }
-
+        /// <summary>
+        /// creates randomal stations
+        /// </summary>
+        /// <param name="num">number of stations to add</param>
         private static void CreateStations(int num)
         {
 
@@ -57,7 +68,10 @@ namespace DalObject
                 
             }
         }
-
+        /// <summary>
+        ///  creates randomal customers
+        /// </summary>
+        /// <param name="num">>number of customers to add</param>
         private static void createCustomers(int num)
         {
             
@@ -75,6 +89,10 @@ namespace DalObject
                
             }
         }
+        /// <summary>
+        /// creates randomal parcels
+        /// </summary>
+        /// <param name="num">number of parcels to add</param>
         private static void createParcels(int num)
         {
             for(int i=0;i<num;i++)
@@ -93,6 +111,10 @@ namespace DalObject
                 
             }
         }
+
+        /// <summary>
+        /// Initializing initial elements in lists
+        /// </summary>
         public static void Initialize()
         {
             
