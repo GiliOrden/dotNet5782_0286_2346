@@ -125,6 +125,7 @@ namespace DalObject
                             break;
                         }
                     }
+                    parcels.Add(p);
                     parcels.Remove(parcel);
                     break;
                 }
