@@ -41,6 +41,7 @@ namespace DalObject
         {
             drones.Add(d);
         }
+
         /// <summary>
         /// Adding customer element to the customers list
         /// </summary>
