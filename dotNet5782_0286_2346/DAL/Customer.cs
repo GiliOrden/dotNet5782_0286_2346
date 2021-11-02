@@ -10,12 +10,12 @@ namespace IDAL
     {
         public struct Customer
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Phone { get; set; }
-            public double Longitude { get; set; }
-            public double Latitude { get; set; }
-            public override string ToString()
+            public int Id { get; set; }//property
+            public string Name { get; set; }//property
+            public string Phone { get; set; }//property
+            public double Longitude { get; set; }//property
+            public double Latitude { get; set; }//property
+            public override string ToString()//Print all the fields (Override the Object's 'ToString()')
             {
                 string longitude, latitude;
                 double absValOfDegree = Math.Abs(Longitude);
@@ -32,9 +32,9 @@ namespace IDAL
                           Latitude: {latitude}";
 
             }
-            public void Distunce(int longitude2, int latitude2)
+            public string Distunce(int longitude2, int latitude2)//Print the distunce between the customer and other location
             {
-                Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}");
+                return $"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}";
 
             }
            

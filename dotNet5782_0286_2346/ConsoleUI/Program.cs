@@ -29,9 +29,10 @@ namespace ConsoleUI
                     Drone d = new();
                     d.Id = int.Parse(Console.ReadLine());
                     d.Model = Console.ReadLine();
-                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+
+                    int.TryParse(Console.ReadLine(), out ans);
                     d.MaxWeight = (WeightCategories)ans;
-                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+                    int.TryParse(Console.ReadLine(), out ans);
                     d.Status = (DroneStatuses)ans;
                     d.Battery = 100;
                     DalObject.DalObject.AddDrone(d);
@@ -139,24 +140,22 @@ namespace ConsoleUI
                 case DisplayOptions.BaseStationDisplay:
                     Console.WriteLine("Please enter the staion ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    Station s = DalObject.DalObject.DisplayBaseStation(id);
-                    s.ToString();
+                    Console.WriteLine(DalObject.DalObject.DisplayBaseStation(id)); 
                     break;
                 case DisplayOptions.DroneDisplay:
                     Console.WriteLine("Please enter the Drone ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    
-                    DalObject.DalObject.DisplayDrone(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayDrone(id));
                     break;
                 case DisplayOptions.CustomerDisplay:
                     Console.WriteLine("Please enter the customer ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayCustomer(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayCustomer(id));
                     break;
                 case DisplayOptions.ParcelDisplay:
                     Console.WriteLine("Please enter the parcel ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DisplayParcel(id);
+                    Console.WriteLine(DalObject.DalObject.DisplayParcel(id));
                     break;
                 default:
                     break;
@@ -171,27 +170,28 @@ namespace ConsoleUI
             switch (choise)
             {
                 case DisplayListsOptions.BaseStationList:
-                    Console.WriteLine("Stations: Id:           Name:                      ChargeSlots:   Longitude:               Latitude:");
-                    DalObject.DalObject.ListOfBaseStations();
+                    foreach (Station allStaions in DalObject.DalObject.ListOfBaseStations())
+                        Console.WriteLine(allStaions.ToString());
                     break;
                 case DisplayListsOptions.DroneList:
-                    List<Drone> dor =DalObject.DalObject.ListOfDrones();
-                    foreach(Drone drone in dor)
-                    {
-
-                    }
-                    break;
+                    foreach (Drone allDrones in DalObject.DalObject.ListOfDrones())
+                        Console.WriteLine(allDrones.ToString());
+                     break;
                 case DisplayListsOptions.CustomerList:
-                    DalObject.DalObject.ListOfCustomers();
-                    break;
+                    foreach (Customer customer in DalObject.DalObject.ListOfCustomers())
+                        Console.WriteLine(customer.ToString());
+                     break;
                 case DisplayListsOptions.ParcelList:
-                    DalObject.DalObject.ListOfParcels();
+                    foreach (Parcel allParcel in DalObject.DalObject.ListOfParcels())
+                        Console.WriteLine(allParcel.ToString());
                     break;
                 case DisplayListsOptions.ParselsNotAssociatedWithDrones:
-                    DalObject.DalObject.ListOfNotAssociatedParsels();
-                    break;
+                    foreach (Parcel parcel in DalObject.DalObject.ListOfNotAssociatedParsels())
+                        Console.WriteLine(parcel.ToString());
+                     break;
                 case DisplayListsOptions.StationsWithAvailableChargings:
-                    DalObject.DalObject.ListOfAvailableChargingStations();
+                    foreach (Station station in DalObject.DalObject.ListOfAvailableChargingStations())
+                        Console.WriteLine(station.ToString());
                     break;
                 default:
                     Console.WriteLine("Wrong number");
@@ -216,7 +216,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
-                    DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name);
+                    Console.WriteLine(DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name).Distunce(longitude, latitude));
                     break;
                 case FindDistances.StationDistance:
                     Console.WriteLine("Enter the location (longitude & latitude) ");
@@ -226,7 +226,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    DalObject.DalObject.DistanceFromStation(longitude, latitude, id);
+                    Console.WriteLine(DalObject.DalObject.DistanceFromStation(longitude, latitude, id).Distunce(longitude, latitude));
                     break;
                 default:
                     break;

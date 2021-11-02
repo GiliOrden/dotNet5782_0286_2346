@@ -12,7 +12,6 @@ namespace DalObject
     {
         public DalObject()//ctor
         {
-            
             DataSource.Initialize();//actually produce the data base 
         }
 
@@ -147,128 +146,123 @@ namespace DalObject
         }
         public static Station DisplayBaseStation(int id)
         {
-            Station s=new Station();
+            Station s = new Station();
             foreach (Station baseStaion in stations)
             {
                 if (baseStaion.Id == id)
                 {
                     return baseStaion;
-                   /* baseStaion.ToString();
-                    break;*/
                 }
             }
             return s;
-
         }
-        public static void DisplayDrone(int id)
+        public static Drone DisplayDrone(int id)
         {
+            Drone d = new Drone();
             foreach(Drone drone in drones)
             {
                 if(drone.Id==id)
                 {
-                    drone.ToString();
-                    break;
+                    return drone;
                 }
             }
+            return d;
         }
-        public static void DisplayCustomer(int id)
+        public static Customer DisplayCustomer(int id)
         {
+            Customer c = new Customer();
             foreach(Customer customer in  customers)
             {
                 if(customer.Id==id)
                 {
-                    customer.ToString();
-                    break;
+                    return customer;
                 }
             }
+            return c;
         }
-        public static void DisplayParcel(int id)
+        public static Parcel DisplayParcel(int id)
         {
-            foreach(Parcel parcel in parcels)
+            Parcel p = new Parcel();
+            foreach (Parcel parcel in parcels)
             {
                 if(parcel.Id==id)
                 {
-                    parcel.ToString();
-                    break;
+                    return parcel;
                 }
             }
+            return p;
         }
 
-        public static void ListOfBaseStations()
+        public static List<Station> ListOfBaseStations()
         {
-           
-            foreach (Station allStaions in stations)
-            {
-
-                allStaions.Print2();
-            }
-               
+           return stations;
         }
 
         public static List<Drone> ListOfDrones()
         {
-            /* foreach (Drone allDrones in drones)
-                 Console.WriteLine(allDrones.ToString());*/
             return drones;
         }
 
-        public static void ListOfCustomers()
+        public static List<Customer> ListOfCustomers()
         {
-            foreach (Customer customer in customers)
-                Console.WriteLine(customer.ToString());
+            return customers;
         }
 
-        public static void ListOfParcels()
+        public static List<Parcel> ListOfParcels()
         {
-            foreach (Parcel allParcel in parcels)
-                Console.WriteLine(allParcel.ToString());
+            return parcels;
         }
 
-        public static void ListOfNotAssociatedParsels()
+        public static List<Parcel> ListOfNotAssociatedParsels()
         {
+            List<Parcel> p = new List<Parcel>();
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.DroneId == 0)
-                    Console.WriteLine(parcel.ToString());
+                    p.Add(parcel);
             }
+            return p;
         }
 
-        public static void ListOfAvailableChargingStations()
+        public static List<Station> ListOfAvailableChargingStations()
         {
+            List<Station> s = new List<Station>();
             foreach (Station baseStaion in stations)
             {
-                if(baseStaion.ChargeSlots!=0)
-                    Console.WriteLine(baseStaion.ToString());       
+                if (baseStaion.ChargeSlots != 0)
+                    s.Add(baseStaion);       
             }
+            return s;
         }
 
-        public static void DistanceFromCustomer(int longitude, int latitude, string name)
+        public static Customer DistanceFromCustomer(int longitude, int latitude, string name)
         {
+            Customer c = new Customer();
             foreach (Customer customer in customers)
             {
                 if (customer.Name==name)
                 {
-                    customer.Distunce(longitude, latitude);
-                    break;
+                    return customer;
+                    
                 }
 
             }
-            
-
-
+            return c;
         }
 
-        public static void DistanceFromStation(int longitude, int latitude, int id)
+        public static Station DistanceFromStation(int longitude, int latitude, int id)
         {
+            Station s = new Station();
             foreach (Station station in stations)
             {
             
                 if (station.Id==id)
                 {
-                    station.Distunce(longitude, latitude);
-                    break;
+                    return station;
+                    
                 }
             }
+            return s;
         }
 
 
