@@ -11,30 +11,49 @@ namespace DalObject
     public class DalObject
     {
         /// <summary>
-        /// 
+        /// constructor, produce the data base
         /// </summary>
-        public DalObject()//ctor
+        public DalObject()
         {
-            DataSource.Initialize();//actually produce the data base 
+            DataSource.Initialize();
         }
-
+        /// <summary>
+        /// Adding station element to the stations list
+        /// </summary>
+        /// <param name="s">  element ,Station tipe, we adding the list</param>
         public static void AddStation(Station s)
         {
             stations.Add(s);
         }
-
+        /// <summary>
+        /// Adding customer element to the customers list
+        /// </summary>
+        /// <param name="c">element ,Customer tipe, we adding the list</param>
         public static void AddCustomer(Customer c)
         {
             customers.Add(c);
         }
+        /// <summary>
+        /// Adding drone element to the drones list
+        /// </summary>
+        /// <param name="d">element ,Drone tipe, we adding the list</param>
         public static void AddDrone(Drone d)
         {
             drones.Add(d);
         }
+        /// <summary>
+        /// Adding customer element to the customers list
+        /// </summary>
+        /// <param name="p">element ,Parcel tipe, we adding the list</param>
         public static void AddParcel(Parcel p)
         {
             parcels.Add(p);
         }
+        /// <summary>
+        /// updating of assign parcel to the drone which will deliver it
+        /// </summary>
+        /// <param name="parcelId">the id of parcel</param>
+        /// <param name="droneId">the id of drone</param>
         public static void AssignParcelToDrone(int parcelId, int droneId)
         { 
             foreach (Drone drone in drones)
@@ -47,7 +66,7 @@ namespace DalObject
                     break;
                 }
             }
-
+            
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == parcelId)
@@ -59,7 +78,11 @@ namespace DalObject
                     break;
                 }
             }
-        }  
+        }
+        /// <summary>
+        /// updating of collection parcel  by drone
+        /// </summary>
+        /// <param name="id">the id of parcel</param>
         public static void CollectParcelByDrone(int id)
         {
             Parcel p;
@@ -74,8 +97,12 @@ namespace DalObject
                     break;
                 }
             }
-            //i think we should do something to the baterry but i dont no where
+            
         }
+        /// <summary>
+        /// updating of supplying delivery to customer
+        /// </summary>
+        /// <param name="id">the id of parcel</param>
         public static void SupplyDeliveryToCustomer(int id)
         {
             Parcel p;
@@ -101,11 +128,16 @@ namespace DalObject
                 }
             }
         }
+        /// <summary>
+        /// updating of sending drone to staion for charging
+        /// </summary>
+        /// <param name="id">the drone id</param>
+        /// <param name="id2">the station id</param>
         public static void SendDroneToCharge(int id ,int id2)
         {
             Drone d;
             Station s;
-            DroneCharge dc = new DroneCharge();//question:is it should look like that?
+            DroneCharge dc = new DroneCharge();
             foreach(Drone drone in drones)
             {
                 if(drone.Id==id)
@@ -131,6 +163,10 @@ namespace DalObject
                 }
             }
         }
+        /// <summary>
+        /// updating of releasing drone from Charging station
+        /// </summary>
+        /// <param name="id">the drone id</param>
         public static void ReleaseDroneFromCharge(int id)
         {
             Drone d;
@@ -147,6 +183,11 @@ namespace DalObject
                 }
             }
         }
+        /// <summary>
+        /// this function returns a specific station from the list
+        /// </summary>
+        /// <param name="id">the station id</param>
+        /// <returns>Station element</returns>
         public static Station DisplayBaseStation(int id)
         {
             Station s = new Station();
@@ -159,6 +200,11 @@ namespace DalObject
             }
             return s;
         }
+        /// <summary>
+        ///  this function returns a specific drone from the list
+        /// </summary>
+        /// <param name="id">the drone id</param>
+        /// <returns>Drone element</returns>
         public static Drone DisplayDrone(int id)
         {
             Drone d = new Drone();
@@ -171,6 +217,11 @@ namespace DalObject
             }
             return d;
         }
+        /// <summary>
+        ///  this function returns a specific customer from the list
+        /// </summary>
+        /// <param name="id">the customer id</param>
+        /// <returns>Customer element</returns>
         public static Customer DisplayCustomer(int id)
         {
             Customer c = new Customer();
@@ -183,6 +234,11 @@ namespace DalObject
             }
             return c;
         }
+        /// <summary>
+        ///  this function returns a specific parcel from the list 
+        /// </summary>
+        /// <param name="id">the parcel id</param>
+        /// <returns>Parcel element</returns>
         public static Parcel DisplayParcel(int id)
         {
             Parcel p = new Parcel();
@@ -195,31 +251,46 @@ namespace DalObject
             }
             return p;
         }
-
+        /// <summary>
+        ///  this function returns list of stations 
+        /// </summary>
+        /// <returns>list of stations </returns>
         public static List<Station> ListOfBaseStations()
         {
             List<Station> s = stations;
            return stations;
         }
-
+        /// <summary>
+        /// this function returns list of drone
+        /// </summary>
+        /// <returns></returns>
         public static List<Drone> ListOfDrones()
         {
             List<Drone> d = drones;
             return d;
         }
-
+        /// <summary>
+        ///  this function returns list of customers
+        /// </summary>
+        /// <returns></returns>
         public static List<Customer> ListOfCustomers()
         {
             List<Customer> c = customers;
             return c;
         }
-
+        /// <summary>
+        /// this function returns list of parcels
+        /// </summary>
+        /// <returns></returns>
         public static List<Parcel> ListOfParcels()
         {
             List<Parcel> p = parcels;
             return p;
         }
-
+        /// <summary>
+        /// this function returns list of all the parsels which aren't associated to drones
+        /// </summary>
+        /// <returns></returns>
         public static List<Parcel> ListOfNotAssociatedParsels()
         {
             List<Parcel> p = new List<Parcel>();
@@ -230,7 +301,10 @@ namespace DalObject
             }
             return p;
         }
-
+        /// <summary>
+        /// this function returns list of all the available charging stations
+        /// </summary>
+        /// <returns></returns>
         public static List<Station> ListOfAvailableChargingStations()
         {
             List<Station> s = new List<Station>();
@@ -241,8 +315,12 @@ namespace DalObject
             }
             return s;
         }
-
-        public static Customer DistanceFromCustomer(int longitude, int latitude, string name)
+       /// <summary>
+       /// returns customer element which the name is his 
+       /// </summary>
+       /// <param name="name">name of customer</param>
+       /// <returns></returns>
+        public static Customer DistanceFromCustomer(string name)
         {
             Customer c = new Customer();
             foreach (Customer customer in customers)
@@ -256,8 +334,12 @@ namespace DalObject
             }
             return c;
         }
-
-        public static Station DistanceFromStation(int longitude, int latitude, int id)
+        /// <summary>
+        ///  returns station element whose the id is its 
+        /// </summary>
+        /// <param name="id">id of station</param>
+        /// <returns></returns>
+        public static Station DistanceFromStation(int id)
         {
             Station s = new Station();
             foreach (Station station in stations)

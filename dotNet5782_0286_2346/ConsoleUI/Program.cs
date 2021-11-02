@@ -298,9 +298,8 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
-                    Customer c = DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name);
-                    //calculates the distance between 2 coordinates and prints it
-                    Console.WriteLine($"The distance is:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
+                    Customer c = DalObject.DalObject.DistanceFromCustomer(name);
+                    Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
                     break;
                 case FindDistances.StationDistance:
                     Console.WriteLine("Enter the location (longitude & latitude) ");
@@ -310,9 +309,8 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    Station s=DalObject.DalObject.DistanceFromStation(longitude, latitude, id);
-                    //calculates the distance between 2 coordinates and prints it
-                    Console.WriteLine($"The distance is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
+                    Station s=DalObject.DalObject.DistanceFromStation(id);
+                    Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
                     break;
                 default:
                     break;
