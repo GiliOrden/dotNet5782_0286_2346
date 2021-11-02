@@ -32,11 +32,7 @@ namespace IDAL
                           Latitude: {latitude}";
 
             }
-            public string Distunce(int longitude2, int latitude2)//Print the distunce between the customer and other location
-            {
-                return $"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}";
-
-            }
+            
            
 
         }

@@ -91,11 +91,11 @@ namespace ConsoleUI
             UpdateOptions update;
             int userChoise;
             int id1,id2;
-            int.TryParse(Console.ReadLine(),out userChoise);//i change it because they wrote to use tryParse
+            int.TryParse(Console.ReadLine(),out userChoise);
             update = (UpdateOptions)userChoise;
             switch (update)
             {
-                case UpdateOptions.AssignParcelToDrone://question:Should it look like this?with 2 id that are sent as parameters?
+                case UpdateOptions.AssignParcelToDrone:
                     Console.WriteLine("Please enter the ID of the parcel and the ID of the drone");
                     int.TryParse(Console.ReadLine(), out id1);
                     int.TryParse(Console.ReadLine(), out id2);
@@ -216,7 +216,8 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
-                    Console.WriteLine(DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name).Distunce(longitude, latitude));
+                    Customer c = DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name);
+                    Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
                     break;
                 case FindDistances.StationDistance:
                     Console.WriteLine("Enter the location (longitude & latitude) ");
@@ -226,7 +227,8 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(DalObject.DalObject.DistanceFromStation(longitude, latitude, id).Distunce(longitude, latitude));
+                    Station s=DalObject.DalObject.DistanceFromStation(longitude, latitude, id);
+                    Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
                     break;
                 default:
                     break;
