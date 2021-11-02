@@ -160,7 +160,7 @@ namespace ConsoleUI
                     break;
             }
         }
-
+        
         public static void DisplayingListsOptions()
         {
             int ans;
@@ -198,7 +198,7 @@ namespace ConsoleUI
             int ans,longitude,latitude,id;
             string name;
             bool check;
-            FindDistances.TryParse(Console.ReadLine(), out ans);
+            int.TryParse(Console.ReadLine(), out ans);
             FindDistances choise = (FindDistances)ans;
             switch (choise)
             {

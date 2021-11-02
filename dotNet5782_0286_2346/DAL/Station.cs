@@ -18,16 +18,16 @@ namespace IDAL
             public override string ToString()
             {
                 return @$"Station
-                          Id:         {Id,15}
-                          Name:       {Name,30} 
-                          ChargeSlots:{ChargeSlots,15}
-                          Longitude:  {Longitude,15}
-                          Latitude:   {Latitude,15}";
+                          Id:         {Id,-15}
+                          Name:       {Name,-30} 
+                          ChargeSlots:{ChargeSlots,-15}
+                          Longitude:  {Longitude,-15}
+                          Latitude:   {Latitude,-15}";
 
             }
-            public string Distunce(int longitude2, int latitude2)
+            public void Distunce(int longitude2, int latitude2)
             {
-                return @$"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}";
+                Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(Longitude - longitude2, 2)) + (Math.Pow(Latitude - latitude2, 2))}");
             }
 
             public void Print2()
@@ -36,6 +36,7 @@ namespace IDAL
 
 
             }
+            
         }
     }
 }
