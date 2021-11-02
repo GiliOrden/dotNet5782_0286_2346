@@ -29,9 +29,10 @@ namespace ConsoleUI
                     Drone d = new();
                     d.Id = int.Parse(Console.ReadLine());
                     d.Model = Console.ReadLine();
-                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+
+                    int.TryParse(Console.ReadLine(), out ans);
                     d.MaxWeight = (WeightCategories)ans;
-                    WeightCategories.TryParse(Console.ReadLine(), out ans);
+                    int.TryParse(Console.ReadLine(), out ans);
                     d.Status = (DroneStatuses)ans;
                     d.Battery = 100;
                     DalObject.DalObject.AddDrone(d);
@@ -169,22 +170,28 @@ namespace ConsoleUI
             switch (choise)
             {
                 case DisplayListsOptions.BaseStationList:
-                    DalObject.DalObject.ListOfBaseStations();
+                    foreach (Station allStaions in DalObject.DalObject.ListOfBaseStations())
+                        Console.WriteLine(allStaions.ToString());
                     break;
                 case DisplayListsOptions.DroneList:
-                    DalObject.DalObject.ListOfDrones();
-                    break;
+                    foreach (Drone allDrones in DalObject.DalObject.ListOfDrones())
+                        Console.WriteLine(allDrones.ToString());
+                     break;
                 case DisplayListsOptions.CustomerList:
-                    DalObject.DalObject.ListOfCustomers();
-                    break;
+                    foreach (Customer customer in DalObject.DalObject.ListOfCustomers())
+                        Console.WriteLine(customer.ToString());
+                     break;
                 case DisplayListsOptions.ParcelList:
-                    DalObject.DalObject.ListOfParcels();
+                    foreach (Parcel allParcel in DalObject.DalObject.ListOfParcels())
+                        Console.WriteLine(allParcel.ToString());
                     break;
                 case DisplayListsOptions.ParselsNotAssociatedWithDrones:
-                    DalObject.DalObject.ListOfNotAssociatedParsels();
-                    break;
+                    foreach (Parcel parcel in DalObject.DalObject.ListOfNotAssociatedParsels())
+                        Console.WriteLine(parcel.ToString());
+                     break;
                 case DisplayListsOptions.StationsWithAvailableChargings:
-                    DalObject.DalObject.ListOfAvailableChargingStations();
+                    foreach (Station station in DalObject.DalObject.ListOfAvailableChargingStations())
+                        Console.WriteLine(station.ToString());
                     break;
                 default:
                     Console.WriteLine("Wrong number");

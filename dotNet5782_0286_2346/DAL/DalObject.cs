@@ -12,7 +12,6 @@ namespace DalObject
     {
         public DalObject()//ctor
         {
-            
             DataSource.Initialize();//actually produce the data base 
         }
 
@@ -194,47 +193,46 @@ namespace DalObject
             return p;
         }
 
-        public static void ListOfBaseStations()
+        public static List<Station> ListOfBaseStations()
         {
-           
-            foreach (Station allStaions in stations)
-                Console.WriteLine(allStaions.ToString());
+           return stations;
         }
 
-        public static void ListOfDrones()
+        public static List<Drone> ListOfDrones()
         {
-            foreach (Drone allDrones in drones)
-                Console.WriteLine(allDrones.ToString());
+            return drones;
         }
 
-        public static void ListOfCustomers()
+        public static List<Customer> ListOfCustomers()
         {
-            foreach (Customer customer in customers)
-                Console.WriteLine(customer.ToString());
+            return customers;
         }
 
-        public static void ListOfParcels()
+        public static List<Parcel> ListOfParcels()
         {
-            foreach (Parcel allParcel in parcels)
-                Console.WriteLine(allParcel.ToString());
+            return parcels;
         }
 
-        public static void ListOfNotAssociatedParsels()
+        public static List<Parcel> ListOfNotAssociatedParsels()
         {
+            List<Parcel> p = new List<Parcel>();
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.DroneId == 0)
-                    Console.WriteLine(parcel.ToString());
+                    p.Add(parcel);
             }
+            return p;
         }
 
-        public static void ListOfAvailableChargingStations()
+        public static List<Station> ListOfAvailableChargingStations()
         {
+            List<Station> s = new List<Station>();
             foreach (Station baseStaion in stations)
             {
-                if(baseStaion.ChargeSlots!=0)
-                    Console.WriteLine(baseStaion.ToString());       
+                if (baseStaion.ChargeSlots != 0)
+                    s.Add(baseStaion);       
             }
+            return s;
         }
 
         public static Customer DistanceFromCustomer(int longitude, int latitude, string name)
