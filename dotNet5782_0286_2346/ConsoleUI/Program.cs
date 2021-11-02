@@ -8,18 +8,68 @@ namespace ConsoleUI
 {
     class Program
     {
-        enum MenuOptions { Add, Update, Display, ShowList, FindDistance, Exit }
-        enum AddOptions { AddDrone, AddStation, AddCustomer,AddParcel, Exit }
-        enum UpdateOptions { AssignParcelToDrone, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge}
-        enum DisplayOptions { BaseStationDisplay,DroneDisplay,CustomerDisplay,ParcelDisplay}
-        enum DisplayListsOptions { BaseStationList, DroneList, CustomerList, ParcelList, ParselsNotAssociatedWithDrones, StationsWithAvailableChargings }
-        enum FindDistances { CustomerDistance, StationDistance }
+        enum MenuOptions { Exit, Add, Update, Display, ShowList, FindDistance }
+        enum AddOptions { AddDrone=1, AddStation, AddCustomer,AddParcel}
+        enum UpdateOptions { AssignParcelToDrone=1, CollectParcelByDrone, SupplyDeliveryToCustomer,SendDroneToCharge,ReleaseDroneFromCharge}
+        enum DisplayOptions { BaseStationDisplay=1,DroneDisplay,CustomerDisplay,ParcelDisplay}
+        enum DisplayListsOptions { BaseStationList=1, DroneList, CustomerList, ParcelList, ParselsNotAssociatedWithDrones, StationsWithAvailableChargings }
+        enum FindDistances { CustomerDistance=1, StationDistance }
 
-       
+        static DalObject.DalObject mydal;
+
+        static void Main(string[] args)
+        {
+            mydal = new DalObject.DalObject();
+            MenuOptions mo;
+            int userChoise;
+            Console.WriteLine("press 1 to add an item");
+            Console.WriteLine("press 2 to update an item");
+            Console.WriteLine("press 3 to display an item");
+            Console.WriteLine("press 4 to display a list of specific item");
+            Console.WriteLine("Press 5 to find a distance of base or customer from a coordinate");
+            Console.WriteLine("press 0 to exit");
+            int.TryParse(Console.ReadLine(), out userChoise);
+            mo = (MenuOptions)userChoise;
+            while (mo!=MenuOptions.Exit)
+            {
+                switch (mo)
+                {
+                    case MenuOptions.Add:
+                        AddingOptions();
+                        break;
+                    case MenuOptions.Update:
+                        UpdatingOptions();
+                        break;
+                    case MenuOptions.Display:
+                        DisplayObject();
+                        break;
+                    case MenuOptions.ShowList:
+                        DisplayingListsOptions();
+                        break;
+                    case MenuOptions.FindDistance:
+                        FindingDistance();
+                        break;
+                    case MenuOptions.Exit:
+
+                        break;
+                    default:
+                        Console.WriteLine("Wrong number");
+                        break;
+                }
+                int.TryParse(Console.ReadLine(), out userChoise);
+                mo = (MenuOptions)userChoise;
+            }
+            Console.WriteLine("End of service");
+            return;
+        }
         public static void AddingOptions()
         {
             int ans;
             AddOptions add;
+            Console.WriteLine("Press 1 to add drone");
+            Console.WriteLine("Press 2 to add station");
+            Console.WriteLine("Press 3 to add customer");
+            Console.WriteLine("Press 4 to add parcel");
             int.TryParse(Console.ReadLine( ),out ans);
             add = (AddOptions)ans;
             switch (add)
@@ -27,13 +77,12 @@ namespace ConsoleUI
                 case AddOptions.AddDrone:
                     Console.WriteLine("Enter ID, model, maximum weight(Press enter after each one of them)");
                     Drone d = new();
-                    d.Id = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(),out ans);
+                    d.Id = ans;
                     d.Model = Console.ReadLine();
-
                     int.TryParse(Console.ReadLine(), out ans);
                     d.MaxWeight = (WeightCategories)ans;
-                    int.TryParse(Console.ReadLine(), out ans);
-                    d.Status = (DroneStatuses)ans;
+                    d.Status = DroneStatuses.Available;
                     d.Battery = 100;
                     DalObject.DalObject.AddDrone(d);
                     break;
@@ -41,7 +90,6 @@ namespace ConsoleUI
                     Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude of the station (Press enter after each one of them)");
                     Station s = new Station()
                     {
-
                         Id = int.Parse(Console.ReadLine()),
                         Name = Console.ReadLine(),
                         ChargeSlots = int.Parse(Console.ReadLine()),
@@ -76,8 +124,6 @@ namespace ConsoleUI
                     p.Requested = DateTime.Now;
                     DalObject.DalObject.AddParcel(p);
                     break;
-                case AddOptions.Exit:
-                    return;
                 default:
                     break;
             }
@@ -235,44 +281,5 @@ namespace ConsoleUI
             }
         }
        
-
-            static void Main(string[] args)
-            { 
-            DalObject.DalObject d1 = new DalObject.DalObject();
-            MenuOptions mo;
-            int userChoise;
-            
-            int.TryParse(Console.ReadLine(), out userChoise);
-            while (userChoise!=5)
-            {
-                
-                mo = (MenuOptions)userChoise;
-                switch (mo)
-                {
-                    case MenuOptions.Add:
-                        AddingOptions();
-                        break;
-                    case MenuOptions.Update:
-                        UpdatingOptions();
-                        break;
-                    case MenuOptions.Display:
-                        DisplayObject();
-                        break;
-                    case MenuOptions.ShowList:
-                        DisplayingListsOptions();
-                        break;
-                    case MenuOptions.FindDistance:
-                        FindingDistance();
-                        break;
-                    case MenuOptions.Exit:
-
-                        break;
-                    default:
-                        Console.WriteLine("Wrong number");
-                        break;
-                }
-                int.TryParse(Console.ReadLine(), out userChoise);
-            }
-        }
     }
 }
