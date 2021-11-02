@@ -50,7 +50,7 @@ namespace ConsoleUI
                         FindingDistance();
                         break;
                     case MenuOptions.Exit:
-
+                        Console.WriteLine("End of service");
                         break;
                     default:
                         Console.WriteLine("Wrong number");
@@ -59,12 +59,12 @@ namespace ConsoleUI
                 int.TryParse(Console.ReadLine(), out userChoise);
                 mo = (MenuOptions)userChoise;
             }
-            Console.WriteLine("End of service");
             return;
         }
         public static void AddingOptions()
         {
             int ans;
+            double ans2;
             AddOptions add;
             Console.WriteLine("Press 1 to add drone");
             Console.WriteLine("Press 2 to add station");
@@ -88,34 +88,40 @@ namespace ConsoleUI
                     break;
                 case AddOptions.AddStation:
                     Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude of the station (Press enter after each one of them)");
-                    Station s = new Station()
-                    {
-                        Id = int.Parse(Console.ReadLine()),
-                        Name = Console.ReadLine(),
-                        ChargeSlots = int.Parse(Console.ReadLine()),
-                        Longitude = double.Parse(Console.ReadLine()),
-                        Latitude = double.Parse(Console.ReadLine())
-                    };
+                    Station s = new Station();
+                    int.TryParse(Console.ReadLine(), out ans);
+                    s.Id = ans;
+                    s.Name = Console.ReadLine();
+                    int.TryParse(Console.ReadLine(), out ans);
+                    s.ChargeSlots = ans;
+                    double.TryParse(Console.ReadLine(), out ans2);
+                    s.Longitude = ans2;
+                    double.TryParse(Console.ReadLine(), out ans2);
+                    s.Latitude = ans2;
                     DalObject.DalObject.AddStation(s);
                     break;
                 case AddOptions.AddCustomer:
                     Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude of the customer (Press enter after each one of them)");
-                    Customer c=new Customer()
-                    {
-                        Id = int.Parse(Console.ReadLine()),
-                        Name = Console.ReadLine(),
-                        Phone = Console.ReadLine(),
-                        Longitude = double.Parse(Console.ReadLine()),
-                        Latitude = double.Parse(Console.ReadLine()),
-                    };
+                    Customer c = new Customer();
+                    int.TryParse(Console.ReadLine(), out ans);
+                    c.Id = ans;
+                    c.Name = Console.ReadLine();
+                    c.Phone = Console.ReadLine();
+                    double.TryParse(Console.ReadLine(), out ans2);
+                    c.Longitude = ans2;
+                    double.TryParse(Console.ReadLine(), out ans2);
+                    c.Latitude = ans2;
                     DalObject.DalObject.AddCustomer(c);
                     break;
                 case AddOptions.AddParcel:
                     Console.WriteLine("Enter ID, senderId, targetId, weight and priority of your parcel(Press enter after each one of them)");
                     Parcel p = new Parcel();
-                    p.Id = int.Parse(Console.ReadLine());
-                    p.SenderId = int.Parse(Console.ReadLine());
-                    p.TargetId = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(),out ans);
+                    p.Id = ans;
+                    int.TryParse(Console.ReadLine(), out ans);
+                    p.SenderId = ans;
+                    int.TryParse(Console.ReadLine(), out ans);
+                    p.TargetId = ans;
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Weight = (WeightCategories)ans;
                     int.TryParse(Console.ReadLine(), out ans);
@@ -133,15 +139,20 @@ namespace ConsoleUI
         /// </summary>
         public static void UpdatingOptions()
         {
-            
             UpdateOptions update;
             int userChoise;
             int id1,id2;
+            Console.WriteLine("Press 1 to assign drone to parcel");
+            Console.WriteLine("Press 2 to collect parcel by drone");
+            Console.WriteLine("Press 3 to supply delivery to customer");
+            Console.WriteLine("Press 4 to send drone to charge");
+            Console.WriteLine("Press 5 to release drone from charging");
             int.TryParse(Console.ReadLine(),out userChoise);
             update = (UpdateOptions)userChoise;
             switch (update)
             {
                 case UpdateOptions.AssignParcelToDrone:
+                    Console.WriteLine(DalObject.DalObject.ListOfDrones());
                     Console.WriteLine("Please enter the ID of the parcel and the ID of the drone");
                     int.TryParse(Console.ReadLine(), out id1);
                     int.TryParse(Console.ReadLine(), out id2);
@@ -179,6 +190,10 @@ namespace ConsoleUI
             int ans;
             DisplayOptions show;
             int id;
+            Console.WriteLine("press 1 to view details of a specific base station");
+            Console.WriteLine("press 2 to view details of a specific drone");
+            Console.WriteLine("press 3 to view details of a specific customer");
+            Console.WriteLine("press 4 to view details of a specific parcel");
             int.TryParse(Console.ReadLine(), out ans);
             show = (DisplayOptions)ans;
             switch (show)
@@ -211,6 +226,12 @@ namespace ConsoleUI
         public static void DisplayingListsOptions()
         {
             int ans;
+            Console.WriteLine("press 1 to view the list of base stations");
+            Console.WriteLine("press 2 to view the list of the drones");
+            Console.WriteLine("press 3 to view the list of the cutomers");
+            Console.WriteLine("press 4 to view the list of the parcels");
+            Console.WriteLine("press 5 to view the list of the parcels without drones");
+            Console.WriteLine("press 6 to view the list of the stations with available charge slots");
             int.TryParse(Console.ReadLine(), out ans);
             DisplayListsOptions choise = (DisplayListsOptions)ans;
             switch (choise)
@@ -250,6 +271,8 @@ namespace ConsoleUI
             int ans,longitude,latitude,id;
             string name;
             bool check;
+            Console.WriteLine("Press 1 to check a customer's distance from a coordinate");
+            Console.WriteLine("Press 2 to check a stationws distance from a coordinate");
             int.TryParse(Console.ReadLine(), out ans);
             FindDistances choise = (FindDistances)ans;
             switch (choise)
@@ -262,7 +285,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
-                    Customer c = DalObject.DalObject.DistanceFromCustomer(name);
+                    Customer c = DalObject.DalObject.DistanceFromCustomer(longitude, latitude, name);
                     Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
                     break;
                 case FindDistances.StationDistance:
@@ -273,7 +296,7 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    Station s=DalObject.DalObject.DistanceFromStation(id);
+                    Station s=DalObject.DalObject.DistanceFromStation(longitude, latitude, id);
                     Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
                     break;
                 default:
