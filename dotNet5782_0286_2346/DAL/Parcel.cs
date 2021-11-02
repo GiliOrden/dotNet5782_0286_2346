@@ -24,16 +24,16 @@ namespace IDAL
             public override string ToString()
             {
                 return @$"Parcel
-                          Id:        {Id,15}
-                          SenderId:  {SenderId,15} 
-                          TargetId:  {TargetId,15}
-                          Weight:    {Weight,15}
-                          Priority:  {Priority,15}
-                          DroneId:   {DroneId,15} 
-                          Requested: {Requested,15}
-                          Scheduled: {Scheduled,15}
-                          PickedUp:  {PickedUp,15}
-                          Delivered: {Delivered,15}";
+                          Id:        {Id,-15}
+                          SenderId:  {SenderId,-15} 
+                          TargetId:  {TargetId,-15}
+                          Weight:    {Weight,-15}
+                          Priority:  {Priority,-15}
+                          DroneId:   {DroneId,-15} 
+                          Requested: {Requested,-15}
+                          Scheduled: {Scheduled,-15}
+                          PickedUp:  {PickedUp,-15}
+                          Delivered: {Delivered,-15}";
 
             }
         }

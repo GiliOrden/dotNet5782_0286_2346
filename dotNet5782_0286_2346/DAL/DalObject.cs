@@ -12,7 +12,7 @@ namespace DalObject
     {
         public DalObject()//ctor
         {
-            Console.WriteLine(" be here");
+            
             DataSource.Initialize();//actually produce the data base 
         }
 
@@ -195,7 +195,7 @@ namespace DalObject
            
             foreach (Station allStaions in stations)
             {
-               
+
                 allStaions.Print2();
             }
                
@@ -204,19 +204,19 @@ namespace DalObject
         public static void ListOfDrones()
         {
             foreach (Drone allDrones in drones)
-                allDrones.ToString();
+                Console.WriteLine(allDrones.ToString());
         }
 
         public static void ListOfCustomers()
         {
             foreach (Customer customer in customers)
-                customer.ToString();
+                Console.WriteLine(customer.ToString());
         }
 
         public static void ListOfParcels()
         {
             foreach (Parcel allParcel in parcels)
-                allParcel.ToString();
+                Console.WriteLine(allParcel.ToString());
         }
 
         public static void ListOfNotAssociatedParsels()
@@ -224,7 +224,7 @@ namespace DalObject
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.DroneId == 0)
-                    parcel.ToString();
+                    Console.WriteLine(parcel.ToString());
             }
         }
 
@@ -233,7 +233,7 @@ namespace DalObject
             foreach (Station baseStaion in stations)
             {
                 if(baseStaion.ChargeSlots!=0)
-                     baseStaion.ToString();       
+                    Console.WriteLine(baseStaion.ToString());       
             }
         }
 
@@ -246,8 +246,11 @@ namespace DalObject
                     customer.Distunce(longitude, latitude);
                     break;
                 }
+
             }
             
+
+
         }
 
         public static void DistanceFromStation(int longitude, int latitude, int id)

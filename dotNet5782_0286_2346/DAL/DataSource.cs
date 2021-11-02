@@ -68,7 +68,7 @@ namespace DalObject
                 {
                     Id = rand.Next(100000000, 999999999),
                     Name=names[i],
-                    Phone = string.Format($"0{ 0 }",rand.Next(510000000, 589999999)),
+                    Phone = string.Format("0{0}",rand.Next(510000000, 589999999)),
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
                 });
