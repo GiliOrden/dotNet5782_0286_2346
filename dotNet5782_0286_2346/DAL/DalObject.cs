@@ -62,6 +62,7 @@ namespace DalObject
                 {
                     Drone d = drone;
                     d.Status = DroneStatuses.Delivery;
+                    drones.Add(d);
                     drones.Remove(drone);
                     break;
                 }
@@ -74,6 +75,7 @@ namespace DalObject
                     Parcel p = parcel;
                     p.DroneId = drones[drones.Count - 1].Id;
                     p.Scheduled = DateTime.Now;
+                    parcels.Add(p);
                     parcels.Remove(parcel);
                     break;
                 }

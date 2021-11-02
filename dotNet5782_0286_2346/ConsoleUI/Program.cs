@@ -167,7 +167,6 @@ namespace ConsoleUI
             switch (update)
             {
                 case UpdateOptions.AssignParcelToDrone:
-                    Console.WriteLine(DalObject.DalObject.ListOfDrones());
                     Console.WriteLine("Please enter the ID of the parcel and the ID of the drone");
                     int.TryParse(Console.ReadLine(), out id1);
                     int.TryParse(Console.ReadLine(), out id2);
