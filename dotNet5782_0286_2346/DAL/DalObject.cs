@@ -10,6 +10,9 @@ namespace DalObject
 {
     public class DalObject
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public DalObject()//ctor
         {
             DataSource.Initialize();//actually produce the data base 
