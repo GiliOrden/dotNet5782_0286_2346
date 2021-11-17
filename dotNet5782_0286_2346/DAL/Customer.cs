@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +20,10 @@ namespace IDAL
                 string longitude, latitude;
                 double absValOfDegree = Math.Abs(Longitude);
                 double minute = (absValOfDegree - (int)absValOfDegree) * 60;//a formula that converts the decimal value of a coordinate to it sexagesimal value
-                longitude = string.Format("{0}° {1}\' {2}\" {3}",(int)Longitude, (int)(minute),Math.Round((minute-(int)minute)*60) ,Longitude < 0 ? "S" : "N");
+                longitude = string.Format("{0}° {1}\' {2}\" {3}", (int)Longitude, (int)(minute), (int)Math.Round((minute - (int)minute) * 60), Longitude < 0 ? "S" : "N");
                 absValOfDegree = Math.Abs(Latitude);
-                minute= (absValOfDegree - (int)absValOfDegree) * 60;
-                latitude= string.Format("{0}° {1}\' {2}\" {3}", (int)Latitude, (int)(minute), Math.Round((minute - (int)minute) * 60), Latitude < 0 ? "W" : "E");
+                minute = (absValOfDegree - (int)absValOfDegree) * 60;
+                latitude = string.Format("{0}° {1}\' {2}\" {3}", (int)Latitude, (int)(minute), (int)Math.Round((minute - (int)minute) * 60), Latitude < 0 ? "W" : "E");
                 return @$"Customer
                           Id:       {Id}
                           Name:     {Name} 
@@ -32,8 +32,8 @@ namespace IDAL
                           Latitude: {latitude}";
 
             }
-            
-           
+
+
 
         }
     }

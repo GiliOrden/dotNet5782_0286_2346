@@ -21,10 +21,10 @@ namespace IDAL
                 string longitude, latitude;
                 double absValOfDegree = Math.Abs(Longitude);
                 double minute = (absValOfDegree - (int)absValOfDegree) * 60;//a formula that converts the decimal value of a coordinate to it sexagesimal value
-                longitude = string.Format("{0}° {1}\' {2}\" {3}", (int)Longitude, (int)(minute), Math.Round((minute - (int)minute) * 60), Longitude < 0 ? "S" : "N");
+                longitude = string.Format("{0}° {1}\' {2}\" {3}", (int)Longitude, (int)(minute), (int)Math.Round((minute - (int)minute) * 60), Longitude < 0 ? "S" : "N");
                 absValOfDegree = Math.Abs(Latitude);
                 minute = (absValOfDegree - (int)absValOfDegree) * 60;
-                latitude = string.Format("{0}° {1}\' {2}\" {3}", (int)Latitude, (int)(minute), Math.Round((minute - (int)minute) * 60), Latitude < 0 ? "W" : "E");
+                latitude = string.Format("{0}° {1}\' {2}\" {3}", (int)Latitude, (int)(minute), (int)Math.Round((minute - (int)minute) * 60), Latitude < 0 ? "W" : "E");
                 return @$"Station
                           Id:         {Id,-15}
                           Name:       {Name,-30} 
@@ -32,7 +32,7 @@ namespace IDAL
                           Longitude:  {longitude,-15}
                           Latitude:   {latitude,-15}";
 
-            }          
+            }
         }
     }
 }
