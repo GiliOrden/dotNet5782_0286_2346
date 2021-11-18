@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static DalObject.DataSource;
-
+using IDAL;
 namespace DalObject
 {
-    public class DalObject
-    {
+    public class DalObject : IDal
+{
         /// <summary>
         /// constructor, produce the data base
         /// </summary>
@@ -21,7 +21,7 @@ namespace DalObject
         /// Adding station element to the stations list
         /// </summary>
         /// <param name="s">  element ,Station tipe, we adding the list</param>
-        public static void AddStation(Station s)
+        public  void AddStation(Station s)
         {
             stations.Add(s);
         }
@@ -29,7 +29,7 @@ namespace DalObject
         /// Adding customer element to the customers list
         /// </summary>
         /// <param name="c">element ,Customer tipe, we adding the list</param>
-        public static void AddCustomer(Customer c)
+        public void AddCustomer(Customer c)
         {
             customers.Add(c);
         }
@@ -37,7 +37,7 @@ namespace DalObject
         /// Adding drone element to the drones list
         /// </summary>
         /// <param name="d">element ,Drone tipe, we adding the list</param>
-        public static void AddDrone(Drone d)
+        public void AddDrone(Drone d)
         {
             drones.Add(d);
         }
@@ -46,7 +46,7 @@ namespace DalObject
         /// Adding customer element to the customers list
         /// </summary>
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
-        public static void AddParcel(Parcel p)
+        public void AddParcel(Parcel p)
         {
             parcels.Add(p);
         }
@@ -55,7 +55,7 @@ namespace DalObject
         /// </summary>
         /// <param name="parcelId">the id of parcel</param>
         /// <param name="droneId">the id of drone</param>
-        public static void AssignParcelToDrone(int parcelId, int droneId)
+        public void AssignParcelToDrone(int parcelId, int droneId)
         { 
             foreach (Drone drone in drones)
             {
@@ -86,7 +86,7 @@ namespace DalObject
         /// updating of collection parcel  by drone
         /// </summary>
         /// <param name="id">the id of parcel</param>
-        public static void CollectParcelByDrone(int id)
+        public void CollectParcelByDrone(int id)
         {
             Parcel p;
             foreach (Parcel parcel in parcels)
@@ -106,7 +106,7 @@ namespace DalObject
         /// updating of supplying delivery to customer
         /// </summary>
         /// <param name="id">the id of parcel</param>
-        public static void SupplyDeliveryToCustomer(int id)
+        public void SupplyDeliveryToCustomer(int id)
         {
             Parcel p;
             foreach(Parcel parcel in parcels)
@@ -137,7 +137,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the drone id</param>
         /// <param name="id2">the station id</param>
-        public static void SendDroneToCharge(int id ,int id2)
+        public void SendDroneToCharge(int id ,int id2)
         {
             Drone d;
             Station s;
@@ -172,7 +172,7 @@ namespace DalObject
         /// updating of releasing drone from Charging station
         /// </summary>
         /// <param name="id">the drone id</param>
-        public static void ReleaseDroneFromCharge(int id)
+        public  void ReleaseDroneFromCharge(int id)
         {
             Drone d;
             foreach(Drone drone in drones)
@@ -212,7 +212,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the station id</param>
         /// <returns>Station element</returns>
-        public static Station DisplayBaseStation(int id)
+        public Station GetBaseStation(int id)
         {
             Station s = new Station();
             foreach (Station baseStaion in stations)
@@ -229,7 +229,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the drone id</param>
         /// <returns>Drone element</returns>
-        public static Drone DisplayDrone(int id)
+        public  Drone GetDrone(int id)
         {
             Drone d = new Drone();
             foreach(Drone drone in drones)
@@ -246,7 +246,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the customer id</param>
         /// <returns>Customer element</returns>
-        public static Customer DisplayCustomer(int id)
+        public  Customer GetCustomer(int id)
         {
             Customer c = new Customer();
             foreach(Customer customer in  customers)
@@ -263,7 +263,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the parcel id</param>
         /// <returns>Parcel element</returns>
-        public static Parcel DisplayParcel(int id)
+        public Parcel GetParcel(int id)
         {
             Parcel p = new Parcel();
             foreach (Parcel parcel in parcels)
@@ -279,43 +279,51 @@ namespace DalObject
         ///  this function returns list of stations 
         /// </summary>
         /// <returns>list of stations </returns>
-        public static List<Station> ListOfBaseStations()
+        public IEnumerable<Station> ListOfBaseStations()
         {
-            List<Station> s = stations;
-           return stations;
+            List<Station> s = new List<Station>();
+            for(int i=0; i<stations.Count;i++)
+                s.Add(stations[i]);
+           return s;
         }
         /// <summary>
         /// this function returns list of drone
         /// </summary>
         /// <returns></returns>
-        public static List<Drone> ListOfDrones()
+        public IEnumerable<Drone> ListOfDrones()
         {
-            List<Drone> d = drones;
+            List<Drone> d = new List<Drone>();
+            for (int i = 0; i < drones.Count; i++)
+                d.Add(drones[i]);
             return d;
         }
         /// <summary>
         ///  this function returns list of customers
         /// </summary>
         /// <returns></returns>
-        public static List<Customer> ListOfCustomers()
+        public  IEnumerable<Customer> ListOfCustomers()
         {
-            List<Customer> c = customers;
+            List<Customer> c =new List<Customer>();
+            for (int i = 0; i < customers.Count; i++)
+                c.Add(customers[i]);
             return c;
         }
         /// <summary>
         /// this function returns list of parcels
         /// </summary>
         /// <returns></returns>
-        public static List<Parcel> ListOfParcels()
+        public IEnumerable<Parcel> ListOfParcels()
         {
-            List<Parcel> p = parcels;
+            List<Parcel> p = new List<Parcel>();
+            for (int i = 0; i < parcels.Count; i++)
+                p.Add(parcels[i]);
             return p;
         }
         /// <summary>
         /// this function returns list of all the parsels which aren't associated to drones
         /// </summary>
         /// <returns></returns>
-        public static List<Parcel> ListOfNotAssociatedParsels()
+        public IEnumerable<Parcel> ListOfNotAssociatedParsels()
         {
             List<Parcel> p = new List<Parcel>();
             foreach (Parcel parcel in parcels)
@@ -329,7 +337,7 @@ namespace DalObject
         /// this function returns list of all the available charging stations
         /// </summary>
         /// <returns></returns>
-        public static List<Station> ListOfAvailableChargingStations()
+        public IEnumerable<Station> ListOfAvailableChargingStations()
         {
             List<Station> s = new List<Station>();
             foreach (Station baseStaion in stations)
@@ -344,7 +352,7 @@ namespace DalObject
        /// </summary>
        /// <param name="name">name of customer</param>
        /// <returns></returns>
-        public static Customer DistanceFromCustomer(string name)
+        public Customer DistanceFromCustomer(string name)
         {
             Customer c = new Customer();
             foreach (Customer customer in customers)
@@ -363,7 +371,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">id of station</param>
         /// <returns></returns>
-        public static Station DistanceFromStation(int id)
+        public Station DistanceFromStation(int id)
         {
             Station s = new Station();
             foreach (Station station in stations)
