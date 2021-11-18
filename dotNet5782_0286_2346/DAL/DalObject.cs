@@ -212,7 +212,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the station id</param>
         /// <returns>Station element</returns>
-        public Station DisplayBaseStation(int id)
+        public Station GetBaseStation(int id)
         {
             Station s = new Station();
             foreach (Station baseStaion in stations)
@@ -229,7 +229,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the drone id</param>
         /// <returns>Drone element</returns>
-        public  Drone DisplayDrone(int id)
+        public  Drone GetDrone(int id)
         {
             Drone d = new Drone();
             foreach(Drone drone in drones)
@@ -246,7 +246,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the customer id</param>
         /// <returns>Customer element</returns>
-        public  Customer DisplayCustomer(int id)
+        public  Customer GetCustomer(int id)
         {
             Customer c = new Customer();
             foreach(Customer customer in  customers)
@@ -263,7 +263,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the parcel id</param>
         /// <returns>Parcel element</returns>
-        public Parcel DisplayParcel(int id)
+        public Parcel GetParcel(int id)
         {
             Parcel p = new Parcel();
             foreach (Parcel parcel in parcels)

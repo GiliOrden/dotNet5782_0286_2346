@@ -11,7 +11,7 @@ namespace IDAL
     {
         #region Station
         void AddStation(DO.Station s);
-        DO.Station DisplayBaseStation(int id);
+        DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> ListOfBaseStations();
         IEnumerable<DO.Station> ListOfAvailableChargingStations();
         DO.Station DistanceFromStation(int id);
@@ -19,7 +19,7 @@ namespace IDAL
 
         #region Customer
         void AddCustomer(DO.Customer c);
-        DO.Customer DisplayCustomer(int id);
+        DO.Customer GetCustomer(int id);
         IEnumerable<DO.Customer> ListOfCustomers();
         DO.Customer DistanceFromCustomer(string name);
         #endregion
@@ -28,7 +28,7 @@ namespace IDAL
         void AddDrone(DO.Drone d);
         void SendDroneToCharge(int id, int id2);
         void ReleaseDroneFromCharge(int id);
-        DO.Drone DisplayDrone(int id);
+        DO.Drone GetDrone(int id);
         IEnumerable<DO.Drone> ListOfDrones();
         #endregion
 
@@ -37,7 +37,7 @@ namespace IDAL
         void AssignParcelToDrone(int parcelId, int droneId);//here or in drone?
         void CollectParcelByDrone(int id);
         void SupplyDeliveryToCustomer(int id);
-        DO.Parcel DisplayParcel(int id);
+        DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> ListOfParcels();
         IEnumerable<DO.Parcel> ListOfNotAssociatedParsels();
         #endregion
