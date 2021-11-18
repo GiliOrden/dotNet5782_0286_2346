@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    class DataSource
+    public class DataSource
     {
         /// <summary>
         /// using as Id for parcels
         /// </summary>
-        internal class Config
+        public class Config
         {
-            internal static int CodeOfParcel = 0;
+            public static int CodeOfParcel = 0;
         }
 
         internal static List<Drone>drones = new List<Drone>();//creat list of drones
