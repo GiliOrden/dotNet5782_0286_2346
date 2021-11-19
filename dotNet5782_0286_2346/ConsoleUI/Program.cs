@@ -188,7 +188,7 @@ namespace ConsoleUI
                     Console.WriteLine("Please enter the drone ID ");
                     int.TryParse(Console.ReadLine(), out id1);
                     Console.WriteLine("Please enter the station ID from the list of stations");
-                    dl.ListOfAvailableChargingStations();
+                    dl.GetListOfAvailableChargingStations();
                     int.TryParse(Console.ReadLine(), out id2);
                     dl.SendDroneToCharge(id1, id2);
                     break;
@@ -258,27 +258,27 @@ namespace ConsoleUI
             switch (choise)
             {
                 case DisplayListsOptions.BaseStationList:
-                    foreach (Station allStaions in dl.ListOfBaseStations())
-                        Console.WriteLine(allStaions.ToString());
+                    foreach (Station stations in dl.GetListOfBaseStations())
+                        Console.WriteLine(stations.ToString());
                     break;
                 case DisplayListsOptions.DroneList:
-                    foreach (Drone allDrones in dl.ListOfDrones())
-                        Console.WriteLine(allDrones.ToString());
+                    foreach (Drone drones in dl.GetListOfDrones())
+                        Console.WriteLine(drones.ToString());
                     break;
                 case DisplayListsOptions.CustomerList:
-                    foreach (Customer customer in dl.ListOfCustomers())
+                    foreach (Customer customer in dl.GetListOfCustomers())
                         Console.WriteLine(customer.ToString());
                     break;
                 case DisplayListsOptions.ParcelList:
-                    foreach (Parcel allParcel in dl.ListOfParcels())
-                        Console.WriteLine(allParcel.ToString());
+                    foreach (Parcel parcel in dl.GetListOfParcels())
+                        Console.WriteLine(parcel.ToString());
                     break;
                 case DisplayListsOptions.ParselsNotAssociatedWithDrones:
-                    foreach (Parcel parcel in dl.ListOfNotAssociatedParsels())
+                    foreach (Parcel parcel in dl.GetListOfNotAssociatedParsels())
                         Console.WriteLine(parcel.ToString());
                     break;
                 case DisplayListsOptions.StationsWithAvailableChargings:
-                    foreach (Station station in dl.ListOfAvailableChargingStations())
+                    foreach (Station station in dl.GetListOfAvailableChargingStations())
                         Console.WriteLine(station.ToString());
                     break;
                 default:

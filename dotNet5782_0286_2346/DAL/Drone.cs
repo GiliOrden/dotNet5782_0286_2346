@@ -13,12 +13,7 @@ namespace IDAL
             public double Battery { get; set; }//property
             public override string ToString()//Print all the fields (Override the Object's 'ToString()')
             {
-                return @$"Drone
-                          Id:         {Id,-15}
-                          Model:      {Model,-25}
-                          MaxWheight: {MaxWeight,-15}
-                          Status:     {Status,-15}
-                          Battery:    {Battery,-15}";
+                return this.ToStringProperty();
             }
         }
     }
