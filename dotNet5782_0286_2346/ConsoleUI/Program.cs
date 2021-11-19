@@ -133,7 +133,6 @@ namespace ConsoleUI
                 case AddOptions.AddParcel:
                     Console.WriteLine("Enter senderId and targetId (Press enter after each one of them)");
                     Parcel p = new Parcel();
-                    p.Id = DalObject.DataSource.Config.CodeOfParcel++; //i changed config and codeOfParcel to be public
                     int.TryParse(Console.ReadLine(), out ans);
                     p.SenderId = ans;
                     int.TryParse(Console.ReadLine(), out ans);

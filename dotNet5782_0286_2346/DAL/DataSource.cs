@@ -13,9 +13,9 @@ namespace DalObject
         /// <summary>
         /// using as Id for parcels
         /// </summary>
-        public class Config
+        internal class Config
         {
-            public static int CodeOfParcel = 0;
+           internal static int CodeOfParcel = 0;
         }
 
         internal static List<Drone>drones = new List<Drone>();//creat list of drones
