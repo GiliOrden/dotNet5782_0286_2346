@@ -34,7 +34,6 @@ namespace DalObject
                 if (drone.Id == droneId)
                 {
                     Drone d = drone;
-                    d.Status = DroneStatuses.Delivery;
                     drones.Add(d);
                     drones.Remove(drone);
                     break;
@@ -92,8 +91,6 @@ namespace DalObject
                         if (drone.Id == p.DroneId)
                         {
                             Drone d = drone;
-                            d.Battery = 20;
-                            d.Status = DroneStatuses.Available;
                             drones.Add(d);
                             drones.Remove(drone);
                             break;

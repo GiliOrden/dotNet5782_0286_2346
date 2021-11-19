@@ -16,6 +16,11 @@ namespace DalObject
         internal class Config
         {
            internal static int CodeOfParcel = 0;
+            public static double AvailableDronePowerConsumption;
+            public static double LightWeightCarrierPowerConsumption;
+            public static double MediumWeightCarrierPowerConsumption;
+            public static double HeavyWeightCarrierPowerConsumption;
+            public static double DroneChargingRate;
         }
 
         internal static List<Drone>drones = new List<Drone>();//creat list of drones
@@ -38,11 +43,8 @@ namespace DalObject
             {
                 drones.Add(new Drone()
                 {
-
                     Id = rand.Next(100, 200),
                     MaxWeight = (WeightCategories)rand.Next(3),
-                    Status = (DroneStatuses)rand.Next(3),
-                    Battery = rand.NextDouble() * 100,
                     Model = string.Format("Drony{0}", i)
                 });
                 

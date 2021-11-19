@@ -15,7 +15,11 @@ namespace DalObject
         {
             drones.Add(d);
         }
-
+        IEnumerable<double> DronePowerConsumption()
+        {
+            double[] status = new double[5];
+            return status;
+        }
 
         /// <summary>
         /// updating of sending drone to staion for charging
@@ -32,7 +36,6 @@ namespace DalObject
                 if (drone.Id == id)
                 {
                     d = drone;
-                    d.Status = DroneStatuses.Maintenance;
                     dc.DroneId = d.Id;
                     dc.StationId = id2;
                     drones.Add(d);
@@ -65,8 +68,6 @@ namespace DalObject
                 if (drone.Id == id)
                 {
                     d = drone;
-                    d.Battery = 100;
-                    d.Status = DroneStatuses.Available;
                     drones.Add(d);
                     drones.Remove(drone);
                     break;

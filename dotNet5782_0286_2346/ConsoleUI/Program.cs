@@ -99,8 +99,6 @@ namespace ConsoleUI
                     Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
                     d.MaxWeight = (WeightCategories)ans;
-                    d.Status = DroneStatuses.Available;
-                    d.Battery = 100;
                     dl.AddDrone(d);
                     break;
                 case AddOptions.AddStation:
