@@ -48,6 +48,7 @@ namespace DalObject
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
         public void AddParcel(Parcel p)
         {
+            p.Id = Config.CodeOfParcel++;
             parcels.Add(p);
         }
         /// <summary>
@@ -121,6 +122,7 @@ namespace DalObject
                         {
                             Drone d = drone;
                             d.Battery = 20;
+                            d.Status = DroneStatuses.Available;
                             drones.Add(d);
                             drones.Remove(drone);
                             break;
