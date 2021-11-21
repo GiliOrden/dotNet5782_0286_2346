@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    public class DataSource
+    internal class DataSource//i read it should be internal class
     {
         /// <summary>
         /// using as Id for parcels
@@ -16,11 +16,11 @@ namespace DalObject
         internal class Config
         {
            internal static int CodeOfParcel = 0;
-            public static double AvailableDronePowerConsumption;
-            public static double LightWeightCarrierPowerConsumption;
-            public static double MediumWeightCarrierPowerConsumption;
-            public static double HeavyWeightCarrierPowerConsumption;
-            public static double DroneChargingRate;
+           internal static double AvailableDronePowerConsumption;//should it be public?
+           internal static double LightWeightCarrierPowerConsumption;
+           internal static double MediumWeightCarrierPowerConsumption;
+           internal static double HeavyWeightCarrierPowerConsumption;
+           internal  double DroneChargingRate;//is it also shuld be static?
         }
 
         internal static List<Drone>drones = new List<Drone>();//creat list of drones

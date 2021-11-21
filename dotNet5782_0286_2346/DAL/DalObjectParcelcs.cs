@@ -17,10 +17,11 @@ namespace DalObject
         /// Adding customer element to the customers list
         /// </summary>
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
-        public void AddParcel(Parcel p)
+        public int AddParcel(Parcel p)
         {
             p.Id = Config.CodeOfParcel++;
             parcels.Add(p);
+            return p.Id;
         }
         /// <summary>
         /// updating of assign parcel to the drone which will deliver it
