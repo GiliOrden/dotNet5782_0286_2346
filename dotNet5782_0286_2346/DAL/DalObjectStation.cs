@@ -18,6 +18,8 @@ namespace DalObject
         /// <param name="s">  element ,Station tipe, we adding the list</param>
         public void AddStation(Station s)
         {
+            if (DataSource.stations.Any(sta => sta.Id == s.Id))
+                throw new IDAL.DO.Exceptions.ExistIdException(s.Id, "station");
             stations.Add(s);
         }
 
@@ -28,7 +30,8 @@ namespace DalObject
         /// <returns>Station element</returns>
         public Station GetBaseStation(int id)
         {
-            Station s = new Station();
+            if (!DataSource.stations.Any(sta => sta.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "station");
             foreach (Station baseStaion in stations)
             {
                 if (baseStaion.Id == id)
@@ -36,6 +39,7 @@ namespace DalObject
                     return baseStaion;
                 }
             }
+            Station s=new();//the function doesn't supposed to come here
             return s;
         }
 
@@ -76,7 +80,10 @@ namespace DalObject
         /// <returns></returns>
         public Station DistanceFromStation(int id)
         {
-            Station s = new Station();
+
+            if (!DataSource.stations.Any(sta => sta.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "station");
+            
             foreach (Station station in stations)
             {
 
@@ -86,6 +93,7 @@ namespace DalObject
 
                 }
             }
+            Station s = new Station();
             return s;
         }
 

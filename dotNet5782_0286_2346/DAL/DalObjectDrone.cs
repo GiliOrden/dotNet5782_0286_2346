@@ -13,6 +13,8 @@ namespace DalObject
   
         public void AddDrone(Drone d)
         {
+            if (DataSource.drones.Any(dron => dron.Id == d.Id))
+                throw new IDAL.DO.Exceptions.ExistIdException(d.Id, "drone");
             drones.Add(d);
         }
         IEnumerable<double> DronePowerConsumption()
@@ -44,6 +46,8 @@ namespace DalObject
                 }
                 droneCharges.Add(dc);
             }
+            if (!DataSource.drones.Any(dron => dron.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "drone");
             foreach (Station station in stations)
             {
                 if (station.Id == id2)
@@ -55,6 +59,8 @@ namespace DalObject
                     break;
                 }
             }
+            if (!DataSource.stations.Any(sta => sta.Id == id2))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id2, "station");
         }
         /// <summary>
         /// updating of releasing drone from Charging station
@@ -73,6 +79,8 @@ namespace DalObject
                     break;
                 }
             }
+            if (!DataSource.drones.Any(dron => dron.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "drone");
             foreach (DroneCharge charger in droneCharges)
             {
                 Station s;
@@ -89,6 +97,8 @@ namespace DalObject
                             break;
                         }
                     }
+                    if (!DataSource.stations.Any(sta => sta.Id == id))
+                        throw new IDAL.DO.Exceptions.IdNotFoundException(id, "station");
                 }
                 droneCharges.Remove(charger);
             }
@@ -101,7 +111,8 @@ namespace DalObject
         /// <returns>Drone element</returns>
         public Drone GetDrone(int id)
         {
-            Drone d = new Drone();
+            if (!DataSource.drones.Any(dron => dron.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "drone");
             foreach (Drone drone in drones)
             {
                 if (drone.Id == id)
@@ -109,6 +120,7 @@ namespace DalObject
                     return drone;
                 }
             }
+            Drone d = new();
             return d;
         }
 
