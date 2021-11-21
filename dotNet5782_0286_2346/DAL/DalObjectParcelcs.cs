@@ -19,6 +19,8 @@ namespace DalObject
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
         public int AddParcel(Parcel p)
         {
+            if (DataSource.parcels.Any(parc => parc.Id == p.Id))
+                throw new IDAL.DO.Exceptions.ExistIdException(p.Id,"parcel");
             p.Id = Config.CodeOfParcel++;
             parcels.Add(p);
             return p.Id;
@@ -30,6 +32,8 @@ namespace DalObject
         /// <param name="droneId">the id of drone</param>
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
+            if (!DataSource.drones.Any(dron => dron.Id == droneId))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(droneId, "drone");
             foreach (Drone drone in drones)
             {
                 if (drone.Id == droneId)
@@ -41,6 +45,8 @@ namespace DalObject
                 }
             }
 
+            if (!DataSource.parcels.Any(parc => parc.Id == parcelId))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(parcelId, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == parcelId)
@@ -61,6 +67,8 @@ namespace DalObject
         public void CollectParcelByDrone(int id)
         {
             Parcel p;
+            if (!DataSource.parcels.Any(parc => parc.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -72,6 +80,7 @@ namespace DalObject
                     break;
                 }
             }
+           
 
         }
         /// <summary>
@@ -81,6 +90,8 @@ namespace DalObject
         public void SupplyDeliveryToCustomer(int id)
         {
             Parcel p;
+            if (!DataSource.parcels.Any(parc => parc.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -112,7 +123,9 @@ namespace DalObject
         /// <returns>Parcel element</returns>
         public Parcel GetParcel(int id)
         {
-            Parcel p = new Parcel();
+            if (!DataSource.parcels.Any(parc => parc.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "parcel");
+           
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -120,6 +133,7 @@ namespace DalObject
                     return parcel;
                 }
             }
+            Parcel p = new ();
             return p;
         }
 

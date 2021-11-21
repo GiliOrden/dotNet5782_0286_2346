@@ -17,6 +17,8 @@ namespace DalObject
         /// <param name="c">element ,Customer tipe, we adding the list</param>
         public void AddCustomer(Customer c)
         {
+            if(DataSource.customers.Any(cust => cust.Id == c.Id))
+                throw new IDAL.DO.Exceptions.ExistIdException(c.Id, "customer");
             customers.Add(c);
         }
 
@@ -27,7 +29,8 @@ namespace DalObject
         /// <returns>Customer element</returns>
         public Customer GetCustomer(int id)
         {
-            Customer c = new Customer();
+            if (!DataSource.customers.Any(cust => cust.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "customer");
             foreach (Customer customer in customers)
             {
                 if (customer.Id == id)
@@ -35,6 +38,7 @@ namespace DalObject
                     return customer;
                 }
             }
+            Customer c = new();
             return c;
         }
 
@@ -55,7 +59,8 @@ namespace DalObject
         /// <returns></returns>
         public Customer DistanceFromCustomer(string name)
         {
-            Customer c = new Customer();
+            if (!DataSource.customers.Any(cust => cust.Name == name))
+                throw new IDAL.DO.Exceptions.NameNotFoundException(name, "customer");
             foreach (Customer customer in customers)
             {
                 if (customer.Name == name)
@@ -63,9 +68,10 @@ namespace DalObject
                     return customer;
 
                 }
-
             }
+            Customer c = new();
             return c;
+
         }
     }
 }
