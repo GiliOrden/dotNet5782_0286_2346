@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IDAL
 {
-    public interface IDal//i'm not sure it should be  public maybe internal
+    public interface IDal//i'm not sure it should be  public maybe internal and i dont know if the properties also should be here
     {
         #region Station
         void AddStation(DO.Station s);
@@ -34,7 +34,7 @@ namespace IDAL
         #endregion
 
         #region Parcel
-        void AddParcel(DO.Parcel p);
+        int AddParcel(DO.Parcel p);
         void AssignParcelToDrone(int parcelId, int droneId);//here or in drone?
         void CollectParcelByDrone(int id);
         void SupplyDeliveryToCustomer(int id);

@@ -15,5 +15,7 @@ namespace IBL
         #region Drone
         void addDrone(BO.Drone drone);
         #endregion
+        #region Location
+        #endregion
     }
 }
