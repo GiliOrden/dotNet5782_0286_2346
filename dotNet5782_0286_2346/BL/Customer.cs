@@ -16,6 +16,10 @@ namespace IBL
             public Location Location { get; set; }
             //פה צריכה להיות רשימת חבילות אצל לקוח -מהלקוח
             //פה צריכה להיות רשימת חבילות אצל לקוח -אל הלקוח
+            public override string ToString()
+            {
+                return this.ToStringProperty();
+            }
         }
     }
 }

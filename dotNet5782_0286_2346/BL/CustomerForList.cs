@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        public class CustomerToList
+        public class CustomerForList
         {
 
 

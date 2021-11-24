@@ -20,6 +20,10 @@ namespace IBL
             public DateTime AssociationTime { get; set; }
             public DateTime CollectionTime{ get; set; }
             public DateTime DeliveryTime { get; set; }
+            public override string ToString()
+            {
+                return this.ToStringProperty();
+            }
 
         }
     }

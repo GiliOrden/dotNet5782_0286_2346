@@ -14,7 +14,7 @@ namespace BL
         public BL()//ctor
         {
             IDal dl=new DalObject.DalObject();
-            ChargingRatePerHour = dl.GetDronePowerConsumption()[];
+            ChargingRatePerHour = dl.GetDronePowerConsumption()[];//i dont understand
         }
 
     }

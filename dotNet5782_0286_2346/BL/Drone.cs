@@ -19,6 +19,10 @@ namespace IBL
             // public int MyProperty { get; set; }
             //כאן צריכה להיות חבילה בהעברה
             public Location Location { get; set; }
+            public override string ToString()
+            {
+                return this.ToStringProperty();
+            }
 
 
         }

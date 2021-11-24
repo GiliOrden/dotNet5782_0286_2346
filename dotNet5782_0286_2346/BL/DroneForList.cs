@@ -17,6 +17,10 @@ namespace IBL
             public EnumsBL.DroneStatuses DroneStatus { get; set; }
             public int NumberOfTheDeliveredParcel  { get; set; }
             public Location Location { get; set; }
+            public override string ToString()
+            {
+                return this.ToStringProperty();
+            }
         }
     }
 }
