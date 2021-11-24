@@ -8,19 +8,15 @@ namespace IBL
 {
     namespace BO
     {
-        class Drone//should it be public?maybe for the list
+        class DroneForList
         {
-            public int Id{ get; set; }
+            public int Id { get; set; }
             public string Model { get; set; }
             public EnumsBL.WeightCategories MaxWeight { get; set; }//property
             public double BatteryStatus { get; set; }
             public EnumsBL.DroneStatuses DroneStatus { get; set; }
-            public int MyProperty { get; set; }
-            // public int MyProperty { get; set; }
-            //כאן צריכה להיות חבילה בהעברה
+            public int NumberOfTheDeliveredParcel  { get; set; }
             public Location Location { get; set; }
-
-
         }
     }
 }

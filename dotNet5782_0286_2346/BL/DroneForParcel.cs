@@ -8,10 +8,11 @@ namespace IBL
 {
     namespace BO
     {
-        class Location
+        class DroneForParcel
         {
-            public double Longitude { get; set; }
-            public double Latitude { get; set; }
+            public int Id { get; set; }
+            public double BatteryStatus { get; set; }
+            public Location Location{ get; set; }
         }
     }
 }
