@@ -13,7 +13,7 @@ namespace IBL
             public int Id{ get; set; }
             public string Model { get; set; }
             public EnumsBL.WeightCategories MaxWeight { get; set; }//property
-            public double BatteryStatus { get; set; }
+            public int BatteryStatus { get; set; }
             public EnumsBL.DroneStatuses DroneStatus { get; set; }
             public int MyProperty { get; set; }
             // public int MyProperty { get; set; }

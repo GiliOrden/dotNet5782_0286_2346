@@ -21,5 +21,11 @@ namespace IBL
             public Location Source { get; set; }
             public Location Destination { get; set; }
             public double TransportDistance { get; set; }
+
+            public override string ToString()
+            {
+                return this.ToStringProperty();
+            }
+
         }
-}
+    }

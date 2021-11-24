@@ -11,7 +11,14 @@ namespace IBL
     {
         public class StationToList
         {
-
+            public int ID { get; set; }
+            public string Name { get; set; }
+            public int AvailableChargingPositions { get; set; }
+            public int InaccessibleChargingPositions { get; set; }
+            public override string ToString()
+            {
+                return this.ToStringProperty();
+            }
 
         }
     }
