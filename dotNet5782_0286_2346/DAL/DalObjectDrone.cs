@@ -17,7 +17,7 @@ namespace DalObject
                 throw new IDAL.DO.Exceptions.ExistIdException(d.Id, "drone");
             drones.Add(d);
         }
-        public IEnumerable<double> GetDronePowerConsumption()
+        public double[] GetDronePowerConsumption()
         {
             double[] status = new double[5];
             status[0]=Config.EmptyDronePowerConsumption;//should it be public?
@@ -131,10 +131,8 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Drone> GetListOfDrones()
         {
-            List<Drone> d = new List<Drone>();
-            for (int i = 0; i < drones.Count; i++)
-                d.Add(drones[i]);
-            return d;
+            return from drone in DataSource.drones
+                   select drone; ;
         }
     }
 }
