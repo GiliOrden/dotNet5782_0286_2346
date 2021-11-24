@@ -8,14 +8,16 @@ namespace IBL
 {
     namespace BO
     {
-        class Customer
+        public class Customer
         {
             public int Id { get; set; }
             public string Name { get; set; }
             public int Phone { get; set; }
             public Location Location { get; set; }
-            //פה צריכה להיות רשימת חבילות אצל לקוח -מהלקוח
-            //פה צריכה להיות רשימת חבילות אצל לקוח -אל הלקוח
+
+            public IEnumerable<ParcelAtCustomer> ListOfParcelsFromMe;
+
+            public IEnumerable<ParcelAtCustomer> ListOfParcelsIntendedToME;//i dont like the"me" and i dont sure it should be public and look like that
             public override string ToString()
             {
                 return this.ToStringProperty();

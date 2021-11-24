@@ -28,11 +28,6 @@ namespace DalObject
             return status;
         }
 
-        /// <summary>
-        /// updating of sending drone to staion for charging
-        /// </summary>
-        /// <param name="id">the drone id</param>
-        /// <param name="id2">the station id</param>
         public void SendDroneToCharge(int id, int id2)//there is problem with the function
         {
             Drone d;

@@ -11,11 +11,11 @@ namespace IBL
         class Parcel
         {
             public int Id { get; set; }
-            //פה צריך להיות לקוח בחבילה -השולח
-            //לקוח בחבילה-המקבל
+            public ParcelAtCustomer Sender { get; set; }
+            public ParcelAtCustomer Receiver { get; set; }
             public EnumsBL.WeightCategories Weight { get; set; }
             public EnumsBL.Priorities Priority { get; set; }
-            //public int MyProperty { get; set; }    פה צריך להיות רחפן בחבילה -ישות שאני צריכה לכתוב
+            public  DroneForParcel MyDrone{ get; set; }    
             public DateTime ParcelCreationTime { get; set; }
             public DateTime AssociationTime { get; set; }
             public DateTime CollectionTime{ get; set; }

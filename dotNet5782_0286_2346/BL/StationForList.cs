@@ -9,7 +9,7 @@ namespace IBL
 {
     namespace BO
     {
-        public class StationToList
+        public class StationForList
         {
             public int ID { get; set; }
             public string Name { get; set; }
