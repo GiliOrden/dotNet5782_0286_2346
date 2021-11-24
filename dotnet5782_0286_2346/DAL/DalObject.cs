@@ -9,7 +9,7 @@ using IDAL;
 namespace DalObject
 {
     public partial class DalObject : IDal
-{
+    { 
         /// <summary>
         /// constructor, produce the data base
         /// </summary>
