@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IDAL.DO;
 using IDAL;
 using DalObject;
+using System.Runtime.Serialization;
 namespace ConsoleUI
 {
     class Program
@@ -39,29 +40,45 @@ namespace ConsoleUI
             mo = (MenuOptions)userChoise;
             while (mo != MenuOptions.Exit)
             {
-                switch (mo)
+                try
                 {
-                    case MenuOptions.Add:
-                        AddingOptions(ref dl);
-                        break;
-                    case MenuOptions.Update:
-                        UpdatingOptions(ref dl);
-                        break;
-                    case MenuOptions.Display:
-                        GetObject(ref dl);
-                        break;
-                    case MenuOptions.ShowList:
-                        DisplayingListsOptions(ref  dl);
-                        break;
-                    case MenuOptions.FindDistance:
-                        FindingDistance(ref dl);
-                        break;
-                    case MenuOptions.Exit:
-                        Console.WriteLine("End of service");
-                        break;
-                    default:
-                        Console.WriteLine("Wrong number");
-                        break;
+                    switch (mo)
+                    {
+                        case MenuOptions.Add:
+                            AddingOptions(ref dl);
+                            break;
+                        case MenuOptions.Update:
+                            UpdatingOptions(ref dl);
+                            break;
+                        case MenuOptions.Display:
+                            GetObject(ref dl);
+                            break;
+                        case MenuOptions.ShowList:
+                            DisplayingListsOptions(ref dl);
+                            break;
+                        case MenuOptions.FindDistance:
+                            FindingDistance(ref dl);
+                            break;
+                        case MenuOptions.Exit:
+                            Console.WriteLine("End of service");
+                            break;
+                        default:
+                            Console.WriteLine("Wrong number");
+                            break;
+
+                    }
+                }
+                catch(Exceptions.ExistIdException e)
+                {
+
+                }
+                catch(Exceptions.IdNotFoundException e)
+                {
+
+                }
+                catch(Exceptions.NameNotFoundException e)
+                {
+
                 }
                 Console.WriteLine("press 1 to add an item");
                 Console.WriteLine("press 2 to update an item");

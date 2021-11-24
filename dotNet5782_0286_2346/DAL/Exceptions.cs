@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IDAL.DO
 {
-    class Exceptions : Exception
+    public class Exceptions : Exception
     {
         [Serializable]
         public class ExistIdException : Exception//when trying to add an id of station/drone/parcel and it allready exists 

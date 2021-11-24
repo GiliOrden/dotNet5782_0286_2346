@@ -16,11 +16,11 @@ namespace DalObject
         internal class Config
         {
            internal static int CodeOfParcel = 0;
-           internal static double AvailableDronePowerConsumption;//should it be public?
-           internal static double LightWeightCarrierPowerConsumption;
-           internal static double MediumWeightCarrierPowerConsumption;
-           internal static double HeavyWeightCarrierPowerConsumption;
-           internal  double DroneChargingRate;//is it also shuld be static?
+           internal static double EmptyDronePowerConsumption=2;
+           internal static double LightWeightCarrierPowerConsumption=2.2;
+           internal static double MediumWeightCarrierPowerConsumption=2.7;
+           internal static double HeavyWeightCarrierPowerConsumption=3.2;
+           internal static double ChargingRatePerHour=25;//is it also shuld be static?
         }
 
         internal static List<Drone>drones = new List<Drone>();//creat list of drones

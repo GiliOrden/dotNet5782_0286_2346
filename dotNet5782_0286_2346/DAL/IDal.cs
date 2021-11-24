@@ -30,7 +30,7 @@ namespace IDAL
         void ReleaseDroneFromCharge(int id);
         DO.Drone GetDrone(int id);
         IEnumerable<DO.Drone> GetListOfDrones();
-        IEnumerable<double> DronePowerConsumption();
+        IEnumerable<double> GetDronePowerConsumption();
         #endregion
 
         #region Parcel

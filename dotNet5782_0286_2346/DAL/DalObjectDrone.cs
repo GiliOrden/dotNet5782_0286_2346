@@ -17,9 +17,14 @@ namespace DalObject
                 throw new IDAL.DO.Exceptions.ExistIdException(d.Id, "drone");
             drones.Add(d);
         }
-        IEnumerable<double> DronePowerConsumption()
+        public IEnumerable<double> GetDronePowerConsumption()
         {
             double[] status = new double[5];
+            status[0]=Config.EmptyDronePowerConsumption;//should it be public?
+            status[1] = Config.LightWeightCarrierPowerConsumption;
+            status[2]= Config.MediumWeightCarrierPowerConsumption;
+            status[3]=Config. HeavyWeightCarrierPowerConsumption;
+            status[4] =Config.ChargingRatePerHour;
             return status;
         }
 

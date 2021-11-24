@@ -38,7 +38,7 @@ namespace DalObject
                     return customer;
                 }
             }
-            Customer c = new();
+            Customer c = new();//i think it shouldnt be here because of th try
             return c;
         }
 
@@ -66,10 +66,9 @@ namespace DalObject
                 if (customer.Name == name)
                 {
                     return customer;
-
                 }
             }
-            Customer c = new();
+            Customer c = new();//i think it shouldnt be here because of th try
             return c;
 
         }
