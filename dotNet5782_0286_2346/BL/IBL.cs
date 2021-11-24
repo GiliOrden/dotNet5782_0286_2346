@@ -9,11 +9,11 @@ namespace IBL
     public interface IBL
     {
         #region BaseStation
-        void addBaseStation(BO.Station station);
+        //void addBaseStation(BO.Station station);
         #endregion
 
         #region Drone
-        void addDrone(BO.Drone drone);
+        //void addDrone(BO.Drone drone);
         #endregion
         #region Location
         #endregion
