@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 using IBL;
 using IBL.BO;
 using IDAL;
-using DalObject.DO;
 
 namespace BL
 {
     public partial class BL : IBL.IBL
     {
-        double ChargingRatePerHour;
-        double[] dronesPowerConsumption=new double[4];
+        double chargingRatePerHour;
+        double emptyDronePowerConsumption;
+        //should it be public?
+        double lightWeightCarrierPowerConsumption;
+        double mediumWeightCarrierPowerConsumption;
+        double heavyWeightCarrierPowerConsumption;
+        
         IDal dl;
-        List<Drone> drones = new List<Drone>();
-        IEnumerable<IDAL.DO.Drone> dalDrones;//i dont know how it should be
+        List<DroneForList> drones = new List<DroneForList>();
+        IEnumerable<IDAL.DO.Drone> dalDrones;
         public BL()//ctor
         {
            dl = new DalObject.DalObject();
