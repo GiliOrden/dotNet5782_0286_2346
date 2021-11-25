@@ -88,8 +88,15 @@ namespace BL
 
         public void SendingDroneForCharging(int id)
         {
-            IDAL.DO.Drone drone = dl.GetDrone(id);
-            if(drone.Status== IDAL.DO.Statuses.Available)
+            BO.Drone drone = dl.GetDrone(id);
+            foreach (Customer customer in dalDrones)
+            {
+                if (customer.Id == id)
+                {
+                    return customer;
+                }
+            }
+            if (drone.Status== IDAL.DO.Statuses.Available)
             {
                 
 
