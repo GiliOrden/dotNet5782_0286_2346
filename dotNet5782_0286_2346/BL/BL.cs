@@ -85,11 +85,15 @@ namespace BL
             dl.SetCustomer(id, customer);
         }
 
+        public void SendingDroneForCharging(int id)
+        {
+            IDAL.DO.Drone drone = dl.GetDrone(id);
+            if(drone.Status== IDAL.DO.Statuses.Available)
+            {
 
-    };
-                    
             }
         }
-        
-    }
+    };
+                    
+           
 }

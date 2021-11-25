@@ -14,7 +14,7 @@ namespace IBL
 
         #region Drone
         //void addDrone(BO.Drone drone);
-        void SendingDroneForCharging(int id);
+        public void SendingDroneForCharging(int id);
         #endregion
 
         #region Location
