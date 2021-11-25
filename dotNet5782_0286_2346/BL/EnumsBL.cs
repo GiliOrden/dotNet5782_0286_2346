@@ -6,7 +6,7 @@ namespace IBL
     {
         public class EnumsBL
         {
-            public enum DroneStatuses {Available,Maintance,OnDelivery}
+            public enum DroneStatuses {Available,Maintenance,OnDelivery}
 
             public enum WeightCategories { Light, Medium, Heavy }
 
@@ -14,10 +14,6 @@ namespace IBL
 
             public enum ParcelStatuses { Defined, Associated, Collected, Supplied}
 
-            public static explicit operator EnumsBL(IDAL.DO.WeightCategories v)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }
