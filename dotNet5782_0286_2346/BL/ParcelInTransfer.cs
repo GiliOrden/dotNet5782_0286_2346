@@ -18,8 +18,8 @@ namespace IBL
             public Priorities Priority { get; set; }
             public ParcelAtCustomer Sender { get; set; }
             public ParcelAtCustomer Recipient { get; set; }
-            public Location Source { get; set; }
-            public Location Destination { get; set; }
+            public BO.Location Source { get; set; }
+            public BO.Location Destination { get; set; }
             public double TransportDistance { get; set; }
 
             public override string ToString()
