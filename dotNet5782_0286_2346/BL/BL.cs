@@ -26,7 +26,7 @@ namespace BL
             Random rand = new Random(DateTime.Now.Millisecond);
             dl = new DalObject.DalObject();
             dalDrones = dl.GetListOfDrones();
-            dronePowerConsumption = dl.getDronePowerConsumption();
+            dronePowerConsumption = dl.GetDronePowerConsumption();
             emptyDronePowerConsumption = dronePowerConsumption[0];
             lightWeightCarrierPowerConsumption = dronePowerConsumption[1];
             mediumWeightCarrierPowerConsumption = dronePowerConsumption[2];
@@ -39,9 +39,10 @@ namespace BL
                   Id = drone.Id,
                   Model = drone.Model,
                   MaxWeight=(EnumsBL.WeightCategories)drone.MaxWeight,
-                    DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.Id == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : rand.Next((int)EnumsBL.DroneStatuses.Maintance),
+                  DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.Id == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2),
                   BatteryStatus =
-                  
+                });
+            }   
         public int NumberOfTheDeliveredParcel { get; set; }
         public Location Location { get; set; }
         public override string ToString()
@@ -90,6 +91,7 @@ namespace BL
             IDAL.DO.Drone drone = dl.GetDrone(id);
             if(drone.Status== IDAL.DO.Statuses.Available)
             {
+                
 
             }
         }
