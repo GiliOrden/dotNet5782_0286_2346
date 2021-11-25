@@ -26,7 +26,7 @@ namespace BL
             Random rand = new Random(DateTime.Now.Millisecond);
             dl = new DalObject.DalObject();
             dalDrones = dl.GetListOfDrones();
-            dronePowerConsumption = dl.getDronePowerConsumption();
+            dronePowerConsumption = dl.GetDronePowerConsumption();
             emptyDronePowerConsumption = dronePowerConsumption[0];
             lightWeightCarrierPowerConsumption = dronePowerConsumption[1];
             mediumWeightCarrierPowerConsumption = dronePowerConsumption[2];
@@ -90,6 +90,7 @@ namespace BL
             IDAL.DO.Drone drone = dl.GetDrone(id);
             if(drone.Status== IDAL.DO.Statuses.Available)
             {
+                
 
             }
         }

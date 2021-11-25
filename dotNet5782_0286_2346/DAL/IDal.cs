@@ -67,10 +67,11 @@ namespace IDAL
         /// <param name="id">the drone id</param>
         /// <param name="id2">the station id</param>
         void SendDroneToCharge(int id, int id2);
+       
         void ReleaseDroneFromCharge(int id);
         DO.Drone GetDrone(int id);
         IEnumerable<DO.Drone> GetListOfDrones();
-        double[] getDronePowerConsumption();
+        double[] GetDronePowerConsumption();
        
         #endregion
 
