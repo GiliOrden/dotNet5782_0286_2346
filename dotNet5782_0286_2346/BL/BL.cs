@@ -19,7 +19,7 @@ namespace BL
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
         IDal dl;
-        List<Drone> drones = new List<Drone>();
+        List<DroneForList> drones = new List<DroneForList>();
         IEnumerable<IDAL.DO.Drone> dalDrones;
         public BL()//ctor
         {
@@ -32,21 +32,21 @@ namespace BL
             mediumWeightCarrierPowerConsumption = dronePowerConsumption[2];
             heavyWeightCarrierPowerConsumption = dronePowerConsumption[3];
             chargingRatePerHour = dronePowerConsumption[4];
-            foreach(var drone in dalDrones)
+            foreach (var drone in dalDrones)
             {
-                drones.Add(new DroneForList()
-                { 
-                  Id = drone.Id,
-                  Model = drone.Model,
-                  MaxWeight=(EnumsBL.WeightCategories)drone.MaxWeight,
-                    DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.Id == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : rand.Next((int)EnumsBL.DroneStatuses.Maintance),
-                  BatteryStatus =
+                DroneForList droneForList = new DroneForList();
+                droneForList.Id = drone.Id;
+                droneForList.Model = drone.Model;
+                droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
+                droneForList.DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.DroneId == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next((int)EnumsBL.DroneStatuses.OnDelivery);//Random value between available and maintenance
+                if(droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+                {
+                   droneForList.Location=rand.Next()
+                   droneForList.BatteryStatus = rand.Next(21);
+                }
                   
-        public int NumberOfTheDeliveredParcel { get; set; }
-        public Location Location { get; set; }
-        public override string ToString()
-        {
-            return this.ToStringProperty();
+                drones.Add(droneForList);
+            }
         }
 
         public void ReceiveNewCustomer(int id, string name, string phone, IBL.BO.Location location)
