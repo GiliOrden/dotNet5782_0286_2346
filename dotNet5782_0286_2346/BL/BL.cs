@@ -48,7 +48,35 @@ namespace BL
         {
             return this.ToStringProperty();
         }
-    });
+
+        public void ReceiveNewCustomer(int id, string name, string phone, IBL.BO.Location location)
+        {
+            IDAL.DO.Customer customer = new();
+            customer.Id = id;
+            customer.Name = name;
+            customer.Phone = phone;
+            customer.Latitude = location.Latitude;
+            customer.Longitude = location.Longitude;
+            dl.AddCustomer(customer);
+        }
+        public void ReceiveNewParcel(int senderId, int receiverId, IBL.BO.EnumsBL.WeightCategories weight, IBL.BO.EnumsBL.Priorities property)
+        {
+            IDAL.DO.Parcel parcel = new();
+            parcel.SenderId = senderId;
+            parcel.TargetId = receiverId;
+            parcel.Weight = (IDAL.DO.WeightCategories)weight;
+            parcel.Priority = (IDAL.DO.Priorities)property;
+            parcel.DroneId = 0;//supposed to be null
+            parcel.Requested = DateTime.Now;
+            parcel.Scheduled = default;
+            parcel.PickedUp = default;
+            parcel.Delivered = default;
+            dl.AddParcel(parcel);
+        }
+
+
+
+    };
                     
             }
         }

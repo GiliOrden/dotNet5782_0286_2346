@@ -21,12 +21,12 @@ namespace IBL
         #endregion
 
         #region Customer
-        BO.Customer ReceiveNewCustomer(int id, string name, int phone, BO.Location location);
-        BO.Customer UpdatingCustomerData(int id, string name, int phone);
+        public void ReceiveNewCustomer(int id, string name, string phone, BO.Location location);
+        public void UpdatingCustomerData(int id, string name, int phone);
         #endregion
 
         #region Parcel
-        BO.Parcel ReceiveNewParcel(int senderId, int receiverId, BO.EnumsBL.WeightCategories weight, BO.EnumsBL.Priorities property);
+        public void ReceiveNewParcel(int senderId, int receiverId, BO.EnumsBL.WeightCategories weight, BO.EnumsBL.Priorities property);
         #endregion
 
 
