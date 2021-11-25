@@ -31,6 +31,19 @@ namespace DalObject
             Customer c = new();//i think it shouldnt be here because of th try
             return c;
         }
+        public void SetCustomer(int id,Customer c)
+        {
+            if (!DataSource.customers.Any(cust => cust.Id == id))
+                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "customer");
+            foreach (Customer customer in customers)
+            {
+                if (customer.Id == id)
+                {
+                    customers.Remove(customer);
+                    customers.Add(c);
+                }
+            }
+        }
 
         public IEnumerable<Customer>GetListOfCustomers()
         {

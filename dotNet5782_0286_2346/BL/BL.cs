@@ -59,6 +59,7 @@ namespace BL
             customer.Longitude = location.Longitude;
             dl.AddCustomer(customer);
         }
+
         public void ReceiveNewParcel(int senderId, int receiverId, IBL.BO.EnumsBL.WeightCategories weight, IBL.BO.EnumsBL.Priorities property)
         {
             IDAL.DO.Parcel parcel = new();
@@ -74,6 +75,15 @@ namespace BL
             dl.AddParcel(parcel);
         }
 
+        public void UpdatingCustomerData(int id, string name, string phone) //is there a chance the function will get only 2 values?
+        {                                                                                          
+            IDAL.DO.Customer customer = dl.GetCustomer(id);
+            if (name != null)
+                customer.Name = name;
+            if (phone != null)
+                customer.Phone = phone;
+            dl.SetCustomer(id, customer);
+        }
 
 
     };

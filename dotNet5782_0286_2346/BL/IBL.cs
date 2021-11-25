@@ -22,7 +22,7 @@ namespace IBL
 
         #region Customer
         public void ReceiveNewCustomer(int id, string name, string phone, BO.Location location);
-        public void UpdatingCustomerData(int id, string name, int phone);
+        public void UpdatingCustomerData(int id, string name, string phone);
         #endregion
 
         #region Parcel

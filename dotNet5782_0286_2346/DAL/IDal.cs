@@ -33,7 +33,13 @@ namespace IDAL
         /// <returns>Customer element</returns>
         DO.Customer GetCustomer(int id);
 
-
+        /// <summary>
+        /// This is a 'set' function for class Customer
+        /// </summary>
+        /// <param name="id">the customer id which need to be changed</param>
+        /// <param name="c">the customer after the changing</param>
+        public void SetCustomer(int id,DO.Customer c);
+                    
         /// <summary>
         /// the function returns the list of the customers
         /// </summary>
