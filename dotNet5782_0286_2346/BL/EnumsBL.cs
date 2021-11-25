@@ -8,11 +8,16 @@ namespace IBL
         {
             public enum DroneStatuses {Available,Maintance,OnDelivery}
 
-            public enum WeightCategories { Light, Medium, Heavy }//i dont know if they need to be here
+            public enum WeightCategories { Light, Medium, Heavy }
 
             public enum Priorities { Regular, Fast, Emergency }
 
             public enum ParcelStatuses { Defined, Associated, Collected, Supplied}
+
+            public static explicit operator EnumsBL(IDAL.DO.WeightCategories v)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
