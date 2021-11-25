@@ -41,7 +41,7 @@ namespace BL
                 droneForList.DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.DroneId == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next((int)EnumsBL.DroneStatuses.OnDelivery);//Random value between available and maintenance
                 if(droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
-                   droneForList.Location=rand.Next()
+                   droneForList.Location = rand.Next()
                    droneForList.BatteryStatus = rand.Next(21);
                 }
                   
@@ -87,19 +87,19 @@ namespace BL
 
         public void SendingDroneForCharging(int id)
         {
-            BO.Drone drone = dl.GetDrone(id);
-            foreach (Customer customer in dalDrones)
+            IDAL.DO.Drone drone =new();
+            foreach (IDAL.DO.Drone d in dalDrones)
             {
-                if (customer.Id == id)
+                if (d.Id == id)
                 {
-                    return customer;
+                    if (d.Status == IDAL.DO.Statuses.Available)
+                    {
+
+
+                    }
                 }
             }
-            if (drone.Status== IDAL.DO.Statuses.Available)
-            {
-                
-
-            }
+            
         }
     };
                     
