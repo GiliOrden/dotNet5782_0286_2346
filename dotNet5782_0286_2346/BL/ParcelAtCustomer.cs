@@ -15,7 +15,7 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public ParcelStatuses Status{ get; set; }
-            public Customer OtherSide { get; set; }//not sure, when we will do get and set it will be solved-i think the problem was becouse customer wasnt public i changed it
+            public BO.Customer OtherSide { get; set; }//not sure, when we will do get and set it will be solved-i think the problem was becouse customer wasnt public i changed it
             public override string ToString()
             {
                 return this.ToStringProperty();
