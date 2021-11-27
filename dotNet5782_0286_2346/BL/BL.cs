@@ -38,7 +38,15 @@ namespace BL
                 droneForList.Id = drone.Id;
                 droneForList.Model = drone.Model;
                 droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
-                droneForList.DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.DroneId == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next((int)EnumsBL.DroneStatuses.OnDelivery);//Random value between available and maintenance
+                droneForList.DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.DroneId == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
+                if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
+                {
+                    if (dl.GetListOfParcels().First(parcel => parcel.DroneId == droneForList.Id).PickedUp != default(DateTime))
+                    {droneForList.Location=}
+                    else
+                        droneForList.Location=
+
+                }
                 if(droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
                    droneForList.Location=rand.Next()
@@ -49,7 +57,7 @@ namespace BL
             }
         }
 
-        public void ReceiveNewCustomer(int id, string name, string phone, IBL.BO.Location location)
+        public void addCustomer(int id, string name, string phone, IBL.BO.Location location)
         {
             IDAL.DO.Customer customer = new();
             customer.Id = id;
@@ -60,7 +68,7 @@ namespace BL
             dl.AddCustomer(customer);
         }
 
-        public void ReceiveNewParcel(int senderId, int receiverId, IBL.BO.EnumsBL.WeightCategories weight, IBL.BO.EnumsBL.Priorities property)
+        public void addParcel(int senderId, int receiverId, IBL.BO.EnumsBL.WeightCategories weight, IBL.BO.EnumsBL.Priorities property)
         {
             IDAL.DO.Parcel parcel = new();
             parcel.SenderId = senderId;

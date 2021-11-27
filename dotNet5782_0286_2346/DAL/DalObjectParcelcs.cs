@@ -11,8 +11,6 @@ namespace DalObject
     public partial class DalObject : IDal
     {
 
-
-
         /// <summary>
         /// Adding customer element to the customers list
         /// </summary>
@@ -25,6 +23,7 @@ namespace DalObject
             parcels.Add(p);
             return p.Id;
         }
+
         /// <summary>
         /// updating of assign parcel to the drone which will deliver it
         /// </summary>
@@ -34,25 +33,15 @@ namespace DalObject
         {
             if (!DataSource.drones.Any(dron => dron.Id == droneId))
                 throw new IDAL.DO.Exceptions.IdNotFoundException(droneId, "drone");
-            foreach (Drone drone in drones)
-            {
-                if (drone.Id == droneId)
-                {
-                    Drone d = drone;
-                    drones.Add(d);
-                    drones.Remove(drone);
-                    break;
-                }
-            }
-
+            Drone d = DataSource.drones.First(drone => drone.Id == droneId);
             if (!DataSource.parcels.Any(parc => parc.Id == parcelId))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(parcelId, "parcel");
+                 throw new IDAL.DO.Exceptions.IdNotFoundException(parcelId, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == parcelId)
                 {
                     Parcel p = parcel;
-                    p.DroneId = drones[drones.Count - 1].Id;
+                    p.DroneId = d.Id;
                     p.Scheduled = DateTime.Now;
                     parcels.Add(p);
                     parcels.Remove(parcel);
@@ -60,6 +49,7 @@ namespace DalObject
                 }
             }
         }
+
         /// <summary>
         /// updating of collection parcel  by drone
         /// </summary>
@@ -148,6 +138,7 @@ namespace DalObject
                 p.Add(parcels[i]);
             return p;
         }
+
         /// <summary>
         /// this function returns list of all the parsels which aren't associated to drones
         /// </summary>
