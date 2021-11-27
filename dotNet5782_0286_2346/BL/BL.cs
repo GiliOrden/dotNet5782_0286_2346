@@ -49,7 +49,7 @@ namespace BL
                 }
                 if(droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
-                   droneForList.Location=rand.Next()
+                   droneForList.Location = rand.Next()
                    droneForList.BatteryStatus = rand.Next(21);
                 }
                   
@@ -95,12 +95,19 @@ namespace BL
 
         public void SendingDroneForCharging(int id)
         {
-            IDAL.DO.Drone drone = dl.GetDrone(id);
-            if(drone.Status== IDAL.DO.Statuses.Available)
+            IDAL.DO.Drone drone =new();
+            foreach (IDAL.DO.Drone d in dalDrones)
             {
-                
+                if (d.Id == id)
+                {
+                    if (d.Status == IDAL.DO.Statuses.Available)
+                    {
 
+
+                    }
+                }
             }
+            
         }
     };
                     
