@@ -14,7 +14,6 @@ namespace IDAL
         DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> GetListOfBaseStations();
         IEnumerable<DO.Station> GetListOfAvailableChargingStations();
-        DO.Station DistanceFromStation(int id);
         
         #endregion
 
@@ -33,12 +32,6 @@ namespace IDAL
         /// <returns>Customer element</returns>
         DO.Customer GetCustomer(int id);
 
-        /// <summary>
-        /// This is a 'set' function for class Customer
-        /// </summary>
-        /// <param name="id">the customer id which need to be changed</param>
-        /// <param name="c">the customer after the changing</param>
-        public void SetCustomer(int id,DO.Customer c);
                     
         /// <summary>
         /// the function returns the list of the customers
@@ -46,12 +39,7 @@ namespace IDAL
         /// <returns><"listOfCustomers">
         IEnumerable<DO.Customer> GetListOfCustomers();
 
-        /// <summary>
-        /// returns customer element which the name is his 
-        /// </summary>
-        /// <param name="name">name of customer</param>
-        /// <returns></returns>
-        DO.Customer DistanceFromCustomer(string name);
+
         #endregion
 
         #region Drone

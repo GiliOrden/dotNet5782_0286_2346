@@ -32,6 +32,7 @@ namespace BL
             mediumWeightCarrierPowerConsumption = dronePowerConsumption[2];
             heavyWeightCarrierPowerConsumption = dronePowerConsumption[3];
             chargingRatePerHour = dronePowerConsumption[4];
+            double minDistance=10000000;
             foreach (var drone in dalDrones)
             {
                 DroneForList droneForList = new DroneForList();
@@ -39,10 +40,21 @@ namespace BL
                 droneForList.Model = drone.Model;
                 droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
                 droneForList.DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.DroneId == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
+
                 if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                 {
-                    if (dl.GetListOfParcels().First(parcel => parcel.DroneId == droneForList.Id).PickedUp != default(DateTime))
-                    {droneForList.Location=}
+                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id);
+                    //If the package was associated but not collected - location will be at the station closest to the sender
+                    if (parcel.PickedUp== default(DateTime))
+                   // if (dl.GetListOfParcels().First(parcel => parcel.DroneId == droneForList.Id).PickedUp == default(DateTime))
+                    {
+                        IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
+                        foreach(IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
+                        {
+                           
+                        }
+                        droneForList.Location=
+                    }
                     else
                         droneForList.Location=
 
@@ -56,7 +68,6 @@ namespace BL
                 drones.Add(droneForList);
             }
         }
-
         public void addCustomer(int id, string name, string phone, IBL.BO.Location location)
         {
             IDAL.DO.Customer customer = new();
@@ -83,7 +94,7 @@ namespace BL
             dl.AddParcel(parcel);
         }
 
-        public void UpdatingCustomerData(int id, string name, string phone) //is there a chance the function will get only 2 values?
+        public void UpdatinCustomerData(int id, string name, string phone) //is there a chance the function will get only 2 values?
         {                                                                                          
             IDAL.DO.Customer customer = dl.GetCustomer(id);
             if (name != null)
