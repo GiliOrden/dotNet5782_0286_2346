@@ -307,7 +307,6 @@ namespace ConsoleUI
         public static void FindingDistance(ref IDal dl)
         {
             int ans, longitude, latitude, id;
-            string name;
             bool check;
             Console.WriteLine("Press 1 to check a customer's distance from a coordinate");
             Console.WriteLine("Press 2 to check a stationws distance from a coordinate");
@@ -321,10 +320,10 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     check = int.TryParse(Console.ReadLine(), out latitude);
                     if (!check) Console.WriteLine("Write only with numbers");
-                    Console.WriteLine("Enter your name");
-                    name = Console.ReadLine();
-                    Customer c =dl.DistanceFromCustomer(name);
-                    Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
+                    Console.WriteLine("Enter the ID of the customer");
+                    int.TryParse(Console.ReadLine(), out id);
+                    Customer c=dl.GetCustomer(id);
+                    Console.WriteLine($"The distance from the customer:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
                     break;
                 case FindDistances.StationDistance:
                     Console.WriteLine("Enter the location (longitude & latitude) ");
@@ -334,8 +333,8 @@ namespace ConsoleUI
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the station's Id");
                     int.TryParse(Console.ReadLine(), out id);
-                    Station s = dl.DistanceFromStation(id);
-                    Console.WriteLine($"The distunce is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
+                    Station s = dl.GetBaseStation(id);
+                    Console.WriteLine($"The distance from the station is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
                     break;
                 default:
                     break;

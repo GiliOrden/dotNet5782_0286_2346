@@ -73,29 +73,6 @@ namespace DalObject
             return s;
         }
 
-        /// <summary>
-        ///  returns station element whose the id is its 
-        /// </summary>
-        /// <param name="id">id of station</param>
-        /// <returns></returns>
-        public Station DistanceFromStation(int id)
-        {
-
-            if (!DataSource.stations.Any(sta => sta.Id == id))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "station");
-            
-            foreach (Station station in stations)
-            {
-
-                if (station.Id == id)
-                {
-                    return station;
-
-                }
-            }
-            Station s = new Station();
-            return s;
-        }
 
     }
 }
