@@ -10,9 +10,7 @@ namespace DalObject
 {
     internal class DataSource//i read it should be internal class
     {
-        /// <summary>
-        /// using as Id for parcels
-        /// </summary>
+      
         internal class Config
         {
            internal static int CodeOfParcel = 0;

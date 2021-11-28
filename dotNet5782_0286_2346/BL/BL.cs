@@ -32,7 +32,7 @@ namespace BL
             chargingRatePerHour = dronePowerConsumption[4];
             double minDistance=10000000;
             double distance;
-            int idOfStation;
+            int idOfStation=0;
             foreach (var drone in dalDrones)
             {
                 DroneForList droneForList = new DroneForList();
@@ -44,30 +44,38 @@ namespace BL
                 if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                 {
                     IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id);
+                    IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
+
                     //If the package was associated but not collected - location will be at the station closest to the sender
                     if (parcel.PickedUp== default(DateTime))
-                   // if (dl.GetListOfParcels().First(parcel => parcel.DroneId == droneForList.Id).PickedUp == default(DateTime))
                     {
-                        IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
-                        from IDAL.DO.Station baseStation in dl.GetListOfBaseStations()
                         foreach (IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
                         {
                             distance = DistanceBetweenPlaces(baseStation.Longitude, baseStation.Latitude, sender.Longitude, sender.Latitude);
                             if (distance < minDistance)
                             {
                                 minDistance = distance;
+                                idOfStation = baseStation.Id;
                             }
                         }
-                        droneForList.Location=
+                        droneForList.Location.Longitude = dl.GetBaseStation(idOfStation).Longitude;
+                        droneForList.Location.Latitude = dl.GetBaseStation(idOfStation).Latitude;
                     }
-                    else
-                        droneForList.Location=
 
+                    //If the package was collected  but wasn't delivered- location will be at the sender
+                    if (parcel.PickedUp != default(DateTime) && parcel.Delivered == default(DateTime))
+                    {
+                        droneForList.Location.Longitude = sender.Longitude;
+                        droneForList.Location.Latitude = sender.Latitude;
+                    }
+
+                    droneForList.BatteryStats = rand.NextDouble() * ( , 100);
                 }
                 if(droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
-                   
-                   droneForList.BatteryStatus = rand.Next(21);
+                    int location = rand.Next(dl.GetListOfBaseStations().Count());
+                    droneForList.Location.Longitude = dl.GetListOfBaseStations()[location];
+                    droneForList.BatteryStats = rand.Next(21);
                 }
                   
                 drones.Add(droneForList);
