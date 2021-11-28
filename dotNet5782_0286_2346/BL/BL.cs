@@ -85,16 +85,29 @@ namespace BL
             dl.SetCustomer(id, customer);
         }
 
-        public void SendingDroneForCharging(int id)
+        public void SendingDroneForCharging(IBL.BO.Drone drone)
         {
-            IDAL.DO.Drone drone =new();
+            IDAL.DO.Drone d2 =new();
             foreach (IDAL.DO.Drone d in dalDrones)
             {
-                if (d.Id == id)
+                if (d.Id == drone.Id)
                 {
                     if (d.Status == IDAL.DO.Statuses.Available)
                     {
+                        foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
+                        {
 
+
+
+
+
+
+
+
+
+
+                        }
+                           
 
                     }
                 }
