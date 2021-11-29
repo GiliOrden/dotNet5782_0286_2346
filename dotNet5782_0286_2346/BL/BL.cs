@@ -93,14 +93,13 @@ namespace BL
 
         public void addBaseStation(Station station)
         {
-            IDAL.DO.Station dalStation=new();//to check the new
+            IDAL.DO.Station dalStation=new();
             dalStation.Id = station.ID;
             dalStation.Name = station.Name;
             dalStation.Longitude = station.Location.Longitude;
             dalStation.Latitude = station.Location.Latitude;
             dalStation.ChargeSlots = station.AvailableChargeSlots;
-
-
+            dl.AddStation(dalStation);
         }
         public void addCustomer(int id, string name, string phone, IBL.BO.Location location)
         {
