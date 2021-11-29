@@ -112,13 +112,13 @@ namespace BL
             dl.AddCustomer(customer);
         }
 
-        public void addParcel(int senderId, int receiverId, IBL.BO.EnumsBL.WeightCategories weight, IBL.BO.EnumsBL.Priorities property)
+        public void addParcel(Parcel p)
         {
             IDAL.DO.Parcel parcel = new();
-            parcel.SenderId = senderId;
-            parcel.TargetId = receiverId;
-            parcel.Weight = (IDAL.DO.WeightCategories)weight;
-            parcel.Priority = (IDAL.DO.Priorities)property;
+            parcel.SenderId = p.Sender.Id;
+            parcel.TargetId = p.Receiver.Id;
+            parcel.Weight = (IDAL.DO.WeightCategories)p.Weight;
+            parcel.Priority = (IDAL.DO.Priorities)p.Priority;
             parcel.DroneId = 0;//supposed to be null
             parcel.Requested = DateTime.Now;
             parcel.Scheduled = default;
@@ -137,7 +137,7 @@ namespace BL
             dl.UpdateCustomer(customer);//where is the UpdateCustomer function?
         }
 
-        public void SendDroneToCharge(int id)
+        public void SendDroneToChargeBL(int id)
         {
             foreach (DroneForList drone in drones)
             {
@@ -174,7 +174,7 @@ namespace BL
 
 
 
-        public void CollectingParcelByDrones(int id)
+        public void CollectingParcelByDronesBL(int id)
         {
             int parcelId;
             foreach(DroneForList d in drones)
@@ -192,14 +192,32 @@ namespace BL
                         dl.CollectParcelByDrone(parcelId);
                     }
                     else
-                    {
                         throw new ExceptionsBL.DroneCanNotCollectParcelException(id, parcelId);
-                    }
                 }
              }
-        } 
+        }
 
-
+        public void SupplyDeliveryToCustomerBL(int droneId)
+        {
+            foreach (DroneForList d in drones)
+            {
+                if (d.Id == droneId) {
+                    if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp != DateTime.MinValue) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == DateTime.MinValue))
+                    {//the parcel picked up but have not reached its destination
+                        Location targetLocation = new();
+                        targetLocation.Latitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Latitude;
+                        targetLocation.Longitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Longitude;
+                        double consumption= dronePowerConsumption[(int)dl.GetParcel(d.IdOfTheDeliveredParcel).Weight + 1];
+                        d.BatteryStatus -= DistanceBetweenPlaces(targetLocation.Longitude, targetLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * consumption;
+                        d.Location = targetLocation;
+                        d.DroneStatus = EnumsBL.DroneStatuses.Available;
+                        dl.SupplyDeliveryToCustomer(d.IdOfTheDeliveredParcel);//update the 'delivery' time in parcel for now
+                    }
+                    else
+                        throw new ExceptionsBL.DroneCanNotSupplyDeliveryToCustomerException(droneId, d.IdOfTheDeliveredParcel);
+                }
+            }
+        }
 
         internal static double Radians(double x)
         {

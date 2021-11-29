@@ -74,7 +74,7 @@ namespace DalObject
 
         }
         /// <summary>
-        /// updating of supplying delivery to customer
+        /// updating of supplying delivery to customer,( update the 'delivered' time of parcel for now)
         /// </summary>
         /// <param name="id">the id of parcel</param>
         public void SupplyDeliveryToCustomer(int id)

@@ -11,7 +11,7 @@ namespace IBL.BO
     {
         
             [Serializable]
-            public class NoBatteryException: Exception//when trying to add an id of station/drone/parcel and it allready exists 
+            public class NoBatteryException: Exception
             {
                 public int ID;
                 
@@ -24,7 +24,7 @@ namespace IBL.BO
 
         
         [Serializable]
-        public class DroneCanNotCollectParcelException : Exception//when trying to add an id of station/drone/parcel and it allready exists 
+        public class DroneCanNotCollectParcelException : Exception
         {
             public int DroneID;
             public int ParcelId;
@@ -34,8 +34,18 @@ namespace IBL.BO
 
             public override string ToString() => base.ToString() + $"The {DroneID} drone cann't send , the {ParcelId} parcel   have allready sent ";
         }
+        
+        [Serializable]
+        public class DroneCanNotSupplyDeliveryToCustomerException : Exception
+        {
+            public int DroneID;
+            public int ParcelId;
+            public DroneCanNotSupplyDeliveryToCustomerException(int droneId, int parcelId) : base() { DroneID = droneId; ParcelId = parcelId; }
+            public DroneCanNotSupplyDeliveryToCustomerException(int droneId, int parcelId, string message) : base(message) { DroneID = droneId; ParcelId = parcelId; }
+            public DroneCanNotSupplyDeliveryToCustomerException(int droneId, int parcelId, string message, Exception inner) : base(message, inner) { DroneID = droneId; ParcelId = parcelId; }
 
-
+            public override string ToString() => base.ToString() + $"The {DroneID} drone cann't supply , the {ParcelId} parcel  ";
+        }
 
     }
 }

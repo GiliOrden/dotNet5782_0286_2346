@@ -17,6 +17,7 @@ namespace IBL
         //public void SendingDroneForCharging(int id);
         public void SendingDroneForCharging(BO.Drone drone);
         public void CollectingParcelByDrones(int droneId);
+        public void SupplyDeliveryToCustomer(int droneId);
         #endregion
 
         #region Location
@@ -28,7 +29,7 @@ namespace IBL
         #endregion
 
         #region Parcel
-        public void ReceiveNewParcel(int senderId, int receiverId, BO.EnumsBL.WeightCategories weight, BO.EnumsBL.Priorities property);
+        public void addParcel(BO.Parcel p);
         #endregion
 
 
