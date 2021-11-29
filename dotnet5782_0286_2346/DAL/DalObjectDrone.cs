@@ -27,8 +27,12 @@ namespace DalObject
             status[4] =Config.ChargingRatePerHour;
             return status;
         }
-
-        public void SendDroneToCharge(int id, int id2)//there is problem with the function
+        /// <summary>
+        /// //שינוי מצב הרחפן והוספת מופע של ישות טעינת סוללת רחפן
+        /// </summary>
+        /// <param name="id">drone id</param>
+        /// <param name="id2">station id</param>
+        public void SendDroneToCharge(int id, int id2)//problem with this function
         {
             Drone d;
             Station s;
@@ -62,6 +66,7 @@ namespace DalObject
             if (!DataSource.stations.Any(sta => sta.Id == id2))
                 throw new IDAL.DO.Exceptions.IdNotFoundException(id2, "station");
         }
+
         /// <summary>
         /// updating of releasing drone from Charging station
         /// </summary>
