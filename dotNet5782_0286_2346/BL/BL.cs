@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IBL.BO;
 using IDAL;
-
+#include<cmath>
 namespace BL
 {
     public partial class BL : IBL.IBL
@@ -114,37 +114,47 @@ namespace BL
                 customer.Name = name;
             if (phone != null)
                 customer.Phone = phone;
-            dl.SetCustomer(id, customer);
+            dl.SetCustomer(id, customer);//where is the UpdateCustomer function?
         }
 
         public void SendingDroneForCharging(IBL.BO.Drone drone)
         {
-            IDAL.DO.Drone d2 =new();
-            foreach (IDAL.DO.Drone d in dalDrones)
+            if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
             {
-                if (d.Id == drone.Id)
+                IDAL.DO.Station minDistanceStation;
+                double minDis = 1000000;
+                foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
                 {
-                    if (d.Status == IDAL.DO.Statuses.Available)
+                    double distance = sqrt(pow(s.Latitude - drone.Location.Latitude, 2.0) + pow(s.Longitude - drone.Location.Longitude, 2.0));//Rivki if u want to change it...
+                    if ((distance < minDis) &&(s.ChargeSlots>0))
                     {
-                        foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
-                        {
-
-
-
-
-
-
-
-
-
-
-                        }
-                           
+                        minDis = distance;
+                        minDistanceStation = s;
+                    }
+                }      
+                if(minDis != 1000000)
+                {
+                    if (emptyDronePowerConsumption * minDis < drone.BatteryStatus)
+                    {
 
                     }
+                    else
+                    {
+                        throw new ExceptionsBL.NoBatteryException(drone.Id);
+                    }
                 }
+
+
+
+
+
+
+
+                       
+
+
             }
-            
+
         }
         public static double Radians(double x)
         {
