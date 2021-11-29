@@ -158,6 +158,9 @@ namespace BL
         public void CollectingParcelByDrones(Drone drone)
         {
 
+
+
+
         } 
         public static double Radians(double x)
         {
