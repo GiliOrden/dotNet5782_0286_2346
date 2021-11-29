@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using IBL.BO;
 using IDAL;
-#include<cmath>
 namespace BL
 {
     public partial class BL : IBL.IBL
@@ -72,21 +71,40 @@ namespace BL
 
                     droneForList.BatteryStats = rand.NextDouble() * ( , 100);
                 }
-                if(droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+
+                //If the drone is in maintenance, its location will be drawn between the existing stations
+                else if (droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
-                    int location = rand.Next(dl.GetListOfBaseStations().Count());
-                    droneForList.Location.Longitude = dl.GetListOfBaseStations()[location];
+                    int index = rand.Next(dl.GetListOfBaseStations().Count());
+                    droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
+                    droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
                     droneForList.BatteryStats = rand.Next(21);
+                }
+
+                else //if the drone is available
+                {
+                  //  מיקומו יוגרל בין לקוחות שיש חבילות שסופקו להם
+
                 }
                   
                 drones.Add(droneForList);
             }
         }
+
+        public void addBaseStation(Station station)
+        {
+            IDAL.DO.Station dalStation=new();//to check the new
+            dalStation.Id = station.ID;
+            dalStation.Name = station.Name;
+            dalStation.Longitude = station.Location.Longitude;
+            dalStation.Latitude = station.Location.Latitude;
+            dalStation.ChargeSlots = station.AvailableChargeSlots;
+        }
         public void addCustomer(int id, string name, string phone, IBL.BO.Location location)
         {
             IDAL.DO.Customer customer = new();
             customer.Id = id;
-            customer.Name = name;
+            customer.Name = name; 
             customer.Phone = phone;
             customer.Latitude = location.Latitude;
             customer.Longitude = location.Longitude;
@@ -159,14 +177,14 @@ namespace BL
         {
 
         } 
-        public static double Radians(double x)
+        internal static double Radians(double x)
         {
             return x * Math.PI / 180;
         }
         // cos(d) = sin(φА)·sin(φB) + cos(φА)·cos(φB)·cos(λА − λB),
         //  where φА, φB are latitudes and λА, λB are longitudes
         // Distance = d * R
-        public static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
+        internal static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
         {
             double R = 6371; // km
 

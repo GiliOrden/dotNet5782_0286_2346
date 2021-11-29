@@ -17,7 +17,7 @@ namespace IBL
 
             public IEnumerable<ParcelAtCustomer> ListOfParcelsFromMe;
 
-            public IEnumerable<ParcelAtCustomer> ListOfParcelsIntendedToME;//i dont like the"me" and i dont sure it should be public and look like that
+            public IEnumerable<ParcelAtCustomer> ListOfParcelsIntendedToME { get; set; }//i dont like the"me" and i dont sure it should be public and look like that//should it be property?
             public override string ToString()
             {
                 return this.ToStringProperty();
