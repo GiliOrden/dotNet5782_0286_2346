@@ -9,7 +9,6 @@ namespace IDAL
     namespace DO
     {
         public enum WeightCategories { Light, Medium, Heavy }
-        public enum Statuses { Available, Maintance, OnDelivery }
         public enum Priorities { Regular, Fast,Emergency }
     }
 }
