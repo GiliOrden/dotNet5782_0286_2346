@@ -138,32 +138,30 @@ namespace BL
             dl.SetCustomer(id, customer);//where is the UpdateCustomer function?
         }
 
-        public void SendingDroneForCharging(IBL.BO.Drone drone)
+        public void SendDroneToCharge(int id)
         {
-            if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
+            foreach (DroneForList drone in drones)
             {
-                IDAL.DO.Station minDistanceStation;
-                double minDis = 1000000;
-                foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
+                if ((drone.Id == id)&& (drone.DroneStatus == EnumsBL.DroneStatuses.Available))
                 {
-                    double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
-                    
-                    if ((distance < minDis) &&(s.ChargeSlots>0))
+                    IDAL.DO.Station minDistanceStation=new();
+                    double minDis = 1000000;
+                    foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
                     {
-                        minDis = distance;
-                        minDistanceStation = s;
+                        double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
+                        if ((distance < minDis) && (s.ChargeSlots > 0))
+                        {
+                            minDis = distance;
+                            minDistanceStation = s;
+                        }
                     }
-                }      
-                if(minDis != 1000000)
-                {
                     if (emptyDronePowerConsumption * minDis < drone.BatteryStatus)
                     {
-                        drone.BatteryStatus -= (int)(emptyDronePowerConsumption * minDis);
-                        drone.Location = minDistanceStation.LocationOfStation;//need to change station for BL kind?
+                        drone.BatteryStatus -= emptyDronePowerConsumption * minDis;
+                        drone.Location.Latitude = minDistanceStation.Latitude;
+                        drone.Location.Longitude = minDistanceStation.Longitude;
                         drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
-                        dl.GetBaseStation(minDistanceStation.Id).ChargeSlots -= 1;//it's by value, build a help function or change station for BL kind
-                        .Add( new DroneInCharging() {droneInCharging.Id=drone.Id, droneInCharging.BatteryStatus = drone.BatteryStatus });//what the name of the list??
-
+                        dl.SendDroneToCharge(drone.Id, minDistanceStation.Id);
 
                     }
                     else
@@ -171,10 +169,12 @@ namespace BL
                         throw new ExceptionsBL.NoBatteryException(drone.Id);
                     }
                 }
-
             }
-           
         }
+
+
+
+
         public void CollectingParcelByDrones(Drone drone)
         {
 
