@@ -99,6 +99,8 @@ namespace BL
             dalStation.Longitude = station.Location.Longitude;
             dalStation.Latitude = station.Location.Latitude;
             dalStation.ChargeSlots = station.AvailableChargeSlots;
+
+
         }
         public void addCustomer(int id, string name, string phone, IBL.BO.Location location)
         {
