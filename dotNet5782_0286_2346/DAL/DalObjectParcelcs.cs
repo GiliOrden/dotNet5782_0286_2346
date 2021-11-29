@@ -51,7 +51,7 @@ namespace DalObject
         }
 
         /// <summary>
-        /// updating of collection parcel  by drone
+        /// updating of collection parcel  by drone.( update the time of picking up for now)
         /// </summary>
         /// <param name="id">the id of parcel</param>
         public void CollectParcelByDrone(int id)

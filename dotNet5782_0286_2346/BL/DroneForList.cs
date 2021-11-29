@@ -15,7 +15,7 @@ namespace IBL
             public EnumsBL.WeightCategories MaxWeight { get; set; }
             public double BatteryStatus { get; set; }
             public EnumsBL.DroneStatuses DroneStatus { get; set; }
-            public int NumberOfTheDeliveredParcel  { get; set; }
+            public int IdOfTheDeliveredParcel  { get; set; }
             public Location Location { get; set; }
             public override string ToString()
             {
