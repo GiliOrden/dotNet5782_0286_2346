@@ -134,7 +134,7 @@ namespace BL
                 customer.Name = name;
             if (phone != null)
                 customer.Phone = phone;
-            dl.SetCustomer(id, customer);//where is the UpdateCustomer function?
+            dl.UpdateCustomer(customer);//where is the UpdateCustomer function?
         }
 
         public void SendDroneToCharge(int id)
