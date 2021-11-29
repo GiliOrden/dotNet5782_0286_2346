@@ -30,6 +30,7 @@ namespace BL
             mediumWeightCarrierPowerConsumption = dronePowerConsumption[2];
             heavyWeightCarrierPowerConsumption = dronePowerConsumption[3];
             chargingRatePerHour = dronePowerConsumption[4];
+            
             double minDistance=10000000;
             double distance;
             int idOfStation=0;
@@ -125,7 +126,7 @@ namespace BL
                 double minDis = 1000000;
                 foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
                 {
-                    double distance = sqrt(pow(s.Latitude - drone.Location.Latitude, 2.0) + pow(s.Longitude - drone.Location.Longitude, 2.0));//Rivki if u want to change it...
+                    double distance = Math.Sqrt(Math.Pow(s.Latitude - drone.Location.Latitude, 2.0) + Math.Pow(s.Longitude - drone.Location.Longitude, 2.0));
                     if ((distance < minDis) &&(s.ChargeSlots>0))
                     {
                         minDis = distance;
@@ -136,6 +137,12 @@ namespace BL
                 {
                     if (emptyDronePowerConsumption * minDis < drone.BatteryStatus)
                     {
+                        drone.BatteryStatus -= (int)(emptyDronePowerConsumption * minDis);
+                        drone.Location = minDistanceStation.LocationOfStation;//need to change station for BL kind?
+                        drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
+                        dl.GetBaseStation(minDistanceStation.Id).ChargeSlots -= 1;//it's by value, build a help function or change station for BL kind
+                        .Add( new DroneInCharging() {droneInCharging.Id=drone.Id, droneInCharging.BatteryStatus = drone.BatteryStatus });//what the name of the list??
+
 
                     }
                     else
