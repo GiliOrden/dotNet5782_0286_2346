@@ -126,7 +126,8 @@ namespace BL
                 double minDis = 1000000;
                 foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
                 {
-                    double distance = Math.Sqrt(Math.Pow(s.Latitude - drone.Location.Latitude, 2.0) + Math.Pow(s.Longitude - drone.Location.Longitude, 2.0));
+                    double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
+                    
                     if ((distance < minDis) &&(s.ChargeSlots>0))
                     {
                         minDis = distance;
@@ -151,18 +152,13 @@ namespace BL
                     }
                 }
 
-
-
-
-
-
-
-                       
-
-
             }
-
+           
         }
+        public void CollectingParcelByDrones(Drone drone)
+        {
+
+        } 
         public static double Radians(double x)
         {
             return x * Math.PI / 180;
