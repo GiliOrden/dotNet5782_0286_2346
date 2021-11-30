@@ -1,5 +1,4 @@
-﻿
-using IDAL.DO;
+﻿using IDAL.DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +14,11 @@ namespace DalObject
         /// <summary>
         /// Adding station element to the stations list
         /// </summary>
-        /// <param name="s">  element ,Station tipe, we adding the list</param>
+        /// <param name="s">  element ,Station type, we adding the list</param>
         public void AddStation(Station s)
         {
-            if (DataSource.stations.Any(sta => sta.Id == s.Id))
-                throw new IDAL.DO.Exceptions.ExistIdException(s.Id, "station");
+            if (!checkStation(s.Id))
+                throw new IDAL.DO.ExistIdException(s.Id, "station");
             stations.Add(s);
         }
 
@@ -30,20 +29,11 @@ namespace DalObject
         /// <returns>Station element</returns>
         public Station GetBaseStation(int id)
         {
-            if (!DataSource.stations.Any(sta => sta.Id == id))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "station");
-            foreach (Station baseStaion in stations)
-            {
-                if (baseStaion.Id == id)
-                {
-                    return baseStaion;
-                }
-            }
-            Station s=new();//the function doesn't supposed to come here
+            if (!checkStation(id))
+                throw new IDAL.DO.IdNotFoundException(id, "station");
+            Station s = DataSource.stations.Find(stat => stat.Id == id);
             return s;
         }
-
-
 
         /// <summary>
         ///  this function returns list of stations 
@@ -51,10 +41,8 @@ namespace DalObject
         /// <returns>list of stations </returns>
         public IEnumerable<Station> GetListOfBaseStations()
         {
-            List<Station> s = new List<Station>();
-            for (int i = 0; i < stations.Count; i++)
-                s.Add(stations[i]);
-            return s;
+            return from baseStation in stations
+            select baseStation;
         }
 
 
@@ -64,15 +52,19 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Station> GetListOfAvailableChargingStations()
         {
-            List<Station> s = new List<Station>();
-            foreach (Station baseStaion in stations)
-            {
-                if (baseStaion.ChargeSlots != 0)
-                    s.Add(baseStaion);
-            }
-            return s;
+            return from Station baseStation in stations
+                   where baseStation.ChargeSlots != 0
+                   select baseStation;
         }
 
-
+        /// <summary>
+        /// the function check an ID
+        /// </summary>
+        /// <param name="id">ID of station</param:>
+        /// <returns>true if the id exists in the list otherwise it returns false </returns>
+        public bool checkStation(int id)
+        {
+            return DataSource.stations.Any(sta => sta.Id ==id);
+        }
     }
 }
