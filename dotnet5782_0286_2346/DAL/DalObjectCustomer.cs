@@ -12,31 +12,36 @@ namespace DalObject
     {
         public void AddCustomer(Customer c)
         {
-            if(DataSource.customers.Any(cust => cust.Id == c.Id))
-                throw new IDAL.DO.Exceptions.ExistIdException(c.Id, "customer");
+            if(checkCustomer(c.Id))
+                throw new IDAL.DO.ExistIdException(c.Id, "customer");
             customers.Add(c);
         }
 
         public Customer GetCustomer(int id)
         {
-            if (!DataSource.customers.Any(cust => cust.Id == id))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "customer");
-            foreach (Customer customer in customers)
-            {
-                if (customer.Id == id)
-                {
-                    return customer;
-                }
-            }
-            Customer c = new();//i think it shouldnt be here because of th try
+            if (!checkCustomer(id))
+                throw new IDAL.DO.IdNotFoundException(id, "customer");
+            Customer c = DataSource.customers.Find(cust=>cust.Id==id);
             return c;
         }
 
-
+        /// <summary>
+        /// the function returns list of customers
+        /// </summary>
         public IEnumerable<Customer>GetListOfCustomers()
         {
             return from customer in DataSource.customers
                    select customer;
+        }
+
+        /// <summary>
+        /// the function check an ID
+        /// </summary>
+        /// <param name="id">ID of customer</param:>
+        /// <returns>true if the id exists in the list otherwise it returns false </returns>
+        private bool checkCustomer(int id)
+        {
+            return DataSource.customers.Any(cust => cust.Id == id);
         }
     }
 }

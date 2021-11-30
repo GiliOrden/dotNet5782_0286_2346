@@ -17,8 +17,8 @@ namespace DalObject
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
         public int AddParcel(Parcel p)
         {
-            if (DataSource.parcels.Any(parc => parc.Id == p.Id))
-                throw new IDAL.DO.Exceptions.ExistIdException(p.Id,"parcel");
+            if (checkParcel(p.Id))
+                throw new IDAL.DO.ExistIdException(p.Id,"parcel");
             p.Id = Config.CodeOfParcel++;
             parcels.Add(p);
             return p.Id;
@@ -31,11 +31,11 @@ namespace DalObject
         /// <param name="droneId">the id of drone</param>
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
-            if (!DataSource.drones.Any(dron => dron.Id == droneId))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(droneId, "drone");
+            if (!checkDrone(droneId))
+                throw new IDAL.DO.IdNotFoundException(droneId, "drone");
             Drone d = DataSource.drones.Find(drone => drone.Id == droneId);
-            if (!DataSource.parcels.Any(parc => parc.Id == parcelId))
-                 throw new IDAL.DO.Exceptions.IdNotFoundException(parcelId, "parcel");
+            if (!checkParcel(parcelId))
+                 throw new IDAL.DO.IdNotFoundException(parcelId, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == parcelId)
@@ -57,8 +57,8 @@ namespace DalObject
         public void CollectParcelByDrone(int id)
         {
             Parcel p;
-            if (!DataSource.parcels.Any(parc => parc.Id == id))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "parcel");
+            if (!checkParcel(id))
+                throw new IDAL.DO.IdNotFoundException(id, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -70,8 +70,6 @@ namespace DalObject
                     break;
                 }
             }
-           
-
         }
 
         /// <summary>
@@ -81,8 +79,8 @@ namespace DalObject
         public void SupplyDeliveryToCustomer(int id)
         {
             Parcel p;
-            if (!DataSource.parcels.Any(parc => parc.Id == id))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "parcel");
+            if (!checkParcel(id))
+                throw new IDAL.DO.IdNotFoundException(id, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -115,17 +113,9 @@ namespace DalObject
         /// <returns>Parcel element</returns>
         public Parcel GetParcel(int id)
         {
-            if (!DataSource.parcels.Any(parc => parc.Id == id))
-                throw new IDAL.DO.Exceptions.IdNotFoundException(id, "parcel");
-           
-            foreach (Parcel parcel in parcels)
-            {
-                if (parcel.Id == id)
-                {
-                    return parcel;
-                }
-            }
-            Parcel p = new ();
+            if (!checkParcel(id))
+                throw new IDAL.DO.IdNotFoundException(id, "parcel");
+            Parcel p =DataSource.parcels.Find(parc=>parc.Id==id);
             return p;
         }
 
@@ -145,15 +135,18 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Parcel> GetListOfNotAssociatedParsels()
         {
-            List<Parcel> p = new List<Parcel>();
-            foreach (Parcel parcel in parcels)
-            {
-                if (parcel.DroneId == 0)
-                    p.Add(parcel);
-            }
-            return p;
+            return from parc in parcels
+                   where parc.DroneId == 0
+                   select parc;
         }
-
-
+        /// <summary>
+        /// the function check an ID
+        /// </summary>
+        /// <param name="id">ID of parcel</param:>
+        /// <returns>true if the id exists in the list otherwise it returns false </returns>
+        private bool checkParcel(int id)
+        {
+            return DataSource.parcels.Any(parc => parc.Id == id);
+        }
     }
 }
