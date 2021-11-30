@@ -125,6 +125,7 @@ namespace BL
                 throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
             }
         }
+
         public void addDrone(DroneForList drone,int idOfStation)
         {
             try 
@@ -133,15 +134,46 @@ namespace BL
                 dalDrone.Id = drone.Id;
                 dalDrone.Model = drone.Model;
                 dalDrone.MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight;
+                dl.AddDrone(dalDrone);
                 //Sends the drone for initial charging
                 dl.SendDroneToCharge(dalDrone.Id, idOfStation);
-                dl.AddDrone(dalDrone);
                 dronesBL.Add(drone);//in the main i should fill its extra fields  
             }
             catch(IDAL.DO.ExistIdException ex)
             {
                 throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
-            }             
+            }  
+            catch(IDAL.DO.IdNotFoundException ex)
+            {
+                dl.RemoveDrone(drone.Id);
+                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
+            }
+        }
+
+        public void UpdateDrone(int id,string newModel)
+        {
+            if (!dl.checkDrone(id))
+                throw new IBL.BO.IdNotFoundException(id, "drone");
+            dronesBL.Find(drone => drone.Id == id).Model = newModel;   
+            IDAL.DO.Drone d = dl.GetDrone(id);
+            d.Model = newModel;
+            dl.RemoveDrone(id);
+            dl.AddDrone(d);
+        }
+        //I'm going to delete this note
+        //Note that the total numOfChargeSlots is the sum of the number of available positions and the number of skimmers in the charge
+        public void UpdateBaseStation(int id,string name,int numOfChargeSlots)
+        {
+            if(!dl.checkStation(id))
+              throw new IBL.BO.IdNotFoundException(id, "station");
+            IDAL.DO.Station s = dl.GetBaseStation(id);
+            if (name != " ")
+                s.Name = name;
+            if(numOfChargeSlots!=-1)
+            {
+
+            }
+
         }
         public void addCustomer(Customer c)
         {
