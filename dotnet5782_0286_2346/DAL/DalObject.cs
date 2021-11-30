@@ -13,6 +13,7 @@ namespace DalObject
         /// <summary>
         /// constructor, produce the data base
         /// </summary>
+        
         public DalObject()
         {
             DataSource.Initialize();

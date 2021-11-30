@@ -43,28 +43,18 @@ namespace DalObject
         /// <param name="idStation">station id</param>
         public void SendDroneToCharge(int idDrone, int idStation)
         {
+            DroneCharge dc = new DroneCharge();
             if (!checkDrone(idDrone))
                 throw new IDAL.DO.IdNotFoundException(idDrone, "drone");
-            if(!checkStation(idStation))
-                throw new IDAL.DO.IdNotFoundException(idStation, "station");
-
-            DroneCharge dc = new DroneCharge();
-            Station s;         
-
+            if (!checkStation(idStation))
+                throw new IDAL.DO.IdNotFoundException(idStation, "station");        
             dc.DroneId =idDrone;
             dc.StationId = idStation;
             droneCharges.Add(dc);
-            foreach (Station station in stations)
-            {
-                if (station.Id == idStation)
-                {
-                    s = station;
-                    s.ChargeSlots = s.ChargeSlots - 1;
-                    stations.Add(s);
-                    stations.Remove(station);
-                    break;
-                }
-            }
+            Station s = DataSource.stations.Find(stat => stat.Id == idStation);
+            s.ChargeSlots--;
+            stations.RemoveAll(stat => stat.Id == idStation);
+            stations.Add(s);
         }
 
         /// <summary>
@@ -106,6 +96,13 @@ namespace DalObject
                     droneCharges.Remove(charger);
                 }      
             }
+        }
+
+        public void RemoveDrone(int id)
+        {
+            if (!checkDrone(id))
+                throw new IdNotFoundException(id, "drone");
+            DataSource.drones.RemoveAll(dron => dron.Id == id);
         }
 
         /// <summary>
