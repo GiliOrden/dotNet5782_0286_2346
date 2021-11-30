@@ -296,23 +296,36 @@ namespace BL
         public Station GetBaseStation(int id)//i didn't finished!
         {
             Station s = new();
+            DroneInCharging droneInCharging = new();
             IDAL.DO.Station sDal = dl.GetBaseStation(id);
             s.ID = sDal.Id;
             s.Name = sDal.Name;
             s.Location.Latitude = sDal.Latitude;
             s.Location.Longitude = sDal.Longitude;
             s.ChargeSlots = sDal.ChargeSlots;
-            foreach (IDAL.DO.DroneCharge droneCharge in droneCharges)//need to get the list droneCharges
-
-
+            List<DroneInCharging> droneInChargingList=new();
+            foreach (DroneForList d in drones)
+            {
+                if (s.Location == d.Location)//the drone and the station have the same location(if a drone in a station it have to be in charging?)
+                {
+                    droneInCharging.Id = d.Id;
+                    droneInCharging.BatteryStatus = d.BatteryStatus;
+                    droneInChargingList.Add(droneInCharging);
+                }
+            }
+            s.DroneInChargingList = droneInChargingList;
             return s;
         }
 
-        public Drone GetDrone(int id)//i didn't finished!
+        public Drone GetDrone(int id)
         {
             Drone d = new();
             ParcelInTransfer parcelInTransfer = new();
-            foreach (DroneForList d2 in dronesBL)
+            ParcelAtCustomer sender = new();
+            ParcelAtCustomer recipient = new();
+            CustomerInParcel senderOtherSide = new();
+            CustomerInParcel recipientOtherSide = new();
+            foreach (DroneForList d2 in drones)
             {
                 if (d2.Id == id)
                 {
@@ -322,21 +335,132 @@ namespace BL
                     d.BatteryStatus = d2.BatteryStatus;
                     d.DroneStatus = d2.DroneStatus;
                     d.Location = d2.Location;
-                    foreach (IDAL.DO.Parcel p in dl.GetListOfParcels())
+                    if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                     {
-                        if (p.Id == d2.IdOfTheDeliveredParcel)
+                        IDAL.DO.Parcel p = dl.GetParcel(id);
+                        parcelInTransfer.Id = p.Id;
+                        if (p.PickedUp == DateTime.MinValue)
+                            parcelInTransfer.Status = false;
+                        else
+                            parcelInTransfer.Status = true;
+                        parcelInTransfer.Weight = (EnumsBL.WeightCategories)p.Weight;
+                        parcelInTransfer.Priority = (EnumsBL.Priorities)p.Priority;
+                        double lat1 = dl.GetCustomer(p.SenderId).Latitude;
+                        parcelInTransfer.Source.Latitude = lat1;
+                        double lon1 = dl.GetCustomer(p.SenderId).Longitude;
+                        parcelInTransfer.Source.Longitude = lon1;
+                        double lat2 = dl.GetCustomer(p.TargetId).Latitude;
+                        parcelInTransfer.Destination.Latitude = lat2;
+                        double lon2 = dl.GetCustomer(p.TargetId).Longitude;
+                        parcelInTransfer.Destination.Longitude = lon2;
+                        parcelInTransfer.TransportDistance = DistanceBetweenPlaces(lon1, lat1, lon2, lat2);
+                        sender.Id = recipient.Id = p.Id;
+                        sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
+                        sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
+
+                        if (p.Scheduled == DateTime.MinValue)//only definited!
+                            sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Defined;
+                        else
                         {
+                            if (p.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
+                                sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Supplied;
+                            else
+                            {
+                                if (p.Delivered == DateTime.MinValue)
+                                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Collected;
+                                else
+                                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Associated;
+                            }
 
                         }
+                        senderOtherSide.ID = p.TargetId;
+                        recipientOtherSide.ID = p.SenderId;
+                        senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
+                        recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
+                        sender.OtherSide = senderOtherSide;
+                        recipient.OtherSide = recipientOtherSide;
+                        parcelInTransfer.Sender = sender;
+                        parcelInTransfer.Recipient = recipient;
                     }
                     d.ParcelInTransfer = parcelInTransfer;
                 }
             }
-           
-
-            return d;
+           return d;
         }
 
+        public Customer GetCustomer(int id)//i did not finish
+        {
+            Customer c = new();
+            IDAL.DO.Customer c2 = dl.GetCustomer(id);
+            IEnumerable<ParcelAtCustomer> listOfParcelsFromMe = new IEnumerable<ParcelAtCustomer>();//problem with IEnumerable?
+            c.Id = id;
+            c.Name = c2.Name;
+            c.Phone = c2.Phone;
+            c.Location.Latitude = c2.Latitude;
+            c.Location.Longitude = c2.Longitude;
+            
+            return c;
+
+        }
+
+        public Parcel GetParcel(int id)
+        {
+            Parcel p = new();
+            ParcelAtCustomer sender = new();
+            ParcelAtCustomer recipient = new();
+            CustomerInParcel senderOtherSide = new();
+            CustomerInParcel recipientOtherSide = new();
+            IDAL.DO.Parcel p2 = dl.GetParcel(id);
+            p.Id = p2.Id;
+            p.Weight = (EnumsBL.WeightCategories)p2.Weight;
+            p.Priority = (EnumsBL.Priorities)p2.Priority;
+            p.ParcelCreationTime = p2.Requested;
+            p.AssociationTime = p2.Scheduled;
+            p.CollectionTime = p2.PickedUp;
+            p.DeliveryTime = p2.Delivered;
+            sender.Id = recipient.Id = p.Id;
+            sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
+            sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
+
+            if (p2.Scheduled == DateTime.MinValue)//only definited!
+                sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Defined;
+            else
+            {
+                if (p2.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
+                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Supplied;
+                else
+                {
+                    if (p2.Delivered == DateTime.MinValue)
+                        sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Collected;
+                    else
+                        sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Associated;
+                }
+
+            }
+            senderOtherSide.ID = p2.TargetId;
+            recipientOtherSide.ID = p2.SenderId;
+            senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
+            recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
+            sender.OtherSide = senderOtherSide;
+            recipient.OtherSide = recipientOtherSide;
+            p.Sender = sender;
+            p.Receiver = recipient;
+            if(p.AssociationTime != DateTime.MinValue)
+            {
+                DroneForParcel drone = new();
+                foreach (DroneForList d in drones)
+                {
+                    if (d.IdOfTheDeliveredParcel == id)
+                    {
+                        drone.Id = d.Id;
+                        drone.BatteryStatus = d.BatteryStatus;
+                        drone.Location = d.Location;
+                    }
+                }
+                p.Drone = drone;
+            }
+            return p;
+        }
 
 
 
