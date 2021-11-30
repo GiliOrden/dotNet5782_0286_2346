@@ -98,7 +98,7 @@ namespace BL
             dalStation.Name = station.Name;
             dalStation.Longitude = station.Location.Longitude;
             dalStation.Latitude = station.Location.Latitude;
-            dalStation.ChargeSlots = station.AvailableChargeSlots;
+            dalStation.ChargeSlots = station.ChargeSlots;
             dl.AddStation(dalStation);
         }
         public void addCustomer(Customer c)
@@ -137,7 +137,7 @@ namespace BL
             dl.UpdateCustomer(customer);//where is the UpdateCustomer function?
         }
 
-        public void SendDroneToChargeBL(int id)
+        public void SendDroneToCharge(int id)
         {
             foreach (DroneForList drone in drones)
             {
@@ -174,7 +174,7 @@ namespace BL
 
 
 
-        public void CollectingParcelByDronesBL(int id)
+        public void CollectingParcelByDrones(int id)
         {
             int parcelId;
             foreach(DroneForList d in drones)
@@ -197,7 +197,7 @@ namespace BL
              }
         }
 
-        public void SupplyDeliveryToCustomerBL(int droneId)
+        public void SupplyDeliveryToCustomer(int droneId)
         {
             foreach (DroneForList d in drones)
             {
@@ -218,6 +218,54 @@ namespace BL
                 }
             }
         }
+
+        public Station GetBaseStation(int id)//i didn't finished!
+        {
+            Station s = new();
+            IDAL.DO.Station sDal = dl.GetBaseStation(id);
+            s.ID = sDal.Id;
+            s.Name = sDal.Name;
+            s.Location.Latitude = sDal.Latitude;
+            s.Location.Longitude = sDal.Longitude;
+            s.ChargeSlots = sDal.ChargeSlots;
+            foreach (IDAL.DO.DroneCharge droneCharge in droneCharges)//need to get the list droneCharges
+
+
+            return s;
+        }
+
+        public Drone GetDrone(int id)//i didn't finished!
+        {
+            Drone d = new();
+            ParcelInTransfer parcelInTransfer = new();
+            foreach (DroneForList d2 in drones)
+            {
+                if (d2.Id == id)
+                {
+                    d.Id = d2.Id;
+                    d.Model = d2.Model;
+                    d.MaxWeight = d2.MaxWeight;
+                    d.BatteryStatus = d2.BatteryStatus;
+                    d.DroneStatus = d2.DroneStatus;
+                    d.Location = d2.Location;
+                    foreach (IDAL.DO.Parcel p in dl.GetListOfParcels())
+                    {
+                        if (p.Id == d2.IdOfTheDeliveredParcel)
+                        {
+
+                        }
+                    }
+                    d.ParcelInTransfer = parcelInTransfer;
+                }
+            }
+           
+
+            return d;
+        }
+
+
+
+
 
         internal static double Radians(double x)
         {
