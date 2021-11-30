@@ -18,9 +18,9 @@ namespace IDAL
             public Priorities Priority { get; set; }//property
             public int DroneId { get; set; }//property
             public DateTime Requested { get; set; }//property
-            public DateTime Scheduled { get; set; }//property
-            public DateTime PickedUp { get; set; }//property
-            public DateTime Delivered { get; set; }//property
+            public DateTime Scheduled { get; set; }//property, ready for sending?
+            public DateTime PickedUp { get; set; }//property, collected by drone
+            public DateTime Delivered { get; set; }//property, brought to the destination
             public override string ToString()//Print all the fields (Override the Object's 'ToString()')
             {
                 return this.ToStringProperty();

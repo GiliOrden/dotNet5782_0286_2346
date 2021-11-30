@@ -69,7 +69,7 @@ namespace BL
                         droneForList.Location.Latitude = sender.Latitude;
                     }
 
-                    droneForList.BatteryStats = rand.NextDouble() * ( , 100);
+                    droneForList.BatteryStatus = rand.NextDouble() * ( , 100);
                 }
 
                 //If the drone is in maintenance, its location will be drawn between the existing stations
@@ -78,7 +78,7 @@ namespace BL
                     int index = rand.Next(dl.GetListOfBaseStations().Count());
                     droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
                     droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
-                    droneForList.BatteryStats = rand.Next(21);
+                    droneForList.BatteryStatus = rand.Next(21);
                 }
 
                 else //if the drone is available
@@ -98,27 +98,27 @@ namespace BL
             dalStation.Name = station.Name;
             dalStation.Longitude = station.Location.Longitude;
             dalStation.Latitude = station.Location.Latitude;
-            dalStation.ChargeSlots = station.AvailableChargeSlots;
+            dalStation.ChargeSlots = station.ChargeSlots;
             dl.AddStation(dalStation);
         }
-        public void addCustomer(int id, string name, string phone, IBL.BO.Location location)
+        public void addCustomer(Customer c)
         {
             IDAL.DO.Customer customer = new();
-            customer.Id = id;
-            customer.Name = name; 
-            customer.Phone = phone;
-            customer.Latitude = location.Latitude;
-            customer.Longitude = location.Longitude;
+            customer.Id = c.Id;
+            customer.Name = c.Name; 
+            customer.Phone = c.Phone;
+            customer.Latitude = c.Location.Latitude;
+            customer.Longitude = c.Location.Longitude;
             dl.AddCustomer(customer);
         }
 
-        public void addParcel(int senderId, int receiverId, IBL.BO.EnumsBL.WeightCategories weight, IBL.BO.EnumsBL.Priorities property)
+        public void addParcel(Parcel p)
         {
             IDAL.DO.Parcel parcel = new();
-            parcel.SenderId = senderId;
-            parcel.TargetId = receiverId;
-            parcel.Weight = (IDAL.DO.WeightCategories)weight;
-            parcel.Priority = (IDAL.DO.Priorities)property;
+            parcel.SenderId = p.Sender.Id;
+            parcel.TargetId = p.Receiver.Id;
+            parcel.Weight = (IDAL.DO.WeightCategories)p.Weight;
+            parcel.Priority = (IDAL.DO.Priorities)p.Priority;
             parcel.DroneId = 0;//supposed to be null
             parcel.Requested = DateTime.Now;
             parcel.Scheduled = default;
@@ -134,35 +134,33 @@ namespace BL
                 customer.Name = name;
             if (phone != null)
                 customer.Phone = phone;
-            dl.SetCustomer(id, customer);//where is the UpdateCustomer function?
+            dl.UpdateCustomer(customer);//where is the UpdateCustomer function?
         }
 
-        public void SendingDroneForCharging(IBL.BO.Drone drone)
+        public void SendDroneToCharge(int id)
         {
-            if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
+            foreach (DroneForList drone in drones)
             {
-                IDAL.DO.Station minDistanceStation;
-                double minDis = 1000000;
-                foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
+                if ((drone.Id == id)&& (drone.DroneStatus == EnumsBL.DroneStatuses.Available))
                 {
-                    double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
-                    
-                    if ((distance < minDis) &&(s.ChargeSlots>0))
+                    IDAL.DO.Station minDistanceStation=new();
+                    double minDis = 1000000;
+                    foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
                     {
-                        minDis = distance;
-                        minDistanceStation = s;
+                        double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
+                        if ((distance < minDis) && (s.ChargeSlots > 0))
+                        {
+                            minDis = distance;
+                            minDistanceStation = s;
+                        }
                     }
-                }      
-                if(minDis != 1000000)
-                {
                     if (emptyDronePowerConsumption * minDis < drone.BatteryStatus)
                     {
-                        drone.BatteryStatus -= (int)(emptyDronePowerConsumption * minDis);
-                        drone.Location = minDistanceStation.LocationOfStation;//need to change station for BL kind?
+                        drone.BatteryStatus -= emptyDronePowerConsumption * minDis;
+                        drone.Location.Latitude = minDistanceStation.Latitude;
+                        drone.Location.Longitude = minDistanceStation.Longitude;
                         drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
-                        dl.GetBaseStation(minDistanceStation.Id).ChargeSlots -= 1;//it's by value, build a help function or change station for BL kind
-                        .Add( new DroneInCharging() {droneInCharging.Id=drone.Id, droneInCharging.BatteryStatus = drone.BatteryStatus });//what the name of the list??
-
+                        dl.SendDroneToCharge(drone.Id, minDistanceStation.Id);
 
                     }
                     else
@@ -170,17 +168,105 @@ namespace BL
                         throw new ExceptionsBL.NoBatteryException(drone.Id);
                     }
                 }
+            }
+        }
 
+
+
+
+        public void CollectingParcelByDrones(int id)
+        {
+            int parcelId;
+            foreach(DroneForList d in drones)
+            {
+                if (d.Id == id)
+                {
+                    parcelId = d.IdOfTheDeliveredParcel;
+                    if (dl.GetParcel(parcelId).PickedUp == DateTime.MinValue)//true=the parcel wasn't collected yet
+                    {
+                        Location senderLocation = new();
+                        senderLocation.Latitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Latitude;
+                        senderLocation.Longitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Longitude;
+                        d.BatteryStatus-=DistanceBetweenPlaces(senderLocation.Longitude, senderLocation.Latitude, d.Location.Longitude, d.Location.Latitude)* emptyDronePowerConsumption;
+                        d.Location = senderLocation;
+                        dl.CollectParcelByDrone(parcelId);
+                    }
+                    else
+                        throw new ExceptionsBL.DroneCanNotCollectParcelException(id, parcelId);
+                }
+             }
+        }
+
+        public void SupplyDeliveryToCustomer(int droneId)
+        {
+            foreach (DroneForList d in drones)
+            {
+                if (d.Id == droneId) {
+                    if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp != DateTime.MinValue) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == DateTime.MinValue))
+                    {//the parcel picked up but have not reached its destination
+                        Location targetLocation = new();
+                        targetLocation.Latitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Latitude;
+                        targetLocation.Longitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Longitude;
+                        double consumption= dronePowerConsumption[(int)dl.GetParcel(d.IdOfTheDeliveredParcel).Weight + 1];
+                        d.BatteryStatus -= DistanceBetweenPlaces(targetLocation.Longitude, targetLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * consumption;
+                        d.Location = targetLocation;
+                        d.DroneStatus = EnumsBL.DroneStatuses.Available;
+                        dl.SupplyDeliveryToCustomer(d.IdOfTheDeliveredParcel);//update the 'delivery' time in parcel for now
+                    }
+                    else
+                        throw new ExceptionsBL.DroneCanNotSupplyDeliveryToCustomerException(droneId, d.IdOfTheDeliveredParcel);
+                }
+            }
+        }
+
+        public Station GetBaseStation(int id)//i didn't finished!
+        {
+            Station s = new();
+            IDAL.DO.Station sDal = dl.GetBaseStation(id);
+            s.ID = sDal.Id;
+            s.Name = sDal.Name;
+            s.Location.Latitude = sDal.Latitude;
+            s.Location.Longitude = sDal.Longitude;
+            s.ChargeSlots = sDal.ChargeSlots;
+            foreach (IDAL.DO.DroneCharge droneCharge in droneCharges)//need to get the list droneCharges
+
+
+            return s;
+        }
+
+        public Drone GetDrone(int id)//i didn't finished!
+        {
+            Drone d = new();
+            ParcelInTransfer parcelInTransfer = new();
+            foreach (DroneForList d2 in drones)
+            {
+                if (d2.Id == id)
+                {
+                    d.Id = d2.Id;
+                    d.Model = d2.Model;
+                    d.MaxWeight = d2.MaxWeight;
+                    d.BatteryStatus = d2.BatteryStatus;
+                    d.DroneStatus = d2.DroneStatus;
+                    d.Location = d2.Location;
+                    foreach (IDAL.DO.Parcel p in dl.GetListOfParcels())
+                    {
+                        if (p.Id == d2.IdOfTheDeliveredParcel)
+                        {
+
+                        }
+                    }
+                    d.ParcelInTransfer = parcelInTransfer;
+                }
             }
            
+
+            return d;
         }
-        public void CollectingParcelByDrones(Drone drone)
-        {
 
 
 
 
-        } 
+
         internal static double Radians(double x)
         {
             return x * Math.PI / 180;
