@@ -33,7 +33,7 @@ namespace DalObject
         {
             if (!DataSource.drones.Any(dron => dron.Id == droneId))
                 throw new IDAL.DO.Exceptions.IdNotFoundException(droneId, "drone");
-            Drone d = DataSource.drones.First(drone => drone.Id == droneId);
+            Drone d = DataSource.drones.Find(drone => drone.Id == droneId);
             if (!DataSource.parcels.Any(parc => parc.Id == parcelId))
                  throw new IDAL.DO.Exceptions.IdNotFoundException(parcelId, "parcel");
             foreach (Parcel parcel in parcels)
@@ -73,6 +73,7 @@ namespace DalObject
            
 
         }
+
         /// <summary>
         /// updating of supplying delivery to customer,( update the 'delivered' time of parcel for now)
         /// </summary>
@@ -93,6 +94,7 @@ namespace DalObject
                         if (drone.Id == p.DroneId)
                         {
                             Drone d = drone;
+                            drone.status = avilable;
                             drones.Add(d);
                             drones.Remove(drone);
                             break;
@@ -133,10 +135,8 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Parcel> GetListOfParcels()
         {
-            List<Parcel> p = new List<Parcel>();
-            for (int i = 0; i < parcels.Count; i++)
-                p.Add(parcels[i]);
-            return p;
+            return from Parcel parc in parcels
+                   select parc;
         }
 
         /// <summary>

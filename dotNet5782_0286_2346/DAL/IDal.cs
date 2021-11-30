@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IDAL
 {
-    public interface IDal//i'm not sure it should be  public maybe internal and i dont know if the properties also should be here
+    public interface IDal
     {
         #region Station
         void AddStation(DO.Station s);

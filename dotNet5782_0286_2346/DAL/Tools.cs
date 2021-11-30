@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DalObject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,12 +21,8 @@ namespace IDAL
                 ": " + item.GetValue(t, null);
                 return str;
             }
-
-            public static double FindDistance<T>(this T t,double longitue,double latitude)
-            {
-                return Math.Sqrt(Math.Pow(t.Longitude - longitude, 2)) + (Math.Pow(t.Latitude - latitude, 2)
-            }
-
+  
         }
+
     }
 }

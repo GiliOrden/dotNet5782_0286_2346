@@ -33,20 +33,23 @@ namespace BL
             double minDistance=10000000;
             double distance;
             int idOfStation=0;
+
             foreach (var drone in dalDrones)
             {
                 DroneForList droneForList = new DroneForList();
                 droneForList.Id = drone.Id;
                 droneForList.Model = drone.Model;
                 droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
-                droneForList.DroneStatus = (dl.GetListOfParcels().Any(Parcel => Parcel.DroneId == drone.Id)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
+
+                //If there are parcels that have not yet been delivered but the drone has already been associated the drone status is OnDelivery
+                droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==default(DateTime))) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
 
                 if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                 {
-                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id);
+                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id && parc.Delivered == default(DateTime));
                     IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
 
-                    //If the package was associated but not collected - location will be at the station closest to the sender
+                    //If the parcel was associated but not collected - location will be at the station closest to the sender
                     if (parcel.PickedUp== default(DateTime))
                     {
                         foreach (IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
@@ -90,16 +93,38 @@ namespace BL
                 drones.Add(droneForList);
             }
         }
-
+        /*ם יש חבילהות שעוד לא סופקו אך הרחפן כבר שויך
+○	מצב הרחפן יהיה כמבצע משלוח
+○	מיקום הרחפן יהיה כדלקמן:
+■	אם החבילה שויכה אך לא נאספה - מיקום יהיה בתחנה הקרובה לשולח
+■	אם החבילה נאספה אך עוד לא סופקה - מיקום הרחפן יהיה במיקום השולח
+○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לרחפן לבצע את המשלוח ולהגיע לטעינה לתחנה הקרובה ליעד המשלוח לבין טעינה מלאה
+●	אם הרחפן לא מבצע משלוח
+○	מצבו יוגרל בין תחזוקה לפנוי
+●	אם הרחפן בתחזוקה
+○	מיקומו יוגרל בין תחנות התחנות הקיימות
+○	מצב סוללה יוגרל בין 0% ל-20%
+●	אם הרחפן פנוי
+○	מיקומו יוגרל בין לקוחות שיש חבילות שסופקו להם
+○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לו להגיע לתחנה הקרובה לטעינה לבין טעינה מלאה
+*/
         public void addBaseStation(Station station)
         {
             IDAL.DO.Station dalStation=new();
-            dalStation.Id = station.ID;
-            dalStation.Name = station.Name;
-            dalStation.Longitude = station.Location.Longitude;
-            dalStation.Latitude = station.Location.Latitude;
-            dalStation.ChargeSlots = station.ChargeSlots;
-            dl.AddStation(dalStation);
+           
+                dalStation.Id = station.ID;
+                dalStation.Name = station.Name;
+                dalStation.Longitude = station.Location.Longitude;
+                dalStation.Latitude = station.Location.Latitude;
+                dalStation.ChargeSlots = station.ChargeSlots;
+            try 
+            { 
+                dl.AddStation(dalStation);
+            }
+            catch (IDAL.DO.Exceptions.ExistIdException ex)
+            {
+                throw new 
+            }
         }
         public void addCustomer(Customer c)
         {
