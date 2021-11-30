@@ -28,12 +28,12 @@ namespace IBL
         #region Customer
         public void ReceiveNewCustomer(int id, string name, string phone, BO.Location location);
         public void UpdatingCustomerData(int id, string name, string phone);
-        public BO.Customer Customer(int id);
+        public BO.Customer GetCustomer(int id);
         #endregion
 
         #region Parcel
         public void addParcel(BO.Parcel p);
-        public BO.Parcel Parcel(int id);
+        public BO.Parcel GetParcel(int id);
         #endregion
 
 

@@ -15,7 +15,7 @@ namespace IBL
             public ParcelAtCustomer Receiver { get; set; }
             public EnumsBL.WeightCategories Weight { get; set; }
             public EnumsBL.Priorities Priority { get; set; }
-            public  DroneForParcel MyDrone{ get; set; }    
+            public  DroneForParcel Drone{ get; set; }    
             public DateTime ParcelCreationTime { get; set; }
             public DateTime AssociationTime { get; set; }
             public DateTime CollectionTime{ get; set; }
