@@ -144,7 +144,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of parcel</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        private bool checkParcel(int id)
+        public bool checkParcel(int id)
         {
             return DataSource.parcels.Any(parc => parc.Id == id);
         }

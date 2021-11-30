@@ -14,7 +14,7 @@ namespace IDAL
         DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> GetListOfBaseStations();
         IEnumerable<DO.Station> GetListOfAvailableChargingStations();
-        
+        bool checkStation(int id);
         #endregion
 
         #region Customer
@@ -65,7 +65,7 @@ namespace IDAL
 
         #region Parcel
         int AddParcel(DO.Parcel p);
-        void AssignParcelToDrone(int parcelId, int droneId);//here or in drone?
+        void AssignParcelToDrone(int parcelId, int droneId);
         void CollectParcelByDrone(int id);
         void SupplyDeliveryToCustomer(int id);
         DO.Parcel GetParcel(int id);

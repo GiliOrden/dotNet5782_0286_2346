@@ -43,16 +43,15 @@ namespace DalObject
         /// <param name="idStation">station id</param>
         public void SendDroneToCharge(int idDrone, int idStation)
         {
-            Station s;
-            DroneCharge dc = new DroneCharge();
             if (!checkDrone(idDrone))
                 throw new IDAL.DO.IdNotFoundException(idDrone, "drone");
             if(!checkStation(idStation))
                 throw new IDAL.DO.IdNotFoundException(idStation, "station");
-            Drone d= DataSource.drones.Find(dron => dron.Id == idDrone);
-            drones.RemoveAll(dron => dron.Id == idDrone);
-            drones.Add(d);
-            dc.DroneId = d.Id;
+
+            DroneCharge dc = new DroneCharge();
+            Station s;         
+
+            dc.DroneId =idDrone;
             dc.StationId = idStation;
             droneCharges.Add(dc);
             foreach (Station station in stations)
@@ -138,7 +137,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of drone</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        private bool checkDrone(int id)
+        public bool checkDrone(int id)
         {
             return DataSource.drones.Any(drone=>drone.Id == id);
         }

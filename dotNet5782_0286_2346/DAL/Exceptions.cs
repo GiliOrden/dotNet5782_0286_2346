@@ -17,7 +17,6 @@ namespace IDAL.DO
             public ExistIdException(int id, string entity, string message, Exception inner) : base(message, inner) { ID = id; EntityName = entity; }
             protected ExistIdException(SerializationInfo info, StreamingContext context)
             : base(info, context) { }
-
         public override string ToString() => base.ToString() + $"The {EntityName} Id: {ID} ,is already exists.";
         }
 
@@ -30,18 +29,9 @@ namespace IDAL.DO
             public IdNotFoundException(int id, string entity, string message) : base(message) { ID = id; EntityName = entity; }
             public IdNotFoundException(int id, string entity, string message, Exception innerException) : base(message, innerException)
              { ID = id; EntityName = entity; }
-            public override string ToString() => base.ToString() + $",The {EntityName} Id:{ID} doesn't found";
+            protected IdNotFoundException(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
+        public override string ToString() => base.ToString() + $",The {EntityName} Id:{ID} isn't found";
         }
 
-        //public class NameNotFoundException : Exception//When trying to look for a name of station/drone/parcel and it does not exist 
-        //{
-        //    public string Name;
-        //    public string EntityName;
-        //    public NameNotFoundException(string name, string entity) : base() { Name = name; EntityName = entity; }
-        //    public NameNotFoundException(string name, string entity, string message) : base(message) { Name = name; EntityName = entity; }
-        //    public NameNotFoundException(string name, string entity, string message, Exception innerException) : base(message, innerException)
-        //    { Name = name; EntityName = entity; }
-        //    public override string ToString() => base.ToString() + $",The {EntityName} name:{Name} doesn't found";
-        //}
-    
 }

@@ -16,7 +16,7 @@ namespace BL
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
         IDal dl;
-        List<DroneForList> drones = new List<DroneForList>();
+        List<DroneForList> dronesBL = new List<DroneForList>();
         IEnumerable<IDAL.DO.Drone> dalDrones;
         public BL()//ctor
         {
@@ -90,7 +90,7 @@ namespace BL
 
                 }
                   
-                drones.Add(droneForList);
+                dronesBL.Add(droneForList);
             }
         }
         /*ם יש חבילהות שעוד לא סופקו אך הרחפן כבר שויך
@@ -111,20 +111,37 @@ namespace BL
         public void addBaseStation(Station station)
         {
             IDAL.DO.Station dalStation=new();
-           
-                dalStation.Id = station.ID;
-                dalStation.Name = station.Name;
-                dalStation.Longitude = station.Location.Longitude;
-                dalStation.Latitude = station.Location.Latitude;
-                dalStation.ChargeSlots = station.ChargeSlots;
+            dalStation.Id = station.ID;
+            dalStation.Name = station.Name;
+            dalStation.Longitude = station.Location.Longitude;
+            dalStation.Latitude = station.Location.Latitude;
+            dalStation.ChargeSlots = station.ChargeSlots;
             try 
             { 
                 dl.AddStation(dalStation);
             }
-            catch (IDAL.DO.Exceptions.ExistIdException ex)
+            catch (IDAL.DO.ExistIdException ex)
             {
-                throw new 
+                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
             }
+        }
+        public void addDrone(DroneForList drone,int idOfStation)
+        {
+            try 
+            {
+                IDAL.DO.Drone dalDrone = new();
+                dalDrone.Id = drone.Id;
+                dalDrone.Model = drone.Model;
+                dalDrone.MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight;
+                //Sends the drone for initial charging
+                dl.SendDroneToCharge(dalDrone.Id, idOfStation);
+                dl.AddDrone(dalDrone);
+                dronesBL.Add(drone);//in the main i should fill its extra fields  
+            }
+            catch(IDAL.DO.ExistIdException ex)
+            {
+                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
+            }             
         }
         public void addCustomer(Customer c)
         {
@@ -164,7 +181,7 @@ namespace BL
 
         public void SendDroneToCharge(int id)
         {
-            foreach (DroneForList drone in drones)
+            foreach (DroneForList drone in dronesBL)
             {
                 if ((drone.Id == id)&& (drone.DroneStatus == EnumsBL.DroneStatuses.Available))
                 {
@@ -190,7 +207,7 @@ namespace BL
                     }
                     else
                     {
-                        throw new ExceptionsBL.NoBatteryException(drone.Id);
+                        throw new NoBatteryException(drone.Id);
                     }
                 }
             }
@@ -202,7 +219,7 @@ namespace BL
         public void CollectingParcelByDrones(int id)
         {
             int parcelId;
-            foreach(DroneForList d in drones)
+            foreach(DroneForList d in dronesBL)
             {
                 if (d.Id == id)
                 {
@@ -217,14 +234,14 @@ namespace BL
                         dl.CollectParcelByDrone(parcelId);
                     }
                     else
-                        throw new ExceptionsBL.DroneCanNotCollectParcelException(id, parcelId);
+                        throw new DroneCanNotCollectParcelException(id, parcelId);
                 }
              }
         }
 
         public void SupplyDeliveryToCustomer(int droneId)
         {
-            foreach (DroneForList d in drones)
+            foreach (DroneForList d in dronesBL)
             {
                 if (d.Id == droneId) {
                     if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp != DateTime.MinValue) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == DateTime.MinValue))
@@ -239,7 +256,7 @@ namespace BL
                         dl.SupplyDeliveryToCustomer(d.IdOfTheDeliveredParcel);//update the 'delivery' time in parcel for now
                     }
                     else
-                        throw new ExceptionsBL.DroneCanNotSupplyDeliveryToCustomerException(droneId, d.IdOfTheDeliveredParcel);
+                        throw new DroneCanNotSupplyDeliveryToCustomerException(droneId, d.IdOfTheDeliveredParcel);
                 }
             }
         }
@@ -263,7 +280,7 @@ namespace BL
         {
             Drone d = new();
             ParcelInTransfer parcelInTransfer = new();
-            foreach (DroneForList d2 in drones)
+            foreach (DroneForList d2 in dronesBL)
             {
                 if (d2.Id == id)
                 {

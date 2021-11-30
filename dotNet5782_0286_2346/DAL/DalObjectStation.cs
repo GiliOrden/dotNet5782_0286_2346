@@ -14,7 +14,7 @@ namespace DalObject
         /// <summary>
         /// Adding station element to the stations list
         /// </summary>
-        /// <param name="s">  element ,Station tipe, we adding the list</param>
+        /// <param name="s">  element ,Station type, we adding the list</param>
         public void AddStation(Station s)
         {
             if (!checkStation(s.Id))
@@ -62,7 +62,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of station</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        private bool checkStation(int id)
+        public bool checkStation(int id)
         {
             return DataSource.stations.Any(sta => sta.Id ==id);
         }
