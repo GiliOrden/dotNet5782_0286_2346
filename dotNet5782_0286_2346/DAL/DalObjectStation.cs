@@ -51,10 +51,8 @@ namespace DalObject
         /// <returns>list of stations </returns>
         public IEnumerable<Station> GetListOfBaseStations()
         {
-            List<Station> s = new List<Station>();
-            for (int i = 0; i < stations.Count; i++)
-                s.Add(stations[i]);
-            return s;
+            return from baseStation in stations
+            select baseStation;
         }
 
 
