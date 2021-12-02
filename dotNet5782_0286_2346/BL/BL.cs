@@ -171,8 +171,15 @@ namespace BL
                 s.Name = name;
             if(numOfChargeSlots!=-1)
             {
-
+              //need to continue
             }
+        }
+        public void ReleaseDroneFromCharge(int id,)
+        {
+
+        }
+        public void AssignParcelToDrone(int idOfDrone)
+        {
 
         }
         public void addCustomer(Customer c)
