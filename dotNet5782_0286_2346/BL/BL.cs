@@ -80,7 +80,7 @@ namespace BL
                         minCharge = mediumWeightCarrierPowerConsumption * way;
                     else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
                         minCharge = heavyWeightCarrierPowerConsumption * way;
-                    droneForList.Battery = rand.Next((int)minCharge + 1, 100);
+                    droneForList.Battery = rand.Next((int)(minCharge+1), 100);
                 }
 
                 //If the drone is in maintenance, its location will be drawn between the existing stations
@@ -95,7 +95,8 @@ namespace BL
                 else //if the drone is available
                 {
                   //  מיקומו יוגרל בין לקוחות שיש חבילות שסופקו להם
-
+                  IEnumerable<CustomerForList> customersWhoHavePackagesProvidedToThem=
+                  ○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לו להגיע לתחנה הקרובה לטעינה לבין טעינה מלאה
                 }
                   
                 dronesBL.Add(droneForList);
@@ -119,6 +120,7 @@ namespace BL
         {
             int idOfStation=0;
             double distance;
+            minDistance = 10000;
             foreach (IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
             {
                 distance = DistanceBetweenPlaces(baseStation.Longitude, baseStation.Latitude, customer.Longitude, customer.Latitude);
@@ -215,6 +217,42 @@ namespace BL
                        AvailableChargingPositions=,
                        In
                    };
+        }
+        public IEnumerable<IBL.BO.CustomerForList>GetListOfCustomers()
+        {
+            return from customer in dl.GetListOfCustomers()
+                   select new IBL.BO.CustomerForList
+                   {
+                       ID = customer.Id,
+                       Name=customer.Name,
+                       Phone=customer.Phone,
+                       SentAndDeliveredParcels=,
+                       
+                   };
+        }
+        public IEnumerable<IBL.BO.ParcelForList>GetListOfParcels()
+        {
+            IEnumerable<IBL.BO.ParcelForList>parcels= from parcel in dl.GetListOfParcels()
+                   select new IBL.BO.ParcelForList
+                   {
+                       Id = parcel.Id,
+                       SenderName=dl.GetCustomer(parcel.SenderId).Name,
+                       ReceiverName=dl.GetCustomer(parcel.TargetId).Name,
+                       Weight= (EnumsBL.WeightCategories)parcel.Weight,
+                       Priority= (EnumsBL.Priorities)parcel.Priority,                    
+                   };
+            foreach (ParcelForList parc in parcels)
+            {
+                if (dl.GetParcel(parc.Id).Scheduled == default(DateTime))
+                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Defined;
+                else if (dl.GetParcel(parc.Id).PickedUp == default(DateTime))
+                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Associated;
+                else if (dl.GetParcel(parc.Id).Delivered == default(DateTime))
+                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Collected;
+                else if(dl.GetParcel(parc.Id).Delivered != default(DateTime))
+                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Delivered;
+            }
+            return parcels;
         }
         public void addCustomer(Customer c)
         {
@@ -404,7 +442,7 @@ namespace BL
                         else
                         {
                             if (p.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
-                                sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Supplied;
+                                sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Delivered;
                             else
                             {
                                 if (p.Delivered == DateTime.MinValue)
@@ -468,7 +506,7 @@ namespace BL
             else
             {
                 if (p2.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
-                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Supplied;
+                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Delivered;
                 else
                 {
                     if (p2.Delivered == DateTime.MinValue)
@@ -506,14 +544,14 @@ namespace BL
 
 
 
-        internal static double Radians(double x)
+        private static double Radians(double x)
         {
             return x * Math.PI / 180;
         }
         // cos(d) = sin(φА)·sin(φB) + cos(φА)·cos(φB)·cos(λА − λB),
         //  where φА, φB are latitudes and λА, λB are longitudes
         // Distance = d * R
-        internal static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
+        private static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
         {
             double R = 6371; // km
 
