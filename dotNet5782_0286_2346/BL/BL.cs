@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using IBL.BO;
 using IDAL;
+
 namespace BL
 {
     public partial class BL : IBL.IBL
     {
         internal double chargingRatePerHour;
         internal double emptyDronePowerConsumption;
-        //should it be public?
         internal double lightWeightCarrierPowerConsumption;
         internal double mediumWeightCarrierPowerConsumption;
         internal double heavyWeightCarrierPowerConsumption;
@@ -18,6 +19,7 @@ namespace BL
         IDal dl;
         List<DroneForList> dronesBL = new List<DroneForList>();
         IEnumerable<IDAL.DO.Drone> dalDrones;
+
         public BL()//ctor
         {
             Random rand = new Random(DateTime.Now.Millisecond);
@@ -29,11 +31,9 @@ namespace BL
             mediumWeightCarrierPowerConsumption = dronePowerConsumption[2];
             heavyWeightCarrierPowerConsumption = dronePowerConsumption[3];
             chargingRatePerHour = dronePowerConsumption[4];
-            
-            double minDistance=10000000;
-            double distance;
-            int idOfStation=0;
-
+            double way;
+            double minDistance = 10000;
+            double minCharge=0;
             foreach (var drone in dalDrones)
             {
                 DroneForList droneForList = new DroneForList();
@@ -43,36 +43,44 @@ namespace BL
 
                 //If there are parcels that have not yet been delivered but the drone has already been associated the drone status is OnDelivery
                 droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==default(DateTime))) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
-
+                
                 if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                 {
                     IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id && parc.Delivered == default(DateTime));
                     IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
-
+                    IDAL.DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
                     //If the parcel was associated but not collected - location will be at the station closest to the sender
                     if (parcel.PickedUp== default(DateTime))
                     {
-                        foreach (IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
-                        {
-                            distance = DistanceBetweenPlaces(baseStation.Longitude, baseStation.Latitude, sender.Longitude, sender.Latitude);
-                            if (distance < minDistance)
-                            {
-                                minDistance = distance;
-                                idOfStation = baseStation.Id;
-                            }
-                        }
-                        droneForList.Location.Longitude = dl.GetBaseStation(idOfStation).Longitude;
-                        droneForList.Location.Latitude = dl.GetBaseStation(idOfStation).Latitude;
+                        droneForList.Location.Longitude = dl.GetBaseStation(getClosestStation(sender,ref minDistance)).Longitude;
+                        droneForList.Location.Latitude = dl.GetBaseStation(getClosestStation(sender, ref minDistance)).Latitude;
                     }
 
                     //If the package was collected  but wasn't delivered- location will be at the sender
                     if (parcel.PickedUp != default(DateTime) && parcel.Delivered == default(DateTime))
                     {
-                        droneForList.Location.Longitude = sender.Longitude;
+                        droneForList.Location.Longitude=sender.Longitude;
                         droneForList.Location.Latitude = sender.Latitude;
                     }
-
-                    droneForList.BatteryStatus = rand.NextDouble() * ( , 100);
+    
+                    if (parcel.PickedUp == default(DateTime))
+                    {
+                       way= DistanceBetweenPlaces(sender.Longitude, sender.Latitude, dl.GetBaseStation(getClosestStation(sender, ref minDistance)).Longitude, dl.GetBaseStation(getClosestStation(sender, ref minDistance)).Latitude)
+                          + DistanceBetweenPlaces(sender.Longitude, sender.Latitude, receiver.Longitude, receiver.Latitude) +
+                          DistanceBetweenPlaces(receiver.Longitude,receiver.Latitude, dl.GetBaseStation(getClosestStation(receiver, ref minDistance)).Longitude, dl.GetBaseStation(getClosestStation(receiver, ref minDistance)).Latitude);
+                    } 
+                    else
+                    {
+                       getClosestStation(receiver, ref minDistance);
+                       way = DistanceBetweenPlaces(sender.Longitude, sender.Latitude, receiver.Longitude, receiver.Latitude) + minDistance;
+                    }                      
+                    if (parcel.Weight == IDAL.DO.WeightCategories.Light)
+                        minCharge = lightWeightCarrierPowerConsumption * way;
+                    else if (parcel.Weight == IDAL.DO.WeightCategories.Medium)
+                        minCharge = mediumWeightCarrierPowerConsumption * way;
+                    else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
+                        minCharge = heavyWeightCarrierPowerConsumption * way;
+                    droneForList.Battery = rand.Next((int)minCharge + 1, 100);
                 }
 
                 //If the drone is in maintenance, its location will be drawn between the existing stations
@@ -81,7 +89,7 @@ namespace BL
                     int index = rand.Next(dl.GetListOfBaseStations().Count());
                     droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
                     droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
-                    droneForList.BatteryStatus = rand.Next(21);
+                    droneForList.Battery = rand.Next(21);
                 }
 
                 else //if the drone is available
@@ -107,7 +115,21 @@ namespace BL
 ●	אם הרחפן פנוי
 ○	מיקומו יוגרל בין לקוחות שיש חבילות שסופקו להם
 ○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לו להגיע לתחנה הקרובה לטעינה לבין טעינה מלאה
-*/
+*/      private int getClosestStation(IDAL.DO.Customer customer,ref double minDistance)//help method
+        {
+            int idOfStation=0;
+            double distance;
+            foreach (IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
+            {
+                distance = DistanceBetweenPlaces(baseStation.Longitude, baseStation.Latitude, customer.Longitude, customer.Latitude);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    idOfStation = baseStation.Id;
+                }
+            }
+            return idOfStation;
+        }
         public void addBaseStation(Station station)
         {
             IDAL.DO.Station dalStation=new();
@@ -182,6 +204,18 @@ namespace BL
         {
 
         }
+
+        public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
+        {
+            return from station in dl.GetListOfBaseStations()
+                   select new IBL.BO.StationForList
+                   {
+                       ID = station.Id,
+                       Name = station.Name,
+                       AvailableChargingPositions=,
+                       In
+                   };
+        }
         public void addCustomer(Customer c)
         {
             IDAL.DO.Customer customer = new();
@@ -235,9 +269,9 @@ namespace BL
                             minDistanceStation = s;
                         }
                     }
-                    if (emptyDronePowerConsumption * minDis < drone.BatteryStatus)
+                    if (emptyDronePowerConsumption * minDis < drone.Battery)
                     {
-                        drone.BatteryStatus -= emptyDronePowerConsumption * minDis;
+                        drone.Battery -= emptyDronePowerConsumption * minDis;
                         drone.Location.Latitude = minDistanceStation.Latitude;
                         drone.Location.Longitude = minDistanceStation.Longitude;
                         drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
@@ -268,7 +302,7 @@ namespace BL
                         Location senderLocation = new();
                         senderLocation.Latitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Latitude;
                         senderLocation.Longitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Longitude;
-                        d.BatteryStatus-=DistanceBetweenPlaces(senderLocation.Longitude, senderLocation.Latitude, d.Location.Longitude, d.Location.Latitude)* emptyDronePowerConsumption;
+                        d.Battery-=DistanceBetweenPlaces(senderLocation.Longitude, senderLocation.Latitude, d.Location.Longitude, d.Location.Latitude)* emptyDronePowerConsumption;
                         d.Location = senderLocation;
                         dl.CollectParcelByDrone(parcelId);
                     }
@@ -289,7 +323,7 @@ namespace BL
                         targetLocation.Latitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Latitude;
                         targetLocation.Longitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Longitude;
                         double consumption= dronePowerConsumption[(int)dl.GetParcel(d.IdOfTheDeliveredParcel).Weight + 1];
-                        d.BatteryStatus -= DistanceBetweenPlaces(targetLocation.Longitude, targetLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * consumption;
+                        d.Battery -= DistanceBetweenPlaces(targetLocation.Longitude, targetLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * consumption;
                         d.Location = targetLocation;
                         d.DroneStatus = EnumsBL.DroneStatuses.Available;
                         dl.SupplyDeliveryToCustomer(d.IdOfTheDeliveredParcel);//update the 'delivery' time in parcel for now
@@ -316,7 +350,7 @@ namespace BL
                 if (s.Location == d.Location)//the drone and the station have the same location(if a drone in a station it have to be in charging?)
                 {
                     droneInCharging.Id = d.Id;
-                    droneInCharging.BatteryStatus = d.BatteryStatus;
+                    droneInCharging.Battery = d.Battery;
                     droneInChargingList.Add(droneInCharging);
                 }
             }
@@ -339,7 +373,7 @@ namespace BL
                     d.Id = d2.Id;
                     d.Model = d2.Model;
                     d.MaxWeight = d2.MaxWeight;
-                    d.BatteryStatus = d2.BatteryStatus;
+                    d.Battery = d2.Battery;
                     d.DroneStatus = d2.DroneStatus;
                     d.Location = d2.Location;
                     if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
@@ -460,7 +494,7 @@ namespace BL
                     if (d.IdOfTheDeliveredParcel == id)
                     {
                         drone.Id = d.Id;
-                        drone.BatteryStatus = d.BatteryStatus;
+                        drone.Battery = d.Battery;
                         drone.Location = d.Location;
                     }
                 }
