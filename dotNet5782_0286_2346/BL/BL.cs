@@ -110,21 +110,8 @@ namespace BL
                 dronesBL.Add(droneForList);
             }
         }
-        /*ם יש חבילהות שעוד לא סופקו אך הרחפן כבר שויך
-○	מצב הרחפן יהיה כמבצע משלוח
-○	מיקום הרחפן יהיה כדלקמן:
-■	אם החבילה שויכה אך לא נאספה - מיקום יהיה בתחנה הקרובה לשולח
-■	אם החבילה נאספה אך עוד לא סופקה - מיקום הרחפן יהיה במיקום השולח
-○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לרחפן לבצע את המשלוח ולהגיע לטעינה לתחנה הקרובה ליעד המשלוח לבין טעינה מלאה
-●	אם הרחפן לא מבצע משלוח
-○	מצבו יוגרל בין תחזוקה לפנוי
-●	אם הרחפן בתחזוקה
-○	מיקומו יוגרל בין תחנות התחנות הקיימות
-○	מצב סוללה יוגרל בין 0% ל-20%
-●	אם הרחפן פנוי
-○	מיקומו יוגרל בין לקוחות שיש חבילות שסופקו להם
-○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לו להגיע לתחנה הקרובה לטעינה לבין טעינה מלאה
-*/      private int getClosestStation(IDAL.DO.Customer customer,ref double minDistance)//help method
+
+        private int getClosestStation(IDAL.DO.Customer customer,ref double minDistance)//help method
         {
             int idOfStation=0;
             double distance;
@@ -217,15 +204,28 @@ namespace BL
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
         {
-            IEnumerable<IBL.BO.StationForList> stations = 
+            IEnumerable<IBL.BO.StationForList> stationsBO = 
                 from station in dl.GetListOfBaseStations()
                 select new IBL.BO.StationForList
                 {
                     ID = station.Id,
                     Name = station.Name,
+                    AvailableChargingPositions=station.ChargeSlots
                 };
-
-            return stations;
+            foreach (StationForList station in stationsBO)
+            {
+                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyDroneCharges())
+                {
+                    if (droneCharger.StationId == station.ID)
+                        station.InaccessibleChargingPositions++;
+                }
+            }
+            return stationsBO;
+        }
+        public IEnumerable<IBL.BO.DroneForList>GetListOfDrones()
+        {
+            return from drone in dronesBL
+                   select drone;
         }
         public IEnumerable<IBL.BO.CustomerForList>GetListOfCustomers()
         {
@@ -282,6 +282,41 @@ namespace BL
             }
             return parcels;
         }
+        public IEnumerable<IBL.BO.ParcelForList> GetListOfDParcelsThatHaveNotYetBeenAssignedToDrone()
+        {
+            return from parcel in dl.GetListOfNotAssociatedParcels()
+                   select new IBL.BO.ParcelForList
+                   {
+                       Id = parcel.Id,
+                       SenderName = dl.GetCustomer(parcel.SenderId).Name,
+                       ReceiverName = dl.GetCustomer(parcel.TargetId).Name,
+                       Weight = (EnumsBL.WeightCategories)parcel.Weight,
+                       Priority = (EnumsBL.Priorities)parcel.Priority,
+                       ParcelStatus = EnumsBL.ParcelStatuses.Defined
+                   };
+        }
+        public IEnumerable<IBL.BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
+        {
+                IEnumerable<IBL.BO.StationForList> stationsWithAvailableChargeSlots =
+                from station in dl.GetListOfStationsWithAvailableChargeSlots()
+                select new IBL.BO.StationForList
+                {
+                    ID = station.Id,
+                    Name = station.Name,
+                    AvailableChargingPositions = station.ChargeSlots
+                };
+            foreach (StationForList station in stationsWithAvailableChargeSlots)
+            {
+                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyDroneCharges())
+                {
+                    if (droneCharger.StationId == station.ID)
+                        station.InaccessibleChargingPositions++;
+                }
+            }
+            return stationsWithAvailableChargeSlots;
+        }
+
+
         public void addCustomer(Customer c)
         {
             IDAL.DO.Customer customer = new();
@@ -326,7 +361,7 @@ namespace BL
                 {
                     IDAL.DO.Station minDistanceStation=new();
                     double minDis = 1000000;
-                    foreach (IDAL.DO.Station s in dl.GetListOfAvailableChargingStations())
+                    foreach (IDAL.DO.Station s in dl.GetListOfStationsWithAvailableChargeSlots())
                     {
                         double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
                         if ((distance < minDis) && (s.ChargeSlots > 0))

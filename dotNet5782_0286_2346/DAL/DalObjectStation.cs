@@ -50,7 +50,7 @@ namespace DalObject
         /// this function returns list of all the available charging stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetListOfAvailableChargingStations()
+        public IEnumerable<Station> GetListOfStationsWithAvailableChargeSlots()
         {
             return from Station baseStation in stations
                    where baseStation.ChargeSlots != 0

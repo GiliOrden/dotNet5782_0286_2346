@@ -203,7 +203,7 @@ namespace ConsoleUI
                     Console.WriteLine("Please enter the drone ID ");
                     int.TryParse(Console.ReadLine(), out id1);
                     Console.WriteLine("Please enter the station ID from the list of stations");
-                    dl.GetListOfAvailableChargingStations();
+                    dl.GetListOfStationsWithAvailableChargeSlots();
                     int.TryParse(Console.ReadLine(), out id2);
                     dl.SendDroneToCharge(id1, id2);
                     break;
@@ -289,11 +289,11 @@ namespace ConsoleUI
                         Console.WriteLine(parcel.ToString());
                     break;
                 case DisplayListsOptions.ParselsNotAssociatedWithDrones:
-                    foreach (Parcel parcel in dl.GetListOfNotAssociatedParsels())
+                    foreach (Parcel parcel in dl.GetListOfNotAssociatedParcels())
                         Console.WriteLine(parcel.ToString());
                     break;
                 case DisplayListsOptions.StationsWithAvailableChargings:
-                    foreach (Station station in dl.GetListOfAvailableChargingStations())
+                    foreach (Station station in dl.GetListOfStationsWithAvailableChargeSlots())
                         Console.WriteLine(station.ToString());
                     break;
                 default:

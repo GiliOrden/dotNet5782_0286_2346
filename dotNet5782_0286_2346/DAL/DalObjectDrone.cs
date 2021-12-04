@@ -11,9 +11,9 @@ namespace DalObject
     public partial class DalObject : IDal
     {
         /// <summary>
-       /// the function recieves a drone as parameter and adds it to the list of drones if its id is already existed it throws "ExistIdException"
-      /// </summary>
-      /// <param name="d"></param>
+        /// the function recieves a drone as parameter and adds it to the list of drones if its id is already existed it throws "ExistIdException"
+        /// </summary>
+        /// <param name="d"></param>
         public void AddDrone(Drone d)
         {
             if (checkDrone(d.Id))
@@ -28,11 +28,11 @@ namespace DalObject
         public double[] GetDronePowerConsumption()
         {
             double[] status = new double[5];
-            status[0]=Config.EmptyDronePowerConsumption;
+            status[0] = Config.EmptyDronePowerConsumption;
             status[1] = Config.LightWeightCarrierPowerConsumption;
-            status[2]= Config.MediumWeightCarrierPowerConsumption;
-            status[3]=Config. HeavyWeightCarrierPowerConsumption;
-            status[4] =Config.ChargingRatePerHour;
+            status[2] = Config.MediumWeightCarrierPowerConsumption;
+            status[3] = Config.HeavyWeightCarrierPowerConsumption;
+            status[4] = Config.ChargingRatePerHour;
             return status;
         }
 
@@ -47,8 +47,8 @@ namespace DalObject
             if (!checkDrone(idDrone))
                 throw new IDAL.DO.IdNotFoundException(idDrone, "drone");
             if (!checkStation(idStation))
-                throw new IDAL.DO.IdNotFoundException(idStation, "station");        
-            dc.DroneId =idDrone;
+                throw new IDAL.DO.IdNotFoundException(idStation, "station");
+            dc.DroneId = idDrone;
             dc.StationId = idStation;
             droneCharges.Add(dc);
             Station s = DataSource.stations.Find(stat => stat.Id == idStation);
@@ -94,7 +94,7 @@ namespace DalObject
                         }
                     }
                     droneCharges.Remove(charger);
-                }      
+                }
             }
         }
 
@@ -118,7 +118,7 @@ namespace DalObject
             return d;
         }
 
- 
+
         /// <summary>
         /// this function returns list of drone
         /// </summary>
@@ -136,7 +136,7 @@ namespace DalObject
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         public bool checkDrone(int id)
         {
-            return DataSource.drones.Any(drone=>drone.Id == id);
+            return DataSource.drones.Any(drone => drone.Id == id);
         }
     }
 }
