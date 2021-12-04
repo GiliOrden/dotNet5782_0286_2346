@@ -611,6 +611,7 @@ namespace BL
         {
             return x * Math.PI / 180;
         }
+
         // cos(d) = sin(φА)·sin(φB) + cos(φА)·cos(φB)·cos(λА − λB),
         //  where φА, φB are latitudes and λА, λB are longitudes
         // Distance = d * R
