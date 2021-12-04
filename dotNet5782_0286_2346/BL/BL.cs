@@ -34,6 +34,7 @@ namespace BL
             double way;
             double minDistance = 10000;
             double minCharge=0;
+            int index;
             foreach (var drone in dalDrones)
             {
                 DroneForList droneForList = new DroneForList();
@@ -86,7 +87,7 @@ namespace BL
                 //If the drone is in maintenance, its location will be drawn between the existing stations
                 else if (droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
-                    int index = rand.Next(dl.GetListOfBaseStations().Count());
+                    index = rand.Next(dl.GetListOfBaseStations().Count());
                     droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
                     droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
                     droneForList.Battery = rand.Next(21);
@@ -94,9 +95,16 @@ namespace BL
 
                 else //if the drone is available
                 {
-                  //  מיקומו יוגרל בין לקוחות שיש חבילות שסופקו להם
-                  IEnumerable<CustomerForList> customersWhoHavePackagesProvidedToThem=
-                  ○	מצב סוללה יוגרל בין טעינה מינימלית שתאפשר לו להגיע לתחנה הקרובה לטעינה לבין טעינה מלאה
+                    //Its location will be raffled off among customers who have packages provided to them
+                    IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from cust in GetListOfCustomers()
+                                                               where cust.ReceivedParcels!=0
+                                                               select cust.ID;
+                    index = rand.Next(customersWhoHaveParcelsDeliveredToThem.Count());
+                    droneForList.Location.Longitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Longitude;
+                    droneForList.Location.Latitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Latitude;
+                    getClosestStation(dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)),ref minDistance);
+                    minCharge = minDistance * emptyDronePowerConsumption;
+                    droneForList.Battery = rand.Next((int)(minCharge + 1), 100);
                 }
                   
                 dronesBL.Add(droneForList);
@@ -209,26 +217,46 @@ namespace BL
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
         {
-            return from station in dl.GetListOfBaseStations()
-                   select new IBL.BO.StationForList
-                   {
-                       ID = station.Id,
-                       Name = station.Name,
-                       AvailableChargingPositions=,
-                       In
-                   };
+            IEnumerable<IBL.BO.StationForList> stations = 
+                from station in dl.GetListOfBaseStations()
+                select new IBL.BO.StationForList
+                {
+                    ID = station.Id,
+                    Name = station.Name,
+                };
+
+            return stations;
         }
         public IEnumerable<IBL.BO.CustomerForList>GetListOfCustomers()
         {
-            return from customer in dl.GetListOfCustomers()
+            IEnumerable<IBL.BO.CustomerForList>customers= from customer in dl.GetListOfCustomers()
                    select new IBL.BO.CustomerForList
                    {
                        ID = customer.Id,
                        Name=customer.Name,
-                       Phone=customer.Phone,
-                       SentAndDeliveredParcels=,
-                       
+                       Phone=customer.Phone,  
                    };
+            foreach(CustomerForList cust in customers)
+            {
+                foreach(IDAL.DO.Parcel parc in dl.GetListOfParcels())
+                {
+                    if(parc.SenderId==cust.ID)
+                    {
+                        if (parc.Delivered != default(DateTime))
+                            cust.SentAndDeliveredParcels++;
+                        else
+                            cust.SentButNotDeliveredParcels++;
+                    }
+                    else if(parc.TargetId==cust.ID)
+                    {
+                        if (parc.Delivered != default(DateTime))
+                            cust.ReceivedParcels++;
+                        else
+                            cust.OnTheWayToCustomerParcels++;
+                    }
+                }
+            }
+            return customers;
         }
         public IEnumerable<IBL.BO.ParcelForList>GetListOfParcels()
         {
