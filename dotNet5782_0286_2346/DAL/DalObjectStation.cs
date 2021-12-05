@@ -56,7 +56,12 @@ namespace DalObject
                    where baseStation.ChargeSlots != 0
                    select baseStation;
         }
-
+        public void DeleteStation (int id)
+        {
+            if (!checkStation(id))
+                throw new IdNotFoundException(id, "station");
+            DataSource.stations.RemoveAll(station => station.Id == id);
+        }
         /// <summary>
         /// the function check an ID
         /// </summary>

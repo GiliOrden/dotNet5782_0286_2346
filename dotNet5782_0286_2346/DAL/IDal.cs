@@ -15,7 +15,7 @@ namespace IDAL
         IEnumerable<DO.Station> GetListOfBaseStations();
         IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();
         bool checkStation(int id);
-        void RemoveDrone(int id);
+        void DeleteStation(int id);
         #endregion
 
         #region Customer
@@ -61,6 +61,7 @@ namespace IDAL
         DO.Drone GetDrone(int id);
         IEnumerable<DO.Drone> GetListOfDrones();
         double[] GetDronePowerConsumption();
+        void DeleteDrone(int id);
 
         #endregion
         #region DroneCharge

@@ -164,7 +164,7 @@ namespace BL
             }  
             catch(IDAL.DO.IdNotFoundException ex)
             {
-                dl.RemoveDrone(drone.Id);
+                dl.DeleteDrone(drone.Id);
                 throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
@@ -176,41 +176,50 @@ namespace BL
             dronesBL.Find(drone => drone.Id == id).Model = newModel;   
             IDAL.DO.Drone d = dl.GetDrone(id);
             d.Model = newModel;
-            dl.RemoveDrone(id);
+            dl.DeleteDrone(id);
             dl.AddDrone(d);
         }
-        //I'm going to delete this note
-        //Note that the total numOfChargeSlots is the sum of the number of available positions and the number of skimmers in the charge
-        public void UpdateBaseStation(int id,string name,int numOfChargeSlots)
+        public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
         {
-            if(!dl.checkStation(id))
-              throw new IBL.BO.IdNotFoundException(id, "station");
+            if (!dl.checkStation(id))
+                throw new IBL.BO.IdNotFoundException(id, "station");
             IDAL.DO.Station s = dl.GetBaseStation(id);
             if (name != " ")
                 s.Name = name;
-            if(numOfChargeSlots!=-1)
+            if (numOfChargeSlots != -1)
             {
-              //need to continue
+                foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
+                {
+                    if (droneCharge.StationId == id)
+                        numOfChargeSlots--;
+                }
+                s.ChargeSlots = numOfChargeSlots;
+                dl.DeleteStation(id);
+                dl.AddStation(s);
             }
         }
-        public void ReleaseDroneFromCharge(int id,)
+        public void ReleaseDroneFromCharge(int id,TimeSpan chargingTime)
         {
-
+           if(dronesBL.Find(drone=>drone.Id==id).DroneStatus==EnumsBL.DroneStatuses.Maintenance)
         }
         public void AssignParcelToDrone(int idOfDrone)
         {
-
+            if(!dl.checkDrone(idOfDrone))
+                throw new IBL.BO.IdNotFoundException(idOfDrone, "drone");
+            if (dronesBL.Find(drone => drone.Id == idOfDrone).DroneStatus != EnumsBL.DroneStatuses.Available)
+                throw new IBL.BO.DroneIsNotAvailableException(idOfDrone);
+            
         }
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
         {
-            IEnumerable<IBL.BO.StationForList> stationsBO = 
+            IEnumerable<IBL.BO.StationForList> stationsBO =
                 from station in dl.GetListOfBaseStations()
                 select new IBL.BO.StationForList
                 {
                     ID = station.Id,
                     Name = station.Name,
-                    AvailableChargingPositions=station.ChargeSlots
+                    AvailableChargingPositions = station.ChargeSlots
                 };
             foreach (StationForList station in stationsBO)
             {
@@ -222,32 +231,33 @@ namespace BL
             }
             return stationsBO;
         }
-        public IEnumerable<IBL.BO.DroneForList>GetListOfDrones()
+        public IEnumerable<IBL.BO.DroneForList> GetListOfDrones()
         {
             return from drone in dronesBL
                    select drone;
         }
-        public IEnumerable<IBL.BO.CustomerForList>GetListOfCustomers()
+        public IEnumerable<IBL.BO.CustomerForList> GetListOfCustomers()
         {
-            IEnumerable<IBL.BO.CustomerForList>customers= from customer in dl.GetListOfCustomers()
-                   select new IBL.BO.CustomerForList
-                   {
-                       ID = customer.Id,
-                       Name=customer.Name,
-                       Phone=customer.Phone,  
-                   };
-            foreach(CustomerForList cust in customers)
-            {
-                foreach(IDAL.DO.Parcel parc in dl.GetListOfParcels())
+            IEnumerable<IBL.BO.CustomerForList> customers =
+                from customer in dl.GetListOfCustomers()
+                select new IBL.BO.CustomerForList
                 {
-                    if(parc.SenderId==cust.ID)
+                    ID = customer.Id,
+                    Name = customer.Name,
+                    Phone = customer.Phone,
+                };
+            foreach (CustomerForList cust in customers)
+            {
+                foreach (IDAL.DO.Parcel parc in dl.GetListOfParcels())
+                {
+                    if (parc.SenderId == cust.ID)
                     {
                         if (parc.Delivered != default(DateTime))
                             cust.SentAndDeliveredParcels++;
                         else
                             cust.SentButNotDeliveredParcels++;
                     }
-                    else if(parc.TargetId==cust.ID)
+                    else if (parc.TargetId == cust.ID)
                     {
                         if (parc.Delivered != default(DateTime))
                             cust.ReceivedParcels++;
@@ -258,17 +268,18 @@ namespace BL
             }
             return customers;
         }
-        public IEnumerable<IBL.BO.ParcelForList>GetListOfParcels()
+        public IEnumerable<IBL.BO.ParcelForList> GetListOfParcels()
         {
-            IEnumerable<IBL.BO.ParcelForList>parcels= from parcel in dl.GetListOfParcels()
-                   select new IBL.BO.ParcelForList
-                   {
-                       Id = parcel.Id,
-                       SenderName=dl.GetCustomer(parcel.SenderId).Name,
-                       ReceiverName=dl.GetCustomer(parcel.TargetId).Name,
-                       Weight= (EnumsBL.WeightCategories)parcel.Weight,
-                       Priority= (EnumsBL.Priorities)parcel.Priority,                    
-                   };
+            IEnumerable<IBL.BO.ParcelForList> parcels = 
+                from parcel in dl.GetListOfParcels()
+                select new IBL.BO.ParcelForList
+                {
+                    Id = parcel.Id,
+                    SenderName = dl.GetCustomer(parcel.SenderId).Name,
+                    ReceiverName = dl.GetCustomer(parcel.TargetId).Name,
+                    Weight = (EnumsBL.WeightCategories)parcel.Weight,
+                    Priority = (EnumsBL.Priorities)parcel.Priority,
+                };
             foreach (ParcelForList parc in parcels)
             {
                 if (dl.GetParcel(parc.Id).Scheduled == default(DateTime))
@@ -277,7 +288,7 @@ namespace BL
                     parc.ParcelStatus = EnumsBL.ParcelStatuses.Associated;
                 else if (dl.GetParcel(parc.Id).Delivered == default(DateTime))
                     parc.ParcelStatus = EnumsBL.ParcelStatuses.Collected;
-                else if(dl.GetParcel(parc.Id).Delivered != default(DateTime))
+                else if (dl.GetParcel(parc.Id).Delivered != default(DateTime))
                     parc.ParcelStatus = EnumsBL.ParcelStatuses.Delivered;
             }
             return parcels;
@@ -297,14 +308,14 @@ namespace BL
         }
         public IEnumerable<IBL.BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
         {
-                IEnumerable<IBL.BO.StationForList> stationsWithAvailableChargeSlots =
-                from station in dl.GetListOfStationsWithAvailableChargeSlots()
-                select new IBL.BO.StationForList
-                {
-                    ID = station.Id,
-                    Name = station.Name,
-                    AvailableChargingPositions = station.ChargeSlots
-                };
+            IEnumerable<IBL.BO.StationForList> stationsWithAvailableChargeSlots =
+            from station in dl.GetListOfStationsWithAvailableChargeSlots()
+            select new IBL.BO.StationForList
+            {
+                ID = station.Id,
+                Name = station.Name,
+                AvailableChargingPositions = station.ChargeSlots
+            };
             foreach (StationForList station in stationsWithAvailableChargeSlots)
             {
                 foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyDroneCharges())
@@ -321,7 +332,7 @@ namespace BL
         {
             IDAL.DO.Customer customer = new();
             customer.Id = c.Id;
-            customer.Name = c.Name; 
+            customer.Name = c.Name;
             customer.Phone = c.Phone;
             customer.Latitude = c.Location.Latitude;
             customer.Longitude = c.Location.Longitude;
@@ -344,7 +355,7 @@ namespace BL
         }
 
         public void UpdatinCustomerData(int id, string name, string phone) //is there a chance the function will get only 2 values?
-        {                                                                                          
+        {
             IDAL.DO.Customer customer = dl.GetCustomer(id);
             if (name != null)
                 customer.Name = name;
@@ -357,9 +368,9 @@ namespace BL
         {
             foreach (DroneForList drone in dronesBL)
             {
-                if ((drone.Id == id)&& (drone.DroneStatus == EnumsBL.DroneStatuses.Available))
+                if ((drone.Id == id) && (drone.DroneStatus == EnumsBL.DroneStatuses.Available))
                 {
-                    IDAL.DO.Station minDistanceStation=new();
+                    IDAL.DO.Station minDistanceStation = new();
                     double minDis = 1000000;
                     foreach (IDAL.DO.Station s in dl.GetListOfStationsWithAvailableChargeSlots())
                     {
@@ -393,7 +404,7 @@ namespace BL
         public void CollectingParcelByDrones(int id)
         {
             int parcelId;
-            foreach(DroneForList d in dronesBL)
+            foreach (DroneForList d in dronesBL)
             {
                 if (d.Id == id)
                 {
@@ -403,27 +414,28 @@ namespace BL
                         Location senderLocation = new();
                         senderLocation.Latitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Latitude;
                         senderLocation.Longitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Longitude;
-                        d.Battery-=DistanceBetweenPlaces(senderLocation.Longitude, senderLocation.Latitude, d.Location.Longitude, d.Location.Latitude)* emptyDronePowerConsumption;
+                        d.Battery -= DistanceBetweenPlaces(senderLocation.Longitude, senderLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * emptyDronePowerConsumption;
                         d.Location = senderLocation;
                         dl.CollectParcelByDrone(parcelId);
                     }
                     else
                         throw new DroneCanNotCollectParcelException(id, parcelId);
                 }
-             }
+            }
         }
 
         public void SupplyDeliveryToCustomer(int droneId)
         {
             foreach (DroneForList d in dronesBL)
             {
-                if (d.Id == droneId) {
+                if (d.Id == droneId)
+                {
                     if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp != DateTime.MinValue) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == DateTime.MinValue))
                     {//the parcel picked up but have not reached its destination
                         Location targetLocation = new();
                         targetLocation.Latitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Latitude;
                         targetLocation.Longitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Longitude;
-                        double consumption= dronePowerConsumption[(int)dl.GetParcel(d.IdOfTheDeliveredParcel).Weight + 1];
+                        double consumption = dronePowerConsumption[(int)dl.GetParcel(d.IdOfTheDeliveredParcel).Weight + 1];
                         d.Battery -= DistanceBetweenPlaces(targetLocation.Longitude, targetLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * consumption;
                         d.Location = targetLocation;
                         d.DroneStatus = EnumsBL.DroneStatuses.Available;
@@ -445,7 +457,7 @@ namespace BL
             s.Location.Latitude = sDal.Latitude;
             s.Location.Longitude = sDal.Longitude;
             s.ChargeSlots = sDal.ChargeSlots;
-            List<DroneInCharging> droneInChargingList=new();
+            List<DroneInCharging> droneInChargingList = new();
             foreach (DroneForList d in drones)
             {
                 if (s.Location == d.Location)//the drone and the station have the same location(if a drone in a station it have to be in charging?)
@@ -527,7 +539,7 @@ namespace BL
                     d.ParcelInTransfer = parcelInTransfer;
                 }
             }
-           return d;
+            return d;
         }
 
         public Customer GetCustomer(int id)//i did not finish
@@ -540,7 +552,7 @@ namespace BL
             c.Phone = c2.Phone;
             c.Location.Latitude = c2.Latitude;
             c.Location.Longitude = c2.Longitude;
-            
+
             return c;
 
         }
@@ -587,7 +599,7 @@ namespace BL
             recipient.OtherSide = recipientOtherSide;
             p.Sender = sender;
             p.Receiver = recipient;
-            if(p.AssociationTime != DateTime.MinValue)
+            if (p.AssociationTime != DateTime.MinValue)
             {
                 DroneForParcel drone = new();
                 foreach (DroneForList d in drones)
@@ -633,7 +645,8 @@ namespace BL
 
             return dist;
         }
+
     };
-                    
-           
+
+
 }

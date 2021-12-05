@@ -98,7 +98,7 @@ namespace DalObject
             }
         }
 
-        public void RemoveDrone(int id)
+        public void DeleteDrone(int id)
         {
             if (!checkDrone(id))
                 throw new IdNotFoundException(id, "drone");
