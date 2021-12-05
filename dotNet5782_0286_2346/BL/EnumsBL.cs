@@ -12,7 +12,7 @@ namespace IBL
 
             public enum Priorities { Regular, Fast, Emergency }
 
-            public enum ParcelStatuses { Defined, Associated, Collected, Supplied}
+            public enum ParcelStatuses { Defined, Associated, Collected, Delivered}
 
         }
     }

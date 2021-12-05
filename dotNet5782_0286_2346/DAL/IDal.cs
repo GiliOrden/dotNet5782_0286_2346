@@ -13,9 +13,9 @@ namespace IDAL
         void AddStation(DO.Station s);
         DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> GetListOfBaseStations();
-        IEnumerable<DO.Station> GetListOfAvailableChargingStations();
+        IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();
         bool checkStation(int id);
-        void RemoveDrone(int id);
+        void DeleteStation(int id);
         #endregion
 
         #region Customer
@@ -61,8 +61,11 @@ namespace IDAL
         DO.Drone GetDrone(int id);
         IEnumerable<DO.Drone> GetListOfDrones();
         double[] GetDronePowerConsumption();
-       
+        void DeleteDrone(int id);
+
         #endregion
+        #region DroneCharge
+        IEnumerable<DO.DroneCharge> GetListOfBusyDroneCharges();
         #region Parcel
         int AddParcel(DO.Parcel p);
         void AssignParcelToDrone(int parcelId, int droneId);
@@ -70,8 +73,9 @@ namespace IDAL
         void SupplyDeliveryToCustomer(int id);
         DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> GetListOfParcels();
-        IEnumerable<DO.Parcel> GetListOfNotAssociatedParsels();
+        IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
         bool checkDrone(int id);
         #endregion
+
     }
 }

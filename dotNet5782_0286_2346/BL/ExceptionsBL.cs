@@ -44,7 +44,7 @@ namespace IBL.BO
             public NoBatteryException(int id, string message) : base(message) { ID = id; }
             public NoBatteryException(int id, string message, Exception inner) : base(message, inner) { ID = id; }
 
-            public override string ToString() => base.ToString() + $"The drone Id: {ID} does not have enough battery to be sent to a base station for charging";
+            public override string ToString() => base.ToString() + $"The drone Id: {ID} does not have enough battery to perform the task.";
         }
 
         [Serializable]
@@ -70,5 +70,16 @@ namespace IBL.BO
 
             public override string ToString() => base.ToString() + $"The {DroneID} drone cann't supply , the {ParcelId} parcel  ";
         }
+    [Serializable]
+    public class DroneIsNotAvailableException : Exception
+    {
+        public int DroneID;
+       
+        public DroneIsNotAvailableException(int droneId) : base() { DroneID = droneId;  }
+        public DroneIsNotAvailableException(int droneId,  string message) : base(message) { DroneID = droneId; }
+        public DroneIsNotAvailableException(int droneId, int parcelId, string message, Exception inner) : base(message, inner) { DroneID = droneId;}
+
+        public override string ToString() => base.ToString() + $"Drone:{DroneID} is not Available, please try another drone. ";
+    }
 
 }

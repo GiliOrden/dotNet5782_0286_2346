@@ -50,13 +50,18 @@ namespace DalObject
         /// this function returns list of all the available charging stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetListOfAvailableChargingStations()
+        public IEnumerable<Station> GetListOfStationsWithAvailableChargeSlots()
         {
             return from Station baseStation in stations
                    where baseStation.ChargeSlots != 0
                    select baseStation;
         }
-
+        public void DeleteStation (int id)
+        {
+            if (!checkStation(id))
+                throw new IdNotFoundException(id, "station");
+            DataSource.stations.RemoveAll(station => station.Id == id);
+        }
         /// <summary>
         /// the function check an ID
         /// </summary>
