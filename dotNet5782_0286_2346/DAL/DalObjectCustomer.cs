@@ -43,6 +43,11 @@ namespace DalObject
         {
             return DataSource.customers.Any(cust => cust.Id == id);
         }
+
+        public void UpdateCustomer(Customer c)
+        {
+
+        }
     }
 }
 
