@@ -40,7 +40,7 @@ namespace IDAL
         /// <returns><"listOfCustomers">
         IEnumerable<DO.Customer> GetListOfCustomers();
 
-
+        void UpdateCustomer(DO.Customer c);
         #endregion
 
         #region Drone

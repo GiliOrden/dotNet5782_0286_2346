@@ -304,7 +304,7 @@ namespace BL
             s.Location.Longitude = sDal.Longitude;
             s.ChargeSlots = sDal.ChargeSlots;
             List<DroneInCharging> droneInChargingList=new();
-            foreach (DroneForList d in drones)
+            foreach (DroneForList d in dronesBL)
             {
                 if (s.Location == d.Location)//the drone and the station have the same location(if a drone in a station it have to be in charging?)
                 {
@@ -317,6 +317,18 @@ namespace BL
             return s;
         }
 
+        private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id)
+        {
+            return from sic in dl.GetStudentsInCourseByPredicate(sic => sic.StudentId == id)
+                   let dronesInCharging = GetDrone(sic.CourseId)
+                   select new DroneInCharging()
+                   {
+                       Id = dronesInCharging.Id,
+                       BatteryStatus = dronesInCharging.BatteryStatus
+                   };
+        }
+
+
         public Drone GetDrone(int id)
         {
             Drone d = new();
@@ -325,7 +337,7 @@ namespace BL
             ParcelAtCustomer recipient = new();
             CustomerInParcel senderOtherSide = new();
             CustomerInParcel recipientOtherSide = new();
-            foreach (DroneForList d2 in drones)
+            foreach (DroneForList d2 in dronesBL)
             {
                 if (d2.Id == id)
                 {
@@ -380,7 +392,7 @@ namespace BL
                         sender.OtherSide = senderOtherSide;
                         recipient.OtherSide = recipientOtherSide;
                         parcelInTransfer.Sender = sender;
-                        parcelInTransfer.Recipient = recipient;
+                        parcelInTransfer.Receiver = recipient;
                     }
                     d.ParcelInTransfer = parcelInTransfer;
                 }
@@ -448,7 +460,7 @@ namespace BL
             if(p.AssociationTime != DateTime.MinValue)
             {
                 DroneForParcel drone = new();
-                foreach (DroneForList d in drones)
+                foreach (DroneForList d in dronesBL)
                 {
                     if (d.IdOfTheDeliveredParcel == id)
                     {
