@@ -199,7 +199,7 @@ namespace BL
                 dl.AddStation(s);
             }
         }
-        public void ReleaseDroneFromCharge(int id,TimeSpan chargingTime)
+        public void ReleaseDroneFromCharge(int id, int chargingTime)
         {
            if(dronesBL.Find(drone=>drone.Id==id).DroneStatus==EnumsBL.DroneStatuses.Maintenance)
         }
@@ -211,16 +211,27 @@ namespace BL
                 throw new IBL.BO.DroneIsNotAvailableException(idOfDrone);
             IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
                 from parc in dl.GetListOfParcels()
-                where checkSufficientPowerToTransmission(idOfDrone, parc) == true
+                where checkSufficientPowerToTransmission(dronesBL.Find(drone=>drone.Id==idOfDrone), parc) == true
                 select parc;
-            if(parcelsThatDroneCanTransfer.Count()==0)
-                throw new IBL.BO.
-
-
+            if (parcelsThatDroneCanTransfer.Count() == 0)
+                throw new IBL.BO.NoBatteryException(idOfDrone);
+             
         }
-        private bool checkSufficientPowerToTransmission(int idOfDrone,IDAL.DO.Parcel parcel)
+        private bool checkSufficientPowerToTransmission(DroneForList drone,IDAL.DO.Parcel parcel)
         {
-            
+         double minDistance = 100000;
+         double minCharge=0;
+         getClosestStation(dl.GetCustomer(parcel.TargetId), ref minDistance);
+            double way = DistanceBetweenPlaces(drone.Location.Longitude, drone.Location.Latitude, dl.GetCustomer(parcel.SenderId).Longitude, dl.GetCustomer(parcel.SenderId).Latitude)
+            + DistanceBetweenPlaces(dl.GetCustomer(parcel.SenderId).Longitude, dl.GetCustomer(parcel.SenderId).Latitude, dl.GetCustomer(parcel.TargetId).Longitude, dl.GetCustomer(parcel.TargetId).Latitude)
+            + minDistance;
+            if (parcel.Weight == IDAL.DO.WeightCategories.Light)
+                minCharge= lightWeightCarrierPowerConsumption *way;
+            else if (parcel.Weight == IDAL.DO.WeightCategories.Medium)
+                minCharge = mediumWeightCarrierPowerConsumption * way;
+            else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
+                minCharge = heavyWeightCarrierPowerConsumption * way;
+            return minCharge < drone.Battery;
         }
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
