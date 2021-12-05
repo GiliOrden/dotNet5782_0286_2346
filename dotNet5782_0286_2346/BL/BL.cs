@@ -127,6 +127,7 @@ namespace BL
             }
             return idOfStation;
         }
+
         public void addBaseStation(Station station)
         {
             IDAL.DO.Station dalStation=new();
@@ -208,6 +209,17 @@ namespace BL
                 throw new IBL.BO.IdNotFoundException(idOfDrone, "drone");
             if (dronesBL.Find(drone => drone.Id == idOfDrone).DroneStatus != EnumsBL.DroneStatuses.Available)
                 throw new IBL.BO.DroneIsNotAvailableException(idOfDrone);
+            IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
+                from parc in dl.GetListOfParcels()
+                where checkSufficientPowerToTransmission(idOfDrone, parc) == true
+                select parc;
+            if(parcelsThatDroneCanTransfer.Count()==0)
+                throw new IBL.BO.
+
+
+        }
+        private bool checkSufficientPowerToTransmission(int idOfDrone,IDAL.DO.Parcel parcel)
+        {
             
         }
 

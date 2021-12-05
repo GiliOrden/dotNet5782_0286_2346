@@ -44,7 +44,7 @@ namespace IBL.BO
             public NoBatteryException(int id, string message) : base(message) { ID = id; }
             public NoBatteryException(int id, string message, Exception inner) : base(message, inner) { ID = id; }
 
-            public override string ToString() => base.ToString() + $"The drone Id: {ID} does not have enough battery to be sent to a base station for charging";
+            public override string ToString() => base.ToString() + $"The drone Id: {ID} does not have enough battery to perform the task.";
         }
 
         [Serializable]
