@@ -201,7 +201,7 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out id2);
                     dl.AssignParcelToDrone(id1, id2);
                     break;
-                case UpdateOptions.CollectParcelByDrone:
+                case UpdateOptions.UpdateStationData:
                     Console.WriteLine("Please enter the parcel ID");
                     int.TryParse(Console.ReadLine(), out id1);
                     dl.CollectParcelByDrone(id1);
@@ -212,16 +212,32 @@ namespace ConsoleUI_BL
                     name = Console.ReadLine();
                     phone= Console.ReadLine();
                     bl.UpdateCustomer(id1, name, phone);
+                    Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.SendDroneToCharge:
                     Console.WriteLine("Please enter the drone ID ");
                     int.TryParse(Console.ReadLine(), out id1);
                     bl.SendDroneToCharge(id1);
+                    Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
                     Console.WriteLine("Please enter the drone ID");
                     int.TryParse(Console.ReadLine(), out id1);
                     dl.ReleaseDroneFromCharge(id1);
+                    break;
+                case UpdateOptions.AssignParcelToDrone:
+                    break;
+                case UpdateOptions.CollectParcelByDrone:
+                    Console.WriteLine("Please enter the drone ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    bl.CollectingParcelByDrones(id1);
+                    Console.WriteLine("Succeeded");
+                    break;
+                case UpdateOptions.SupplyParcelByDrone:
+                    Console.WriteLine("Please enter the drone ID");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    bl.SupplyDeliveryToCustomer(id1);
+                    Console.WriteLine("Succeeded");
                     break;
                 default:
                     break;
