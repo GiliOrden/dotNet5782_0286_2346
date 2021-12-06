@@ -71,15 +71,15 @@ namespace IBL.BO
         public override string ToString() => base.ToString() + $"The {DroneID} drone cann't supply , the {ParcelId} parcel  ";
     }
     [Serializable]
-    public class DroneIsNotAvailableException : Exception
+    public class DroneStatusException : Exception
     {
         public int DroneID;
+        public string Status;
+        public DroneStatusException(int droneId,string status) : base() { DroneID = droneId; Status = status; }
+        public DroneStatusException(int droneId, string status, string message) : base(message) { DroneID = droneId; Status = status; }
+        public DroneStatusException(int droneId, string status, string message, Exception inner) : base(message, inner) { DroneID = droneId; Status = status; }
 
-        public DroneIsNotAvailableException(int droneId) : base() { DroneID = droneId; }
-        public DroneIsNotAvailableException(int droneId, string message) : base(message) { DroneID = droneId; }
-        public DroneIsNotAvailableException(int droneId, int parcelId, string message, Exception inner) : base(message, inner) { DroneID = droneId; }
-
-        public override string ToString() => base.ToString() + $"Drone:{DroneID} is not Available, please try another drone. ";
+        public override string ToString() => base.ToString() + $"Drone:{DroneID} is not {Status} please try another drone. ";
     }
 
     [Serializable]

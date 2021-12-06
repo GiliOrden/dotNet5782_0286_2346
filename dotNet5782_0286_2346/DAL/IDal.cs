@@ -74,6 +74,7 @@ namespace IDAL
         DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> GetListOfParcels();
         IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
+        IEnumerable<DO.Parcel> GetParcelsAtCustomerByPredicate(Predicate<DO.Parcel> predicate)
         #endregion
 
     }

@@ -39,7 +39,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of customer</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        public bool checkCustomer(int id)
+        private bool checkCustomer(int id)
         {
             return DataSource.customers.Any(cust => cust.Id == id);
         }

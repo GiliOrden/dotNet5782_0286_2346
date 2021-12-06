@@ -185,6 +185,7 @@ namespace BL
                 throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
+
         public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
         {
             try
@@ -209,13 +210,25 @@ namespace BL
                 throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
+
         public void ReleaseDroneFromCharge(int id, int chargingTime)
         {
-            if
-           if(dronesBL.Find(drone=>drone.Id==id).DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+            DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == id);
+            if(drone==null)
+                throw new IBL.BO.IdNotFoundException(id,"drone");
+            if (drone.DroneStatus != EnumsBL.DroneStatuses.Maintenance)
+                throw new IBL.BO.DroneStatusException(id, "in maintenance");
+
+            drone.Battery = drone.Battery + chargingTime * chargingRatePerHour;
+            if (drone.Battery > 100)
+                drone.Battery = 100;
+            drone.DroneStatus = EnumsBL.DroneStatuses.Available;
+            dl.ReleaseDroneFromCharge(id);
         }
+
         public void AssignParcelToDrone(int idOfDrone)
         {
+            
             int idOfParcel=0;
             DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == idOfDrone);
             double distance;
@@ -224,46 +237,58 @@ namespace BL
             if (drone==null)
                 throw new IBL.BO.IdNotFoundException(idOfDrone, "drone");
             if (drone.DroneStatus != EnumsBL.DroneStatuses.Available)
-                throw new IBL.BO.DroneIsNotAvailableException(idOfDrone);
+                throw new IBL.BO.DroneStatusException(idOfDrone,"available");
 
             IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
                 from parc in dl.GetListOfNotAssociatedParcels()
-                where checkSufficientPowerToTransmission(drone, parc) == true  
+                where checkSufficientPowerToTransmission(drone, parc) == true
                 select parc;
             if (parcelsThatDroneCanTransfer.Count() == 0)
-              throw new IBL.BO.NoBatteryException(idOfDrone);
+                throw new IBL.BO.NoBatteryException(idOfDrone);
 
             IEnumerable<IDAL.DO.Parcel> parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Emergency);
-            if(parcelsWithTheHighestPriority.Count()==0)
+            if (parcelsWithTheHighestPriority.Count() == 0)
             {
-                parcelsWithTheHighestPriority=parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
+                parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
                 if (parcelsWithTheHighestPriority.Count() == 0)
                     parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer;
             }
 
-            IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone = parcelsWithTheHighestPriority.Where(parc => parc.Weight == dl.GetDrone(idOfDrone).MaxWeight);
+            IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority,idOfDrone);
             if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
-            {
-                parcelsWithMaxWeightPossibleToDrone = parcelsWithTheHighestPriority.Where(parc => parc.Weight < dl.GetDrone(idOfDrone).MaxWeight);
-                if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
-                {
-                    parcelsWithMaxWeightPossibleToDrone=
-                    throw new IBL.BO.DroneMaxWeightIsLowException(idOfDrone);
-                }
-            
+            {    
+                    if (parcelsWithTheHighestPriority.ElementAt(0).Priority == IDAL.DO.Priorities.Emergency)
+                    {
+                        parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
+                        parcelsWithMaxWeightPossibleToDrone =getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
+                        if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+                        {
+                          parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Regular);
+                          parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
+                        }
+                    }
+                    else if(parcelsWithTheHighestPriority.ElementAt(0).Priority == IDAL.DO.Priorities.Fast)
+                    {
+                    parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Regular);
+                    parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
+                    }
+                    if(parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+                     throw new IBL.BO.DroneMaxWeightIsLowException(idOfDrone);
             }
-            foreach(IDAL.DO.Parcel parcel in parcelsWithMaxWeightPossibleToDrone)
+            foreach (IDAL.DO.Parcel parcel in parcelsWithMaxWeightPossibleToDrone)
             {
                 distance = DistanceBetweenPlaces(drone.Location.Longitude, drone.Location.Latitude, dl.GetCustomer(parcel.SenderId).Longitude, dl.GetCustomer(parcel.SenderId).Latitude);
-                if (distance<minDistance)
+                if (distance < minDistance)
                 {
                     minDistance = distance;
                     idOfParcel = parcel.Id;
-                }    
+                }
             }
+
             dl.AssignParcelToDrone(idOfParcel, idOfDrone);
             drone.DroneStatus = EnumsBL.DroneStatuses.OnDelivery;
         }
+    
         private bool checkSufficientPowerToTransmission(DroneForList drone,IDAL.DO.Parcel parcel)
         {
          double minDistance = 100000;
@@ -279,6 +304,21 @@ namespace BL
             else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
                 minCharge = heavyWeightCarrierPowerConsumption * way;
             return minCharge < drone.Battery;
+        }
+        private IEnumerable<IDAL.DO.Parcel> getParcelsWithMaxWeightPossibleToDrone(IEnumerable<IDAL.DO.Parcel>parcels,int id)
+        {
+            IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone =
+                 from parc in parcels
+                 where parc.Weight == dl.GetDrone(id).MaxWeight
+                 select parc;
+            if(parcelsWithMaxWeightPossibleToDrone.Count()==0)
+            {
+               parcelsWithMaxWeightPossibleToDrone =
+               from parc in parcels
+               where parc.Weight< dl.GetDrone(id).MaxWeight
+               select parc;
+            }
+            return parcelsWithMaxWeightPossibleToDrone;
         }
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
@@ -593,23 +633,8 @@ namespace BL
                         sender.Id = recipient.Id = p.Id;
                         sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
                         sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
-
-                        if (p.Scheduled == DateTime.MinValue)//only definited!
-                            sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Defined;
-                        else
-                        {
-                            if (p.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
-                                sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Delivered;
-                            else
-                            {
-                                if (p.Delivered == DateTime.MinValue)
-                                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Collected;
-                                else
-                                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Associated;
-                            }
-
-                        }
-                        senderOtherSide.ID = p.TargetId;
+                        sender.Status = recipient.Status = StatusOfParcel(p.Id);
+                         senderOtherSide.ID = p.TargetId;
                         recipientOtherSide.ID = p.SenderId;
                         senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
                         recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
@@ -626,17 +651,81 @@ namespace BL
 
         public Customer GetCustomer(int id)//i did not finish
         {
-            Customer c = new();
-            IDAL.DO.Customer c2 = dl.GetCustomer(id);
-            IEnumerable<ParcelAtCustomer> listOfParcelsFromMe = new IEnumerable<ParcelAtCustomer>();//problem with IEnumerable?
-            c.Id = id;
-            c.Name = c2.Name;
-            c.Phone = c2.Phone;
-            c.Location.Latitude = c2.Latitude;
-            c.Location.Longitude = c2.Longitude;
+            Customer c = new Customer();
+            try
+            {
+                IDAL.DO.Customer c2 = dl.GetCustomer(id);
+                
+                c.Id = id;
+                c.Name = c2.Name;
+                c.Phone = c2.Phone;
+                c.Location.Latitude = c2.Latitude;
+                c.Location.Longitude = c2.Longitude;
+                c.ListOfParcelsFromMe= GetParcelsFromMe(id);
+                c.ListOfParcelsIntendedToME= GetParcelsIntendedToME(id);
+            }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IdNotFoundException(ex.ID, "customer");
+            }
 
             return c;
 
+        }
+        private IEnumerable<ParcelAtCustomer> GetParcelsFromMe(int cstId)
+        {
+            return from sic in dl.GetParcelsAtCustomerByPredicate(sic => sic.SenderId == cstId)
+                   let prc = dl.GetParcel(sic.Id)
+                   select new ParcelAtCustomer()
+                   {
+                       Id = prc.Id,
+                       Weight = (EnumsBL.WeightCategories)prc.Weight,
+                       Priority = (EnumsBL.Priorities)prc.Priority,
+                       Status = StatusOfParcel(prc.Id),
+                       OtherSide = OtherSideCustomerInParcel(sic.Id, cstId)
+                   };
+        }
+        private IEnumerable<ParcelAtCustomer> GetParcelsIntendedToME(int cstId)
+        {
+            return from sic in dl.GetParcelsAtCustomerByPredicate(sic => sic.TargetId == cstId)
+                   let prc = dl.GetParcel(sic.Id)
+                   select new ParcelAtCustomer()
+                   {
+                       Id = prc.Id,
+                       Weight = (EnumsBL.WeightCategories)prc.Weight,
+                       Priority = (EnumsBL.Priorities)prc.Priority,
+                       Status = StatusOfParcel(prc.Id),
+                       OtherSide = OtherSideCustomerInParcel(sic.Id, cstId)
+                   };
+        }
+
+        private EnumsBL.ParcelStatuses StatusOfParcel(int parcelId)
+        {
+            IDAL.DO.Parcel p = dl.GetParcel(parcelId);
+            if (p.Scheduled == DateTime.MinValue)//only definited!
+                return EnumsBL.ParcelStatuses.Defined;
+            if (p.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
+                return EnumsBL.ParcelStatuses.Delivered;
+            if (p.Delivered == DateTime.MinValue)
+                return EnumsBL.ParcelStatuses.Collected;
+            return EnumsBL.ParcelStatuses.Associated;
+        }
+
+        private CustomerInParcel OtherSideCustomerInParcel(int parcelId, int customerId)
+        {
+            IDAL.DO.Parcel p = dl.GetParcel(parcelId);
+            CustomerInParcel customerInParcel = new();
+            if(p.SenderId== customerId)
+            {
+                customerInParcel.ID = p.TargetId;
+                customerInParcel.Name = dl.GetCustomer(p.TargetId).Name;
+            }
+            else//p.TargetId== customerId
+            {
+                customerInParcel.ID = p.SenderId;
+                customerInParcel.Name = dl.GetCustomer(p.SenderId).Name;
+            }
+            return customerInParcel;
         }
 
         public Parcel GetParcel(int id)
