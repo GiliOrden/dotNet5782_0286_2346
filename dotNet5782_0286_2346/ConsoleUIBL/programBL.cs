@@ -1,4 +1,5 @@
-﻿using IBL.BO;
+﻿using IBL;
+using IBL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
