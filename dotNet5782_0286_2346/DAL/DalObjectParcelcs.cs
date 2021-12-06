@@ -87,17 +87,6 @@ namespace DalObject
                 {
                     p = parcel;
                     p.Delivered = DateTime.Now;
-                    foreach (Drone drone in drones)
-                    {
-                        if (drone.Id == p.DroneId)
-                        {
-                            Drone d = drone;
-                            drone.status = avilable;
-                            drones.Add(d);
-                            drones.Remove(drone);
-                            break;
-                        }
-                    }
                     parcels.Add(p);
                     parcels.Remove(parcel);
                     break;
