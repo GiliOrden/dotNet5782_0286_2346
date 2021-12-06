@@ -44,7 +44,7 @@ namespace ConsoleUI_BL
                             AddingOptions(ref bl);
                             break;
                         case MenuOptions.Update:
-                            UpdatingOptions(ref bl);
+                            UpdatingOptions(ref );
                             break;
                         case MenuOptions.Display:
                             GetObject(ref bl);

@@ -27,7 +27,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-            IBL dl = new BL();
+            IDal dl = new DalObject.DalObject();
             MenuOptions mo;
             int userChoise;
             Console.WriteLine("press 1 to add an item");
