@@ -30,7 +30,6 @@ namespace BL
         }
 
 
-
         public void UpdateBaseStation(int id, string name="", int numOfChargeSlots=-1)
         {
             try
@@ -40,7 +39,7 @@ namespace BL
                     s.Name = name;
                 if (numOfChargeSlots !=-1)
                 {
-                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
+                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyChargeSlots())
                     {
                         if (droneCharge.StationId == id)
                             numOfChargeSlots--;
