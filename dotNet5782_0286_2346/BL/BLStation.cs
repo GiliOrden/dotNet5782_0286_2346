@@ -11,7 +11,7 @@ namespace BL
     public partial class BL : IBL.IBL
     {
 
-        public void addBaseStation(Station station)
+        public void AddBaseStation(Station station)
         {
             IDAL.DO.Station dalStation = new();
             dalStation.Id = station.ID;
@@ -31,14 +31,14 @@ namespace BL
 
 
 
-        public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
+        public void UpdateBaseStation(int id, string name="", int numOfChargeSlots=-1)
         {
             try
             {
                 IDAL.DO.Station s = dl.GetBaseStation(id);
-                if (name != " ")
+                if (name != "")
                     s.Name = name;
-                if (numOfChargeSlots != -1)
+                if (numOfChargeSlots !=-1)
                 {
                     foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
                     {
@@ -55,8 +55,6 @@ namespace BL
                 throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
-
-
 
 
 

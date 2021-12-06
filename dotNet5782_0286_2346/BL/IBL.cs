@@ -88,7 +88,7 @@ namespace IBL
         /// </summary>
         /// <param name="id">id of the drone</param>
         /// <param name="chargingTime">the time drone wasin charging</param>
-        void ReleaseDroneFromCharge(int id, int chargingTime);
+        void ReleaseDroneFromCharge(int id, double chargingTime);
 
         /// <summary>
         /// This function retuns all the list of drones
@@ -161,7 +161,7 @@ namespace IBL
         /// this function retuns list of parcels that hasn't been assigned to a drone
         /// </summary>
         /// <returns>list of parcels that hasn't been assigned to a drone</returns>
-        IEnumerable<ParcelForList> GetListOfDParcelsThatHaveNotYetBeenAssignedToDrone();
+        IEnumerable<ParcelForList> GetListOfNotAssociatedParcels();
         #endregion
 
 

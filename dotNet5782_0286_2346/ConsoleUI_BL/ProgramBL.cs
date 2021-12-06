@@ -54,7 +54,7 @@ namespace ConsoleUI_BL
                             DisplayingListsOptions(ref bl);
                             break;
                         case MenuOptions.FindDistance:
-                            FindingDistance(ref bl);
+                           // FindingDistance(ref bl);
                             break;
                         case MenuOptions.Exit:
                             Console.WriteLine("End of service");
@@ -65,17 +65,33 @@ namespace ConsoleUI_BL
 
                     }
                 }
-                catch (Exceptions.ExistIdException e)
+                catch (IBL.BO.ExistIdException ex)
                 {
-
+                    Console.WriteLine(ex);
                 }
-                catch (Exceptions.IdNotFoundException e)
+                catch (IBL.BO.IdNotFoundException ex)
                 {
-
+                    Console.WriteLine(ex);
                 }
-                catch (Exceptions.NameNotFoundException e)
+                catch (IBL.BO.NoBatteryException ex)
                 {
-
+                    Console.WriteLine(ex);
+                }
+                catch(IBL.BO.DroneCanNotCollectParcelException ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                catch(IBL.BO.DroneCanNotSupplyDeliveryToCustomerException ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                catch(IBL.BO.DroneMaxWeightIsLowException ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                catch(IBL.BO.DroneStatusException ex)
+                {
+                    Console.WriteLine(ex);
                 }
                 Console.WriteLine("press 1 to add an item");
                 Console.WriteLine("press 2 to update an item");
@@ -145,6 +161,7 @@ namespace ConsoleUI_BL
                     double.TryParse(Console.ReadLine(), out ans2);
                     c.Location.Latitude = ans2;
                     bl.AddCustomer(c);
+                    Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddParcel:
                     Console.WriteLine("Enter senderId , targetId  (Press enter after each one of them)");
@@ -160,6 +177,7 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Priority = (EnumsBL.Priorities)ans;
                     bl.AddParcel(p);
+                    Console.WriteLine("Succeeded");
                     break;
                 default:
                     break;
@@ -172,36 +190,41 @@ namespace ConsoleUI_BL
         {
             UpdateOptions update;
             int userChoise;
-            int id1, id2;
+            int id1, id2, numOfChargeSlots;
+            double chargingTime;
             string name, phone;
-            Console.WriteLine("Press 1 to assign drone to parcel");
-            Console.WriteLine("Press 2 to collect parcel by drone");
+            Console.WriteLine("Press 1 to update drone data");
+            Console.WriteLine("Press 2 to update station data");
             Console.WriteLine("Press 3 to update customer data");
             Console.WriteLine("Press 4 to send drone to charge");
             Console.WriteLine("Press 5 to release drone from charging");
-
+            Console.WriteLine("Press 6 to assign parcel to drone");
             Console.WriteLine("Press 7 to collect parcel by drone");
             Console.WriteLine("Press 8 to supply parcel by drone");
             int.TryParse(Console.ReadLine(), out userChoise);
             update = (UpdateOptions)userChoise;
             switch (update)
             {
-                case UpdateOptions.AssignParcelToDrone:
-                    Console.WriteLine("Please enter the ID of the parcel and the ID of the drone");
+                case UpdateOptions.UpdateDroneData:
+                    Console.WriteLine("Please enter the drone ID and the new model");
                     int.TryParse(Console.ReadLine(), out id1);
-                    int.TryParse(Console.ReadLine(), out id2);
-                    dl.AssignParcelToDrone(id1, id2);
+                    name = Console.ReadLine();
+                    bl.UpdateDrone(id1, name);
+                    Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.UpdateStationData:
-                    Console.WriteLine("Please enter the parcel ID");
+                    Console.WriteLine(@"Please enter the station ID and details to update (name Of Station\total number of charge slots)");
                     int.TryParse(Console.ReadLine(), out id1);
-                    dl.CollectParcelByDrone(id1);
+                    name = Console.ReadLine();
+                    int.TryParse(Console.ReadLine(), out numOfChargeSlots);
+                    bl.UpdateBaseStation(id1, name, numOfChargeSlots);
+                    Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.UpdateCustomerData:
                     Console.WriteLine("Please enter ID, a new name and/or phone number");
                     int.TryParse(Console.ReadLine(), out id1);
                     name = Console.ReadLine();
-                    phone= Console.ReadLine();
+                    phone = Console.ReadLine();
                     bl.UpdateCustomer(id1, name, phone);
                     Console.WriteLine("Succeeded");
                     break;
@@ -212,11 +235,17 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
-                    Console.WriteLine("Please enter the drone ID");
+                    Console.WriteLine("Please enter the drone ID and the time of charging");
                     int.TryParse(Console.ReadLine(), out id1);
-                    dl.ReleaseDroneFromCharge(id1);
+                    double.TryParse(Console.ReadLine(), out chargingTime);
+                    bl.ReleaseDroneFromCharge(id1,chargingTime);
+                    Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.AssignParcelToDrone:
+                    Console.WriteLine("Please enter the ID of the drone");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    bl.AssignParcelToDrone(id1);
+                    Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.CollectParcelByDrone:
                     Console.WriteLine("Please enter the drone ID");
@@ -295,27 +324,27 @@ namespace ConsoleUI_BL
             switch (choise)
             {
                 case DisplayListsOptions.BaseStationList:
-                    foreach (Station stations in dl.GetListOfBaseStations())
-                        Console.WriteLine(stations.ToString());
+                    foreach (StationForList station in bl.GetListOfBaseStations())
+                        Console.WriteLine(station.ToString());
                     break;
                 case DisplayListsOptions.DroneList:
-                    foreach (Drone drones in dl.GetListOfDrones())
-                        Console.WriteLine(drones.ToString());
+                    foreach (DroneForList drone in bl.GetListOfDrones())
+                        Console.WriteLine(drone.ToString());
                     break;
                 case DisplayListsOptions.CustomerList:
-                    foreach (Customer customer in dl.GetListOfCustomers())
+                    foreach (CustomerForList customer in bl.GetListOfCustomers())
                         Console.WriteLine(customer.ToString());
                     break;
                 case DisplayListsOptions.ParcelList:
-                    foreach (Parcel parcel in dl.GetListOfParcels())
+                    foreach (ParcelForList parcel in bl.GetListOfParcels())
                         Console.WriteLine(parcel.ToString());
                     break;
                 case DisplayListsOptions.ParselsNotAssociatedWithDrones:
-                    foreach (Parcel parcel in dl.GetListOfNotAssociatedParcels())
+                    foreach (ParcelForList parcel in bl.GetListOfNotAssociatedParcels())
                         Console.WriteLine(parcel.ToString());
                     break;
                 case DisplayListsOptions.StationsWithAvailableChargings:
-                    foreach (Station station in dl.GetListOfStationsWithAvailableChargeSlots())
+                    foreach (StationForList station in bl.GetListOfStationsWithAvailableChargeSlots())
                         Console.WriteLine(station.ToString());
                     break;
                 default:
