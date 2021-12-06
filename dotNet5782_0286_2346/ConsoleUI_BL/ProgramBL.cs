@@ -116,6 +116,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Enter Station ID for initial charging");
                     int.TryParse(Console.ReadLine(), out ans);
                     bl.AddDrone(d,ans);
+                    Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddStation:
                     Console.WriteLine("Enter ID, name,Location, chargeSlots(Press enter after each one of them)");
@@ -130,6 +131,7 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out ans);
                     s.ChargeSlots = ans;
                     bl.AddBaseStation(s);
+                    Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddCustomer:
                     Console.WriteLine("Enter id , name , phone and location (Press enter after each one of them)");
