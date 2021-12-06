@@ -20,7 +20,7 @@ namespace IBL
         /// the function adds the station that is sent as parameter
         /// </summary>
         /// <param name="station">a new station to add </param>
-        void addBaseStation(Station station);
+        void AddBaseStation(Station station);
 
         /// <summary>
         /// this function update name and  number of Charging slots in a station
@@ -74,7 +74,7 @@ namespace IBL
         /// </summary>
         /// <param name="drone"> a new drone for adding</param>
         /// <param name="idOfStation">the id station (the drone will be in it at the begginning)</param>
-        void addDrone(DroneForList drone, int idOfStation);
+        void AddDrone(DroneForList drone, int idOfStation);
 
         /// <summary>
         /// This function update the new model of a drone

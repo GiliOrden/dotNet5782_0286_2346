@@ -19,10 +19,9 @@ namespace BL
         IDal dl;
         List<DroneForList> dronesBL = new List<DroneForList>();
         IEnumerable<IDAL.DO.Drone> dalDrones;
-
+        Random rand = new Random(DateTime.Now.Millisecond);
         public BL()//ctor
         {
-            Random rand = new Random(DateTime.Now.Millisecond);
             dl = new DalObject.DalObject();
             dalDrones = dl.GetListOfDrones();
             dronePowerConsumption = dl.GetDronePowerConsumption();
