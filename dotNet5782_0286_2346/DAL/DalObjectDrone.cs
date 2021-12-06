@@ -65,21 +65,9 @@ namespace DalObject
         {
             if (!DataSource.drones.Any(dron => dron.Id == id))
                 throw new IDAL.DO.IdNotFoundException(id, "drone");
-            Drone d;
-            foreach (Drone drone in drones)//unnecessary cause the status isnt here
-            {
-                if (drone.Id == id)
-                {
-                    d = drone;
-                    drones.Add(d);
-                    drones.Remove(drone);
-                    break;
-                }
-            }
-
+            Station s;
             foreach (DroneCharge charger in droneCharges)
             {
-                Station s;
                 if (charger.DroneId == id)
                 {
                     foreach (Station station in stations)
@@ -90,10 +78,11 @@ namespace DalObject
                             s.ChargeSlots++;
                             stations.Add(s);
                             stations.Remove(station);
+                            droneCharges.Remove(charger);
                             break;
                         }
                     }
-                    droneCharges.Remove(charger);
+                    break;
                 }
             }
         }
@@ -134,7 +123,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of drone</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        public bool checkDrone(int id)
+        private bool checkDrone(int id)
         {
             return DataSource.drones.Any(drone => drone.Id == id);
         }

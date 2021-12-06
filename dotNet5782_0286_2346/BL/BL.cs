@@ -172,51 +172,123 @@ namespace BL
 
         public void UpdateDrone(int id,string newModel)
         {
-            if (!dl.checkDrone(id))
-                throw new IBL.BO.IdNotFoundException(id, "drone");
-            dronesBL.Find(drone => drone.Id == id).Model = newModel;   
-            IDAL.DO.Drone d = dl.GetDrone(id);
-            d.Model = newModel;
-            dl.DeleteDrone(id);
-            dl.AddDrone(d);
-        }
-        public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
-        {
-            if (!dl.checkStation(id))
-                throw new IBL.BO.IdNotFoundException(id, "station");
-            IDAL.DO.Station s = dl.GetBaseStation(id);
-            if (name != " ")
-                s.Name = name;
-            if (numOfChargeSlots != -1)
+            try
             {
-                foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
-                {
-                    if (droneCharge.StationId == id)
-                        numOfChargeSlots--;
-                }
-                s.ChargeSlots = numOfChargeSlots;
-                dl.DeleteStation(id);
-                dl.AddStation(s);
+                IDAL.DO.Drone d = dl.GetDrone(id);
+                dronesBL.Find(drone => drone.Id == id).Model = newModel;                
+                d.Model = newModel;
+                dl.DeleteDrone(id);
+                dl.AddDrone(d);
+            }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
+
+        public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
+        {
+            try
+            {
+                IDAL.DO.Station s = dl.GetBaseStation(id);
+                if (name != " ")
+                    s.Name = name;
+                if (numOfChargeSlots != -1)
+                {
+                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
+                    {
+                        if (droneCharge.StationId == id)
+                            numOfChargeSlots--;
+                    }
+                    s.ChargeSlots = numOfChargeSlots;
+                    dl.DeleteStation(id);
+                    dl.AddStation(s);
+                }
+            }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
+            }
+        }
+
         public void ReleaseDroneFromCharge(int id, int chargingTime)
         {
-           if(dronesBL.Find(drone=>drone.Id==id).DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+            DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == id);
+            if(drone==null)
+                throw new IBL.BO.IdNotFoundException(id,"drone");
+            if (drone.DroneStatus != EnumsBL.DroneStatuses.Maintenance)
+                throw new IBL.BO.DroneStatusException(id, "in maintenance");
+
+            drone.Battery = drone.Battery + chargingTime * chargingRatePerHour;
+            if (drone.Battery > 100)
+                drone.Battery = 100;
+            drone.DroneStatus = EnumsBL.DroneStatuses.Available;
+            dl.ReleaseDroneFromCharge(id);
         }
+
         public void AssignParcelToDrone(int idOfDrone)
         {
-            if(!dl.checkDrone(idOfDrone))
+            
+            int idOfParcel=0;
+            DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == idOfDrone);
+            double distance;
+            double minDistance = 100000;
+
+            if (drone==null)
                 throw new IBL.BO.IdNotFoundException(idOfDrone, "drone");
-            if (dronesBL.Find(drone => drone.Id == idOfDrone).DroneStatus != EnumsBL.DroneStatuses.Available)
-                throw new IBL.BO.DroneIsNotAvailableException(idOfDrone);
+            if (drone.DroneStatus != EnumsBL.DroneStatuses.Available)
+                throw new IBL.BO.DroneStatusException(idOfDrone,"available");
+
             IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
-                from parc in dl.GetListOfParcels()
-                where checkSufficientPowerToTransmission(dronesBL.Find(drone=>drone.Id==idOfDrone), parc) == true
+                from parc in dl.GetListOfNotAssociatedParcels()
+                where checkSufficientPowerToTransmission(drone, parc) == true
                 select parc;
             if (parcelsThatDroneCanTransfer.Count() == 0)
                 throw new IBL.BO.NoBatteryException(idOfDrone);
-             
+
+            IEnumerable<IDAL.DO.Parcel> parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Emergency);
+            if (parcelsWithTheHighestPriority.Count() == 0)
+            {
+                parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
+                if (parcelsWithTheHighestPriority.Count() == 0)
+                    parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer;
+            }
+
+            IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority,idOfDrone);
+            if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+            {    
+                    if (parcelsWithTheHighestPriority.ElementAt(0).Priority == IDAL.DO.Priorities.Emergency)
+                    {
+                        parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
+                        parcelsWithMaxWeightPossibleToDrone =getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
+                        if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+                        {
+                          parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Regular);
+                          parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
+                        }
+                    }
+                    else if(parcelsWithTheHighestPriority.ElementAt(0).Priority == IDAL.DO.Priorities.Fast)
+                    {
+                    parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Regular);
+                    parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
+                    }
+                    if(parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+                     throw new IBL.BO.DroneMaxWeightIsLowException(idOfDrone);
+            }
+            foreach (IDAL.DO.Parcel parcel in parcelsWithMaxWeightPossibleToDrone)
+            {
+                distance = DistanceBetweenPlaces(drone.Location.Longitude, drone.Location.Latitude, dl.GetCustomer(parcel.SenderId).Longitude, dl.GetCustomer(parcel.SenderId).Latitude);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    idOfParcel = parcel.Id;
+                }
+            }
+
+            dl.AssignParcelToDrone(idOfParcel, idOfDrone);
+            drone.DroneStatus = EnumsBL.DroneStatuses.OnDelivery;
         }
+    
         private bool checkSufficientPowerToTransmission(DroneForList drone,IDAL.DO.Parcel parcel)
         {
          double minDistance = 100000;
@@ -232,6 +304,21 @@ namespace BL
             else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
                 minCharge = heavyWeightCarrierPowerConsumption * way;
             return minCharge < drone.Battery;
+        }
+        private IEnumerable<IDAL.DO.Parcel> getParcelsWithMaxWeightPossibleToDrone(IEnumerable<IDAL.DO.Parcel>parcels,int id)
+        {
+            IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone =
+                 from parc in parcels
+                 where parc.Weight == dl.GetDrone(id).MaxWeight
+                 select parc;
+            if(parcelsWithMaxWeightPossibleToDrone.Count()==0)
+            {
+               parcelsWithMaxWeightPossibleToDrone =
+               from parc in parcels
+               where parc.Weight< dl.GetDrone(id).MaxWeight
+               select parc;
+            }
+            return parcelsWithMaxWeightPossibleToDrone;
         }
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
