@@ -56,7 +56,7 @@ namespace ConsoleUI
                         DisplayingListsOptions(ref dl);
                         break;
                     case MenuOptions.FindDistance:
-                        //FindingDistance(ref dl);
+                        FindingDistance(ref dl);
                         break;
                     case MenuOptions.Exit:
                         Console.WriteLine("End of service");
@@ -247,7 +247,7 @@ namespace ConsoleUI
             /// <summary>
             /// the function show lists of items according to user request
             /// </summary>
-            static void DisplayingListsOptions()
+            static void DisplayingListsOptions(ref IDal dl)
             {
                 int ans;
                 Console.WriteLine("press 1 to view the list of base stations");
