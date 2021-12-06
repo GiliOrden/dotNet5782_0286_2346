@@ -30,7 +30,6 @@ namespace BL
         }
 
 
-
         public void UpdateBaseStation(int id, string name="", int numOfChargeSlots=-1)
         {
             try
