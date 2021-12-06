@@ -41,7 +41,7 @@ namespace ConsoleUI
             while (mo != MenuOptions.Exit)
             {
                 try
-                {
+                
                     switch (mo)
                     {
                         case MenuOptions.Add:
@@ -67,19 +67,8 @@ namespace ConsoleUI
                             break;
 
                     }
-                }
-                catch(Exceptions.ExistIdException e)
-                {
+                
 
-                }
-                catch(Exceptions.IdNotFoundException e)
-                {
-
-                }
-                catch(Exceptions.NameNotFoundException e)
-                {
-
-                }
                 Console.WriteLine("press 1 to add an item");
                 Console.WriteLine("press 2 to update an item");
                 Console.WriteLine("press 3 to display an item");

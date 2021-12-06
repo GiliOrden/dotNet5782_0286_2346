@@ -190,7 +190,7 @@ namespace ConsoleUI_BL
         {
             UpdateOptions update;
             int userChoise;
-            int id1, id2, numOfChargeSlots;
+            int id1, numOfChargeSlots;
             double chargingTime;
             string name, phone;
             Console.WriteLine("Press 1 to update drone data");

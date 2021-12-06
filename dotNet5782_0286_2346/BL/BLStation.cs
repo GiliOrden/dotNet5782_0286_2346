@@ -70,7 +70,7 @@ namespace BL
                 };
             foreach (StationForList station in stationsBO)
             {
-                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyDroneCharges())
+                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
                 {
                     if (droneCharger.StationId == station.ID)
                         station.InaccessibleChargingPositions++;
@@ -93,7 +93,7 @@ namespace BL
             };
             foreach (StationForList station in stationsWithAvailableChargeSlots)
             {
-                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyDroneCharges())
+                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
                 {
                     if (droneCharger.StationId == station.ID)
                         station.InaccessibleChargingPositions++;

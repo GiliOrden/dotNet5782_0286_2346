@@ -62,8 +62,9 @@ namespace BL
             {
                 if (d.Id == droneId)
                 {
-                    if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp != DateTime.MinValue) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == DateTime.MinValue))
-                    {//the parcel picked up but have not reached its destination
+                    //if the parcel picked up but have not reached its destination
+                    if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp !=default(DateTime)) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == default(DateTime)))
+                    {
                         Location targetLocation = new();
                         targetLocation.Latitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Latitude;
                         targetLocation.Longitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Longitude;

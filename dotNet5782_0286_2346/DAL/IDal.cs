@@ -40,7 +40,7 @@ namespace IDAL
         /// <returns><"listOfCustomers">
         IEnumerable<DO.Customer> GetListOfCustomers();
 
-        void UpdateCustomer(DO.Customer c);
+        
         void DeleteCustomer(int id);
         #endregion
 
@@ -66,7 +66,7 @@ namespace IDAL
 
         #endregion
         #region DroneCharge
-        IEnumerable<DO.DroneCharge> GetListOfBusyDroneCharges();
+        IEnumerable<DO.DroneCharge> GetListOfBusyChargeSlots();
         
         #region Parcel
         int AddParcel(DO.Parcel p);
