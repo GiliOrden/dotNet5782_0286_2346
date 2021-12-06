@@ -24,7 +24,7 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
 
-            IBL bl = new BL.BL();
+             bl = new BL.BL();
             MenuOptions mo;
             int userChoise;
             Console.WriteLine("press 1 to add an item");
