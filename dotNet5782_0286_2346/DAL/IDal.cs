@@ -66,6 +66,7 @@ namespace IDAL
         #endregion
         #region DroneCharge
         IEnumerable<DO.DroneCharge> GetListOfBusyDroneCharges();
+        void DeleteCustomer(int id);
         #region Parcel
         int AddParcel(DO.Parcel p);
         void AssignParcelToDrone(int parcelId, int droneId);

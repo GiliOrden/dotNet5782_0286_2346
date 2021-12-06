@@ -27,7 +27,7 @@ namespace IBL
 
         #region Customer
         public void ReceiveNewCustomer(int id, string name, string phone, BO.Location location);
-        public void UpdatingCustomerData(int id, string name, string phone);
+        public void UpdateCustomer(int id, string name, string phone);
         public BO.Customer GetCustomer(int id);
         #endregion
 

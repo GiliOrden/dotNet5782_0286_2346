@@ -185,6 +185,7 @@ namespace BL
                 throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
+       
 
         public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
         {
@@ -441,39 +442,63 @@ namespace BL
         public void addCustomer(Customer c)
         {
             IDAL.DO.Customer customer = new();
-            customer.Id = c.Id;
-            customer.Name = c.Name;
-            customer.Phone = c.Phone;
-            customer.Latitude = c.Location.Latitude;
-            customer.Longitude = c.Location.Longitude;
-            dl.AddCustomer(customer);
+            try
+            {
+               
+                customer.Id = c.Id;
+                customer.Name = c.Name;
+                customer.Phone = c.Phone;
+                customer.Latitude = c.Location.Latitude;
+                customer.Longitude = c.Location.Longitude;
+                dl.AddCustomer(customer);
+            }
+            catch (IDAL.DO.ExistIdException ex)
+            {
+                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
+            }
+            
         }
 
         public void addParcel(Parcel p)
         {
-            IDAL.DO.Parcel parcel = new();
-            parcel.SenderId = p.Sender.Id;
-            parcel.TargetId = p.Receiver.Id;
-            parcel.Weight = (IDAL.DO.WeightCategories)p.Weight;
-            parcel.Priority = (IDAL.DO.Priorities)p.Priority;
-            parcel.DroneId = 0;//supposed to be null
-            parcel.Requested = DateTime.Now;
-            parcel.Scheduled = default;
-            parcel.PickedUp = default;
-            parcel.Delivered = default;
-            dl.AddParcel(parcel);
+            try
+            {
+                IDAL.DO.Parcel parcel = new();
+                parcel.SenderId = p.Sender.Id;
+                parcel.TargetId = p.Receiver.Id;
+                parcel.Weight = (IDAL.DO.WeightCategories)p.Weight;
+                parcel.Priority = (IDAL.DO.Priorities)p.Priority;
+                parcel.DroneId = 0;//supposed to be null
+                parcel.Requested = DateTime.Now;
+                parcel.Scheduled = default;
+                parcel.PickedUp = default;
+                parcel.Delivered = default;
+                dl.AddParcel(parcel);
+            }
+            catch (IDAL.DO.ExistIdException ex)
+            {
+                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
+            }
         }
 
-        public void UpdatinCustomerData(int id, string name, string phone) //is there a chance the function will get only 2 values?
+        public void UpdateCustomer(int id, string name, string phone) //is there a chance the function will get only 2 values?
         {
-            IDAL.DO.Customer customer = dl.GetCustomer(id);
-            if (name != null)
-                customer.Name = name;
-            if (phone != null)
-                customer.Phone = phone;
-            dl.UpdateCustomer(customer);//where is the UpdateCustomer function?
+            try
+            {
+                IDAL.DO.Customer customer = dl.GetCustomer(id);
+                if (name != "")
+                    customer.Name = name;
+                if (phone != "")
+                    customer.Phone = phone;
+                dl.DeleteCustomer(id);
+                dl.AddCustomer(customer);
+            }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
+            }
         }
-
+       
         public void SendDroneToCharge(int id)
         {
             foreach (DroneForList drone in dronesBL)
