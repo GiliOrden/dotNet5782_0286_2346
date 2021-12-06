@@ -50,6 +50,7 @@ namespace DalObject
             {
                 if (c.Id == id)
                     customers.Remove(c);
+                break;
             }
         }
     }
