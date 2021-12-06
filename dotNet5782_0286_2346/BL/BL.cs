@@ -464,7 +464,7 @@ namespace BL
             dl.AddParcel(parcel);
         }
 
-        public void UpdatenCustomer(int id, string name, string phone)
+        public void UpdateCustomer(int id, string name, string phone)
         {
             IDAL.DO.Customer customer = dl.GetCustomer(id);
             if (name != null)

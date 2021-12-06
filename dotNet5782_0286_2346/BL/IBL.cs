@@ -10,8 +10,15 @@ namespace IBL
     public interface IBL
     {
         #region BaseStation
-        //void addBaseStation(BO.Station station);
+        /// <summary>
+        /// the function returns the base station with the id is sent as parameter
+        /// </summary>
+        /// <param name="id"></param>
         BO.Station GetBaseStation(int id);
+        /// <summary>
+        /// the function adds the station that is sent as parameter
+        /// </summary>
+        /// <param name="station"></param>
         void addBaseStation(Station station);
         void UpdateBaseStation(int id, string name, int numOfChargeSlots);
         IEnumerable<StationForList> GetListOfBaseStations();
