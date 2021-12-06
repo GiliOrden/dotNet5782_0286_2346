@@ -352,10 +352,44 @@ namespace ConsoleUI_BL
                     break;
             }
         }
-        /// <summary>
-        /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
-        /// </summary>
-      
-        
-    }
+        public static void FindingDistance(ref IBL.IBL bl)
+        {
+            int ans, longitude, latitude, id;
+            bool check;
+            Console.WriteLine("Press 1 to check a customer's distance from a coordinate");
+            Console.WriteLine("Press 2 to check a stationws distance from a coordinate");
+            int.TryParse(Console.ReadLine(), out ans);
+            FindDistances choise = (FindDistances)ans;
+            switch (choise)
+            {
+                case FindDistances.CustomerDistance:
+                    Console.WriteLine("Enter the location (longitude & latitude) ");
+                    check = int.TryParse(Console.ReadLine(), out longitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    check = int.TryParse(Console.ReadLine(), out latitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    Console.WriteLine("Enter the ID of the customer");
+                    int.TryParse(Console.ReadLine(), out id);
+                    Customer c = bl.GetCustomer(id);
+                    Console.WriteLine($"The distance from the customer:{BL.BL.DistanceBetweenPlaces(c.Location.Longitude, c.Location.Latitude, longitude, latitude)}");
+                    break;//
+                case FindDistances.StationDistance:
+                    Console.WriteLine("Enter the location (longitude & latitude) ");
+                    check = int.TryParse(Console.ReadLine(), out longitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    check = int.TryParse(Console.ReadLine(), out latitude);
+                    if (!check) Console.WriteLine("Write only with numbers");
+                    Console.WriteLine("Enter the station's Id");
+                    int.TryParse(Console.ReadLine(), out id);
+                    Station s = bl.GetBaseStation(id);
+                    Console.WriteLine($"The distance from the station is:{BL.BL.DistanceBetweenPlaces(s.Location.Longitude, s.Location.Latitude, longitude, latitude)}");
+                    break;
+                default:
+                    break;
+            }
+            /// <summary>
+            /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
+            /// </summary>
+
+        }
 }
