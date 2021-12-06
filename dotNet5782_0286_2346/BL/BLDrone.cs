@@ -54,7 +54,7 @@ namespace BL
         }
 
 
-        public void ReleaseDroneFromCharge(int id, int chargingTime)
+        public void ReleaseDroneFromCharge(int id, double chargingTime)
         {
             DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == id);
             if (drone == null)

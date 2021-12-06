@@ -79,7 +79,7 @@ namespace BL
             }
         }
 
-        public IEnumerable<IBL.BO.ParcelForList> GetListOfDParcelsThatHaveNotYetBeenAssignedToDrone()
+        public IEnumerable<IBL.BO.ParcelForList> GetListOfNotAssociatedParcels()
         {
             return from parcel in dl.GetListOfNotAssociatedParcels()
                    select new IBL.BO.ParcelForList
