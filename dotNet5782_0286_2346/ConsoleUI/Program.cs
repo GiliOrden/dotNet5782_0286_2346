@@ -26,8 +26,8 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            
-            IDal dl = new DalObject.DalObject();
+
+            IBL dl = new BL();
             MenuOptions mo;
             int userChoise;
             Console.WriteLine("press 1 to add an item");

@@ -23,8 +23,7 @@ namespace ConsoleUI_BL
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-
-             bl = new BL.BL();
+            IBL.IBL bl = new BL.BL();
             MenuOptions mo;
             int userChoise;
             Console.WriteLine("press 1 to add an item");
