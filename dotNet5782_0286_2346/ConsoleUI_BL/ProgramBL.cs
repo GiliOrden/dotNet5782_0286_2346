@@ -145,6 +145,7 @@ namespace ConsoleUI_BL
                     double.TryParse(Console.ReadLine(), out ans2);
                     c.Location.Latitude = ans2;
                     bl.AddCustomer(c);
+                    Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddParcel:
                     Console.WriteLine("Enter senderId , targetId  (Press enter after each one of them)");
@@ -160,6 +161,7 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Priority = (EnumsBL.Priorities)ans;
                     bl.AddParcel(p);
+                    Console.WriteLine("Succeeded");
                     break;
                 default:
                     break;
@@ -174,15 +176,25 @@ namespace ConsoleUI_BL
             int userChoise;
             int id1, id2;
             string name, phone;
-            Console.WriteLine("Press 1 to assign drone to parcel");
-            Console.WriteLine("Press 2 to collect parcel by drone");
+            Console.WriteLine("Press 1 to update drone data");
+            Console.WriteLine("Press 2 to update station data");
             Console.WriteLine("Press 3 to update customer data");
             Console.WriteLine("Press 4 to send drone to charge");
             Console.WriteLine("Press 5 to release drone from charging");
+            Console.WriteLine("Press 6 to assign parcel to drone");
+            Console.WriteLine("Press 7 to collect parcel by drone");
+            Console.WriteLine("Press 8 to supply parcel by drone");
             int.TryParse(Console.ReadLine(), out userChoise);
             update = (UpdateOptions)userChoise;
             switch (update)
             {
+                case UpdateOptions.UpdateDroneData:
+                    Console.WriteLine("Please enter the drone ID and the new model");
+                    int.TryParse(Console.ReadLine(), out id1);
+                    name = Console.ReadLine();
+                    bl.UpdateDrone(id1, name);
+                    Console.WriteLine("Succeeded");
+                    break;
                 case UpdateOptions.AssignParcelToDrone:
                     Console.WriteLine("Please enter the ID of the parcel and the ID of the drone");
                     int.TryParse(Console.ReadLine(), out id1);
