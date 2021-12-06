@@ -54,7 +54,7 @@ namespace ConsoleUI_BL
                             DisplayingListsOptions(ref bl);
                             break;
                         case MenuOptions.FindDistance:
-                            FindingDistance(ref bl);
+                           // FindingDistance(ref bl);
                             break;
                         case MenuOptions.Exit:
                             Console.WriteLine("End of service");
