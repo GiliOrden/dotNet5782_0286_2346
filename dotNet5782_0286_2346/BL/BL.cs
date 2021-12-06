@@ -494,8 +494,8 @@ namespace BL
 
         private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id,Location location)//id and location of a base station 
         {
-            return from sic in GetDroneInChargingByPredicate(sic => sic.Location == location)
-                   let dronesInCharging = GetDrone(sic.Id)
+            return from d in GetDroneInChargingByPredicate(d => d.Location == location)
+                   let dronesInCharging = GetDrone(d.Id)
                    select new DroneInCharging()
                    {
                        Id = dronesInCharging.Id,
@@ -512,56 +512,64 @@ namespace BL
         public Drone GetDrone(int id)
         {
             Drone d = new();
-            ParcelInTransfer parcelInTransfer = new();
-            ParcelAtCustomer sender = new();
-            ParcelAtCustomer recipient = new();
-            CustomerInParcel senderOtherSide = new();
-            CustomerInParcel recipientOtherSide = new();
-            foreach (DroneForList d2 in dronesBL)
+            try
             {
-                if (d2.Id == id)
+                ParcelInTransfer parcelInTransfer = new();
+                ParcelAtCustomer sender = new();
+                ParcelAtCustomer recipient = new();
+                CustomerInParcel senderOtherSide = new();
+                CustomerInParcel recipientOtherSide = new();
+                foreach (DroneForList d2 in dronesBL)
                 {
-                    d.Id = d2.Id;
-                    d.Model = d2.Model;
-                    d.MaxWeight = d2.MaxWeight;
-                    d.Battery = d2.Battery;
-                    d.DroneStatus = d2.DroneStatus;
-                    d.Location = d2.Location;
-                    if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
+                    if (d2.Id == id)
                     {
-                        IDAL.DO.Parcel p = dl.GetParcel(id);
-                        parcelInTransfer.Id = p.Id;
-                        if (p.PickedUp == DateTime.MinValue)
-                            parcelInTransfer.Status = false;
-                        else
-                            parcelInTransfer.Status = true;
-                        parcelInTransfer.Weight = (EnumsBL.WeightCategories)p.Weight;
-                        parcelInTransfer.Priority = (EnumsBL.Priorities)p.Priority;
-                        double lat1 = dl.GetCustomer(p.SenderId).Latitude;
-                        parcelInTransfer.Source.Latitude = lat1;
-                        double lon1 = dl.GetCustomer(p.SenderId).Longitude;
-                        parcelInTransfer.Source.Longitude = lon1;
-                        double lat2 = dl.GetCustomer(p.TargetId).Latitude;
-                        parcelInTransfer.Destination.Latitude = lat2;
-                        double lon2 = dl.GetCustomer(p.TargetId).Longitude;
-                        parcelInTransfer.Destination.Longitude = lon2;
-                        parcelInTransfer.TransportDistance = DistanceBetweenPlaces(lon1, lat1, lon2, lat2);
-                        sender.Id = recipient.Id = p.Id;
-                        sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
-                        sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
-                        sender.Status = recipient.Status = StatusOfParcel(p.Id);
-                         senderOtherSide.ID = p.TargetId;
-                        recipientOtherSide.ID = p.SenderId;
-                        senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
-                        recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
-                        sender.OtherSide = senderOtherSide;
-                        recipient.OtherSide = recipientOtherSide;
-                        parcelInTransfer.Sender = sender;
-                        parcelInTransfer.Receiver = recipient;
+                        d.Id = d2.Id;
+                        d.Model = d2.Model;
+                        d.MaxWeight = d2.MaxWeight;
+                        d.Battery = d2.Battery;
+                        d.DroneStatus = d2.DroneStatus;
+                        d.Location = d2.Location;
+                        if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
+                        {
+                            IDAL.DO.Parcel p = dl.GetParcel(id);
+                            parcelInTransfer.Id = p.Id;
+                            if (p.PickedUp == DateTime.MinValue)
+                                parcelInTransfer.Status = false;
+                            else
+                                parcelInTransfer.Status = true;
+                            parcelInTransfer.Weight = (EnumsBL.WeightCategories)p.Weight;
+                            parcelInTransfer.Priority = (EnumsBL.Priorities)p.Priority;
+                            double lat1 = dl.GetCustomer(p.SenderId).Latitude;
+                            parcelInTransfer.Source.Latitude = lat1;
+                            double lon1 = dl.GetCustomer(p.SenderId).Longitude;
+                            parcelInTransfer.Source.Longitude = lon1;
+                            double lat2 = dl.GetCustomer(p.TargetId).Latitude;
+                            parcelInTransfer.Destination.Latitude = lat2;
+                            double lon2 = dl.GetCustomer(p.TargetId).Longitude;
+                            parcelInTransfer.Destination.Longitude = lon2;
+                            parcelInTransfer.TransportDistance = DistanceBetweenPlaces(lon1, lat1, lon2, lat2);
+                            sender.Id = recipient.Id = p.Id;
+                            sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
+                            sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
+                            sender.Status = recipient.Status = StatusOfParcel(p.Id);
+                            senderOtherSide.ID = p.TargetId;
+                            recipientOtherSide.ID = p.SenderId;
+                            senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
+                            recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
+                            sender.OtherSide = senderOtherSide;
+                            recipient.OtherSide = recipientOtherSide;
+                            parcelInTransfer.Sender = sender;
+                            parcelInTransfer.Receiver = recipient;
+                        }
+                        d.ParcelInTransfer = parcelInTransfer;
                     }
-                    d.ParcelInTransfer = parcelInTransfer;
                 }
             }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IdNotFoundException(ex.ID, "drone");
+            }
+
             return d;
         }
 
@@ -662,22 +670,7 @@ namespace BL
             sender.Id = recipient.Id = p.Id;
             sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
             sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
-
-            if (p2.Scheduled == DateTime.MinValue)//only definited!
-                sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Defined;
-            else
-            {
-                if (p2.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
-                    sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Delivered;
-                else
-                {
-                    if (p2.Delivered == DateTime.MinValue)
-                        sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Collected;
-                    else
-                        sender.Status = recipient.Status = EnumsBL.ParcelStatuses.Associated;
-                }
-
-            }
+            sender.Status = recipient.Status = StatusOfParcel(p.Id);
             senderOtherSide.ID = p2.TargetId;
             recipientOtherSide.ID = p2.SenderId;
             senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
