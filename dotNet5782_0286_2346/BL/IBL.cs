@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,30 +11,40 @@ namespace IBL
     {
         #region BaseStation
         //void addBaseStation(BO.Station station);
-        public BO.Station GetBaseStation(int id);
+        BO.Station GetBaseStation(int id);
+        void addBaseStation(Station station);
+        void UpdateBaseStation(int id, string name, int numOfChargeSlots);
+        IEnumerable<StationForList> GetListOfBaseStations();
+        IEnumerable<StationForList> GetListOfStationsWithAvailableChargeSlots();
         #endregion
 
         #region Drone
-        //void addDrone(BO.Drone drone);
-        //public void SendingDroneForCharging(int id);
-        public void SendingDroneForCharging(BO.Drone drone);
-        public void CollectingParcelByDrones(int droneId);
-        public void SupplyDeliveryToCustomer(int droneId);
-        public BO.Drone GetDrone(int id);
+         void SendDroneToCharge(int id);
+         void CollectingParcelByDrones(int droneId);
+        void SupplyDeliveryToCustomer(int droneId);
+        BO.Drone GetDrone(int id);
+        void addDrone(DroneForList drone, int idOfStation);
+        void UpdateDrone(int id, string newModel);
+        void ReleaseDroneFromCharge(int id, int chargingTime);
+        IEnumerable<DroneForList> GetListOfDrones();
         #endregion
 
         #region Location
         #endregion
 
         #region Customer
-        public void ReceiveNewCustomer(int id, string name, string phone, BO.Location location);
-        public void UpdatingCustomerData(int id, string name, string phone);
-        public BO.Customer GetCustomer(int id);
+         void addCustomer(Customer cust);
+         void UpdatingCustomerData(int id, string name, string phone);
+         BO.Customer GetCustomer(int id);
+        IEnumerable<CustomerForList> GetListOfCustomers();
         #endregion
 
         #region Parcel
-        public void addParcel(BO.Parcel p);
-        public BO.Parcel GetParcel(int id);
+        void addParcel(BO.Parcel p);
+         BO.Parcel GetParcel(int id);
+        void AssignParcelToDrone(int idOfDrone);
+        IEnumerable<ParcelForList> GetListOfParcels();
+        IEnumerable<ParcelForList> GetListOfDParcelsThatHaveNotYetBeenAssignedToDrone();
         #endregion
 
 

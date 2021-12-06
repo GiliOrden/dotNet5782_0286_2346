@@ -464,7 +464,7 @@ namespace BL
             dl.AddParcel(parcel);
         }
 
-        public void UpdatinCustomerData(int id, string name, string phone) //is there a chance the function will get only 2 values?
+        public void UpdatenCustomer(int id, string name, string phone)
         {
             IDAL.DO.Customer customer = dl.GetCustomer(id);
             if (name != null)
