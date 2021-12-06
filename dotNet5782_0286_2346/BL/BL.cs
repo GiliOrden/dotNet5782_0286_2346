@@ -560,38 +560,41 @@ namespace BL
         public Station GetBaseStation(int id)//i didn't finished!
         {
             Station s = new();
-            DroneInCharging droneInCharging = new();
-            IDAL.DO.Station sDal = dl.GetBaseStation(id);
-            s.ID = sDal.Id;
-            s.Name = sDal.Name;
-            s.Location.Latitude = sDal.Latitude;
-            s.Location.Longitude = sDal.Longitude;
-            s.ChargeSlots = sDal.ChargeSlots;
-            List<DroneInCharging> droneInChargingList=new();
-            foreach (DroneForList d in dronesBL)
+            try
             {
-                if (s.Location == d.Location)//the drone and the station have the same location(if a drone in a station it have to be in charging?)
-                {
-                    droneInCharging.Id = d.Id;
-                    droneInCharging.Battery = d.Battery;
-                    droneInChargingList.Add(droneInCharging);
-                }
+                DroneInCharging droneInCharging = new();
+                IDAL.DO.Station sDal = dl.GetBaseStation(id);
+                s.ID = sDal.Id;
+                s.Name = sDal.Name;
+                s.Location.Latitude = sDal.Latitude;
+                s.Location.Longitude = sDal.Longitude;
+                s.ChargeSlots = sDal.ChargeSlots;
+                s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location);
             }
-            s.DroneInChargingList = droneInChargingList;
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IdNotFoundException(ex.ID, "station");
+            }
+
             return s;
         }
 
-        private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id)
+        private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id,Location location)//id and location of a base station 
         {
-            return from sic in dl.GetStudentsInCourseByPredicate(sic => sic.StudentId == id)
-                   let dronesInCharging = GetDrone(sic.CourseId)
+            return from sic in GetDroneInChargingByPredicate(sic => sic.Location == location)
+                   let dronesInCharging = GetDrone(sic.Id)
                    select new DroneInCharging()
                    {
                        Id = dronesInCharging.Id,
-                       BatteryStatus = dronesInCharging.BatteryStatus
+                       Battery = dronesInCharging.Battery
                    };
         }
-
+        private IEnumerable<DroneForList> GetDroneInChargingByPredicate(Predicate<DroneForList> predicate)
+        {
+            return from sic in dronesBL
+                   where predicate(sic)
+                   select sic;
+        }
 
         public Drone GetDrone(int id)
         {
@@ -649,7 +652,7 @@ namespace BL
             return d;
         }
 
-        public Customer GetCustomer(int id)//i did not finish
+        public Customer GetCustomer(int id)
         {
             Customer c = new Customer();
             try
