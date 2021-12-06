@@ -75,6 +75,7 @@ namespace IDAL
         IEnumerable<DO.Parcel> GetListOfParcels();
         IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
         bool checkDrone(int id);
+        IEnumerable<DO.Parcel> GetParcelsAtCustomerByPredicate(Predicate<DO.Parcel> predicate)
         #endregion
 
     }

@@ -148,5 +148,12 @@ namespace DalObject
         {
             return DataSource.parcels.Any(parc => parc.Id == id);
         }
+
+        public IEnumerable<Parcel> GetParcelsAtCustomerByPredicate(Predicate<Parcel> predicate)
+        {
+            return from sic in parcels
+                   where predicate(sic)
+                   select sic;
+        }
     }
 }
