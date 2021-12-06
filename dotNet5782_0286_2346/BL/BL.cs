@@ -119,7 +119,7 @@ namespace BL
         // cos(d) = sin(φА)·sin(φB) + cos(φА)·cos(φB)·cos(λА − λB),
         //  where φА, φB are latitudes and λА, λB are longitudes
         // Distance = d * R
-        private static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
+        public static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
         {
             double R = 6371; // km
 
