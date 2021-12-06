@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +45,7 @@ namespace ConsoleUI_BL
                             AddingOptions(ref bl);
                             break;
                         case MenuOptions.Update:
-                            UpdatingOptions(ref bl);
+                            UpdatingOptions(ref bl );
                             break;
                         case MenuOptions.Display:
                             GetObject(ref bl);
@@ -215,7 +216,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function display an object according to user request
         /// </summary>
-        public static void GetObject(ref IDal dl)
+        public static void GetObject(ref IBL.IBL bl)
         {
             int ans;
             DisplayOptions show;
@@ -255,7 +256,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function show lists of items according to user request
         /// </summary>
-        public static void DisplayingListsOptions(ref IDal dl)
+        public static void DisplayingListsOptions(ref IBL.IBL bl)
         {
             int ans;
             Console.WriteLine("press 1 to view the list of base stations");
@@ -300,7 +301,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
         /// </summary>
-        public static void FindingDistance(ref IDal dl)
+        public static void FindingDistance(ref IBL.IBL bl)
         {
             int ans, longitude, latitude, id;
             bool check;
