@@ -72,12 +72,6 @@ namespace DalObject
             return DataSource.stations.Any(sta => sta.Id ==id);
         }
 
-        public IEnumerable<DO.StudentInCourse> GetStudentsInCourseByPredicate(Predicate<DO.StudentInCourse> predicate)//just want to see something
-        {
-            return from sic in DataSource.StudentInCourseList
-                   where predicate(sic)
-                   select sic;
-        }
 
     }
 }

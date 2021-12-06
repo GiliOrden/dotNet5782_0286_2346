@@ -67,7 +67,7 @@ namespace IDAL
         #endregion
         #region DroneCharge
         IEnumerable<DO.DroneCharge> GetListOfBusyChargeSlots();
-        
+        #endregion
         #region Parcel
         int AddParcel(DO.Parcel p);
         void AssignParcelToDrone(int parcelId, int droneId);
@@ -76,7 +76,7 @@ namespace IDAL
         DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> GetListOfParcels();
         IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
-        IEnumerable<DO.Parcel> GetParcelsAtCustomerByPredicate(Predicate<DO.Parcel> predicate)
+        IEnumerable<DO.Parcel> GetParcelsAtCustomerByPredicate(Predicate<DO.Parcel> predicate);
         #endregion
 
     }

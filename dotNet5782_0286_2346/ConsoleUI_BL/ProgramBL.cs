@@ -45,7 +45,7 @@ namespace ConsoleUI_BL
                             AddingOptions(ref bl);
                             break;
                         case MenuOptions.Update:
-                            UpdatingOptions(ref bl );
+                            UpdatingOptions(ref bl);
                             break;
                         case MenuOptions.Display:
                             GetObject(ref bl);
@@ -54,7 +54,7 @@ namespace ConsoleUI_BL
                             DisplayingListsOptions(ref bl);
                             break;
                         case MenuOptions.FindDistance:
-                           // FindingDistance(ref bl);
+                            // FindingDistance(ref bl);
                             break;
                         case MenuOptions.Exit:
                             Console.WriteLine("End of service");
@@ -77,19 +77,19 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex);
                 }
-                catch(IBL.BO.DroneCanNotCollectParcelException ex)
+                catch (IBL.BO.DroneCanNotCollectParcelException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch(IBL.BO.DroneCanNotSupplyDeliveryToCustomerException ex)
+                catch (IBL.BO.DroneCanNotSupplyDeliveryToCustomerException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch(IBL.BO.DroneMaxWeightIsLowException ex)
+                catch (IBL.BO.DroneMaxWeightIsLowException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch(IBL.BO.DroneStatusException ex)
+                catch (IBL.BO.DroneStatusException ex)
                 {
                     Console.WriteLine(ex);
                 }
@@ -131,7 +131,7 @@ namespace ConsoleUI_BL
                     d.MaxWeight = (EnumsBL.WeightCategories)ans;
                     Console.WriteLine("Enter Station ID for initial charging");
                     int.TryParse(Console.ReadLine(), out ans);
-                    bl.AddDrone(d,ans);
+                    bl.AddDrone(d, ans);
                     Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddStation:
@@ -238,7 +238,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Please enter the drone ID and the time of charging");
                     int.TryParse(Console.ReadLine(), out id1);
                     double.TryParse(Console.ReadLine(), out chargingTime);
-                    bl.ReleaseDroneFromCharge(id1,chargingTime);
+                    bl.ReleaseDroneFromCharge(id1, chargingTime);
                     Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.AssignParcelToDrone:
@@ -352,6 +352,10 @@ namespace ConsoleUI_BL
                     break;
             }
         }
+
+        /// <summary>
+        /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
+        /// </summary>
         public static void FindingDistance(ref IBL.IBL bl)
         {
             int ans, longitude, latitude, id;
@@ -387,9 +391,8 @@ namespace ConsoleUI_BL
                 default:
                     break;
             }
-            /// <summary>
-            /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
-            /// </summary>
+
 
         }
+    }
 }

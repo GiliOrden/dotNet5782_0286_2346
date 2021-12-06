@@ -39,7 +39,7 @@ namespace BL
                     s.Name = name;
                 if (numOfChargeSlots !=-1)
                 {
-                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
+                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyChargeSlots())
                     {
                         if (droneCharge.StationId == id)
                             numOfChargeSlots--;
