@@ -262,22 +262,26 @@ namespace ConsoleUI_BL
                 case DisplayOptions.BaseStationDisplay:
                     Console.WriteLine("Please enter the staion ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(dl.GetBaseStation(id));
+                    Console.WriteLine(bl.GetBaseStation(id));
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayOptions.DroneDisplay:
                     Console.WriteLine("Please enter the Drone ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(dl.GetDrone(id));
+                    Console.WriteLine(bl.GetDrone(id));
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayOptions.CustomerDisplay:
                     Console.WriteLine("Please enter the customer ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(dl.GetCustomer(id));
+                    Console.WriteLine(bl.GetCustomer(id));
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayOptions.ParcelDisplay:
                     Console.WriteLine("Please enter the parcel ID");
                     int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(dl.GetParcel(id));
+                    Console.WriteLine(bl.GetParcel(id));
+                    Console.WriteLine("Succeeded");
                     break;
                 default:
                     break;
@@ -331,42 +335,6 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
         /// </summary>
-        public static void FindingDistance(ref IBL.IBL bl)
-        {
-            int ans, longitude, latitude, id;
-            bool check;
-            Console.WriteLine("Press 1 to check a customer's distance from a coordinate");
-            Console.WriteLine("Press 2 to check a stationws distance from a coordinate");
-            int.TryParse(Console.ReadLine(), out ans);
-            FindDistances choise = (FindDistances)ans;
-            switch (choise)
-            {
-                case FindDistances.CustomerDistance:
-                    Console.WriteLine("Enter the location (longitude & latitude) ");
-                    check = int.TryParse(Console.ReadLine(), out longitude);
-                    if (!check) Console.WriteLine("Write only with numbers");
-                    check = int.TryParse(Console.ReadLine(), out latitude);
-                    if (!check) Console.WriteLine("Write only with numbers");
-                    Console.WriteLine("Enter the ID of the customer");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Customer c = dl.GetCustomer(id);
-                    Console.WriteLine($"The distance from the customer:{Math.Sqrt(Math.Pow(c.Longitude - longitude, 2)) + (Math.Pow(c.Latitude - latitude, 2))}");
-                    break;
-                case FindDistances.StationDistance:
-                    Console.WriteLine("Enter the location (longitude & latitude) ");
-                    check = int.TryParse(Console.ReadLine(), out longitude);
-                    if (!check) Console.WriteLine("Write only with numbers");
-                    check = int.TryParse(Console.ReadLine(), out latitude);
-                    if (!check) Console.WriteLine("Write only with numbers");
-                    Console.WriteLine("Enter the station's Id");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Station s = dl.GetBaseStation(id);
-                    Console.WriteLine($"The distance from the station is:{Math.Sqrt(Math.Pow(s.Longitude - longitude, 2)) + (Math.Pow(s.Latitude - latitude, 2))}");
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        
     }
 }
