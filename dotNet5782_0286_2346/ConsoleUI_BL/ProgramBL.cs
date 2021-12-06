@@ -105,29 +105,33 @@ namespace ConsoleUI_BL
             switch (add)
             {
                 case AddOptions.AddDrone:
-                    Console.WriteLine("Enter ID & model(Press enter after each one of them)");
-                    Drone d = new();
+                    Console.WriteLine("Enter Manufacturer's serial number & model(Press enter after each one of them)");
+                    DroneForList d = new();
                     int.TryParse(Console.ReadLine(), out ans);
                     d.Id = ans;
                     d.Model = Console.ReadLine();
                     Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
-                    d.MaxWeight = (WeightCategories)ans;
-                    dl.AddDrone(d);
+                    d.MaxWeight = (EnumsBL.WeightCategories)ans;
+                    Console.WriteLine("Enter Station ID for initial charging");
+                    int.TryParse(Console.ReadLine(), out ans);
+                    bl.AddDrone(d,ans);
+                    Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddStation:
-                    Console.WriteLine("Enter ID, name, chargeSlots, Longitude and  Latitude of the station (Press enter after each one of them)");
+                    Console.WriteLine("Enter ID, name,Location, chargeSlots(Press enter after each one of them)");
                     Station s = new Station();
                     int.TryParse(Console.ReadLine(), out ans);
-                    s.Id = ans;
+                    s.ID = ans;
                     s.Name = Console.ReadLine();
+                    double.TryParse(Console.ReadLine(), out ans2);
+                    s.Location.Longitude = ans2;
+                    double.TryParse(Console.ReadLine(), out ans2);
+                    s.Location.Latitude = ans2;
                     int.TryParse(Console.ReadLine(), out ans);
                     s.ChargeSlots = ans;
-                    double.TryParse(Console.ReadLine(), out ans2);
-                    s.Longitude = ans2;
-                    double.TryParse(Console.ReadLine(), out ans2);
-                    s.Latitude = ans2;
-                    dl.AddStation(s);
+                    bl.AddBaseStation(s);
+                    Console.WriteLine("Succeeded");
                     break;
                 case AddOptions.AddCustomer:
                     Console.WriteLine("Enter id , name , phone and location (Press enter after each one of them)");

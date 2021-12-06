@@ -11,7 +11,7 @@ namespace BL
     public partial class BL : IBL.IBL
     {
 
-        public void addDrone(DroneForList drone, int idOfStation)
+        public void AddDrone(DroneForList drone, int idOfStation)
         {
             try
             {
@@ -20,9 +20,11 @@ namespace BL
                 dalDrone.Model = drone.Model;
                 dalDrone.MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight;
                 dl.AddDrone(dalDrone);
-                //Sends the drone for initial charging
                 dl.SendDroneToCharge(dalDrone.Id, idOfStation);
-                dronesBL.Add(drone);//in the main i should fill its extra fields  
+                drone.Battery = rand.Next(20, 41);
+                drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
+                drone.Location = GetBaseStation(idOfStation).Location;
+                dronesBL.Add(drone); 
             }
             catch (IDAL.DO.ExistIdException ex)
             {
