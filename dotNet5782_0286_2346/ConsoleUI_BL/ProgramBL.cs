@@ -65,18 +65,18 @@ namespace ConsoleUI_BL
 
                     }
                 }
-                //catch (Exceptions.ExistIdException e)
-                //{
+                catch (Exceptions.ExistIdException e)
+                {
 
-                //}
-                //catch (Exceptions.IdNotFoundException e)
-                //{
+                }
+                catch (Exceptions.IdNotFoundException e)
+                {
 
-                //}
-                //catch (Exceptions.NameNotFoundException e)
-                //{
+                }
+                catch (Exceptions.NameNotFoundException e)
+                {
 
-                //}
+                }
                 Console.WriteLine("press 1 to add an item");
                 Console.WriteLine("press 2 to update an item");
                 Console.WriteLine("press 3 to display an item");
@@ -132,17 +132,17 @@ namespace ConsoleUI_BL
                     bl.AddBaseStation(s);
                     break;
                 case AddOptions.AddCustomer:
-                    Console.WriteLine("Enter ID, name, Phone, Longitude and  Latitude of the customer (Press enter after each one of them)");
-                    Customer c = new Customer();
+                    Console.WriteLine("Enter id , name , phone and location (Press enter after each one of them)");
+                    IBL.BO.Customer c = new IBL.BO.Customer();
                     int.TryParse(Console.ReadLine(), out ans);
                     c.Id = ans;
                     c.Name = Console.ReadLine();
                     c.Phone = Console.ReadLine();
                     double.TryParse(Console.ReadLine(), out ans2);
-                    c.Longitude = ans2;
+                    c.Location.Longitude = ans2;
                     double.TryParse(Console.ReadLine(), out ans2);
-                    c.Latitude = ans2;
-                    dl.AddCustomer(c);
+                    c.Location.Latitude = ans2;
+                    bl.AddCustomer(c);
                     break;
                 case AddOptions.AddParcel:
                     Console.WriteLine("Enter senderId and targetId (Press enter after each one of them)");
