@@ -67,7 +67,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of station</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        public bool checkStation(int id)
+        private bool checkStation(int id)
         {
             return DataSource.stations.Any(sta => sta.Id ==id);
         }

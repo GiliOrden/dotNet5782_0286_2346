@@ -172,50 +172,97 @@ namespace BL
 
         public void UpdateDrone(int id,string newModel)
         {
-            if (!dl.checkDrone(id))
-                throw new IBL.BO.IdNotFoundException(id, "drone");
-            dronesBL.Find(drone => drone.Id == id).Model = newModel;   
-            IDAL.DO.Drone d = dl.GetDrone(id);
-            d.Model = newModel;
-            dl.DeleteDrone(id);
-            dl.AddDrone(d);
+            try
+            {
+                IDAL.DO.Drone d = dl.GetDrone(id);
+                dronesBL.Find(drone => drone.Id == id).Model = newModel;                
+                d.Model = newModel;
+                dl.DeleteDrone(id);
+                dl.AddDrone(d);
+            }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
+            }
         }
         public void UpdateBaseStation(int id, string name, int numOfChargeSlots)
         {
-            if (!dl.checkStation(id))
-                throw new IBL.BO.IdNotFoundException(id, "station");
-            IDAL.DO.Station s = dl.GetBaseStation(id);
-            if (name != " ")
-                s.Name = name;
-            if (numOfChargeSlots != -1)
+            try
             {
-                foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
+                IDAL.DO.Station s = dl.GetBaseStation(id);
+                if (name != " ")
+                    s.Name = name;
+                if (numOfChargeSlots != -1)
                 {
-                    if (droneCharge.StationId == id)
-                        numOfChargeSlots--;
+                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyDroneCharges())
+                    {
+                        if (droneCharge.StationId == id)
+                            numOfChargeSlots--;
+                    }
+                    s.ChargeSlots = numOfChargeSlots;
+                    dl.DeleteStation(id);
+                    dl.AddStation(s);
                 }
-                s.ChargeSlots = numOfChargeSlots;
-                dl.DeleteStation(id);
-                dl.AddStation(s);
+            }
+            catch (IDAL.DO.IdNotFoundException ex)
+            {
+                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
         public void ReleaseDroneFromCharge(int id, int chargingTime)
         {
+            if
            if(dronesBL.Find(drone=>drone.Id==id).DroneStatus==EnumsBL.DroneStatuses.Maintenance)
         }
         public void AssignParcelToDrone(int idOfDrone)
         {
-            if(!dl.checkDrone(idOfDrone))
+            int idOfParcel=0;
+            DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == idOfDrone);
+            double distance;
+            double minDistance = 100000;
+
+            if (drone==null)
                 throw new IBL.BO.IdNotFoundException(idOfDrone, "drone");
-            if (dronesBL.Find(drone => drone.Id == idOfDrone).DroneStatus != EnumsBL.DroneStatuses.Available)
+            if (drone.DroneStatus != EnumsBL.DroneStatuses.Available)
                 throw new IBL.BO.DroneIsNotAvailableException(idOfDrone);
+
             IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
-                from parc in dl.GetListOfParcels()
-                where checkSufficientPowerToTransmission(dronesBL.Find(drone=>drone.Id==idOfDrone), parc) == true
+                from parc in dl.GetListOfNotAssociatedParcels()
+                where checkSufficientPowerToTransmission(drone, parc) == true  
                 select parc;
             if (parcelsThatDroneCanTransfer.Count() == 0)
-                throw new IBL.BO.NoBatteryException(idOfDrone);
-             
+              throw new IBL.BO.NoBatteryException(idOfDrone);
+
+            IEnumerable<IDAL.DO.Parcel> parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Emergency);
+            if(parcelsWithTheHighestPriority.Count()==0)
+            {
+                parcelsWithTheHighestPriority=parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
+                if (parcelsWithTheHighestPriority.Count() == 0)
+                    parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer;
+            }
+
+            IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone = parcelsWithTheHighestPriority.Where(parc => parc.Weight == dl.GetDrone(idOfDrone).MaxWeight);
+            if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+            {
+                parcelsWithMaxWeightPossibleToDrone = parcelsWithTheHighestPriority.Where(parc => parc.Weight < dl.GetDrone(idOfDrone).MaxWeight);
+                if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+                {
+                    parcelsWithMaxWeightPossibleToDrone=
+                    throw new IBL.BO.DroneMaxWeightIsLowException(idOfDrone);
+                }
+            
+            }
+            foreach(IDAL.DO.Parcel parcel in parcelsWithMaxWeightPossibleToDrone)
+            {
+                distance = DistanceBetweenPlaces(drone.Location.Longitude, drone.Location.Latitude, dl.GetCustomer(parcel.SenderId).Longitude, dl.GetCustomer(parcel.SenderId).Latitude);
+                if (distance<minDistance)
+                {
+                    minDistance = distance;
+                    idOfParcel = parcel.Id;
+                }    
+            }
+            dl.AssignParcelToDrone(idOfParcel, idOfDrone);
+            drone.DroneStatus = EnumsBL.DroneStatuses.OnDelivery;
         }
         private bool checkSufficientPowerToTransmission(DroneForList drone,IDAL.DO.Parcel parcel)
         {

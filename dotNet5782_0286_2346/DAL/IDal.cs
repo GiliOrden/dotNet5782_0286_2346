@@ -14,7 +14,7 @@ namespace IDAL
         DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> GetListOfBaseStations();
         IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();
-        bool checkStation(int id);
+     
         void DeleteStation(int id);
         #endregion
 
@@ -74,7 +74,6 @@ namespace IDAL
         DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> GetListOfParcels();
         IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
-        bool checkDrone(int id);
         #endregion
 
     }

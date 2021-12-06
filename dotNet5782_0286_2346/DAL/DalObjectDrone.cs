@@ -134,7 +134,7 @@ namespace DalObject
         /// </summary>
         /// <param name="id">ID of drone</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        public bool checkDrone(int id)
+        private bool checkDrone(int id)
         {
             return DataSource.drones.Any(drone => drone.Id == id);
         }
