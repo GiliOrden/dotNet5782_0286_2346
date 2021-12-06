@@ -41,7 +41,7 @@ namespace IBL
 
         #region Customer
          void addCustomer(Customer cust);
-         void UpdatingCustomerData(int id, string name, string phone);
+         void UpdateCustomer(int id, string name, string phone);
          BO.Customer GetCustomer(int id);
         IEnumerable<CustomerForList> GetListOfCustomers();
         #endregion

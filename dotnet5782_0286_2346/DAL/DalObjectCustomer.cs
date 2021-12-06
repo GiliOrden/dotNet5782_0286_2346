@@ -44,6 +44,14 @@ namespace DalObject
             return DataSource.customers.Any(cust => cust.Id == id);
         }
 
+        public void DeleteCustomer(int id)
+        {
+            foreach(Customer c in customers)
+            {
+                if (c.Id == id)
+                    customers.Remove(c);
+            }
+        }
     }
 }
 
