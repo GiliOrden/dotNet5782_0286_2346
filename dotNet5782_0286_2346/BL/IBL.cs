@@ -106,7 +106,7 @@ namespace IBL
         /// this functio adds a new customer to customers list
         /// </summary>
         /// <param name="cust">a new customer</param>
-        void addCustomer(Customer cust);
+        void AddCustomer(Customer cust);
          
         /// <summary>
         /// this function update a new name or/and phone of a customer
@@ -136,7 +136,7 @@ namespace IBL
         /// this function add a new parcel to parcels list
         /// </summary>
         /// <param name="p">a new parcel</param>
-        void addParcel(BO.Parcel p);
+        void AddParcel(BO.Parcel p);
 
         /// <summary>
         /// this function returns a parcel with the id is sent as parameter

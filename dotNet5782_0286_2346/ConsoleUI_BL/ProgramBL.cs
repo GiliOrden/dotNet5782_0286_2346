@@ -12,7 +12,7 @@ namespace ConsoleUI_BL
 
         enum MenuOptions { Exit, Add, Update, Display, ShowList, FindDistance }
         enum AddOptions { AddDrone = 1, AddStation, AddCustomer, AddParcel }
-        enum UpdateOptions { AssignParcelToDrone = 1, CollectParcelByDrone, SupplyDeliveryToCustomer, SendDroneToCharge, ReleaseDroneFromCharge }
+        enum UpdateOptions { UpdateDroneData = 1, UpdateStationData, UpdateCustomerData, SendDroneToCharge, ReleaseDroneFromCharge, AssignParcelToDrone, CollectParcelByDrone, SupplyParcelByDrone }
         enum DisplayOptions { BaseStationDisplay = 1, DroneDisplay, CustomerDisplay, ParcelDisplay }
         enum DisplayListsOptions { BaseStationList = 1, DroneList, CustomerList, ParcelList, ParselsNotAssociatedWithDrones, StationsWithAvailableChargings }
         enum FindDistances { CustomerDistance = 1, StationDistance }
@@ -131,7 +131,7 @@ namespace ConsoleUI_BL
                     break;
                 case AddOptions.AddCustomer:
                     Console.WriteLine("Enter id , name , phone and location (Press enter after each one of them)");
-                    IBL.BO.Customer c = new IBL.BO.Customer();
+                    Customer c = new Customer();
                     int.TryParse(Console.ReadLine(), out ans);
                     c.Id = ans;
                     c.Name = Console.ReadLine();
@@ -143,21 +143,19 @@ namespace ConsoleUI_BL
                     bl.AddCustomer(c);
                     break;
                 case AddOptions.AddParcel:
-                    Console.WriteLine("Enter senderId and targetId (Press enter after each one of them)");
+                    Console.WriteLine("Enter senderId , targetId  (Press enter after each one of them)");
                     Parcel p = new Parcel();
                     int.TryParse(Console.ReadLine(), out ans);
-                    p.SenderId = ans;
+                    p.Sender.Id = ans;
                     int.TryParse(Console.ReadLine(), out ans);
-                    p.TargetId = ans;
+                    p.Receiver.Id = ans;
                     Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
-                    p.Weight = (WeightCategories)ans;
+                    p.Weight = (EnumsBL.WeightCategories)ans;
                     Console.WriteLine("Choose priority: 0 for Regular, 1 for Fast, 2 for Emergency ");
                     int.TryParse(Console.ReadLine(), out ans);
-                    p.Priority = (Priorities)ans;
-                    p.DroneId = 0;
-                    p.Requested = DateTime.Now;
-                    dl.AddParcel(p);
+                    p.Priority = (EnumsBL.Priorities)ans;
+                    bl.AddParcel(p);
                     break;
                 default:
                     break;
@@ -171,9 +169,10 @@ namespace ConsoleUI_BL
             UpdateOptions update;
             int userChoise;
             int id1, id2;
+            string name, phone;
             Console.WriteLine("Press 1 to assign drone to parcel");
             Console.WriteLine("Press 2 to collect parcel by drone");
-            Console.WriteLine("Press 3 to supply delivery to customer");
+            Console.WriteLine("Press 3 to update customer data");
             Console.WriteLine("Press 4 to send drone to charge");
             Console.WriteLine("Press 5 to release drone from charging");
             int.TryParse(Console.ReadLine(), out userChoise);
@@ -191,18 +190,17 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out id1);
                     dl.CollectParcelByDrone(id1);
                     break;
-                case UpdateOptions.SupplyDeliveryToCustomer:
-                    Console.WriteLine("Please enter the parcel ID");
+                case UpdateOptions.UpdateCustomerData:
+                    Console.WriteLine("Please enter ID, a new name and/or phone number");
                     int.TryParse(Console.ReadLine(), out id1);
-                    dl.SupplyDeliveryToCustomer(id1);
+                    name = Console.ReadLine();
+                    phone= Console.ReadLine();
+                    bl.UpdateCustomer(id1, name, phone);
                     break;
                 case UpdateOptions.SendDroneToCharge:
                     Console.WriteLine("Please enter the drone ID ");
                     int.TryParse(Console.ReadLine(), out id1);
-                    Console.WriteLine("Please enter the station ID from the list of stations");
-                    dl.GetListOfStationsWithAvailableChargeSlots();
-                    int.TryParse(Console.ReadLine(), out id2);
-                    dl.SendDroneToCharge(id1, id2);
+                    bl.SendDroneToCharge(id1);
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
                     Console.WriteLine("Please enter the drone ID");

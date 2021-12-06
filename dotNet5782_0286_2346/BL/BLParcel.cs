@@ -10,7 +10,7 @@ namespace BL
 {
     public partial class BL : IBL.IBL
     {
-        public void addParcel(Parcel p)
+        public void AddParcel(Parcel p)
         {
             try
             {

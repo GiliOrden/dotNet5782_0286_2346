@@ -11,7 +11,7 @@ namespace BL
     public partial class BL : IBL.IBL
     {
 
-        public void addCustomer(Customer c)
+        public void AddCustomer(Customer c)
         {
             IDAL.DO.Customer customer = new();
             try
