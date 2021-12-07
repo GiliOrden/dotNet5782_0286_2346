@@ -17,7 +17,7 @@ namespace BL
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
         IDal dl;
-        List<DroneForList> dronesBL = new List<DroneForList>();
+        List<DroneForList> dronesBL = new();
         IEnumerable<IDAL.DO.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
         public BL()//ctor
@@ -49,6 +49,7 @@ namespace BL
                     IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id && parc.Delivered == default(DateTime));
                     IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
                     IDAL.DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
+                    droneForList.Location = new();
                     //If the parcel was associated but not collected - location will be at the station closest to the sender
                     if (parcel.PickedUp== default(DateTime))
                     {
@@ -79,7 +80,7 @@ namespace BL
                     else if (parcel.Weight == IDAL.DO.WeightCategories.Medium)
                         minCharge = mediumWeightCarrierPowerConsumption * way;
                     else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
-                        minCharge = heavyWeightCarrierPowerConsumption * way;
+                        minCharge = heavyWeightCarrierPowerConsumption * way; 
                     droneForList.Battery = rand.Next((int)(minCharge+1), 100);
                 }
 
