@@ -87,6 +87,7 @@ namespace BL
                 else if (droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
                     index = rand.Next(dl.GetListOfBaseStations().Count());
+                    droneForList.Location = new Location();
                     droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
                     droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
                     droneForList.Battery = rand.Next(21);
@@ -95,7 +96,7 @@ namespace BL
                 else //if the drone is available
                 {
                     //Its location will be raffled off among customers who have packages provided to them
-                    IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from cust in GetListOfCustomers()
+                    IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from cust in dl.GetListOfCustomers()
                                                                where cust.ReceivedParcels!=0
                                                                select cust.ID;
                     index = rand.Next(customersWhoHaveParcelsDeliveredToThem.Count());
