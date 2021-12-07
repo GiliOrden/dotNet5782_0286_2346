@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{A675D54B-555B-4D42-AE77-5FFBAB082D47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUIBL", "ConsoleUIBL\ConsoleUIBL.csproj", "{BE0EE345-D7B9-4F69-BF13-E492C9485676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUIBL", "ConsoleUIBL\ConsoleUIBL.csproj", "{BE0EE345-D7B9-4F69-BF13-E492C9485676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

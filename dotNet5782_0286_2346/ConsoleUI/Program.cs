@@ -39,9 +39,7 @@ namespace ConsoleUI
             mo = (MenuOptions)userChoise;
             while (mo != MenuOptions.Exit)
             {
-
-
-                switch (mo)
+              switch (mo)
                 {
                     case MenuOptions.Add:
                         AddingOptions(ref dl);
@@ -66,7 +64,6 @@ namespace ConsoleUI
                         break;
 
                 }
-
 
                 Console.WriteLine("press 1 to add an item");
                 Console.WriteLine("press 2 to update an item");
@@ -292,7 +289,7 @@ namespace ConsoleUI
 // < summary >
 // the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
 // </ summary >
-        public static void FindingDistance(ref IDal dl)
+         static void FindingDistance(ref IDal dl)
             {
                 int ans, longitude, latitude, id;
                 bool check;
