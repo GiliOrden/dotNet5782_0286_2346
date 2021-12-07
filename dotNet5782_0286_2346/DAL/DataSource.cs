@@ -106,10 +106,13 @@ namespace DalObject
                     TargetId = rand.Next(100000000, 999999999),
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
-                    Requested = DateTime.Now,
+                    Requested = new DateTime(),
+                    Scheduled = new DateTime(),
+                    PickedUp = new DateTime(),
+                    Delivered = new DateTime(),
                     DroneId = 0
-                   
-                });
+                }) ;
+                ;
                 
             }
         }
