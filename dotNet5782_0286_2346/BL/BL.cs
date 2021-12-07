@@ -96,9 +96,9 @@ namespace BL
                 else //if the drone is available
                 {
                     //Its location will be raffled off among customers who have packages provided to them
-                    IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from cust in dl.GetListOfCustomers()
-                                                               where cust.ReceivedParcels!=0
-                                                               select cust.ID;
+                    IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from parc in dl.GetListOfParcels()
+                                                               where parc.Delivered!=default(DateTime)
+                                                               select parc.TargetId;
                     index = rand.Next(customersWhoHaveParcelsDeliveredToThem.Count());
                     droneForList.Location.Longitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Longitude;
                     droneForList.Location.Latitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Latitude;
