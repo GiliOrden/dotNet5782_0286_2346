@@ -40,7 +40,7 @@ namespace BL
                 droneForList.Id = drone.Id;
                 droneForList.Model = drone.Model;
                 droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
-
+                droneForList.Location = new Location();
                 //If there are parcels that have not yet been delivered but the drone has already been associated the drone status is OnDelivery
                 droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==default(DateTime))) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
                 
@@ -87,7 +87,6 @@ namespace BL
                 else if (droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
                 {
                     index = rand.Next(dl.GetListOfBaseStations().Count());
-                    droneForList.Location = new Location();
                     droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
                     droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
                     droneForList.Battery = rand.Next(21);
@@ -97,7 +96,7 @@ namespace BL
                 {
                     //Its location will be raffled off among customers who have packages provided to them
                     IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from parc in dl.GetListOfParcels()
-                                                               where parc.Delivered!=default(DateTime)
+                                                               where parc.Delivered!=default(DateTime) 
                                                                select parc.TargetId;
                     index = rand.Next(customersWhoHaveParcelsDeliveredToThem.Count());
                     droneForList.Location.Longitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Longitude;

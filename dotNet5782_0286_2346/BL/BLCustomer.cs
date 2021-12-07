@@ -16,7 +16,6 @@ namespace BL
             IDAL.DO.Customer customer = new();
             try
             {
-
                 customer.Id = c.Id;
                 customer.Name = c.Name;
                 customer.Phone = c.Phone;

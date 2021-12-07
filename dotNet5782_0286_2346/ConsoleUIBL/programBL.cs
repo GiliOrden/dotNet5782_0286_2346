@@ -124,6 +124,7 @@ namespace ConsoleUI_BL
                 case AddOptions.AddDrone:
                     Console.WriteLine("Enter Manufacturer's serial number & model(Press enter after each one of them)");
                     DroneForList d = new();
+                    d.Location = new Location();
                     int.TryParse(Console.ReadLine(), out ans);
                     d.Id = ans;
                     d.Model = Console.ReadLine();
@@ -138,6 +139,8 @@ namespace ConsoleUI_BL
                 case AddOptions.AddStation:
                     Console.WriteLine("Enter ID, name,Location, chargeSlots(Press enter after each one of them)");
                     Station s = new Station();
+                    s.Location = new Location();
+                    s.DroneInChargingList = new List<DroneInCharging>();
                     int.TryParse(Console.ReadLine(), out ans);
                     s.ID = ans;
                     s.Name = Console.ReadLine();
