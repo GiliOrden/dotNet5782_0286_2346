@@ -26,6 +26,7 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            
             IDal dl = new DalObject.DalObject();
             MenuOptions mo;
             int userChoise;

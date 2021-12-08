@@ -9,6 +9,7 @@ namespace IDAL
 {
     public interface IDal
     {
+        
         #region Station
         void AddStation(DO.Station s);
         DO.Station GetBaseStation(int id);
