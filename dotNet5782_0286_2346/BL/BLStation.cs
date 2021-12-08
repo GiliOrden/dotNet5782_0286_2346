@@ -102,7 +102,7 @@ namespace BL
         }
 
 
-        public Station GetBaseStation(int id)//i didn't finished!
+        public Station GetBaseStation(int id)
         {
             Station s = new();
             try
@@ -111,6 +111,7 @@ namespace BL
                 IDAL.DO.Station sDal = dl.GetBaseStation(id);
                 s.ID = sDal.Id;
                 s.Name = sDal.Name;
+                s.Location = new Location();
                 s.Location.Latitude = sDal.Latitude;
                 s.Location.Longitude = sDal.Longitude;
                 s.ChargeSlots = sDal.ChargeSlots;

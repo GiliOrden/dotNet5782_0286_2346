@@ -112,8 +112,8 @@ namespace DalObject
                 parcels.Add(new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
-                    SenderId =ID[i],
-                    TargetId =ID[i+1],
+                    SenderId = ID[i],
+                    TargetId = ID[i+1],
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Requested =DateTime.Today,
@@ -127,8 +127,8 @@ namespace DalObject
             parcels.Add(new Parcel()
             {
                 Id = Config.CodeOfParcel++,
-                SenderId = ID[3],
-                TargetId = ID[4],
+                SenderId = ID[2],
+                TargetId = ID[3],
                 Weight = (WeightCategories)rand.Next(3),
                 Priority = (Priorities)rand.Next(3),
                 Requested = DateTime.Today,
@@ -141,8 +141,8 @@ namespace DalObject
             parcels.Add(new Parcel()
             {
                 Id = Config.CodeOfParcel++,
-                SenderId = ID[1],
-                TargetId = ID[3],
+                SenderId = ID[2],
+                TargetId = ID[4],
                 Weight = (WeightCategories)rand.Next(3),
                 Priority = (Priorities)rand.Next(3),
                 Requested = DateTime.Today,
@@ -156,8 +156,8 @@ namespace DalObject
                 parcels.Add(new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
-                    SenderId = rand.Next(100000000, 999999999),
-                    TargetId = rand.Next(100000000, 999999999),
+                    SenderId = customers[rand.Next(customers.Count)].Id,
+                    TargetId = customers[rand.Next(customers.Count -5)].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Requested = DateTime.Now,
