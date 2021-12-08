@@ -107,12 +107,15 @@ namespace BL
                     IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from parc in dl.GetListOfParcels()
                                                                where parc.Delivered!=default(DateTime) 
                                                                select parc.TargetId;
-                    index = rand.Next(customersWhoHaveParcelsDeliveredToThem.Count());
-                    droneForList.Location.Longitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Longitude;
-                    droneForList.Location.Latitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Latitude;
-                    getClosestStation(dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)),ref minDistance);
-                    minCharge = minDistance * emptyDronePowerConsumption;
-                    droneForList.Battery = rand.Next((int)(minCharge + 1), 100);
+                    if (customersWhoHaveParcelsDeliveredToThem.Count() != 0)
+                    {
+                        index = rand.Next(customersWhoHaveParcelsDeliveredToThem.Count());
+                        droneForList.Location.Longitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Longitude;
+                        droneForList.Location.Latitude = dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)).Latitude;
+                        getClosestStation(dl.GetCustomer(customersWhoHaveParcelsDeliveredToThem.ElementAt(index)), ref minDistance);
+                        minCharge = minDistance * emptyDronePowerConsumption;
+                        droneForList.Battery = rand.Next((int)(minCharge + 1), 100);
+                    }
                 }
                 
                 dronesBL.Add(droneForList);
