@@ -161,6 +161,7 @@ namespace ConsoleUI_BL
                     c.Name = Console.ReadLine();
                     c.Phone = Console.ReadLine();
                     double.TryParse(Console.ReadLine(), out ans2);
+                    c.Location = new();
                     c.Location.Longitude = ans2;
                     double.TryParse(Console.ReadLine(), out ans2);
                     c.Location.Latitude = ans2;
@@ -171,8 +172,10 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Enter senderId , targetId  (Press enter after each one of them)");
                     Parcel p = new Parcel();
                     int.TryParse(Console.ReadLine(), out ans);
+                    p.Sender = new();
                     p.Sender.Id = ans;
                     int.TryParse(Console.ReadLine(), out ans);
+                    p.Receiver = new();
                     p.Receiver.Id = ans;
                     Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
