@@ -15,10 +15,10 @@ namespace IBL
             public string Phone { get; set; }
             public Location Location { get; set; }
 
-            public IEnumerable<ParcelAtCustomer> ListOfParcelsFromMe { get; set; }//parcel he broght for others
+            public IEnumerable<ParcelAtCustomer> ListOfParcelsFromMe { get; set; }
 
-            public IEnumerable<ParcelAtCustomer> ListOfParcelsIntendedToME { get; set; }//should it be property?
-            public override string ToString()                                       //parcels he have gotten,   
+            public IEnumerable<ParcelAtCustomer> ListOfParcelsIntendedToME { get; set; }
+            public override string ToString()                                       
             {
                 return this.ToStringProperty();
             }

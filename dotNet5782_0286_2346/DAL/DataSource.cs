@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace DalObject
 {
-    internal class DataSource//i read it should be internal class
+    internal class DataSource
     {
       
         internal class Config
         {
            internal static int CodeOfParcel = 0;
-           internal static double EmptyDronePowerConsumption=2;
-           internal static double LightWeightCarrierPowerConsumption=2.2;
-           internal static double MediumWeightCarrierPowerConsumption=2.7;
-           internal static double HeavyWeightCarrierPowerConsumption=3.2;
+           internal static double EmptyDronePowerConsumption=0.05;
+           internal static double LightWeightCarrierPowerConsumption=0.06;
+           internal static double MediumWeightCarrierPowerConsumption=0.07;
+           internal static double HeavyWeightCarrierPowerConsumption=0.08;
            internal static double ChargingRatePerHour=25;//is it also shuld be static?
         }
 
@@ -37,11 +37,11 @@ namespace DalObject
         private static void createDrones(int num)
         {
             
-            for (int i = 0; i < num; i++)
+            for (int i = 1; i <= num; i++)
             {
                 drones.Add(new Drone()
                 {
-                    Id = rand.Next(100, 200),
+                    Id =i,
                     MaxWeight = (WeightCategories)rand.Next(3),
                     Model = string.Format("Drony{0}", i)
                 });
@@ -66,8 +66,7 @@ namespace DalObject
                     ChargeSlots = rand.Next(2,5),
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
-                 });
-                
+                 });               
             }
         }
         /// <summary>
@@ -75,20 +74,30 @@ namespace DalObject
         /// </summary>
         /// <param name="num">>number of customers to add</param>
         private static void createCustomers(int num)
-        {
-            
-            string[] names = new string[] { "Brurya", "Ron", "Shmulik", "Tzuki", "Mahmud","Dorit", "Greg", "CafeNeheman", "BurgersBar", "Avrum", "Shoshana", "Gili"," Rivki" };
-            for (int i = 0; i < num; i++)
+        {           
+            string[] names = new string[] { "Greg", "CafeNeheman", "BurgersBar", "Brurya", "Ron", "Shmulik", "Tzuki", "Mahmud","Dorit", "ShuferSal", "Avrum", "Shoshana", "Gili"," Rivki" };
+            int[] ID = new int[] { 325152347, 234678954, 123987456, 246987246, 309390876 };
+            for (int i =0; i<5; i++)
             {
                 customers.Add ( new Customer()
                 {
-                    Id = rand.Next(100000000, 999999999),
+                    Id =ID[i],
                     Name=names[i],
                     Phone = string.Format("0{0}",rand.Next(510000000, 589999999)),
                     Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
                     Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
+                });               
+            }
+            for (int i=5; i<num; i++)
+            {
+                customers.Add(new Customer()
+                {
+                    Id =rand.Next(100000000,999999999),
+                    Name = names[i],
+                    Phone = string.Format("0{0}", rand.Next(510000000, 589999999)),
+                    Longitude = rand.NextDouble() * (33.5 - 29.3) + 29.3,
+                    Latitude = rand.NextDouble() * (36.3 - 33.7) + 33.7
                 });
-               
             }
         }
         /// <summary>
@@ -97,23 +106,66 @@ namespace DalObject
         /// <param name="num">number of parcels to add</param>
         private static void createParcels(int num)
         {
-            for(int i=0;i<num;i++)
+            int[] ID = new int[] { 325152347, 234678954, 123987456, 246987246, 309390876 };
+            for (int i=1;i<=3;i++)
             {
                 parcels.Add(new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
-                    SenderId = rand.Next(100000000, 999999999),//someone tells me it sould look like that
+                    SenderId =ID[i],
+                    TargetId =ID[i+1],
+                    Weight = (WeightCategories)rand.Next(3),
+                    Priority = (Priorities)rand.Next(3),
+                    Requested =DateTime.Today,
+                    Scheduled =DateTime.Now,
+                    PickedUp = new DateTime(),
+                    Delivered = new DateTime(),
+                    DroneId =i
+                });
+            }
+
+            parcels.Add(new Parcel()
+            {
+                Id = Config.CodeOfParcel++,
+                SenderId = ID[3],
+                TargetId = ID[4],
+                Weight = (WeightCategories)rand.Next(3),
+                Priority = (Priorities)rand.Next(3),
+                Requested = DateTime.Today,
+                Scheduled = DateTime.Today,
+                PickedUp = DateTime.Today,
+                Delivered = DateTime.Now,
+                DroneId = 4
+            });
+
+            parcels.Add(new Parcel()
+            {
+                Id = Config.CodeOfParcel++,
+                SenderId = ID[1],
+                TargetId = ID[3],
+                Weight = (WeightCategories)rand.Next(3),
+                Priority = (Priorities)rand.Next(3),
+                Requested = DateTime.Today,
+                Scheduled = DateTime.Today,
+                PickedUp = DateTime.Today,
+                Delivered =default(DateTime),
+                DroneId = 4
+            });
+            for (int i =0; i < (num - 5); i++)
+            {
+                parcels.Add(new Parcel()
+                {
+                    Id = Config.CodeOfParcel++,
+                    SenderId = rand.Next(100000000, 999999999),
                     TargetId = rand.Next(100000000, 999999999),
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
-                    Requested = new DateTime(),
+                    Requested = DateTime.Now,
                     Scheduled = new DateTime(),
                     PickedUp = new DateTime(),
                     Delivered = new DateTime(),
                     DroneId = 0
-                }) ;
-                ;
-                
+                });
             }
         }
 
@@ -128,8 +180,7 @@ namespace DalObject
             createCustomers(rand.Next(10, 14));
             createParcels(rand.Next(10, 100));
             
-        }
-       
+        }       
     }
 }
 
