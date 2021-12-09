@@ -32,7 +32,7 @@ namespace IBL.BO
         { ID = id; EntityName = entity; }
         protected IdNotFoundException(SerializationInfo info, StreamingContext context)
         : base(info, context) { }
-        public override string ToString() => base.ToString() + $",The {EntityName} Id:{ID} isn't found";
+        public override string ToString() => base.ToString() + $",The {EntityName} Id isn't found";
     }
 
     [Serializable]
@@ -79,7 +79,7 @@ namespace IBL.BO
         public DroneStatusException(int droneId, string status, string message) : base(message) { DroneID = droneId; Status = status; }
         public DroneStatusException(int droneId, string status, string message, Exception inner) : base(message, inner) { DroneID = droneId; Status = status; }
 
-        public override string ToString() => base.ToString() + $"Drone:{DroneID} is not {Status} please try another drone. ";
+        public override string ToString() => base.ToString() + $"Drone:{DroneID} is not {Status} . ";//i changed the sentense a little bit, want it to be good for another func
     }
 
     [Serializable]

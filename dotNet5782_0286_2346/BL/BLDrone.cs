@@ -168,36 +168,36 @@ namespace BL
 
         public void SendDroneToCharge(int id)
         {
-            foreach (DroneForList drone in dronesBL)
+            Drone drone = GetDrone(id);
+            if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
             {
-                if ((drone.Id == id) && (drone.DroneStatus == EnumsBL.DroneStatuses.Available))
+                IDAL.DO.Station minDistanceStation = new();
+                double minDis = 1000000;
+                foreach (IDAL.DO.Station s in dl.GetListOfStationsWithAvailableChargeSlots())
                 {
-                    IDAL.DO.Station minDistanceStation = new();
-                    double minDis = 1000000;
-                    foreach (IDAL.DO.Station s in dl.GetListOfStationsWithAvailableChargeSlots())
+                    double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
+                    if ((distance < minDis) && (s.ChargeSlots > 0))
                     {
-                        double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
-                        if ((distance < minDis) && (s.ChargeSlots > 0))
-                        {
-                            minDis = distance;
-                            minDistanceStation = s;
-                        }
-                    }
-                    if (emptyDronePowerConsumption * minDis < drone.Battery)
-                    {
-                        drone.Battery -= emptyDronePowerConsumption * minDis;
-                        drone.Location.Latitude = minDistanceStation.Latitude;
-                        drone.Location.Longitude = minDistanceStation.Longitude;
-                        drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
-                        dl.SendDroneToCharge(drone.Id, minDistanceStation.Id);
-
-                    }
-                    else
-                    {
-                        throw new NoBatteryException(drone.Id);
+                        minDis = distance;
+                        minDistanceStation = s;
                     }
                 }
+                if (emptyDronePowerConsumption * minDis < drone.Battery)
+                {
+                    drone.Battery -= emptyDronePowerConsumption * minDis;
+                    drone.Location.Latitude = minDistanceStation.Latitude;
+                    drone.Location.Longitude = minDistanceStation.Longitude;
+                    drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
+                    dl.SendDroneToCharge(drone.Id, minDistanceStation.Id);
+
+                }
+                else
+                {
+                    throw new NoBatteryException(drone.Id);
+                }
             }
+            else 
+                throw new DroneStatusException(id,"available");
         }
 
 
@@ -210,66 +210,56 @@ namespace BL
         public Drone GetDrone(int id)
         {
             Drone d = new();
-            try
-            {
-                ParcelInTransfer parcelInTransfer = new();
-                ParcelAtCustomer sender = new();
-                ParcelAtCustomer recipient = new();
-                CustomerInParcel senderOtherSide = new();
-                CustomerInParcel recipientOtherSide = new();
-                foreach (DroneForList d2 in dronesBL)
-                {
-                    if (d2.Id == id)
-                    {
-                        d.Id = d2.Id;
-                        d.Model = d2.Model;
-                        d.MaxWeight = d2.MaxWeight;
-                        d.Battery = d2.Battery;
-                        d.DroneStatus = d2.DroneStatus;
-                        d.Location = d2.Location;
-                        if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
-                        {
-                            IDAL.DO.Parcel p = dl.GetParcel(id);
-                            parcelInTransfer.Id = p.Id;
-                            if (p.PickedUp == DateTime.MinValue)
-                                parcelInTransfer.Status = false;
-                            else
-                                parcelInTransfer.Status = true;
-                            parcelInTransfer.Weight = (EnumsBL.WeightCategories)p.Weight;
-                            parcelInTransfer.Priority = (EnumsBL.Priorities)p.Priority;
-                            double lat1 = dl.GetCustomer(p.SenderId).Latitude;
-                            parcelInTransfer.Source = new Location();
-                            parcelInTransfer.Source.Latitude = lat1;
-                            double lon1 = dl.GetCustomer(p.SenderId).Longitude;
-                            parcelInTransfer.Source.Longitude = lon1;
-                            double lat2 = dl.GetCustomer(p.TargetId).Latitude;
-                            parcelInTransfer.Destination = new Location();
-                            parcelInTransfer.Destination.Latitude = lat2;
-                            double lon2 = dl.GetCustomer(p.TargetId).Longitude;
-                            parcelInTransfer.Destination.Longitude = lon2;
-                            parcelInTransfer.TransportDistance = DistanceBetweenPlaces(lon1, lat1, lon2, lat2);
-                            sender.Id = recipient.Id = p.Id;
-                            sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
-                            sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
-                            sender.Status = recipient.Status = StatusOfParcel(p.Id);
-                            senderOtherSide.ID = p.TargetId;
-                            recipientOtherSide.ID = p.SenderId;
-                            senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
-                            recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
-                            sender.OtherSide = senderOtherSide;
-                            recipient.OtherSide = recipientOtherSide;
-                            parcelInTransfer.Sender = sender;
-                            parcelInTransfer.Receiver = recipient;
-                        }
-                        d.ParcelInTransfer = parcelInTransfer;
-                    }
-                }
-            }
-            catch (IDAL.DO.IdNotFoundException ex)
-            {
-                throw new IdNotFoundException(ex.ID, "drone");
-            }
+            if (!dronesBL.Any(drone => drone.Id == id))
+                throw new IdNotFoundException(id, "drone");
+            ParcelInTransfer parcelInTransfer = new();
+            ParcelAtCustomer sender = new();
+            ParcelAtCustomer recipient = new();
+            CustomerInParcel senderOtherSide = new();
+            CustomerInParcel recipientOtherSide = new();
 
+            DroneForList d2 = dronesBL.Find(drone => drone.Id == id);
+            d.Id = d2.Id;
+            d.Model = d2.Model;
+            d.MaxWeight = d2.MaxWeight;
+            d.Battery = d2.Battery;
+            d.DroneStatus = d2.DroneStatus;
+            d.Location = d2.Location;
+            if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
+            {
+                IDAL.DO.Parcel p = dl.GetParcel(id);
+                parcelInTransfer.Id = p.Id;
+                if (p.PickedUp == DateTime.MinValue)
+                    parcelInTransfer.Status = false;
+                else
+                    parcelInTransfer.Status = true;
+                parcelInTransfer.Weight = (EnumsBL.WeightCategories)p.Weight;
+                parcelInTransfer.Priority = (EnumsBL.Priorities)p.Priority;
+                double lat1 = dl.GetCustomer(p.SenderId).Latitude;
+                parcelInTransfer.Source = new Location();
+                parcelInTransfer.Source.Latitude = lat1;
+                double lon1 = dl.GetCustomer(p.SenderId).Longitude;
+                parcelInTransfer.Source.Longitude = lon1;
+                double lat2 = dl.GetCustomer(p.TargetId).Latitude;
+                parcelInTransfer.Source = new Location();
+                parcelInTransfer.Destination.Latitude = lat2;
+                double lon2 = dl.GetCustomer(p.TargetId).Longitude;
+                parcelInTransfer.Destination.Longitude = lon2;
+                parcelInTransfer.TransportDistance = DistanceBetweenPlaces(lon1, lat1, lon2, lat2);
+                sender.Id = recipient.Id = p.Id;
+                sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
+                sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
+                sender.Status = recipient.Status = StatusOfParcel(p.Id);
+                senderOtherSide.ID = p.TargetId;
+                recipientOtherSide.ID = p.SenderId;
+                senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
+                recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
+                sender.OtherSide = senderOtherSide;
+                recipient.OtherSide = recipientOtherSide;
+                parcelInTransfer.Sender = sender;
+                parcelInTransfer.Receiver = recipient;
+            }
+            d.ParcelInTransfer = parcelInTransfer;
             return d;
         }
         private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id, Location location)//id and location of a base station 

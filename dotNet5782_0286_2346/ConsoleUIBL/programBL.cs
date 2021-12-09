@@ -32,7 +32,7 @@ namespace ConsoleUI_BL
             Console.WriteLine("press 2 to update an item");
             Console.WriteLine("press 3 to display an item");
             Console.WriteLine("press 4 to display a list of specific item");
-            Console.WriteLine("Press 5 to find a distance of base or customer from a coordinate");
+            Console.WriteLine("Press 5 to find a distance of base station or customer from a coordinate");
             Console.WriteLine("press 0 to exit");
             int.TryParse(Console.ReadLine(), out userChoise);
             mo = (MenuOptions)userChoise;
@@ -55,7 +55,7 @@ namespace ConsoleUI_BL
                             DisplayingListsOptions(ref bl);
                             break;
                         case MenuOptions.FindDistance:
-                            // FindingDistance(ref bl);
+                            FindingDistance(ref bl);
                             break;
                         case MenuOptions.Exit:
                             Console.WriteLine("End of service");
