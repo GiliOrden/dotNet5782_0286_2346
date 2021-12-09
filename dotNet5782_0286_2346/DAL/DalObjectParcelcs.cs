@@ -17,8 +17,6 @@ namespace DalObject
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
         public int AddParcel(Parcel p)
         {
-            if (checkParcel(p.Id))
-                throw new IDAL.DO.ExistIdException(p.Id,"parcel");
             p.Id = Config.CodeOfParcel++;
             parcels.Add(p);
             return p.Id;
@@ -140,9 +138,9 @@ namespace DalObject
 
         public IEnumerable<Parcel> GetParcelsAtCustomerByPredicate(Predicate<Parcel> predicate)
         {
-            return from sic in parcels
-                   where predicate(sic)
-                   select sic;
+            return from pac in parcels
+                   where predicate(pac)
+                   select pac;
         }
     }
 }

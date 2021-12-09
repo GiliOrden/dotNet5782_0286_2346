@@ -92,7 +92,6 @@ namespace BL
                 c.Location = new Location();
                 c.Location.Latitude = c2.Latitude;
                 c.Location.Longitude = c2.Longitude;
-                
                 c.ListOfParcelsFromMe = GetParcelsFromMe(id) ;
                 c.ListOfParcelsIntendedToME = GetParcelsIntendedToME(id);
             }

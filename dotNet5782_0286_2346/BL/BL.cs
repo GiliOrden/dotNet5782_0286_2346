@@ -53,7 +53,7 @@ namespace BL
                     IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id && parc.Delivered == default(DateTime));
                     IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
                     IDAL.DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
-                    droneForList.Location = new();
+                    
                     //If the parcel was associated but not collected - location will be at the station closest to the sender
                     if (parcel.PickedUp== default(DateTime))
                     {

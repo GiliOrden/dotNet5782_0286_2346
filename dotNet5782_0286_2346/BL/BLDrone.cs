@@ -238,10 +238,12 @@ namespace BL
                             parcelInTransfer.Weight = (EnumsBL.WeightCategories)p.Weight;
                             parcelInTransfer.Priority = (EnumsBL.Priorities)p.Priority;
                             double lat1 = dl.GetCustomer(p.SenderId).Latitude;
+                            parcelInTransfer.Source = new Location();
                             parcelInTransfer.Source.Latitude = lat1;
                             double lon1 = dl.GetCustomer(p.SenderId).Longitude;
                             parcelInTransfer.Source.Longitude = lon1;
                             double lat2 = dl.GetCustomer(p.TargetId).Latitude;
+                            parcelInTransfer.Destination = new Location();
                             parcelInTransfer.Destination.Latitude = lat2;
                             double lon2 = dl.GetCustomer(p.TargetId).Longitude;
                             parcelInTransfer.Destination.Longitude = lon2;
@@ -272,7 +274,7 @@ namespace BL
         }
         private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id, Location location)//id and location of a base station 
         {
-            return from d in GetDroneInChargingByPredicate(d => d.Location == location)
+            return from d in GetDroneInChargingByPredicate(d =>d.Location.Longitude == location.Longitude )
                    let dronesInCharging = GetDrone(d.Id)
                    select new DroneInCharging()
                    {

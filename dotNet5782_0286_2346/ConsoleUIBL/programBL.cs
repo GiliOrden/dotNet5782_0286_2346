@@ -295,6 +295,7 @@ namespace ConsoleUI_BL
                     {
                         Console.WriteLine(item);
                     }
+                    Console.WriteLine();
                     Console.WriteLine("Succeeded");
                     break;
                 case DisplayOptions.DroneDisplay:
