@@ -17,8 +17,6 @@ namespace DalObject
         /// <param name="p">element ,Parcel tipe, we adding the list</param>
         public int AddParcel(Parcel p)
         {
-            if (checkParcel(p.Id))
-                throw new IDAL.DO.ExistIdException(p.Id,"parcel");
             p.Id = Config.CodeOfParcel++;
             parcels.Add(p);
             return p.Id;

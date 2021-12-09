@@ -86,12 +86,13 @@ namespace BL
             try
             {
                 IDAL.DO.Customer c2 = dl.GetCustomer(id);
-
                 c.Id = id;
                 c.Name = c2.Name;
                 c.Phone = c2.Phone;
+                c.Location = new Location();
                 c.Location.Latitude = c2.Latitude;
                 c.Location.Longitude = c2.Longitude;
+                
                 c.ListOfParcelsFromMe = GetParcelsFromMe(id);
                 c.ListOfParcelsIntendedToME = GetParcelsIntendedToME(id);
             }

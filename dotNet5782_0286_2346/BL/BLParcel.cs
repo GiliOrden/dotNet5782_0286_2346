@@ -12,8 +12,7 @@ namespace BL
     {
         public void AddParcel(Parcel p)
         {
-            try
-            {
+           
                 IDAL.DO.Parcel parcel = new();
                 parcel.SenderId = p.Sender.Id;
                 parcel.TargetId = p.Receiver.Id;
@@ -25,11 +24,7 @@ namespace BL
                 parcel.PickedUp = default;
                 parcel.Delivered = default;
                 dl.AddParcel(parcel);
-            }
-            catch (IDAL.DO.ExistIdException ex)
-            {
-                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
-            }
+           
         }
 
 

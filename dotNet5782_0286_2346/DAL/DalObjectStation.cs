@@ -17,7 +17,7 @@ namespace DalObject
         /// <param name="s">  element ,Station type, we adding the list</param>
         public void AddStation(Station s)
         {
-            if (!checkStation(s.Id))
+            if (checkStation(s.Id))
                 throw new IDAL.DO.ExistIdException(s.Id, "station");
             stations.Add(s);
         }
