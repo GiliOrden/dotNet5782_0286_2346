@@ -94,6 +94,7 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex);
                 }
+                Console.WriteLine();
                 Console.WriteLine("press 1 to add an item");
                 Console.WriteLine("press 2 to update an item");
                 Console.WriteLine("press 3 to display an item");
@@ -290,6 +291,10 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Please enter the staion ID");
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine(bl.GetBaseStation(id));
+                    foreach (var item in bl.GetBaseStation(id).DroneInChargingList)
+                    {
+                        Console.WriteLine(item);
+                    }
                     Console.WriteLine("Succeeded");
                     break;
                 case DisplayOptions.DroneDisplay:
@@ -302,6 +307,16 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Please enter the customer ID");
                     int.TryParse(Console.ReadLine(), out id);
                     Console.WriteLine(bl.GetCustomer(id));
+                    foreach (var item in bl.GetCustomer(id).ListOfParcelsFromMe)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    Console.WriteLine();
+                    foreach (var item in bl.GetCustomer(id).ListOfParcelsIntendedToME)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    Console.WriteLine();
                     Console.WriteLine("Succeeded");
                     break;
                 case DisplayOptions.ParcelDisplay:

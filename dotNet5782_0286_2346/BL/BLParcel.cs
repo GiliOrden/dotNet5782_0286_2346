@@ -174,8 +174,8 @@ namespace BL
         {
             return from sic in dl.GetParcelsAtCustomerByPredicate(sic => sic.SenderId == cstId)
                    let prc = dl.GetParcel(sic.Id)
-                   select new ParcelAtCustomer()
-                   {
+                   select new ParcelAtCustomer() 
+                   { 
                        Id = prc.Id,
                        Weight = (EnumsBL.WeightCategories)prc.Weight,
                        Priority = (EnumsBL.Priorities)prc.Priority,

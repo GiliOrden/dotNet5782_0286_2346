@@ -138,9 +138,9 @@ namespace DalObject
 
         public IEnumerable<Parcel> GetParcelsAtCustomerByPredicate(Predicate<Parcel> predicate)
         {
-            return from sic in parcels
-                   where predicate(sic)
-                   select sic;
+            return from pac in parcels
+                   where predicate(pac)
+                   select pac;
         }
     }
 }
