@@ -169,6 +169,7 @@ namespace BL
         public void SendDroneToCharge(int id)
         {
             Drone drone = GetDrone(id);
+            
             if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
             {
                 IDAL.DO.Station minDistanceStation = new();
@@ -176,20 +177,29 @@ namespace BL
                 foreach (IDAL.DO.Station s in dl.GetListOfStationsWithAvailableChargeSlots())
                 {
                     double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
-                    if ((distance < minDis) && (s.ChargeSlots > 0))
+                    if (distance < minDis)
                     {
-                        minDis = distance;
-                        minDistanceStation = s;
+                        if (s.ChargeSlots > 0) {
+                            minDis = distance;
+                            minDistanceStation = s;
+                        }
+                            
                     }
                 }
                 if (emptyDronePowerConsumption * minDis < drone.Battery)
                 {
-                    drone.Battery -= emptyDronePowerConsumption * minDis;
-                    drone.Location.Latitude = minDistanceStation.Latitude;
-                    drone.Location.Longitude = minDistanceStation.Longitude;
-                    drone.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
+                    DroneForList d = new();
+                    d.Id = drone.Id;
+                    d.Model = drone.Model;
+                    d.MaxWeight = drone.MaxWeight;
+                    d.Battery=drone.Battery - emptyDronePowerConsumption * minDis;
+                    d.Location = new();
+                    d.Location.Latitude  = minDistanceStation.Latitude;
+                    d.Location.Longitude = minDistanceStation.Longitude;
+                    d.DroneStatus = EnumsBL.DroneStatuses.Maintenance;
                     dl.SendDroneToCharge(drone.Id, minDistanceStation.Id);
-
+                    dronesBL.RemoveAll(dr => dr.Id == id);
+                    dronesBL.Add(d);
                 }
                 else
                 {
@@ -224,6 +234,7 @@ namespace BL
             d.MaxWeight = d2.MaxWeight;
             d.Battery = d2.Battery;
             d.DroneStatus = d2.DroneStatus;
+            d.Location = new Location();
             d.Location = d2.Location;
             if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
             {
@@ -241,7 +252,7 @@ namespace BL
                 double lon1 = dl.GetCustomer(p.SenderId).Longitude;
                 parcelInTransfer.Source.Longitude = lon1;
                 double lat2 = dl.GetCustomer(p.TargetId).Latitude;
-                parcelInTransfer.Source = new Location();
+                parcelInTransfer.Destination = new Location();
                 parcelInTransfer.Destination.Latitude = lat2;
                 double lon2 = dl.GetCustomer(p.TargetId).Longitude;
                 parcelInTransfer.Destination.Longitude = lon2;
