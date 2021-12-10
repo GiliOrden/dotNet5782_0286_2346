@@ -46,12 +46,9 @@ namespace DalObject
 
         public void DeleteCustomer(int id)
         {
-            foreach(Customer c in customers)
-            {
-                if (c.Id == id)
-                    customers.Remove(c);
-                break;
-            }
+           if (!checkCustomer(id))
+                throw new IdNotFoundException(id, "customer");
+            DataSource.customers.RemoveAll(cus => cus.Id == id);
         }
         
     }
