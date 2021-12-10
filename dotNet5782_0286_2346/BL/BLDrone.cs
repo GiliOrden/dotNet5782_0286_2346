@@ -130,6 +130,7 @@ namespace BL
 
             dl.AssignParcelToDrone(idOfParcel, idOfDrone);
             drone.DroneStatus = EnumsBL.DroneStatuses.OnDelivery;
+            drone.IdOfTheDeliveredParcel = idOfParcel;
         }
 
         private bool checkSufficientPowerToTransmission(DroneForList drone, IDAL.DO.Parcel parcel)
@@ -238,7 +239,7 @@ namespace BL
             d.Location = d2.Location;
             if (d.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
             {
-                IDAL.DO.Parcel p = dl.GetParcel(id);
+                IDAL.DO.Parcel p = dl.GetParcel(d2.IdOfTheDeliveredParcel);
                 parcelInTransfer.Id = p.Id;
                 if (p.PickedUp == DateTime.MinValue)
                     parcelInTransfer.Status = false;

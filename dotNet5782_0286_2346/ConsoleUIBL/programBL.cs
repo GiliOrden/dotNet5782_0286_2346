@@ -188,6 +188,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Succeeded");
                     break;
                 default:
+                    Console.WriteLine("Wrong number");
                     break;
             }
         }
@@ -243,7 +244,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
-                    Console.WriteLine("Please enter the drone ID and the time of charging");
+                    Console.WriteLine("Please enter the drone ID and the time of charging in hours");
                     int.TryParse(Console.ReadLine(), out id1);
                     double.TryParse(Console.ReadLine(), out chargingTime);
                     bl.ReleaseDroneFromCharge(id1, chargingTime);
@@ -268,6 +269,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Succeeded");
                     break;
                 default:
+                    Console.WriteLine("Wrong number");
                     break;
             }
         }
@@ -327,6 +329,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Succeeded");
                     break;
                 default:
+                    Console.WriteLine("Wrong number");
                     break;
             }
         }
@@ -349,26 +352,32 @@ namespace ConsoleUI_BL
                 case DisplayListsOptions.BaseStationList:
                     foreach (StationForList station in bl.GetListOfBaseStations())
                         Console.WriteLine(station.ToString());
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayListsOptions.DroneList:
                     foreach (DroneForList drone in bl.GetListOfDrones())
                         Console.WriteLine(drone.ToString());
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayListsOptions.CustomerList:
                     foreach (CustomerForList customer in bl.GetListOfCustomers())
                         Console.WriteLine(customer.ToString());
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayListsOptions.ParcelList:
                     foreach (ParcelForList parcel in bl.GetListOfParcels())
                         Console.WriteLine(parcel.ToString());
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayListsOptions.ParselsNotAssociatedWithDrones:
                     foreach (ParcelForList parcel in bl.GetListOfNotAssociatedParcels())
                         Console.WriteLine(parcel.ToString());
+                    Console.WriteLine("Succeeded");
                     break;
                 case DisplayListsOptions.StationsWithAvailableChargings:
                     foreach (StationForList station in bl.GetListOfStationsWithAvailableChargeSlots())
                         Console.WriteLine(station.ToString());
+                    Console.WriteLine("Succeeded");
                     break;
                 default:
                     Console.WriteLine("Wrong number");
@@ -412,6 +421,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine($"The distance from the station is:{BL.BL.DistanceBetweenPlaces(s.Location.Longitude, s.Location.Latitude, longitude, latitude)}");
                     break;
                 default:
+                    Console.WriteLine("Wrong number");
                     break;
             }
 
