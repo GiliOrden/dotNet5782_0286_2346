@@ -157,32 +157,49 @@ namespace BL
             return p;
         }
 
+        /// <summary>
+        /// the function recieves a customer's ID and returns all the parcels he recieved/will receive according to the current data
+        /// </summary>
+        /// <param name="cstId"></param>
+        /// <returns></returns>
         private IEnumerable<ParcelAtCustomer> GetParcelsIntendedToME(int cstId)
         {
-            return from sic in dl.GetParcelsAtCustomerByPredicate(sic => sic.TargetId == cstId)
-                   let prc = dl.GetParcel(sic.Id)
+            return from parc in dl.GetParcelsAtCustomerByPredicate(parc => parc.TargetId == cstId)
+                   let prc = dl.GetParcel(parc.Id)
                    select new ParcelAtCustomer()
                    {
                        Id = prc.Id,
                        Weight = (EnumsBL.WeightCategories)prc.Weight,
                        Priority = (EnumsBL.Priorities)prc.Priority,
                        Status = StatusOfParcel(prc.Id),
-                       OtherSide = OtherSideCustomerInParcel(sic.Id, cstId)
+                       OtherSide = OtherSideCustomerInParcel(parc.Id, cstId)
                    };
         }
+
+        /// <summary>
+        /// the function recieves a customer's ID and returns all the parcels he sent/will send according to the current data
+        /// </summary>
+        /// <param name="cstId"></param>
+        /// <returns>IEnumerable<ParcelAtCustomer></returns>
         private IEnumerable<ParcelAtCustomer> GetParcelsFromMe(int cstId)
         {
-            return from sic in dl.GetParcelsAtCustomerByPredicate(sic => sic.SenderId == cstId)
-                   let prc = dl.GetParcel(sic.Id)
+            return from parc in dl.GetParcelsAtCustomerByPredicate(parc => parc.SenderId == cstId)
+                   let prc = dl.GetParcel(parc.Id)
                    select new ParcelAtCustomer() 
                    { 
                        Id = prc.Id,
                        Weight = (EnumsBL.WeightCategories)prc.Weight,
                        Priority = (EnumsBL.Priorities)prc.Priority,
                        Status = StatusOfParcel(prc.Id),
-                       OtherSide = OtherSideCustomerInParcel(sic.Id, cstId)
+                       OtherSide = OtherSideCustomerInParcel(parc.Id, cstId)
                    };
         }
+
+        /// <summary>
+        /// the function recieves a parcel's ID and returns the parcel's status
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <returns>status of the parcel </returns>
         private EnumsBL.ParcelStatuses StatusOfParcel(int parcelId)
         {
             IDAL.DO.Parcel p = dl.GetParcel(parcelId);
@@ -195,6 +212,13 @@ namespace BL
             return EnumsBL.ParcelStatuses.Associated;
         }
 
+        /// <summary>
+        /// the function recieves a parcel's ID and customer's ID and returns the customer of the other side of the customer is received 
+        /// as parameter sender-receiver/receiver-sender
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="customerId"></param>
+        /// <returns>CustomerInParcel</returns>
         private CustomerInParcel OtherSideCustomerInParcel(int parcelId, int customerId)
         {
             IDAL.DO.Parcel p = dl.GetParcel(parcelId);

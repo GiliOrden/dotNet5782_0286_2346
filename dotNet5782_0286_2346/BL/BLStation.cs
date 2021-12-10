@@ -124,7 +124,14 @@ namespace BL
 
             return s;
         }
-        private int getClosestStation(IDAL.DO.Customer customer, ref double minDistance)//help method for customer
+
+        /// <summary>
+        /// the function receives customer and distance and returns the ID of the station that is closest to the customer and the distance to it
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <param name="minDistance"></param>
+        /// <returns> the ID of the station that is closest to the customer</returns>
+        private int getClosestStation(IDAL.DO.Customer customer, ref double minDistance)
         {
             int idOfStation = 0;
             double distance;

@@ -86,11 +86,11 @@ namespace BL
                 from parc in dl.GetListOfNotAssociatedParcels()
                 where checkSufficientPowerToTransmission(drone, parc) == true
                 select parc;
-            if (parcelsThatDroneCanTransfer.Count() == 0)
+            if (parcelsThatDroneCanTransfer.Count() == 0)//if the drone can't transfer any parcel because is low battery
                 throw new IBL.BO.NoBatteryException(idOfDrone);
 
             IEnumerable<IDAL.DO.Parcel> parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Emergency);
-            if (parcelsWithTheHighestPriority.Count() == 0)
+            if (parcelsWithTheHighestPriority.Count() == 0)//if there aren't parcels with emergency priority that the drone can transfer
             {
                 parcelsWithTheHighestPriority = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
                 if (parcelsWithTheHighestPriority.Count() == 0)
@@ -100,7 +100,7 @@ namespace BL
             IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
             if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
             {
-                if (parcelsWithTheHighestPriority.ElementAt(0).Priority == IDAL.DO.Priorities.Emergency)
+                if (parcelsWithTheHighestPriority.ElementAt(0).Priority == IDAL.DO.Priorities.Emergency)//if there are parcels with emergency priority that the drone has enough power to carry bat there weight is too heavy
                 {
                     parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Fast);
                     parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
@@ -115,9 +115,10 @@ namespace BL
                     parcelsWithMaxWeightPossibleToDrone = parcelsThatDroneCanTransfer.Where(parc => parc.Priority == IDAL.DO.Priorities.Regular);
                     parcelsWithMaxWeightPossibleToDrone = getParcelsWithMaxWeightPossibleToDrone(parcelsWithTheHighestPriority, idOfDrone);
                 }
-                if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)
+                if (parcelsWithMaxWeightPossibleToDrone.Count() == 0)//if there are no parcels that the drone can transfer becuse its max weight
                     throw new IBL.BO.DroneMaxWeightIsLowException(idOfDrone);
             }
+
             foreach (IDAL.DO.Parcel parcel in parcelsWithMaxWeightPossibleToDrone)
             {
                 distance = DistanceBetweenPlaces(drone.Location.Longitude, drone.Location.Latitude, dl.GetCustomer(parcel.SenderId).Longitude, dl.GetCustomer(parcel.SenderId).Latitude);
@@ -133,6 +134,12 @@ namespace BL
             drone.IdOfTheDeliveredParcel = idOfParcel;
         }
 
+        /// <summary>
+        /// the function receives drone and parcel and check if the drone has enough power to carry the parcel to destination
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="parcel"></param>
+        /// <returns>true if the drone has enough power otherwise it returns false</returns>
         private bool checkSufficientPowerToTransmission(DroneForList drone, IDAL.DO.Parcel parcel)
         {
             double minDistance = 100000;
@@ -150,6 +157,12 @@ namespace BL
             return minCharge < drone.Battery;
         }
 
+        /// <summary>
+        /// recieves list of parcel and drone's id and returnes parcels that the drone can carry their weight
+        /// </summary>
+        /// <param name="parcels">list of parcel</param>
+        /// <param name="id">drone's id</param>
+        /// <returns>IEnumerable<IDAL.DO.Parcel> parcels that the drone can carry their weight </returns>
         private IEnumerable<IDAL.DO.Parcel> getParcelsWithMaxWeightPossibleToDrone(IEnumerable<IDAL.DO.Parcel> parcels, int id)
         {
             IEnumerable<IDAL.DO.Parcel> parcelsWithMaxWeightPossibleToDrone =

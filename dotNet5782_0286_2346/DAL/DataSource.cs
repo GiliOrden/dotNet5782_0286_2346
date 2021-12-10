@@ -18,7 +18,7 @@ namespace DalObject
            internal static double LightWeightCarrierPowerConsumption=0.06;
            internal static double MediumWeightCarrierPowerConsumption=0.07;
            internal static double HeavyWeightCarrierPowerConsumption=0.08;
-           internal static double ChargingRatePerHour=25;//is it also shuld be static?
+           internal static double ChargingRatePerHour=25;
         }
 
         internal static List<Drone>drones = new List<Drone>();//creat list of drones
@@ -37,15 +37,23 @@ namespace DalObject
         private static void createDrones(int num)
         {
             
-            for (int i = 1; i <= num; i++)
+            for (int i = 1; i <= 5; i++)
             {
                 drones.Add(new Drone()
                 {
                     Id =i,
+                    MaxWeight =WeightCategories.Heavy,
+                    Model = string.Format("Drony{0}", i)
+                });               
+            }
+            for (int i =6; i <=num; i++)
+            {
+                drones.Add(new Drone()
+                {
+                    Id = i,
                     MaxWeight = (WeightCategories)rand.Next(3),
                     Model = string.Format("Drony{0}", i)
                 });
-                
             }
         }
 
@@ -149,7 +157,7 @@ namespace DalObject
                 Scheduled = DateTime.Today,
                 PickedUp = DateTime.Today,
                 Delivered =default(DateTime),
-                DroneId = 4
+                DroneId = 5
             });
             for (int i =0; i < (num - 5); i++)
             {
