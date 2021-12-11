@@ -174,10 +174,10 @@ namespace ConsoleUI_BL
                     Parcel p = new Parcel();
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Sender = new();
-                    p.Sender.Id = ans;
+                    p.Sender.ID = ans;
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Receiver = new();
-                    p.Receiver.Id = ans;
+                    p.Receiver.ID = ans;
                     Console.WriteLine("Choose maximum weight:0 for Light,1 for Medium,2 for Heavy");
                     int.TryParse(Console.ReadLine(), out ans);
                     p.Weight = (EnumsBL.WeightCategories)ans;

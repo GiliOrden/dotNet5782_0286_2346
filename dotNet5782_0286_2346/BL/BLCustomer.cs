@@ -52,7 +52,8 @@ namespace BL
                     Name = customer.Name,
                     Phone = customer.Phone,
                 };
-            foreach (CustomerForList cust in customers)
+            var listOfCustomers = customers.ToList();
+            foreach (CustomerForList cust in listOfCustomers)
             {
                 foreach (IDAL.DO.Parcel parc in dl.GetListOfParcels())
                 {
@@ -72,7 +73,7 @@ namespace BL
                     }
                 }
             }
-            return customers;
+            return listOfCustomers;
         }
 
         public Customer GetCustomer(int id)

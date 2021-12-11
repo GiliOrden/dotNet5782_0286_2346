@@ -14,8 +14,8 @@ namespace BL
         {
            
                 IDAL.DO.Parcel parcel = new();
-                parcel.SenderId = p.Sender.Id;
-                parcel.TargetId = p.Receiver.Id;
+                parcel.SenderId = p.Sender.ID;
+                parcel.TargetId = p.Receiver.ID;
                 parcel.Weight = (IDAL.DO.WeightCategories)p.Weight;
                 parcel.Priority = (IDAL.DO.Priorities)p.Priority;
                 parcel.DroneId = 0;//supposed to be null
@@ -24,7 +24,7 @@ namespace BL
                 parcel.PickedUp = default;
                 parcel.Delivered = default;
                 dl.AddParcel(parcel);
-           
+          
         }
 
 
@@ -88,9 +88,10 @@ namespace BL
                        ParcelStatus = EnumsBL.ParcelStatuses.Defined
                    };
         }
+
         public IEnumerable<IBL.BO.ParcelForList> GetListOfParcels()
         {
-            IEnumerable<IBL.BO.ParcelForList> parcels =
+             var parcels =
                 from parcel in dl.GetListOfParcels()
                 select new IBL.BO.ParcelForList
                 {
@@ -100,7 +101,8 @@ namespace BL
                     Weight = (EnumsBL.WeightCategories)parcel.Weight,
                     Priority = (EnumsBL.Priorities)parcel.Priority,
                 };
-            foreach (ParcelForList parc in parcels)
+            var listOfParcels=parcels.ToList();
+            foreach (ParcelForList parc in listOfParcels)
             {
                 if (dl.GetParcel(parc.Id).Scheduled == default(DateTime))
                     parc.ParcelStatus = EnumsBL.ParcelStatuses.Defined;
@@ -111,15 +113,15 @@ namespace BL
                 else if (dl.GetParcel(parc.Id).Delivered != default(DateTime))
                     parc.ParcelStatus = EnumsBL.ParcelStatuses.Delivered;
             }
-            return parcels;
+            return listOfParcels;
         }
         public Parcel GetParcel(int id)
         {
             Parcel p = new();
-            ParcelAtCustomer sender = new();
-            ParcelAtCustomer recipient = new();
-            CustomerInParcel senderOtherSide = new();
-            CustomerInParcel recipientOtherSide = new();
+            p.Sender= new();
+            p.Receiver = new();
+            p.Drone = new();
+            p.Drone.Location = new();
             IDAL.DO.Parcel p2 = dl.GetParcel(id);
             p.Id = p2.Id;
             p.Weight = (EnumsBL.WeightCategories)p2.Weight;
@@ -128,32 +130,24 @@ namespace BL
             p.AssociationTime = p2.Scheduled;
             p.CollectionTime = p2.PickedUp;
             p.DeliveryTime = p2.Delivered;
-            sender.Id = recipient.Id = p.Id;
-            sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
-            sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
-            sender.Status = recipient.Status = StatusOfParcel(p.Id);
-            senderOtherSide.ID = p2.TargetId;
-            recipientOtherSide.ID = p2.SenderId;
-            senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
-            recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
-            sender.OtherSide = senderOtherSide;
-            recipient.OtherSide = recipientOtherSide;
-            p.Sender = sender;
-            p.Receiver = recipient;
+            p.Sender.ID=p2.SenderId;
+            p.Sender.Name = dl.GetCustomer(p2.SenderId).Name;
+            p.Receiver.ID = p2.TargetId;
+            p.Receiver.Name = dl.GetCustomer(p2.TargetId).Name;
             if (p.AssociationTime != DateTime.MinValue)
             {
-                DroneForParcel drone = new();
                 foreach (DroneForList d in dronesBL)
                 {
                     if (d.IdOfTheDeliveredParcel == id)
                     {
-                        drone.Id = d.Id;
-                        drone.Battery = d.Battery;
-                        drone.Location = d.Location;
+                        p.Drone.Id = d.Id;
+                        p.Drone.Battery = d.Battery;
+                        p.Drone.Location = d.Location;
                     }
                 }
-                p.Drone = drone;
             }
+            else
+                p.Drone.Id = 0;
             return p;
         }
 

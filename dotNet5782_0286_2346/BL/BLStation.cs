@@ -67,7 +67,8 @@ namespace BL
                     Name = station.Name,
                     AvailableChargingPositions = station.ChargeSlots
                 };
-            foreach (StationForList station in stationsBO)
+            var stations = stationsBO.ToList();
+            foreach (StationForList station in stations)
             {
                 foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
                 {
@@ -75,7 +76,7 @@ namespace BL
                         station.InaccessibleChargingPositions++;
                 }
             }
-            return stationsBO;
+            return stations;
         }
 
 
@@ -90,7 +91,8 @@ namespace BL
                 Name = station.Name,
                 AvailableChargingPositions = station.ChargeSlots
             };
-            foreach (StationForList station in stationsWithAvailableChargeSlots)
+            var stations = stationsWithAvailableChargeSlots.ToList();
+            foreach (StationForList station in stations)
             {
                 foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
                 {
@@ -98,7 +100,7 @@ namespace BL
                         station.InaccessibleChargingPositions++;
                 }
             }
-            return stationsWithAvailableChargeSlots;
+            return stations;
         }
 
 

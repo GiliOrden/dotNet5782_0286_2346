@@ -49,8 +49,8 @@ namespace BL
                 droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==default(DateTime))) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
                 if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                 {
-                    
-                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id && parc.Delivered == default(DateTime));
+                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id&& parc.Delivered == default(DateTime));
+                    droneForList.IdOfTheDeliveredParcel = parcel.Id;
                     IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
                     IDAL.DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
                     

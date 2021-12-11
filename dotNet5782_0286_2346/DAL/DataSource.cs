@@ -13,7 +13,7 @@ namespace DalObject
       
         internal class Config
         {
-           internal static int CodeOfParcel = 0;
+           internal static int CodeOfParcel =1;
            internal static double EmptyDronePowerConsumption=0.05;
            internal static double LightWeightCarrierPowerConsumption=0.06;
            internal static double MediumWeightCarrierPowerConsumption=0.07;
@@ -120,6 +120,7 @@ namespace DalObject
                 parcels.Add(new Parcel()
                 {
                     Id = Config.CodeOfParcel++,
+                    DroneId = i,
                     SenderId = ID[i],
                     TargetId = ID[i+1],
                     Weight = (WeightCategories)rand.Next(3),
@@ -128,9 +129,22 @@ namespace DalObject
                     Scheduled =DateTime.Now,
                     PickedUp = new DateTime(),
                     Delivered = new DateTime(),
-                    DroneId =i
                 });
             }
+
+            parcels.Add(new Parcel()
+            {
+                Id = Config.CodeOfParcel++,
+                SenderId = ID[2],
+                TargetId = ID[4],
+                Weight = (WeightCategories)rand.Next(3),
+                Priority = (Priorities)rand.Next(3),
+                Requested = DateTime.Today,
+                Scheduled = DateTime.Today,
+                PickedUp = DateTime.Today,
+                Delivered = default(DateTime),
+                DroneId = 4
+            });
 
             parcels.Add(new Parcel()
             {
@@ -143,22 +157,9 @@ namespace DalObject
                 Scheduled = DateTime.Today,
                 PickedUp = DateTime.Today,
                 Delivered = DateTime.Now,
-                DroneId = 4
-            });
-
-            parcels.Add(new Parcel()
-            {
-                Id = Config.CodeOfParcel++,
-                SenderId = ID[2],
-                TargetId = ID[4],
-                Weight = (WeightCategories)rand.Next(3),
-                Priority = (Priorities)rand.Next(3),
-                Requested = DateTime.Today,
-                Scheduled = DateTime.Today,
-                PickedUp = DateTime.Today,
-                Delivered =default(DateTime),
                 DroneId = 5
             });
+
             for (int i =0; i < (num - 5); i++)
             {
                 parcels.Add(new Parcel()
