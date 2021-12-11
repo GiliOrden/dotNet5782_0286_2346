@@ -16,8 +16,8 @@ namespace IBL
             public bool Status { get; set; }//no- Waiting for collection /yes- on the way to the destination
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public ParcelAtCustomer Sender { get; set; }
-            public ParcelAtCustomer Receiver { get; set; }
+            public CustomerInParcel Sender { get; set; }
+            public CustomerInParcel Receiver { get; set; }
             public BO.Location Source { get; set; }
             public BO.Location Destination { get; set; }
             public double TransportDistance { get; set; }

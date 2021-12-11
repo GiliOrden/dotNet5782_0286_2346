@@ -343,7 +343,7 @@ namespace ConsoleUI_BL
             Console.WriteLine("press 2 to view the list of the drones");
             Console.WriteLine("press 3 to view the list of the cutomers");
             Console.WriteLine("press 4 to view the list of the parcels");
-            Console.WriteLine("press 5 to view the list of the parcels without drones");
+            Console.WriteLine("press 5 to view the list of the parcels that aren't associated to drone");
             Console.WriteLine("press 6 to view the list of the stations with available charge slots");
             int.TryParse(Console.ReadLine(), out ans);
             DisplayListsOptions choise = (DisplayListsOptions)ans;

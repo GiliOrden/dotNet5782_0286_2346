@@ -235,12 +235,9 @@ namespace BL
             Drone d = new();
             if (!dronesBL.Any(drone => drone.Id == id))
                 throw new IdNotFoundException(id, "drone");
-            ParcelInTransfer parcelInTransfer = new();
-            ParcelAtCustomer sender = new();
-            ParcelAtCustomer recipient = new();
-            CustomerInParcel senderOtherSide = new();
-            CustomerInParcel recipientOtherSide = new();
-
+            ParcelInTransfer parcelInTransfer= new();
+            parcelInTransfer.Sender = new();
+            parcelInTransfer.Receiver = new();
             DroneForList d2 = dronesBL.Find(drone => drone.Id == id);
             d.Id = d2.Id;
             d.Model = d2.Model;
@@ -270,37 +267,14 @@ namespace BL
                 double lon2 = dl.GetCustomer(p.TargetId).Longitude;
                 parcelInTransfer.Destination.Longitude = lon2;
                 parcelInTransfer.TransportDistance = DistanceBetweenPlaces(lon1, lat1, lon2, lat2);
-                sender.Id = recipient.Id = p.Id;
-                sender.Weight = recipient.Weight = (EnumsBL.WeightCategories)p.Weight;
-                sender.Priority = recipient.Priority = (EnumsBL.Priorities)p.Priority;
-                sender.Status = recipient.Status = StatusOfParcel(p.Id);
-                senderOtherSide.ID = p.TargetId;
-                recipientOtherSide.ID = p.SenderId;
-                senderOtherSide.Name = dl.GetCustomer(senderOtherSide.ID).Name;
-                recipientOtherSide.Name = dl.GetCustomer(recipientOtherSide.ID).Name;
-                sender.OtherSide = senderOtherSide;
-                recipient.OtherSide = recipientOtherSide;
-                parcelInTransfer.Sender = sender;
-                parcelInTransfer.Receiver = recipient;
+                parcelInTransfer.Sender.ID=p.SenderId;
+                parcelInTransfer.Sender.Name = dl.GetCustomer(p.SenderId).Name;
+                parcelInTransfer.Receiver.ID = p.TargetId;
+                parcelInTransfer.Receiver.Name = dl.GetCustomer(p.TargetId).Name;
             }
             d.ParcelInTransfer = parcelInTransfer;
             return d;
         }
-        private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id, Location location)//id and location of a base station 
-        {
-            return from d in GetDroneInChargingByPredicate(d =>d.Location.Longitude == location.Longitude )
-                   let dronesInCharging = GetDrone(d.Id)
-                   select new DroneInCharging()
-                   {
-                       Id = dronesInCharging.Id,
-                       Battery = dronesInCharging.Battery
-                   };
-        }
-        private IEnumerable<DroneForList> GetDroneInChargingByPredicate(Predicate<DroneForList> predicate)
-        {
-            return from sic in dronesBL
-                   where predicate(sic)
-                   select sic;
-        }
+
     }
 }

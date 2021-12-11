@@ -95,7 +95,8 @@ namespace BL
                     
                     index = rand.Next(dl.GetListOfBaseStations().Count());
                     droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
-                    droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;    
+                    droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;
+                    dl.AddDroneCharge(droneForList.Id, dl.GetListOfBaseStations().ElementAt(index).Id);
                     droneForList.Battery = rand.Next(21);
                     
                 }

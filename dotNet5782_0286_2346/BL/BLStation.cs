@@ -117,7 +117,12 @@ namespace BL
                 s.Location.Latitude = sDal.Latitude;
                 s.Location.Longitude = sDal.Longitude;
                 s.ChargeSlots = sDal.ChargeSlots;
-                s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location);
+                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
+                {
+                    if (droneCharger.StationId == id)
+                        s.ChargeSlots--;
+                }
+                s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location).ToList();
             }
             catch (IDAL.DO.IdNotFoundException ex)
             {
@@ -150,7 +155,37 @@ namespace BL
             return idOfStation;
         }
 
-        
+        /// <summary>
+        /// the function calculates and returns a list of drones in charging in a specific base station
+        /// </summary>
+        /// <param name="id">baseStation's ID</param>
+        /// <param name="location">baseStation's location</param>
+        /// <returns>list of drones in charging in a specific base station</returns>
+        private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id, Location location)//id and location of a base station 
+        {
+            var drones=from d in GetDroneInChargingByPredicate(d => d.Location.Longitude == location.Longitude && d.Location.Latitude == location.Latitude&&d.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+                   let dronesInCharging = GetDrone(d.Id)
+                   select new DroneInCharging()
+                   {
+                       Id = dronesInCharging.Id,
+                       Battery = dronesInCharging.Battery
+                   };
+            return drones.ToList();
+        }
+
+        /// <summary>
+        /// the function calculates and returns all the drones in charging at a specific station
+        /// </summary>
+        /// <param name="predicate">check if the drone's location is int the specific station and its status is in maintenance </param>
+        /// <returns>collection of drones by predicate</returns>
+        private IEnumerable<DroneForList> GetDroneInChargingByPredicate(Predicate<DroneForList> predicate)
+        {
+            return from drone in dronesBL
+                   where predicate(drone)
+                   select drone;
+        }
+
+
     };
 }
 
