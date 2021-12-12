@@ -68,12 +68,6 @@ namespace IDAL
         #endregion
         #region DroneCharge
         /// <summary>
-        /// the function add drone charger to the list of drone charges
-        /// </summary>
-        /// <param name="idOfDrone">the drone's ID</param>
-        /// <param name="idOfStation">the station's ID</param>
-        void AddDroneCharge(int idOfDrone, int idOfStation);
-        /// <summary>
         /// the function calculates and returns a list of busy charge slotes of a station
         /// </summary>
         /// <returns>collection of busy charge slotes of a station</returns>

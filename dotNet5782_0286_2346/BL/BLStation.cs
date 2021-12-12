@@ -117,11 +117,6 @@ namespace BL
                 s.Location.Latitude = sDal.Latitude;
                 s.Location.Longitude = sDal.Longitude;
                 s.ChargeSlots = sDal.ChargeSlots;
-                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
-                {
-                    if (droneCharger.StationId == id)
-                        s.ChargeSlots--;
-                }
                 s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location).ToList();
             }
             catch (IDAL.DO.IdNotFoundException ex)

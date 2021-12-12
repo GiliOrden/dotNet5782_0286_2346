@@ -94,11 +94,11 @@ namespace BL
                 {
                     
                     index = rand.Next(dl.GetListOfBaseStations().Count());
-                    droneForList.Location.Longitude = dl.GetListOfBaseStations().ElementAt(index).Longitude;
-                    droneForList.Location.Latitude = dl.GetListOfBaseStations().ElementAt(index).Latitude;
-                    dl.AddDroneCharge(droneForList.Id, dl.GetListOfBaseStations().ElementAt(index).Id);
-                    droneForList.Battery = rand.Next(21);
-                    
+                    IDAL.DO.Station station = dl.GetListOfBaseStations().ElementAt(index);
+                    droneForList.Location.Longitude = station.Longitude;
+                    droneForList.Location.Latitude =station.Latitude;
+                    SendDroneToCharge(droneForList.Id);
+                    droneForList.Battery = rand.Next(21);                    
                 }
                
                 else //if the drone is available
