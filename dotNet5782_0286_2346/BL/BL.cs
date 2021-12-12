@@ -97,7 +97,7 @@ namespace BL
                     IDAL.DO.Station station = dl.GetListOfBaseStations().ElementAt(index);
                     droneForList.Location.Longitude = station.Longitude;
                     droneForList.Location.Latitude =station.Latitude;
-                    SendDroneToCharge(droneForList.Id);
+                    dl.SendDroneToCharge(droneForList.Id,station.Id);
                     droneForList.Battery = rand.Next(21);                    
                 }
                

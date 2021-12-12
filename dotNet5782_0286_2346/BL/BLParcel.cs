@@ -101,7 +101,8 @@ namespace BL
                     Weight = (EnumsBL.WeightCategories)parcel.Weight,
                     Priority = (EnumsBL.Priorities)parcel.Priority,
                 };
-            var listOfParcels=parcels.ToList();
+
+            var listOfParcels = parcels.ToList();
             foreach (ParcelForList parc in listOfParcels)
             {
                 if (dl.GetParcel(parc.Id).Scheduled == default(DateTime))
