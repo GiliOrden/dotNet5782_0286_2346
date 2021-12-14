@@ -10,6 +10,7 @@ namespace IBL
     {
         public class Drone
         {
+            
             public int Id{ get; set; }
             public string Model { get; set; }
             public EnumsBL.WeightCategories MaxWeight { get; set; }
