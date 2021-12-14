@@ -39,23 +39,22 @@ namespace BL
                     s.Name = name;
                 if (numOfChargeSlots !=-1)
                 {
+ 
                     foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyChargeSlots())
                     {
                         if (droneCharge.StationId == id)
                             numOfChargeSlots--;
                     }
                     s.ChargeSlots = numOfChargeSlots;
-                    dl.DeleteStation(id);
-                    dl.AddStation(s);
                 }
+                dl.DeleteStation(id);
+                dl.AddStation(s);
             }
             catch (IDAL.DO.IdNotFoundException ex)
             {
                 throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
-
-
 
         public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
         {
@@ -65,20 +64,27 @@ namespace BL
                 {
                     ID = station.Id,
                     Name = station.Name,
-                    AvailableChargingPositions = station.ChargeSlots
+                    AvailableChargingPositions = station.ChargeSlots,
+                    InaccessibleChargingPositions=getNumberOfInaccessibleChargingSlots(station.Id)
                 };
-            var stations = stationsBO.ToList();
-            foreach (StationForList station in stations)
-            {
-                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
-                {
-                    if (droneCharger.StationId == station.ID)
-                        station.InaccessibleChargingPositions++;
-                }
-            }
-            return stations;
+            return stationsBO;
         }
 
+        /// <summary>
+        /// the function calculates and returns the number of inaccessible charging slots in a specific station
+        /// </summary>
+        /// <param name="id">the station's ID</param>
+        /// <returns>number of inaccessible charging slots in a specific station</returns>
+        private int getNumberOfInaccessibleChargingSlots(int id)
+        {
+            int numOfInaccessibleChargingSlots = 0;
+            foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
+            {
+                if (droneCharger.StationId == id)
+                    numOfInaccessibleChargingSlots++;
+            }
+            return numOfInaccessibleChargingSlots;
+        }
 
 
         public IEnumerable<IBL.BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
@@ -89,18 +95,10 @@ namespace BL
             {
                 ID = station.Id,
                 Name = station.Name,
-                AvailableChargingPositions = station.ChargeSlots
+                AvailableChargingPositions = station.ChargeSlots,
+                InaccessibleChargingPositions = getNumberOfInaccessibleChargingSlots(station.Id)
             };
-            var stations = stationsWithAvailableChargeSlots.ToList();
-            foreach (StationForList station in stations)
-            {
-                foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
-                {
-                    if (droneCharger.StationId == station.ID)
-                        station.InaccessibleChargingPositions++;
-                }
-            }
-            return stations;
+            return stationsWithAvailableChargeSlots;
         }
 
 

@@ -100,21 +100,9 @@ namespace BL
                     ReceiverName = dl.GetCustomer(parcel.TargetId).Name,
                     Weight = (EnumsBL.WeightCategories)parcel.Weight,
                     Priority = (EnumsBL.Priorities)parcel.Priority,
+                    ParcelStatus=StatusOfParcel(parcel.Id)
                 };
-
-            var listOfParcels = parcels.ToList();
-            foreach (ParcelForList parc in listOfParcels)
-            {
-                if (dl.GetParcel(parc.Id).Scheduled == default(DateTime))
-                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Defined;
-                else if (dl.GetParcel(parc.Id).PickedUp == default(DateTime))
-                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Associated;
-                else if (dl.GetParcel(parc.Id).Delivered == default(DateTime))
-                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Collected;
-                else if (dl.GetParcel(parc.Id).Delivered != default(DateTime))
-                    parc.ParcelStatus = EnumsBL.ParcelStatuses.Delivered;
-            }
-            return listOfParcels;
+            return parcels;
         }
         public Parcel GetParcel(int id)
         {

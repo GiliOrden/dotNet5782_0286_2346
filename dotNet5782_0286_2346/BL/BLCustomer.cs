@@ -42,38 +42,45 @@ namespace BL
                 dl.DeleteCustomer(id);
                 dl.AddCustomer(customer);
          }
+
         public IEnumerable<IBL.BO.CustomerForList> GetListOfCustomers()
         {
             IEnumerable<IBL.BO.CustomerForList> customers =
                 from customer in dl.GetListOfCustomers()
-                select new IBL.BO.CustomerForList
-                {
-                    ID = customer.Id,
-                    Name = customer.Name,
-                    Phone = customer.Phone,
-                };
-            var listOfCustomers = customers.ToList();
-            foreach (CustomerForList cust in listOfCustomers)
+                let cust= getCustomerForList(customer)
+                select cust;
+            return customers;
+        }
+
+        /// <summary>
+        /// the function generates a customer for list according to data in the dalobject layer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        private CustomerForList getCustomerForList(IDAL.DO.Customer customer)
+        {
+            CustomerForList customerForList = new();
+            customerForList.ID = customer.Id;
+            customerForList.Name = customer.Name;
+            customerForList.Phone = customer.Phone;
+            foreach (IDAL.DO.Parcel parc in dl.GetListOfParcels())
             {
-                foreach (IDAL.DO.Parcel parc in dl.GetListOfParcels())
+                if (parc.SenderId == customerForList.ID)
                 {
-                    if (parc.SenderId == cust.ID)
-                    {
-                        if (parc.Delivered != default(DateTime))
-                            cust.SentAndDeliveredParcels++;
-                        else
-                            cust.SentButNotDeliveredParcels++;
-                    }
-                    else if (parc.TargetId == cust.ID)
-                    {
-                        if (parc.Delivered != default(DateTime))
-                            cust.ReceivedParcels++;
-                        else
-                            cust.OnTheWayToCustomerParcels++;
-                    }
+                    if (parc.Delivered != default(DateTime))
+                        customerForList.SentAndDeliveredParcels++;
+                    else
+                        customerForList.SentButNotDeliveredParcels++;
+                }
+                else if (parc.TargetId == customerForList.ID)
+                {
+                    if (parc.Delivered != default(DateTime))
+                        customerForList.ReceivedParcels++;
+                    else
+                        customerForList.OnTheWayToCustomerParcels++;
                 }
             }
-            return listOfCustomers;
+            return customerForList;
         }
 
         public Customer GetCustomer(int id)
