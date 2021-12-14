@@ -116,7 +116,7 @@ namespace BL
                 s.Location.Latitude = sDal.Latitude;
                 s.Location.Longitude = sDal.Longitude;
                 s.ChargeSlots = sDal.ChargeSlots;
-                s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location).ToList();
+                s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location);
             }
             catch (IDAL.DO.IdNotFoundException ex)
             {
@@ -164,7 +164,7 @@ namespace BL
                        Id = dronesInCharging.Id,
                        Battery = dronesInCharging.Battery
                    };
-            return drones.ToList();
+            return drones;
         }
 
         /// <summary>

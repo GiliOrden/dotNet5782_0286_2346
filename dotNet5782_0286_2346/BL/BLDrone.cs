@@ -60,7 +60,6 @@ namespace BL
                 throw new IBL.BO.IdNotFoundException(id, "drone");
             if (drone.DroneStatus != EnumsBL.DroneStatuses.Maintenance)
                 throw new IBL.BO.DroneStatusException(id, "in maintenance");
-
             drone.Battery = drone.Battery + chargingTime * chargingRatePerHour;
             if (drone.Battery > 100)
                 drone.Battery = 100;
