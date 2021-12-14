@@ -24,7 +24,6 @@ namespace BL
 
         public BL()//ctor
         {
-
             dl = new DalObject.DalObject();
             dalDrones = dl.GetListOfDrones();
             dronePowerConsumption = dl.GetDronePowerConsumption();
