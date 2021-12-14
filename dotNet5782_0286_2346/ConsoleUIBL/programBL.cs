@@ -225,7 +225,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine(@"Please enter the station ID and details to update (name Of Station\total number of charge slots)");
                     int.TryParse(Console.ReadLine(), out id1);
                     name = Console.ReadLine();
-                    int.TryParse(Console.ReadLine(), out numOfChargeSlots);
+                    int.TryParse(Console.ReadLine(), out numOfChargeSlots);//when it's stay empty numOfChargeSlots=0
                     bl.UpdateBaseStation(id1, name, numOfChargeSlots);
                     Console.WriteLine("Succeeded");
                     break;

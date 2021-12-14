@@ -30,14 +30,14 @@ namespace BL
         }
 
 
-        public void UpdateBaseStation(int id, string name="", int numOfChargeSlots=-1)
+        public void UpdateBaseStation(int id, string name="", int numOfChargeSlots=0)
         {
             try
             {
                 IDAL.DO.Station s = dl.GetBaseStation(id);
                 if (name != "")
                     s.Name = name;
-                if (numOfChargeSlots !=-1)
+                if (numOfChargeSlots !=0)
                 {
  
                     foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyChargeSlots())
@@ -46,6 +46,7 @@ namespace BL
                             numOfChargeSlots--;
                     }
                     s.ChargeSlots = numOfChargeSlots;
+                    
                 }
                 dl.DeleteStation(id);
                 dl.AddStation(s);
