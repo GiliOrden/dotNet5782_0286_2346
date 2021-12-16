@@ -16,10 +16,10 @@ namespace IBL
             public EnumsBL.WeightCategories Weight { get; set; }
             public EnumsBL.Priorities Priority { get; set; }
             public  DroneForParcel Drone{ get; set; }    
-            public DateTime ParcelCreationTime { get; set; }
-            public DateTime AssociationTime { get; set; }
-            public DateTime CollectionTime{ get; set; }
-            public DateTime DeliveryTime { get; set; }
+            public DateTime? ParcelCreationTime { get; set; }
+            public DateTime? AssociationTime { get; set; }
+            public DateTime? CollectionTime{ get; set; }
+            public DateTime? DeliveryTime { get; set; }
             public override string ToString()
             {
                 return this.ToStringProperty();

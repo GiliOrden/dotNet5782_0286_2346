@@ -20,9 +20,9 @@ namespace BL
                 parcel.Priority = (IDAL.DO.Priorities)p.Priority;
                 parcel.DroneId = 0;//supposed to be null
                 parcel.Requested = DateTime.Now;
-                parcel.Scheduled = default;
-                parcel.PickedUp = default;
-                parcel.Delivered = default;
+                parcel.Scheduled = null;
+                parcel.PickedUp = null;
+                parcel.Delivered = null;
                 dl.AddParcel(parcel);
           
         }
@@ -36,7 +36,7 @@ namespace BL
                 if (d.Id == id)
                 {
                     parcelId = d.IdOfTheDeliveredParcel;
-                    if (dl.GetParcel(parcelId).PickedUp == DateTime.MinValue)//true=the parcel wasn't collected yet
+                    if (dl.GetParcel(parcelId).PickedUp == null)//true=the parcel wasn't collected yet
                     {
                         Location senderLocation = new();
                         senderLocation.Latitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Latitude;
@@ -58,7 +58,7 @@ namespace BL
                 if (d.Id == droneId)
                 {
                     //if the parcel picked up but have not reached its destination
-                    if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp !=default(DateTime)) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == default(DateTime)))
+                    if ((dl.GetParcel(d.IdOfTheDeliveredParcel).PickedUp !=null) && (dl.GetParcel(d.IdOfTheDeliveredParcel).Delivered == null))
                     {
                         Location targetLocation = new();
                         targetLocation.Latitude = dl.GetCustomer(dl.GetParcel(d.IdOfTheDeliveredParcel).TargetId).Latitude;
@@ -77,7 +77,7 @@ namespace BL
 
         public IEnumerable<IBL.BO.ParcelForList> GetListOfNotAssociatedParcels()
         {
-            return from parcel in dl.GetListOfNotAssociatedParcels()
+            return from parcel in dl.GetGenericList<IDAL.DO.Parcel>(p => p.DroneId == null)
                    select new IBL.BO.ParcelForList
                    {
                        Id = parcel.Id,
@@ -123,7 +123,7 @@ namespace BL
             p.Sender.Name = dl.GetCustomer(p2.SenderId).Name;
             p.Receiver.ID = p2.TargetId;
             p.Receiver.Name = dl.GetCustomer(p2.TargetId).Name;
-            if (p.AssociationTime != DateTime.MinValue)
+            if (p.AssociationTime != null)
             {
                 foreach (DroneForList d in dronesBL)
                 {
@@ -186,11 +186,11 @@ namespace BL
         private EnumsBL.ParcelStatuses StatusOfParcel(int parcelId)
         {
             IDAL.DO.Parcel p = dl.GetParcel(parcelId);
-            if (p.Scheduled == DateTime.MinValue)//only definited!
+            if (p.Scheduled == null)//only definited!
                 return EnumsBL.ParcelStatuses.Defined;
-            if (p.PickedUp == DateTime.MinValue)//PickedUp==null, the parcel did not picked up
+            if (p.PickedUp == null)//PickedUp==null, the parcel did not picked up
                 return EnumsBL.ParcelStatuses.Delivered;
-            if (p.Delivered == DateTime.MinValue)
+            if (p.Delivered == null)
                 return EnumsBL.ParcelStatuses.Collected;
             return EnumsBL.ParcelStatuses.Associated;
         }

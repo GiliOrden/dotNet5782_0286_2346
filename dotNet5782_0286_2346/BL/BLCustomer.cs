@@ -67,14 +67,14 @@ namespace BL
             {
                 if (parc.SenderId == customerForList.ID)
                 {
-                    if (parc.Delivered != default(DateTime))
+                    if (parc.Delivered != null)
                         customerForList.SentAndDeliveredParcels++;
                     else
                         customerForList.SentButNotDeliveredParcels++;
                 }
                 else if (parc.TargetId == customerForList.ID)
                 {
-                    if (parc.Delivered != default(DateTime))
+                    if (parc.Delivered != null)
                         customerForList.ReceivedParcels++;
                     else
                         customerForList.OnTheWayToCustomerParcels++;

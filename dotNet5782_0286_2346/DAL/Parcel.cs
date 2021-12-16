@@ -16,11 +16,11 @@ namespace IDAL
             public int TargetId { get; set; }//property
             public WeightCategories Weight { get; set; }//property
             public Priorities Priority { get; set; }//property
-            public int DroneId { get; set; }//property
-            public DateTime Requested { get; set; }//property
-            public DateTime Scheduled { get; set; }//property, assigned to drone
-            public DateTime PickedUp { get; set; }//property, collected by drone
-            public DateTime Delivered { get; set; }//property, brought to the destination
+            public int? DroneId { get; set; }//property
+            public DateTime? Requested { get; set; }//property
+            public DateTime? Scheduled { get; set; }//property, assigned to drone
+            public DateTime? PickedUp { get; set; }//property, collected by drone
+            public DateTime? Delivered { get; set; }//property, brought to the destination
             public override string ToString()//Print all the fields (Override the Object's 'ToString()')
             {
                 return this.ToStringProperty();
