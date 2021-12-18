@@ -9,12 +9,12 @@ namespace IDAL
 {
     public interface IDal
     {
-        
+        IEnumerable<T> GetGenericList<T>(Predicate<T> predicate);
         #region Station
         void AddStation(DO.Station s);
         DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> GetListOfBaseStations();
-        IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();
+        //IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();
      
         void DeleteStation(int id);
         #endregion
@@ -80,7 +80,7 @@ namespace IDAL
         void SupplyDeliveryToCustomer(int id);
         DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> GetListOfParcels();
-        IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
+        //IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
         IEnumerable<DO.Parcel> GetParcelsAtCustomerByPredicate(Predicate<DO.Parcel> predicate);
         #endregion
 

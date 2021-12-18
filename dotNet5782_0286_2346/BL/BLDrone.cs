@@ -81,7 +81,7 @@ namespace BL
                 throw new IBL.BO.DroneStatusException(idOfDrone, "available");
 
             IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
-                from parc in dl.GetListOfNotAssociatedParcels()
+                from parc in dl.GetGenericList<IDAL.DO.Parcel>(p=>p.DroneId == null)
                 where checkSufficientPowerToTransmission(drone, parc) == true
                 select parc;
             if (parcelsThatDroneCanTransfer.Count() == 0)//if the drone can't transfer any parcel because is low battery
@@ -249,7 +249,7 @@ namespace BL
             {
                 IDAL.DO.Parcel p = dl.GetParcel(d2.IdOfTheDeliveredParcel);
                 parcelInTransfer.Id = p.Id;
-                if (p.PickedUp == DateTime.MinValue)
+                if (p.PickedUp == null)
                     parcelInTransfer.Status = false;
                 else
                     parcelInTransfer.Status = true;

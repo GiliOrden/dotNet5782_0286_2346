@@ -127,8 +127,8 @@ namespace DalObject
                     Priority = (Priorities)rand.Next(3),
                     Requested =DateTime.Today,
                     Scheduled =DateTime.Now,
-                    PickedUp = new DateTime(),
-                    Delivered = new DateTime(),
+                    PickedUp = null,
+                    Delivered = null,
                 });
             }
 
@@ -142,7 +142,7 @@ namespace DalObject
                 Requested = DateTime.Today,
                 Scheduled = DateTime.Today,
                 PickedUp = DateTime.Today,
-                Delivered = default(DateTime),
+                Delivered =null,
                 DroneId = 4
             });
 
@@ -170,10 +170,10 @@ namespace DalObject
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Requested = DateTime.Now,
-                    Scheduled = new DateTime(),
-                    PickedUp = new DateTime(),
-                    Delivered = new DateTime(),
-                    DroneId = 0
+                    Scheduled = null,
+                    PickedUp = null,
+                    Delivered = null,
+                    DroneId = null
                 });
             }
         }

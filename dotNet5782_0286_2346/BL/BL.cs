@@ -46,29 +46,29 @@ namespace BL
                 droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
                 droneForList.Location = new Location();
                 //If there are parcels that have not yet been delivered but the drone has already been associated the drone status is OnDelivery
-                droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==default(DateTime))) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
+                droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==null)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
                 if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
                 {
-                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id&& parc.Delivered == default(DateTime));
+                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id&& parc.Delivered == null);
                     droneForList.IdOfTheDeliveredParcel = parcel.Id;
                     IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
                     IDAL.DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
                     
                     //If the parcel was associated but not collected - location will be at the station closest to the sender
-                    if (parcel.PickedUp== default(DateTime))
+                    if (parcel.PickedUp== null)
                     {
                         droneForList.Location.Longitude = dl.GetBaseStation(getClosestStation(sender,ref minDistance)).Longitude;
                         droneForList.Location.Latitude = dl.GetBaseStation(getClosestStation(sender, ref minDistance)).Latitude;
                     }
                     
                     //If the package was collected  but wasn't delivered- location will be at the sender
-                    if (parcel.PickedUp != default(DateTime) && parcel.Delivered == default(DateTime))
+                    if (parcel.PickedUp != null && parcel.Delivered == null)
                     {
                         droneForList.Location.Longitude=sender.Longitude;
                         droneForList.Location.Latitude = sender.Latitude;
                     }
                     
-                    if (parcel.PickedUp == default(DateTime))
+                    if (parcel.PickedUp == null)
                     {
                        way= DistanceBetweenPlaces(sender.Longitude, sender.Latitude, dl.GetBaseStation(getClosestStation(sender, ref minDistance)).Longitude, dl.GetBaseStation(getClosestStation(sender, ref minDistance)).Latitude)
                           + DistanceBetweenPlaces(sender.Longitude, sender.Latitude, receiver.Longitude, receiver.Latitude) +
@@ -94,7 +94,7 @@ namespace BL
                 {
                     
                     index = rand.Next(dl.GetListOfBaseStations().Count());
-                    IDAL.DO.Station station = dl.GetListOfBaseStations().ElementAt(index);
+                    IDAL.DO.Station station = dl.GetGenericList<IDAL.DO.Station>(s => s.Id == index).ElementAt(index);
                     droneForList.Location.Longitude = station.Longitude;
                     droneForList.Location.Latitude =station.Latitude;
                     dl.SendDroneToCharge(droneForList.Id,station.Id);
@@ -106,7 +106,7 @@ namespace BL
                     
                     //Its location will be raffled off among customers who have packages provided to them
                     IEnumerable<int>customersWhoHaveParcelsDeliveredToThem = from parc in dl.GetListOfParcels()
-                                                               where parc.Delivered!=default(DateTime) 
+                                                               where parc.Delivered!=null 
                                                                select parc.TargetId;
                     if (customersWhoHaveParcelsDeliveredToThem.Count() != 0)
                     {

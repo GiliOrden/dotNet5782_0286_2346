@@ -116,16 +116,7 @@ namespace DalObject
                    select parc;
         }
 
-        /// <summary>
-        /// this function returns list of all the parsels which aren't associated to drones
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> GetListOfNotAssociatedParcels()
-        {
-            return from parc in parcels
-                   where parc.DroneId == 0
-                   select parc;
-        }
+        
         /// <summary>
         /// the function check an ID
         /// </summary>
@@ -142,5 +133,16 @@ namespace DalObject
                    where predicate(pac)
                    select pac;
         }
+
+        /// <summary>
+        /// this function returns list of all the parsels which aren't associated to drones
+        /// </summary>
+        /// <returns></returns>
+        //public IEnumerable<Parcel> GetListOfNotAssociatedParcels()
+        //{
+        //    return from parc in parcels
+        //           where parc.DroneId == null
+        //           select parc;
+        //}
     }
 }

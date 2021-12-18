@@ -144,7 +144,7 @@ namespace ConsoleUI
                         Console.WriteLine("Choose priority: 0 for Regular, 1 for Fast, 2 for Emergency ");
                         int.TryParse(Console.ReadLine(), out ans);
                         p.Priority = (Priorities)ans;
-                        p.DroneId = 0;
+                        p.DroneId = null;
                         p.Requested = DateTime.Now;
                         dl.AddParcel(p);
                         break;
