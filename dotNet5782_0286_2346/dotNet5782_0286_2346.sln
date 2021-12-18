@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{A675
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUIBL", "ConsoleUIBL\ConsoleUIBL.csproj", "{BE0EE345-D7B9-4F69-BF13-E492C9485676}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{261B835B-06F0-4EFC-B17B-A0725992F6F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{BE0EE345-D7B9-4F69-BF13-E492C9485676}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE0EE345-D7B9-4F69-BF13-E492C9485676}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE0EE345-D7B9-4F69-BF13-E492C9485676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261B835B-06F0-4EFC-B17B-A0725992F6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261B835B-06F0-4EFC-B17B-A0725992F6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261B835B-06F0-4EFC-B17B-A0725992F6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261B835B-06F0-4EFC-B17B-A0725992F6F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
