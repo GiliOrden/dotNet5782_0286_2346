@@ -138,11 +138,11 @@ namespace DalObject
         /// this function returns list of all the parsels which aren't associated to drones
         /// </summary>
         /// <returns></returns>
-        //public IEnumerable<Parcel> GetListOfNotAssociatedParcels()
-        //{
-        //    return from parc in parcels
-        //           where parc.DroneId == null
-        //           select parc;
-        //}
+        public IEnumerable<Parcel> GetListOfNotAssociatedParcels()//should be deleted
+        {
+            return from parc in parcels
+                   where parc.DroneId == null
+                   select parc;
+        }
     }
 }

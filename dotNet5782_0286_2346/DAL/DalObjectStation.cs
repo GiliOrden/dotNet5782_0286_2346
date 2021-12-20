@@ -67,12 +67,12 @@ namespace DalObject
         /// this function returns list of all the available charging stations
         /// </summary>
         /// <returns></returns>
-        //public IEnumerable<Station> GetListOfStationsWithAvailableChargeSlots()
-        //{
-        //    return from Station baseStation in stations
-        //           where baseStation.ChargeSlots != 0
-        //           select baseStation;
-        //}
+        public IEnumerable<Station> GetListOfStationsWithAvailableChargeSlots()//should be deleted
+        {
+            return from Station baseStation in stations
+                   where baseStation.ChargeSlots != 0
+                   select baseStation;
+        }
 
         public IEnumerable<T> GetGenericList<T>(Predicate<T> predicate)
         {

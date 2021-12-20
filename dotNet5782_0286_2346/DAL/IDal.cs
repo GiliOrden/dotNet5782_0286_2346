@@ -14,7 +14,7 @@ namespace IDAL
         void AddStation(DO.Station s);
         DO.Station GetBaseStation(int id);
         IEnumerable<DO.Station> GetListOfBaseStations();
-        //IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();
+        IEnumerable<DO.Station> GetListOfStationsWithAvailableChargeSlots();//need to be deleted
      
         void DeleteStation(int id);
         #endregion
@@ -80,7 +80,7 @@ namespace IDAL
         void SupplyDeliveryToCustomer(int id);
         DO.Parcel GetParcel(int id);
         IEnumerable<DO.Parcel> GetListOfParcels();
-        //IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();
+        IEnumerable<DO.Parcel> GetListOfNotAssociatedParcels();//should be deleted
         IEnumerable<DO.Parcel> GetParcelsAtCustomerByPredicate(Predicate<DO.Parcel> predicate);
         #endregion
 

@@ -94,7 +94,7 @@ namespace BL
                 {
                     
                     index = rand.Next(dl.GetListOfBaseStations().Count());
-                    IDAL.DO.Station station = dl.GetGenericList<IDAL.DO.Station>(s => s.Id == index).ElementAt(index);
+                    IDAL.DO.Station station = dl.GetListOfBaseStations().ElementAt(index);
                     droneForList.Location.Longitude = station.Longitude;
                     droneForList.Location.Latitude =station.Latitude;
                     dl.SendDroneToCharge(droneForList.Id,station.Id);

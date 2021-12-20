@@ -1,5 +1,7 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +22,22 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        ObservableCollection<DroneForList> listDrone;
+        private IBL.IBL bl;
         public MainWindow()
         {
             InitializeComponent();
             bl = new BL.BL();
         }
 
-        private IBL.IBL bl;
+        
+
+        private void ShowListOfDrones_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListWindow dw = new DroneListWindow(bl);
+            dw.Show();
+        }
+
+
     }
 }
