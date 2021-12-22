@@ -12,9 +12,9 @@ namespace IBL
         {
             public int Id { get; set; }
             public string Model { get; set; }
-            public EnumsBL.WeightCategories MaxWeight { get; set; }
+            public EnumsBL.WeightCategories ? MaxWeight { get; set; }
             public double Battery { get; set; }
-            public EnumsBL.DroneStatuses DroneStatus { get; set; }
+            public EnumsBL.DroneStatuses ? DroneStatus { get; set; }
             public int IdOfTheDeliveredParcel  { get; set; }//the id of the parcel the drone need to send
             public Location Location { get; set; }
             public override string ToString()

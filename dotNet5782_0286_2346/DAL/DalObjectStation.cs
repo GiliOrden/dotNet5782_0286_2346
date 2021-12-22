@@ -63,24 +63,14 @@ namespace DalObject
             return DataSource.stations.Any(sta => sta.Id ==id);
         }
 
-        /// <summary>
-        /// this function returns list of all the available charging stations
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Station> GetListOfStationsWithAvailableChargeSlots()//should be deleted
+
+        public IEnumerable<Station> GetStationsByPredicate(Predicate<Station> predicate)
         {
-            return from Station baseStation in stations
-                   where baseStation.ChargeSlots != 0
-                   select baseStation;
+            return from stat in stations
+                   where predicate(stat)
+                   select stat;
         }
 
-        public IEnumerable<T> GetGenericList<T>(Predicate<T> predicate)
-        {
-            return from T objec in typeof(T).GetProperties()//how does it recognize the lists?
-                   where predicate(objec)
-                   select objec;
-        }
 
-       
     }
 }

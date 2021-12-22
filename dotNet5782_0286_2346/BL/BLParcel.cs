@@ -77,7 +77,7 @@ namespace BL
 
         public IEnumerable<IBL.BO.ParcelForList> GetListOfNotAssociatedParcels()
         {
-            return from parcel in dl.GetGenericList<IDAL.DO.Parcel>(p => p.DroneId == null)
+            return from parcel in dl.GetParcelsByPredicate(p => p.DroneId == null)
                    select new IBL.BO.ParcelForList
                    {
                        Id = parcel.Id,
@@ -147,7 +147,7 @@ namespace BL
         /// <returns></returns>
         private IEnumerable<ParcelAtCustomer> GetParcelsIntendedToME(int cstId)
         {
-            return from parc in dl.GetParcelsAtCustomerByPredicate(parc => parc.TargetId == cstId)
+            return from parc in dl.GetParcelsByPredicate(parc => parc.TargetId == cstId)
                    let prc = dl.GetParcel(parc.Id)
                    select new ParcelAtCustomer()
                    {
@@ -166,7 +166,7 @@ namespace BL
         /// <returns>IEnumerable<ParcelAtCustomer></returns>
         private IEnumerable<ParcelAtCustomer> GetParcelsFromMe(int cstId)
         {
-            return from parc in dl.GetParcelsAtCustomerByPredicate(parc => parc.SenderId == cstId)
+            return from parc in dl.GetParcelsByPredicate(parc => parc.SenderId == cstId)
                    let prc = dl.GetParcel(parc.Id)
                    select new ParcelAtCustomer() 
                    { 

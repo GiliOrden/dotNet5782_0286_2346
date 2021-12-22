@@ -81,7 +81,7 @@ namespace BL
                 throw new IBL.BO.DroneStatusException(idOfDrone, "available");
 
             IEnumerable<IDAL.DO.Parcel> parcelsThatDroneCanTransfer =
-                from parc in dl.GetGenericList<IDAL.DO.Parcel>(p=>p.DroneId == null)
+                from parc in dl.GetParcelsByPredicate(p=>p.DroneId == null)
                 where checkSufficientPowerToTransmission(drone, parc) == true
                 select parc;
             if (parcelsThatDroneCanTransfer.Count() == 0)//if the drone can't transfer any parcel because is low battery
@@ -186,7 +186,7 @@ namespace BL
             {
                 IDAL.DO.Station minDistanceStation = new();
                 double minDis = 1000000;
-                foreach (IDAL.DO.Station s in dl.GetListOfStationsWithAvailableChargeSlots())
+                foreach (IDAL.DO.Station s in dl.GetStationsByPredicate(stat=>stat.ChargeSlots!=0))
                 {
                     double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
                     if (distance < minDis)
@@ -229,6 +229,12 @@ namespace BL
                    select drone;
         }
 
+        public IEnumerable<DroneForList> GetDronesByPredicate(Predicate<DroneForList> predicate)
+        {
+            return from drone in dronesBL
+                   where predicate(drone)
+                   select drone;
+        }
         public Drone GetDrone(int id)
         {
             Drone d = new();

@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<DroneForList> listDrone;
+       
         private IBL.IBL bl;
         public MainWindow()
         {
@@ -32,9 +32,9 @@ namespace PL
 
         
 
-        private void ShowListOfDrones_Click(object sender, RoutedEventArgs e)
+        private void ShowDronesList_Click(object sender, RoutedEventArgs e)
         {
-            DroneListWindow dw = new DroneListWindow(bl);
+            DroneListWindow dw = new DroneListWindow(ref bl);
             dw.Show();
         }
 

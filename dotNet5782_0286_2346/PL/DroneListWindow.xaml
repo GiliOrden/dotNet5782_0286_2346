@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneListWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="DroneListWindow" Height="640" Width="800">
+    <Grid Name="MainGrid" ShowGridLines="false">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" ShowGridLines="True" RenderTransformOrigin="0.521,0.513">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <ComboBox Name="StatusSelector"  Grid.Column="0" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Right" Margin="0,22,0,0" VerticalAlignment="Top" Width="100" Height="28" RenderTransformOrigin="0.5,0.5"/>
+
+
+            <Label Content="Status:" Margin="10,17,136,0" VerticalAlignment="Top" Height="30" FontSize="15"/>
+            <ComboBox Name="WeightSelector" Grid.Column="1" Margin="100,0,0,0" VerticalAlignment="Center" Height="28" SelectionChanged="WeightSelector_SelectionChanged"/>
+            <Label Content="MaxWeight:" Grid.Column="1"  Margin="5,17,100,0" VerticalAlignment="Top" FontSize="15" Height="30"/>
+        </Grid>
+        <ListView x:Name="DroneListView" Grid.Row="1">
+
+        </ListView>
     </Grid>
 </Window>

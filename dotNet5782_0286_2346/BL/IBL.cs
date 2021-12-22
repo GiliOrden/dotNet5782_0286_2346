@@ -95,6 +95,8 @@ namespace IBL
         /// </summary>
         /// <returns>retuns drones list</returns>
         IEnumerable<DroneForList> GetListOfDrones();
+
+        IEnumerable<BO.DroneForList> GetDronesByPredicate(Predicate<BO.DroneForList> predicate);
         #endregion
 
         #region Location

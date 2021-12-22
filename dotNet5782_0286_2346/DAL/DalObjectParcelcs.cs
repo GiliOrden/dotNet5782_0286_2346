@@ -127,22 +127,14 @@ namespace DalObject
             return DataSource.parcels.Any(parc => parc.Id == id);
         }
 
-        public IEnumerable<Parcel> GetParcelsAtCustomerByPredicate(Predicate<Parcel> predicate)
+      
+
+        public IEnumerable<Parcel> GetParcelsByPredicate(Predicate<Parcel> predicate)
         {
             return from pac in parcels
                    where predicate(pac)
                    select pac;
         }
 
-        /// <summary>
-        /// this function returns list of all the parsels which aren't associated to drones
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Parcel> GetListOfNotAssociatedParcels()//should be deleted
-        {
-            return from parc in parcels
-                   where parc.DroneId == null
-                   select parc;
-        }
     }
 }

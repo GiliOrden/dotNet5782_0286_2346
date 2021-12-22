@@ -91,7 +91,7 @@ namespace BL
         public IEnumerable<IBL.BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
         {
             IEnumerable<IBL.BO.StationForList> stationsWithAvailableChargeSlots =
-            from station in dl.GetGenericList<IDAL.DO.Station>(t=>t.ChargeSlots != 0)
+            from station in dl.GetStationsByPredicate(t=>t.ChargeSlots != 0)
             select new IBL.BO.StationForList
             {
                 ID = station.Id,
