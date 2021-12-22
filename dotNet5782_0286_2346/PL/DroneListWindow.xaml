@@ -24,8 +24,10 @@
             <Label Content="Status:" Margin="10,17,136,0" VerticalAlignment="Top" Height="30" FontSize="15"/>
             <ComboBox Name="WeightSelector" Grid.Column="1" Margin="100,0,0,0" VerticalAlignment="Center" Height="28" SelectionChanged="WeightSelector_SelectionChanged"/>
             <Label Content="MaxWeight:" Grid.Column="1"  Margin="5,17,100,0" VerticalAlignment="Top" FontSize="15" Height="30"/>
+            <Button Content="Add Drone" Grid.Column="2" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Height="30" Width="150" FontWeight="Bold" Click="AddDroneButton_Click"/>
+            <Button Content="Close" Grid.Column="3" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Height="30" Width="150" FontWeight="Bold" Click="CloseButton_Click"/>
         </Grid>
-        <ListView x:Name="DroneListView" Grid.Row="1">
+        <ListView x:Name="DroneListView" Grid.Row="1" SelectionChanged="DroneListView_SelectionChanged">
 
         </ListView>
     </Grid>

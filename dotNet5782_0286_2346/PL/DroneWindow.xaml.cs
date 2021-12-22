@@ -19,9 +19,14 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public DroneWindow(ref IBL.IBL bl)
+        public DroneWindow(ref IBL.IBL bl)//first constructor
         {
             InitializeComponent();
+        }
+
+        public DroneWindow(ref IBL.BO.DroneForList drone)//second constructor
+        {
+
         }
     }
 }
