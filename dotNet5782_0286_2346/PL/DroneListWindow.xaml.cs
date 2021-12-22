@@ -19,7 +19,7 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
-        IBL.IBL droneListWindowBL;
+        private IBL.IBL droneListWindowBL;
         public DroneListWindow(ref IBL.IBL bl)
         {
             InitializeComponent();
@@ -30,18 +30,17 @@ namespace PL
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
-        
-        //DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == StatusSelector.SelectedItem as IBL.BO.EnumsBL.DroneStatuses));
+        { 
+            
+         // DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == StatusSelector.SelectedItem as IBL.BO.EnumsBL.DroneStatuses));
         }
 
         private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+         
         }
 
-        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
         {
             IBL.BO.DroneForList drone = (DroneListView.SelectedItem as IBL.BO.DroneForList);
             if (drone != null)
@@ -51,7 +50,7 @@ namespace PL
             }
         }
 
-        private void AddDroneButton_Click(object sender, RoutedEventArgs e)
+        private void AddDroneButton_Click(object sender, RoutedEventArgs e)//add drone
         {
             DroneWindow dw = new DroneWindow(ref droneListWindowBL);
             dw.Show();

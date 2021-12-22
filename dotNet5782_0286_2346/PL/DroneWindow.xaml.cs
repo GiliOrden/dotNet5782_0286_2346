@@ -26,7 +26,7 @@ namespace PL
 
         public DroneWindow(ref IBL.BO.DroneForList drone)//second constructor
         {
-
+            InitializeComponent();
         }
     }
 }
