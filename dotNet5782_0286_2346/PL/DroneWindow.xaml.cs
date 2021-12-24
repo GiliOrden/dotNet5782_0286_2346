@@ -22,11 +22,23 @@ namespace PL
         public DroneWindow(ref IBL.IBL bl)//first constructor
         {
             InitializeComponent();
+
         }
 
         public DroneWindow(ref IBL.BO.DroneForList drone)//second constructor
         {
             InitializeComponent();
+            
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
