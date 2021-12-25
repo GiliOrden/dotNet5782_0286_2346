@@ -56,9 +56,13 @@ namespace PL
             }
             if(drone.DroneStatus==EnumsBL.DroneStatuses.OnDelivery)
             {
-                if(droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel))
+                if(droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel).CollectionTime==null)
                 {
-
+                    collectParcelButton.Visibility = Visibility.Visible;
+                }
+                else if(droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel).DeliveryTime==null)
+                {
+                    supplyParcelButton.Visibility = Visibility.Visible;
                 }
             }
             droneWindowGrid.DataContext = drone;
@@ -153,7 +157,7 @@ namespace PL
         {
 
         }
-        private void releaseFromChargeButton_Click(object sender, RoutedEventArgs e)
+        private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
