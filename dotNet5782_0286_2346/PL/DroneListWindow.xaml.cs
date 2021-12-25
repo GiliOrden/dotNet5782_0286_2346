@@ -32,17 +32,24 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
         }
 
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void statusSelectorAndWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (IBL.BO.EnumsBL.DroneStatuses)StatusSelector.SelectedItem);
-            DroneListView.Items.Refresh();
-        }
-        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.MaxWeight == (IBL.BO.EnumsBL.WeightCategories)WeightSelector.SelectedItem);
-            DroneListView.Items.Refresh();
-        }
+            if (StatusSelector.SelectedItem != null && WeightSelector.SelectedItem != null)
+            {
+                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (IBL.BO.EnumsBL.DroneStatuses)StatusSelector.SelectedItem && drone.MaxWeight == (IBL.BO.EnumsBL.WeightCategories)WeightSelector.SelectedItem);
+            }
+            else if (StatusSelector.SelectedItem != null)
+            {
+                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (IBL.BO.EnumsBL.DroneStatuses)StatusSelector.SelectedItem);
+            }
+            else if (WeightSelector.SelectedItem != null)
+            {
 
+                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.MaxWeight == (IBL.BO.EnumsBL.WeightCategories)WeightSelector.SelectedItem);
+            }
+
+            DroneListView.Items.Refresh();
+        }
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
         {
             IBL.BO.DroneForList drone = (DroneListView.SelectedItem as IBL.BO.DroneForList);
