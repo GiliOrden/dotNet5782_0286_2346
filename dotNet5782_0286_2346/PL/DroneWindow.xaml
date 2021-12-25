@@ -22,8 +22,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="idTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" MaxLength="9" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" />
+            <TextBox x:Name="idTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" MaxLength="9" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" TextChanged="idTextBox_TextChanged" PreviewKeyDown="TextBoxOnlyNumbersPreviewKeyDown"/>
             <Label Content="Model:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBox x:Name="modelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" IsEnabled="True" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Content="Max Weight:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
@@ -39,8 +39,11 @@
             <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
             <TextBox x:Name="latitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="7" IsEnabled="false"  VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="507,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="addButton_Click"/>
+        <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="507,560,0,0"  IsEnabled="False"  VerticalAlignment="Top" Height="32" Width="104" Click="addButton_Click"/>
         <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="655,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="cancelButton_Click" />
         <Button x:Name="updateButton" Content="UpDate"  HorizontalAlignment="Left" Margin="507,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="updateButton_Click"/>
+        <TextBlock x:Name="chooseStationTextBox" HorizontalAlignment="Left" Margin="35,498,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Text="Please choose station for initial charging: "/>
+        <ListBox x:Name="stationsListBox"  SelectionChanged="ListBox_SelectionChanged" Margin="35,519,545,18"/>
+
     </Grid>
 </Window>
