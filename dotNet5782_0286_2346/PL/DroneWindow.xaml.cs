@@ -19,32 +19,48 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL DroneWindowBL;
+        IBL.IBL droneWindowBL;
         DroneForList drone;
         public DroneWindow(ref IBL.IBL bl)//first constructor
         {
-            DroneWindowBL = bl;
+            droneWindowBL = bl;
             InitializeComponent();
             updateButton.Visibility = Visibility.Collapsed;
             DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
             MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
             stationsListBox.ItemsSource = bl.GetListOfBaseStations();
             stationsListBox.SelectedValuePath = "ID";
-
             idTextBox.TextChanged += addButton_isEnable;
             modelTextBox.TextChanged += addButton_isEnable;
             MaxWeightComboBox.SelectionChanged += addButton_isEnable;
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.BO.DroneForList drone)//second constructor
+        public DroneWindow(ref IBL.IBL bl,ref IBL.BO.DroneForList drone)//second constructor
         {
+            droneWindowBL = bl;
             InitializeComponent();
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
             chooseStationTextBox.Visibility = Visibility.Collapsed;
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
+            if(drone.DroneStatus==EnumsBL.DroneStatuses.Available)
+            {
+                sendToChargeButton.Visibility = Visibility.Visible;
+                sendDroneToDeliveryButton.Visibility = Visibility.Visible;
+            }
+            if(drone.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+            {
+                releaseDroneFromChargeButton.Visibility = Visibility.Visible;
+            }
+            if(drone.DroneStatus==EnumsBL.DroneStatuses.OnDelivery)
+            {
+                if(droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel))
+                {
+
+                }
+            }
             droneWindowGrid.DataContext = drone;
             DroneStatusComboBox.DataContext = drone.DroneStatus;
             MaxWeightComboBox.DataContext = drone.MaxWeight;
@@ -72,8 +88,9 @@ namespace PL
                 drone.Id = int.Parse(idTextBox.Text);
                 drone.Model = modelTextBox.Text;
                 drone.MaxWeight = (EnumsBL.WeightCategories?)MaxWeightComboBox.SelectedItem;
-                idOfStation = int.Parse(stationsListBox.SelectedValuePath);
-                DroneWindowBL.AddDrone(drone, idOfStation);
+                StationForList station = (IBL.BO.StationForList)stationsListBox.SelectedItem;
+                idOfStation =station.ID;
+                droneWindowBL.AddDrone(drone, idOfStation);
                 MessageBox.Show("The drone was successfully added");
                 
             }
@@ -130,6 +147,30 @@ namespace PL
             //forbid letters and signs (#,$, %, ...)
             e.Handled = true; //ignore this key. mark event as handled, will not be routed to other controls
             return;
+        }
+
+        private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void releaseFromChargeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void collectParcelButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void supplyParcelButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
