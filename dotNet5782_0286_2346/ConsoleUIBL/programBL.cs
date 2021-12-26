@@ -200,7 +200,7 @@ namespace ConsoleUI_BL
             UpdateOptions update;
             int userChoise;
             int id1, numOfChargeSlots;
-            double chargingTime;
+            DateTime chargingTime;
             string name, phone;
             Console.WriteLine("Press 1 to update drone data");
             Console.WriteLine("Press 2 to update station data");
@@ -244,9 +244,9 @@ namespace ConsoleUI_BL
                     Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.ReleaseDroneFromCharge:
-                    Console.WriteLine("Please enter the drone ID and the time of charging in hours");
+                    Console.WriteLine("Please enter the drone ID ");
                     int.TryParse(Console.ReadLine(), out id1);
-                    double.TryParse(Console.ReadLine(), out chargingTime);
+                    chargingTime = DateTime.Now;
                     bl.ReleaseDroneFromCharge(id1, chargingTime);
                     Console.WriteLine("Succeeded");
                     break;

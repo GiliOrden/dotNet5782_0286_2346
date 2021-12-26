@@ -53,14 +53,15 @@ namespace BL
             }
         }
 
-        public void ReleaseDroneFromCharge(int id, double chargingTime)
+        public void ReleaseDroneFromCharge(int id, DateTime releaseTime)
         {
             DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == id);
             if (drone == null)
                 throw new IBL.BO.IdNotFoundException(id, "drone");
             if (drone.DroneStatus != EnumsBL.DroneStatuses.Maintenance)
                 throw new IBL.BO.DroneStatusException(id, "in maintenance");
-            drone.Battery = drone.Battery + chargingTime * chargingRatePerHour;
+            TimeSpan chargingTime = dl.GetListOfBusyChargeSlots().FirstOrDefault(dc => dc.DroneId == id).StartOfCharging - releaseTime;
+            drone.Battery = drone.Battery + chargingTime.TotalMinutes/60 * chargingRatePerHour;
             if (drone.Battery > 100)
                 drone.Battery = 100;
             drone.DroneStatus = EnumsBL.DroneStatuses.Available;
@@ -186,16 +187,13 @@ namespace BL
             {
                 IDAL.DO.Station minDistanceStation = new();
                 double minDis = 1000000;
-                foreach (IDAL.DO.Station s in dl.GetStationsByPredicate(stat=>stat.ChargeSlots!=0))
+                foreach (IDAL.DO.Station s in dl.GetStationsByPredicate(stat=>stat.ChargeSlots>0))
                 {
                     double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
                     if (distance < minDis)
-                    {
-                        if (s.ChargeSlots > 0) {
-                            minDis = distance;
-                            minDistanceStation = s;
-                        }
-                            
+                    {                       
+                      minDis = distance;
+                      minDistanceStation = s;
                     }
                 }
                 if (emptyDronePowerConsumption * minDis < drone.Battery)
