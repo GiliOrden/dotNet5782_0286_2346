@@ -162,7 +162,14 @@ namespace PL
         }
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
-            droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+            try//לא צריך את זה כאן כי ממילא רק רחפן שבתחזוקה יכול לראות את הכפתור הזה אז בטח שהאיי די שלא קיים ולא תיזרק חריגה רק עשיתי דוגמא כי יש  כפתורים שכן יכולה להזרק חריגה
+            {
+                droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+            }
+            catch(IdNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
