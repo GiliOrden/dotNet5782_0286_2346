@@ -16,5 +16,6 @@ namespace DalObject
             return from DroneCharge in droneCharges
                    select DroneCharge;
         }
+
     }
 }

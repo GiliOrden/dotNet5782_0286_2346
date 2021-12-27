@@ -36,40 +36,42 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.IBL bl,ref IBL.BO.DroneForList drone)//second constructor for update
+        public DroneWindow(ref IBL.IBL bl,ref IBL.BO.DroneForList selectedDrone)//second constructor for update
         {
             droneWindowBL = bl;
+            drone = selectedDrone;
+            drone.Location = new();
             InitializeComponent();
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
             chooseStationTextBox.Visibility = Visibility.Collapsed;
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
-            if(drone.DroneStatus==EnumsBL.DroneStatuses.Available)
+            if(selectedDrone.DroneStatus==EnumsBL.DroneStatuses.Available)
             {
                 sendToChargeButton.Visibility = Visibility.Visible;
                 sendDroneToDeliveryButton.Visibility = Visibility.Visible;
             }
-            if(drone.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+            if(selectedDrone.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
             {
                 releaseDroneFromChargeButton.Visibility = Visibility.Visible;
             }
-            if(drone.DroneStatus==EnumsBL.DroneStatuses.OnDelivery)
+            if(selectedDrone.DroneStatus==EnumsBL.DroneStatuses.OnDelivery)
             {
-                if(droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel).CollectionTime==null)
+                if(droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).CollectionTime==null)
                 {
                     collectParcelButton.Visibility = Visibility.Visible;
                 }
-                else if(droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel).DeliveryTime==null)
+                else if(droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).DeliveryTime==null)
                 {
                     supplyParcelButton.Visibility = Visibility.Visible;
                 }
             }
-            droneWindowGrid.DataContext = drone;
-            DroneStatusComboBox.DataContext = drone.DroneStatus;
-            MaxWeightComboBox.DataContext = drone.MaxWeight;
-            longitudeTextBox.DataContext = drone.Location.Longitude;
-            latitudeTextBox.DataContext = drone.Location.Latitude;
+            droneWindowGrid.DataContext = selectedDrone;
+            DroneStatusComboBox.DataContext = selectedDrone.DroneStatus;
+            MaxWeightComboBox.DataContext = selectedDrone.MaxWeight;
+            longitudeTextBox.DataContext = selectedDrone.Location.Longitude;
+            latitudeTextBox.DataContext = selectedDrone.Location.Latitude;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -106,11 +108,7 @@ namespace PL
 
         }
 
-        private void updateButton_Click(object sender, RoutedEventArgs e)
-        {
-           
 
-        }
 
         
 
@@ -146,13 +144,25 @@ namespace PL
             return;
         }
 
+        private void updateButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try//לא צריך את זה כאן כי ממילא רק רחפן שבתחזוקה יכול לראות את הכפתור הזה אז בטח שהאיי די שלא קיים ולא תיזרק חריגה רק עשיתי דוגמא כי יש  כפתורים שכן יכולה להזרק חריגה
+            {
+                droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+            }
+            catch(IdNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)

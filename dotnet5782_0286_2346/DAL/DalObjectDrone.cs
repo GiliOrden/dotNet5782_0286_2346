@@ -50,6 +50,7 @@ namespace DalObject
                 throw new IDAL.DO.IdNotFoundException(idStation, "station");
             dc.DroneId = idDrone;
             dc.StationId = idStation;
+            dc.StartOfCharging = DateTime.Now;
             droneCharges.Add(dc);
             Station s = DataSource.stations.Find(stat => stat.Id == idStation);
             s.ChargeSlots--;

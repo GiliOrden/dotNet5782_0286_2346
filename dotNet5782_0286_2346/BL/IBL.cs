@@ -88,7 +88,7 @@ namespace IBL
         /// </summary>
         /// <param name="id">id of the drone</param>
         /// <param name="chargingTime">the time drone wasin charging</param>
-        void ReleaseDroneFromCharge(int id, double chargingTime);
+        void ReleaseDroneFromCharge(int id, DateTime chargingTime);
 
         /// <summary>
         /// This function retuns all the list of drones

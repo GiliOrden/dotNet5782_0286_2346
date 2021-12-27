@@ -12,6 +12,8 @@ namespace IDAL
         {
             public int DroneId { get; set; }//property
             public int StationId { get; set; }//property
+            public DateTime StartOfCharging { get; set; }
+            
             public override string ToString()//Print all the fields (Override the Object's 'ToString()')
             {
                 return @$"DroneCharge
