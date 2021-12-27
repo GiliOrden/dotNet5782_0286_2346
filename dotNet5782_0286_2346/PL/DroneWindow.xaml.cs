@@ -97,8 +97,7 @@ namespace PL
                 StationForList station = (IBL.BO.StationForList)stationsListBox.SelectedItem;
                 idOfStation = station.ID;
                 droneWindowBL.AddDrone(drone, idOfStation);
-                MessageBox.Show("The drone was successfully added");
-
+                MessageBox.Show("The drone was successfully added");               
             }
             catch (ExistIdException ex)
             {
