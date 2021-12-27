@@ -36,7 +36,7 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.IBL bl,ref IBL.BO.DroneForList selectedDrone)//second constructor for update
+        public DroneWindow(ref IBL.IBL bl, ref IBL.BO.DroneForList selectedDrone)//second constructor for update
         {
             droneWindowBL = bl;
             drone = selectedDrone;
@@ -47,22 +47,22 @@ namespace PL
             chooseStationTextBox.Visibility = Visibility.Collapsed;
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
-            if(selectedDrone.DroneStatus==EnumsBL.DroneStatuses.Available)
+            if (selectedDrone.DroneStatus == EnumsBL.DroneStatuses.Available)
             {
                 sendToChargeButton.Visibility = Visibility.Visible;
                 sendDroneToDeliveryButton.Visibility = Visibility.Visible;
             }
-            if(selectedDrone.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+            if (selectedDrone.DroneStatus == EnumsBL.DroneStatuses.Maintenance)
             {
                 releaseDroneFromChargeButton.Visibility = Visibility.Visible;
             }
-            if(selectedDrone.DroneStatus==EnumsBL.DroneStatuses.OnDelivery)
+            if (selectedDrone.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
             {
-                if(droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).CollectionTime==null)
+                if (droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).CollectionTime == null)
                 {
                     collectParcelButton.Visibility = Visibility.Visible;
                 }
-                else if(droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).DeliveryTime==null)
+                else if (droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).DeliveryTime == null)
                 {
                     supplyParcelButton.Visibility = Visibility.Visible;
                 }
@@ -95,18 +95,18 @@ namespace PL
                 drone.Model = modelTextBox.Text;
                 drone.MaxWeight = (EnumsBL.WeightCategories?)MaxWeightComboBox.SelectedItem;
                 StationForList station = (IBL.BO.StationForList)stationsListBox.SelectedItem;
-                idOfStation =station.ID;
+                idOfStation = station.ID;
                 droneWindowBL.AddDrone(drone, idOfStation);
                 MessageBox.Show("The drone was successfully added");               
             }
-            catch(ExistIdException ex)
+            catch (ExistIdException ex)
             {
                 idTextBox.BorderBrush = Brushes.Red;
                 MessageBox.Show(ex.Message);
             }
 
         }
- 
+
         private void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -148,7 +148,7 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -187,5 +187,16 @@ namespace PL
         {
             droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var selectedItem in stationsListBox.SelectedItems) { }
+
+        }
+
+        private void idTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
-}
+}    
