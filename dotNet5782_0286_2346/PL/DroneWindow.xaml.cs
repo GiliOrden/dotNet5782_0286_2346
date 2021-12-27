@@ -21,7 +21,7 @@ namespace PL
     {
         IBL.IBL droneWindowBL;
         DroneForList drone;
-        public DroneWindow(ref IBL.IBL bl)//first constructor
+        public DroneWindow(ref IBL.IBL bl)//first constructor for adding
         {
             droneWindowBL = bl;
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.IBL bl,ref IBL.BO.DroneForList drone)//second constructor
+        public DroneWindow(ref IBL.IBL bl,ref IBL.BO.DroneForList drone)//second constructor for update
         {
             droneWindowBL = bl;
             InitializeComponent();
@@ -112,16 +112,9 @@ namespace PL
 
         }
 
-        private void idTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-         
-        }
+        
 
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
         private void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
