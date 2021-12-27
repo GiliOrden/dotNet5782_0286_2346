@@ -107,12 +107,7 @@ namespace PL
             }
 
         }
-
-
-
-        
-
-       
+ 
         private void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
