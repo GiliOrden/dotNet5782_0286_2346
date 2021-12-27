@@ -166,6 +166,9 @@ namespace PL
             try
             {
                 droneWindowBL.SendDroneToCharge(drone.Id);
+                MessageBox.Show("The drone was sent to charging");
+                Close();
+                new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (IdNotFoundException ex)
             {
@@ -175,13 +178,19 @@ namespace PL
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+            MessageBox.Show("The drone was released from charging!");
+            Close();
+            new DroneListWindow(ref droneWindowBL).Show();
         }
 
         private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                droneWindowBL.SendDroneToCharge(drone.Id);
+                droneWindowBL.AssignParcelToDrone(drone.Id);
+                MessageBox.Show("The drone was assigned to parcel!");
+                Close();
+                new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (IdNotFoundException ex)
             {
@@ -192,11 +201,17 @@ namespace PL
         private void collectParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
             droneWindowBL.CollectingParcelByDrones(drone.Id);
+            MessageBox.Show("The parcel was collected!");
+            Close();
+            new DroneListWindow(ref droneWindowBL).Show();
         }
 
         private void supplyParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
             droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
+            MessageBox.Show("The drone was supplied to customer!");
+            Close();
+            new DroneListWindow(ref droneWindowBL).Show();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
