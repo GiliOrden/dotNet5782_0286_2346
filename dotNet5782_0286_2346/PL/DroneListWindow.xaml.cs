@@ -22,7 +22,15 @@ namespace PL
     {
         private IBL.IBL droneListWindowBL;
         ObservableCollection<IBL.BO.DroneForList> dronesObservableCollection;
-        
+        public DroneListWindow(ref IBL.IBL bl)
+        {
+            InitializeComponent();
+            droneListWindowBL = bl;
+            dronesObservableCollection = new ObservableCollection<IBL.BO.DroneForList>(droneListWindowBL.GetListOfDrones());
+            DroneListView.ItemsSource = dronesObservableCollection;
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
+            WeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
+        }
 
         private void statusSelectorAndWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
