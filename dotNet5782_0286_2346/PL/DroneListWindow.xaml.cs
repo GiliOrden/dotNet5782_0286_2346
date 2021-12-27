@@ -26,8 +26,8 @@ namespace PL
         {
             InitializeComponent();
             droneListWindowBL = bl;
-            dronesObservableCollection = new ObservableCollection<IBL.BO.DroneForList>(droneListWindowBL.GetListOfDrones());
-            DroneListView.ItemsSource = dronesObservableCollection;
+           // dronesObservableCollection = new ObservableCollection<IBL.BO.DroneForList>(droneListWindowBL.GetListOfDrones());
+            DroneListView.ItemsSource = droneListWindowBL.GetListOfDrones();
             StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
         }
