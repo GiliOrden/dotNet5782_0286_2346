@@ -144,9 +144,10 @@ namespace PL
             return;
         }
 
-        private void updateButton_Click(object sender, RoutedEventArgs e)
+        private void updateButton_Click(object sender, RoutedEventArgs e)//this is a func for 'click' event
         {
-
+            string model= modelTextBox.Text;
+            droneWindowBL.UpdateDrone(drone.Id, model);//what's going on with the other attributes? there is no another update drone func for them. we supposed to build one?
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
