@@ -81,7 +81,7 @@ namespace PL
 
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text.Length == 9 && modelTextBox != null && MaxWeightComboBox != null && stationsListBox.SelectedItem != null)
+            if (idTextBox.Text.Length!=0&& modelTextBox != null && MaxWeightComboBox != null && stationsListBox.SelectedItem != null)
                 addButton.IsEnabled = true;
         }
         private void addButton_Click(object sender, RoutedEventArgs e)
@@ -97,7 +97,9 @@ namespace PL
                 StationForList station = (IBL.BO.StationForList)stationsListBox.SelectedItem;
                 idOfStation = station.ID;
                 droneWindowBL.AddDrone(drone, idOfStation);
-                MessageBox.Show("The drone was successfully added");               
+                MessageBox.Show("The drone was successfully added");
+                Close();
+                new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (ExistIdException ex)
             {
