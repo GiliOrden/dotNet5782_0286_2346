@@ -26,8 +26,8 @@ namespace PL
         {
             InitializeComponent();
             droneListWindowBL = bl;
-           // dronesObservableCollection = new ObservableCollection<IBL.BO.DroneForList>(droneListWindowBL.GetListOfDrones());
-            DroneListView.ItemsSource = droneListWindowBL.GetListOfDrones();
+            dronesObservableCollection = new ObservableCollection<IBL.BO.DroneForList>(droneListWindowBL.GetListOfDrones());
+            DroneListView.ItemsSource = dronesObservableCollection;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
         }
@@ -55,7 +55,6 @@ namespace PL
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
         {
             IBL.BO.DroneForList drone = DroneListView.SelectedItem as IBL.BO.DroneForList;
-            drone.Location = new();
             if (drone != null)
             {
                 DroneWindow dw = new DroneWindow(ref droneListWindowBL,ref drone);
