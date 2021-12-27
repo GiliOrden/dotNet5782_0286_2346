@@ -55,11 +55,12 @@ namespace PL
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
         {
             IBL.BO.DroneForList drone = DroneListView.SelectedItem as IBL.BO.DroneForList;
-            drone.Location = new();
+            
             if (drone != null)
             {
                 DroneWindow dw = new DroneWindow(ref droneListWindowBL, ref drone);
                 dw.ShowDialog();
+                Close();
             }
         }
 

@@ -40,7 +40,7 @@ namespace PL
         {
             droneWindowBL = bl;
             drone = selectedDrone;
-            drone.Location = new();
+            
             InitializeComponent();
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
@@ -72,6 +72,9 @@ namespace PL
             MaxWeightComboBox.DataContext = selectedDrone.MaxWeight;
             longitudeTextBox.DataContext = selectedDrone.Location.Longitude;
             latitudeTextBox.DataContext = selectedDrone.Location.Latitude;
+
+            DroneStatusComboBox.ItemsSource= Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
+            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -144,10 +147,16 @@ namespace PL
         {
             try
             {
-                droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
+                
+                string model = modelTextBox.Text;
+                droneWindowBL.UpdateDrone(drone.Id, model);
+                MessageBox.Show("The drone was successfully updeted");
+                Close();
+                new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (IdNotFoundException ex)
             {
+                modelTextBox.BorderBrush = Brushes.Red;
                 MessageBox.Show(ex.Message);
             }
 
@@ -200,5 +209,10 @@ namespace PL
         {
 
         }
+
+        //private void modelSelectionChanged(object sender, RoutedEventArgs e)
+        //{
+        //    //modelTextBox.SelectedItem = modelTextBox.Text;
+        //}
     }
 }    
