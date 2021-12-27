@@ -147,37 +147,43 @@ namespace PL
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
 
-
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                droneWindowBL.SendDroneToCharge(drone.Id);
+            }
+            catch (IdNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
-            try//לא צריך את זה כאן כי ממילא רק רחפן שבתחזוקה יכול לראות את הכפתור הזה אז בטח שהאיי די שלא קיים ולא תיזרק חריגה רק עשיתי דוגמא כי יש  כפתורים שכן יכולה להזרק חריגה
+            droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+        }
+
+        private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+                droneWindowBL.SendDroneToCharge(drone.Id);
             }
-            catch(IdNotFoundException ex)
+            catch (IdNotFoundException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
+        private void collectParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
-
+            droneWindowBL.CollectingParcelByDrones(drone.Id);
         }
 
-        private void collectParcelButton_Click(object sender, RoutedEventArgs e)
+        private void supplyParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
-
-        }
-
-        private void supplyParcelButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
         }
     }
 }
