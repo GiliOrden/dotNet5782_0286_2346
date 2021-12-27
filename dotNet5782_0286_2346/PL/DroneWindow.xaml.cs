@@ -67,14 +67,9 @@ namespace PL
                     supplyParcelButton.Visibility = Visibility.Visible;
                 }
             }
-            droneWindowGrid.DataContext = selectedDrone;
-            DroneStatusComboBox.DataContext = selectedDrone.DroneStatus;
-            MaxWeightComboBox.DataContext = selectedDrone.MaxWeight;
-            longitudeTextBox.DataContext = selectedDrone.Location.Longitude;
-            latitudeTextBox.DataContext = selectedDrone.Location.Latitude;
-
-            DroneStatusComboBox.ItemsSource= Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
             MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
+            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
+            droneWindowGrid.DataContext = selectedDrone;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -151,7 +146,7 @@ namespace PL
                 string model = modelTextBox.Text;
                 droneWindowBL.UpdateDrone(drone.Id, model);
                 MessageBox.Show("The drone was successfully updeted");
-                Close();
+                
                 new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (IdNotFoundException ex)
@@ -167,7 +162,7 @@ namespace PL
             {
                 droneWindowBL.SendDroneToCharge(drone.Id);
                 MessageBox.Show("The drone was sent to charging");
-                Close();
+                
                 new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (IdNotFoundException ex)
@@ -179,7 +174,7 @@ namespace PL
         {
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
             MessageBox.Show("The drone was released from charging!");
-            Close();
+            
             new DroneListWindow(ref droneWindowBL).Show();
         }
 
@@ -189,7 +184,7 @@ namespace PL
             {
                 droneWindowBL.AssignParcelToDrone(drone.Id);
                 MessageBox.Show("The drone was assigned to parcel!");
-                Close();
+                
                 new DroneListWindow(ref droneWindowBL).Show();
             }
             catch (IdNotFoundException ex)
@@ -202,7 +197,7 @@ namespace PL
         {
             droneWindowBL.CollectingParcelByDrones(drone.Id);
             MessageBox.Show("The parcel was collected!");
-            Close();
+            
             new DroneListWindow(ref droneWindowBL).Show();
         }
 
@@ -210,7 +205,7 @@ namespace PL
         {
             droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
             MessageBox.Show("The drone was supplied to customer!");
-            Close();
+            
             new DroneListWindow(ref droneWindowBL).Show();
         }
 
