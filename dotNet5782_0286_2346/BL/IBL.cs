@@ -54,7 +54,7 @@ namespace IBL
         /// a parcel,which hasn't been collected yet, collects by a drone
         /// </summary>
         /// <param name="droneId">id of the drone</param>
-        void CollectingParcelByDrones(int droneId);
+        void CollectParcelByDrone(int droneId);
 
         /// <summary>
         /// a parcel,which has been collected but hasn't supplied yet, comes to the target and supplies to the customer
@@ -165,9 +165,6 @@ namespace IBL
         /// <returns>list of parcels that hasn't been assigned to a drone</returns>
         IEnumerable<ParcelForList> GetListOfNotAssociatedParcels();
         #endregion
-
-
-
 
     }
 }
