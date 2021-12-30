@@ -26,6 +26,7 @@ namespace IBL.BO
     {
         public int ID;
         public string EntityName;
+        public string Message;
         public IdNotFoundException(int id, string entity) : base() { ID = id; EntityName = entity; }
         public IdNotFoundException(int id, string entity, string message) : base(message) { ID = id; EntityName = entity; }
         public IdNotFoundException(int id, string entity, string message, Exception innerException) : base(message, innerException)
@@ -43,7 +44,6 @@ namespace IBL.BO
         public NoBatteryException(int id) : base() { ID = id; }
         public NoBatteryException(int id, string message) : base(message) { ID = id; }
         public NoBatteryException(int id, string message, Exception inner) : base(message, inner) { ID = id; }
-
         public override string ToString() => base.ToString() + $"The drone Id: {ID} does not have enough battery to perform the task.";
     }
 

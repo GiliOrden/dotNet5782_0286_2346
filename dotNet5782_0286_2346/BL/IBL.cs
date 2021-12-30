@@ -97,6 +97,12 @@ namespace IBL
         IEnumerable<DroneForList> GetListOfDrones();
 
         IEnumerable<BO.DroneForList> GetDronesByPredicate(Predicate<BO.DroneForList> predicate);
+        /// <summary>
+        /// The function search and returns DroneForList object
+        /// </summary>
+        /// <param name="id">the id of the drone</param>
+        /// <returns>DroneForList drone</returns>
+        DroneForList GetDroneForList(int id);
         #endregion
 
         #region Location

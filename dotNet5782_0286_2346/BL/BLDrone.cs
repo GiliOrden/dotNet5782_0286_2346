@@ -278,6 +278,10 @@ namespace BL
             d.ParcelInTransfer = parcelInTransfer;
             return d;
         }
+        public DroneForList GetDroneForList(int id)
+        {
+            return dronesBL.Find(drone => drone.Id == id);
+        }
 
     }
 }

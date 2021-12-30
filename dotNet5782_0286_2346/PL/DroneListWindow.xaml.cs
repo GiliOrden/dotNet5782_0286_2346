@@ -58,7 +58,7 @@ namespace PL
             
             if (drone != null)
             {
-                DroneWindow dw = new DroneWindow(ref droneListWindowBL, ref drone);
+                DroneWindow dw = new DroneWindow(ref droneListWindowBL, drone);
                 dw.ShowDialog();
                 Close();
             }
