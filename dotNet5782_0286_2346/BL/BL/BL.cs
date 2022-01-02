@@ -4,13 +4,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IDAL;
 
+using BlApi;
+using DalApi;
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    internal partial class BL : IBL
     {
+        static readonly IBL instance = new BL();
+        public static IBL Instance { get => instance; }
+
+        internal IDal dl = DalFactory.GetDal();
+
         internal double chargingRatePerHour;
         internal double emptyDronePowerConsumption;
         internal double lightWeightCarrierPowerConsumption;
@@ -18,15 +23,15 @@ namespace BL
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
 
-        IDal dl;
-        List<DroneForList> dronesBL = new();
-        IEnumerable<IDAL.DO.Drone> dalDrones;
+       
+        List<BO.DroneForList> dronesBL = new();
+        IEnumerable<DO.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
 
         public BL()//ctor
         {
 
-            dl = new DalObject.DalObject();
+            
             dalDrones = dl.GetListOfDrones();
             dronePowerConsumption = dl.GetDronePowerConsumption();
             emptyDronePowerConsumption = dronePowerConsumption[0];
@@ -40,20 +45,20 @@ namespace BL
             int index;
             foreach (var drone in dalDrones)
             {
-                
-                DroneForList droneForList = new DroneForList();
+
+                BO.DroneForList droneForList = new BO.DroneForList();
                 droneForList.Id = drone.Id;
                 droneForList.Model = drone.Model;
-                droneForList.MaxWeight = (EnumsBL.WeightCategories)drone.MaxWeight;
-                droneForList.Location = new Location();
+                droneForList.MaxWeight = (BO.EnumsBL.WeightCategories)drone.MaxWeight;
+                droneForList.Location = new BO.Location();
                 //If there are parcels that have not yet been delivered but the drone has already been associated the drone status is OnDelivery
-                droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==null)) ? EnumsBL.DroneStatuses.OnDelivery : (EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
-                if (droneForList.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
+                droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==null)) ? BO.EnumsBL.DroneStatuses.OnDelivery : (BO.EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
+                if (droneForList.DroneStatus == BO.EnumsBL.DroneStatuses.OnDelivery)
                 {
-                    IDAL.DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id&& parc.Delivered == null);
+                    DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id&& parc.Delivered == null);
                     droneForList.IdOfTheDeliveredParcel = parcel.Id;
-                    IDAL.DO.Customer sender = dl.GetCustomer(parcel.SenderId);
-                    IDAL.DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
+                    DO.Customer sender = dl.GetCustomer(parcel.SenderId);
+                    DO.Customer receiver = dl.GetCustomer(parcel.TargetId);
                     
                     //If the parcel was associated but not collected - location will be at the station closest to the sender
                     if (parcel.PickedUp== null)
@@ -91,7 +96,7 @@ namespace BL
                 }
 
                 //If the drone is in maintenance, its location will be drawn between the existing stations
-                else if (droneForList.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+                else if (droneForList.DroneStatus== BO.EnumsBL.DroneStatuses.Maintenance)
                 {
                     
                     index = rand.Next(dl.GetListOfBaseStations().Count());

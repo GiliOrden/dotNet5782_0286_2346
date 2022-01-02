@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IDAL;
+using BlApi;
+using DalApi.IDal;
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    public partial class BL : IBL
     {
 
-        public void AddBaseStation(Station station)
+        public void AddBaseStation(BO.Station station)
         {
-            IDAL.DO.Station dalStation = new();
+            DO.Station dalStation = new();
             dalStation.Id = station.ID;
             dalStation.Name = station.Name;
             dalStation.Longitude = station.Location.Longitude;
@@ -23,9 +23,9 @@ namespace BL
             {
                 dl.AddStation(dalStation);
             }
-            catch (IDAL.DO.ExistIdException ex)
+            catch (IDal.DO.ExistIdException ex)
             {
-                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
+                throw new BO.ExistIdException(ex.ID, ex.EntityName);
             }
         }
 
@@ -53,15 +53,15 @@ namespace BL
             }
             catch (IDAL.DO.IdNotFoundException ex)
             {
-                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
+                throw new IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
 
-        public IEnumerable<IBL.BO.StationForList> GetListOfBaseStations()
+        public IEnumerable<BO.StationForList> GetListOfBaseStations()
         {
-            IEnumerable<IBL.BO.StationForList> stationsBO =
+            IEnumerable<BO.StationForList> stationsBO =
                 from station in dl.GetListOfBaseStations()
-                select new IBL.BO.StationForList
+                select new BO.StationForList
                 {
                     ID = station.Id,
                     Name = station.Name,
@@ -88,11 +88,11 @@ namespace BL
         }
 
 
-        public IEnumerable<IBL.BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
+        public IEnumerable<BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
         {
-            IEnumerable<IBL.BO.StationForList> stationsWithAvailableChargeSlots =
+            IEnumerable<BO.StationForList> stationsWithAvailableChargeSlots =
             from station in dl.GetStationsByPredicate(t=>t.ChargeSlots != 0)
-            select new IBL.BO.StationForList
+            select new BO.StationForList
             {
                 ID = station.Id,
                 Name = station.Name,
@@ -103,16 +103,16 @@ namespace BL
         }
 
 
-        public Station GetBaseStation(int id)
+        public BO.Station GetBaseStation(int id)
         {
-            Station s = new();
+            BO.Station s = new();
             try
             {
-                DroneInCharging droneInCharging = new();
+                BO.DroneInCharging droneInCharging = new();
                 IDAL.DO.Station sDal = dl.GetBaseStation(id);
                 s.ID = sDal.Id;
                 s.Name = sDal.Name;
-                s.Location = new Location();
+                s.Location = new BO.Location();
                 s.Location.Latitude = sDal.Latitude;
                 s.Location.Longitude = sDal.Longitude;
                 s.ChargeSlots = sDal.ChargeSlots;
@@ -155,11 +155,11 @@ namespace BL
         /// <param name="id">baseStation's ID</param>
         /// <param name="location">baseStation's location</param>
         /// <returns>list of drones in charging in a specific base station</returns>
-        private IEnumerable<DroneInCharging> GetdronesInChargingPerStation(int id, Location location)//id and location of a base station 
+        private IEnumerable<BO.DroneInCharging> GetdronesInChargingPerStation(int id, BO.Location location)//id and location of a base station 
         {
-            var drones=from d in GetDroneInChargingByPredicate(d => d.Location.Longitude == location.Longitude && d.Location.Latitude == location.Latitude&&d.DroneStatus==EnumsBL.DroneStatuses.Maintenance)
+            var drones=from d in GetDroneInChargingByPredicate(d => d.Location.Longitude == location.Longitude && d.Location.Latitude == location.Latitude&&d.DroneStatus==BO.EnumsBL.DroneStatuses.Maintenance)
                    let dronesInCharging = GetDrone(d.Id)
-                   select new DroneInCharging()
+                   select new BO.DroneInCharging()
                    {
                        Id = dronesInCharging.Id,
                        Battery = dronesInCharging.Battery
@@ -172,7 +172,7 @@ namespace BL
         /// </summary>
         /// <param name="predicate">check if the drone's location is int the specific station and its status is in maintenance </param>
         /// <returns>collection of drones by predicate</returns>
-        private IEnumerable<DroneForList> GetDroneInChargingByPredicate(Predicate<DroneForList> predicate)
+        private IEnumerable<BO.DroneForList> GetDroneInChargingByPredicate(Predicate<BO.DroneForList> predicate)
         {
             return from drone in dronesBL
                    where predicate(drone)

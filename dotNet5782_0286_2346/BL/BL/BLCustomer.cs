@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IDAL;
+using BlApi;
+using BO;
+
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    sealed class BL : IBL
     {
 
-        public void AddCustomer(Customer c)
+        public void AddCustomer(BO.Customer c)
         {
-            IDAL.DO.Customer customer = new();
+            DO.Customer customer = new();
             try
             {
                 customer.Id = c.Id;
@@ -23,9 +24,9 @@ namespace BL
                 customer.Longitude = c.Location.Longitude;
                 dl.AddCustomer(customer);
             }
-            catch (IDAL.DO.ExistIdException ex)
+            catch (ExistIdException ex)
             {
-                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
+                throw new ExistIdException(ex.ID, ex.EntityName);
             }
 
         }
@@ -34,7 +35,7 @@ namespace BL
         {
             if (!dl.GetListOfCustomers().Any(cus => cus.Id == id))
                 throw new IdNotFoundException(id, "customer");
-            IDAL.DO.Customer customer = dl.GetCustomer(id);
+            DO.Customer customer = dl.GetCustomer(id);
                 if (name != "")
                     customer.Name = name;
                 if (phone != "")
@@ -43,9 +44,9 @@ namespace BL
                 dl.AddCustomer(customer);
          }
 
-        public IEnumerable<IBL.BO.CustomerForList> GetListOfCustomers()
+        public IEnumerable<BO.CustomerForList> GetListOfCustomers()
         {
-            IEnumerable<IBL.BO.CustomerForList> customers =
+            IEnumerable<BO.CustomerForList> customers =
                 from customer in dl.GetListOfCustomers()
                 let cust= getCustomerForList(customer)
                 select cust;
@@ -57,9 +58,9 @@ namespace BL
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        private CustomerForList getCustomerForList(IDAL.DO.Customer customer)
+        private BO.CustomerForList getCustomerForList(DO.Customer customer)
         {
-            CustomerForList customerForList = new();
+            BO.CustomerForList customerForList = new();
             customerForList.ID = customer.Id;
             customerForList.Name = customer.Name;
             customerForList.Phone = customer.Phone;
@@ -83,22 +84,22 @@ namespace BL
             return customerForList;
         }
 
-        public Customer GetCustomer(int id)
+        public BO.Customer GetCustomer(int id)
         {
-            Customer c = new Customer();
+            BO.Customer c = new BO.Customer();
             try
             {
-                IDAL.DO.Customer c2 = dl.GetCustomer(id);
+                DO.Customer c2 = dl.GetCustomer(id);
                 c.Id = id;
                 c.Name = c2.Name;
                 c.Phone = c2.Phone;
-                c.Location = new Location();
+                c.Location = new BO.Location();
                 c.Location.Latitude = c2.Latitude;
                 c.Location.Longitude = c2.Longitude;
-                c.ListOfParcelsFromMe = GetParcelsFromMe(id) ;
-                c.ListOfParcelsIntendedToME = GetParcelsIntendedToME(id);
+                c.ListOfParcelsFromMe = dl.GetParcelsFromMe(id) ;
+                c.ListOfParcelsIntendedToME = dl.GetParcelsIntendedToME(id);
             }
-            catch (IDAL.DO.IdNotFoundException ex)
+            catch (IdNotFoundException ex)
             {
                 throw new IdNotFoundException(ex.ID, "customer");
             }
