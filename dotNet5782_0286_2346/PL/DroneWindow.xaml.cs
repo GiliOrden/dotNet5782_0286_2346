@@ -40,8 +40,10 @@ namespace PL
         {
             droneWindowBL = bl;
             drone = selectedDrone;
-            
             InitializeComponent();
+            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
+            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
+            droneWindowGrid.DataContext = selectedDrone;
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
             chooseStationTextBox.Visibility = Visibility.Collapsed;
@@ -67,9 +69,7 @@ namespace PL
                     supplyParcelButton.Visibility = Visibility.Visible;
                 }
             }
-            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
-            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
-            droneWindowGrid.DataContext = selectedDrone;
+
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -79,7 +79,7 @@ namespace PL
 
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text.Length!=0&& modelTextBox != null && MaxWeightComboBox != null && stationsListBox.SelectedItem != null)
+            if (idTextBox.Text.Length != 0 && modelTextBox != null && MaxWeightComboBox != null && stationsListBox.SelectedItem != null)
                 addButton.IsEnabled = true;
         }
         private void addButton_Click(object sender, RoutedEventArgs e)
@@ -102,7 +102,7 @@ namespace PL
             catch (ExistIdException ex)
             {
                 idTextBox.BorderBrush = Brushes.Red;
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.ToString());
             }
 
         }
@@ -142,12 +142,9 @@ namespace PL
         {
             try
             {
-                
-                string model = modelTextBox.Text;
-                droneWindowBL.UpdateDrone(drone.Id, model);
+                droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
                 MessageBox.Show("The drone was successfully updeted");
-                
-                new DroneListWindow(ref droneWindowBL).Show();
+                DroneWindow dw = new DroneWindow(ref droneWindowBL, ref drone);
             }
             catch (IdNotFoundException ex)
             {
@@ -162,10 +159,9 @@ namespace PL
             {
                 droneWindowBL.SendDroneToCharge(drone.Id);
                 MessageBox.Show("The drone was sent to charging");
-                
-                new DroneListWindow(ref droneWindowBL).Show();
+
             }
-            catch (IdNotFoundException ex)
+            catch (NoBatteryException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -174,8 +170,6 @@ namespace PL
         {
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
             MessageBox.Show("The drone was released from charging!");
-            
-            new DroneListWindow(ref droneWindowBL).Show();
         }
 
         private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
@@ -184,10 +178,12 @@ namespace PL
             {
                 droneWindowBL.AssignParcelToDrone(drone.Id);
                 MessageBox.Show("The drone was assigned to parcel!");
-                
-                new DroneListWindow(ref droneWindowBL).Show();
             }
-            catch (IdNotFoundException ex)
+            catch (NoBatteryException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (DroneMaxWeightIsLowException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -195,18 +191,29 @@ namespace PL
 
         private void collectParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
-            droneWindowBL.CollectingParcelByDrones(drone.Id);
-            MessageBox.Show("The parcel was collected!");
-            
-            new DroneListWindow(ref droneWindowBL).Show();
+            try
+            {
+                droneWindowBL.CollectingParcelByDrones(drone.Id);
+                MessageBox.Show("The parcel was collected!");
+            }
+            catch (DroneCanNotCollectParcelException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void supplyParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
-            droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
-            MessageBox.Show("The drone was supplied to customer!");
-            
-            new DroneListWindow(ref droneWindowBL).Show();
+            try
+            {
+                droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
+                MessageBox.Show("The drone was supplied to customer!");
+                DroneStatusComboBox.DataContext = drone;
+            }
+            catch (DroneCanNotSupplyDeliveryToCustomerException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -220,9 +227,14 @@ namespace PL
 
         }
 
+        private void Window_Activated(object sender, EventArgs e)
+        {
+
+        }
+
         //private void modelSelectionChanged(object sender, RoutedEventArgs e)
         //{
         //    //modelTextBox.SelectedItem = modelTextBox.Text;
         //}
     }
-}    
+}
