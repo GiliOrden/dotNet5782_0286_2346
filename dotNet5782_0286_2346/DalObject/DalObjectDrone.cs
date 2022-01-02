@@ -1,14 +1,14 @@
-﻿using IDAL.DO;
+﻿using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DalObject.DataSource;
-using IDAL;
+using static Dal.DataSource;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
         /// <summary>
         /// the function recieves a drone as parameter and adds it to the list of drones if its id is already existed it throws "ExistIdException"
@@ -17,7 +17,7 @@ namespace DalObject
         public void AddDrone(Drone d)
         {
             if (checkDrone(d.Id))
-                throw new IDAL.DO.ExistIdException(d.Id, "drone");
+                throw new DO.ExistIdException(d.Id, "drone");
             drones.Add(d);
         }
 
@@ -45,14 +45,14 @@ namespace DalObject
         {
             DroneCharge dc = new DroneCharge();
             if (!checkDrone(idDrone))
-                throw new IDAL.DO.IdNotFoundException(idDrone, "drone");
+                throw new DO.IdNotFoundException(idDrone, "drone");
             if (!checkStation(idStation))
-                throw new IDAL.DO.IdNotFoundException(idStation, "station");
+                throw new DO.IdNotFoundException(idStation, "station");
             dc.DroneId = idDrone;
             dc.StationId = idStation;
             dc.StartOfCharging = DateTime.Now;
             droneCharges.Add(dc);
-            Station s = DataSource.stations.Find(stat => stat.Id == idStation);
+            Station s = Dal.DataSource.stations.Find(stat => stat.Id == idStation);
             s.ChargeSlots--;
             stations.RemoveAll(stat => stat.Id == idStation);
             stations.Add(s);
@@ -64,8 +64,8 @@ namespace DalObject
         /// <param name="id">the drone id</param>
         public void ReleaseDroneFromCharge(int id)
         {
-            if (!DataSource.drones.Any(dron => dron.Id == id))
-                throw new IDAL.DO.IdNotFoundException(id, "drone");
+            if (!Dal.DataSource.drones.Any(dron => dron.Id == id))
+                throw new DO.IdNotFoundException(id, "drone");
             Station s;
             foreach (DroneCharge charger in droneCharges)
             {
@@ -92,7 +92,7 @@ namespace DalObject
         {
             if (!checkDrone(id))
                 throw new IdNotFoundException(id, "drone");
-            DataSource.drones.RemoveAll(dron => dron.Id == id);
+            Dal.DataSource.drones.RemoveAll(dron => dron.Id == id);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace DalObject
         public Drone GetDrone(int id)
         {
             if (!checkDrone(id))
-                throw new IDAL.DO.IdNotFoundException(id, "drone");
-            Drone d = DataSource.drones.Find(drone => drone.Id == id);
+                throw new DO.IdNotFoundException(id, "drone");
+            Drone d = Dal.DataSource.drones.Find(drone => drone.Id == id);
             return d;
         }
 
@@ -115,7 +115,7 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Drone> GetListOfDrones()
         {
-            return from drone in DataSource.drones
+            return from drone in Dal.DataSource.drones
                    select drone; ;
         }
 
@@ -126,7 +126,7 @@ namespace DalObject
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkDrone(int id)
         {
-            return DataSource.drones.Any(drone => drone.Id == id);
+            return Dal.DataSource.drones.Any(drone => drone.Id == id);
         }
     }
 }

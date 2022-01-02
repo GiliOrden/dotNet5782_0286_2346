@@ -1,14 +1,14 @@
-﻿using IDAL.DO;
+﻿using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DalObject.DataSource;
-using IDAL;
+using static Dal.DataSource;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
 
         /// <summary>
@@ -30,10 +30,10 @@ namespace DalObject
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
             if (!checkDrone(droneId))
-                throw new IDAL.DO.IdNotFoundException(droneId, "drone");
-            Drone d = DataSource.drones.Find(drone => drone.Id == droneId);
+                throw new DO.IdNotFoundException(droneId, "drone");
+            Drone d = Dal.DataSource.drones.Find(drone => drone.Id == droneId);
             if (!checkParcel(parcelId))
-                 throw new IDAL.DO.IdNotFoundException(parcelId, "parcel");
+                 throw new DO.IdNotFoundException(parcelId, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == parcelId)
@@ -56,7 +56,7 @@ namespace DalObject
         {
             Parcel p;
             if (!checkParcel(id))
-                throw new IDAL.DO.IdNotFoundException(id, "parcel");
+                throw new DO.IdNotFoundException(id, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -78,7 +78,7 @@ namespace DalObject
         {
             Parcel p;
             if (!checkParcel(id))
-                throw new IDAL.DO.IdNotFoundException(id, "parcel");
+                throw new DO.IdNotFoundException(id, "parcel");
             foreach (Parcel parcel in parcels)
             {
                 if (parcel.Id == id)
@@ -101,8 +101,8 @@ namespace DalObject
         public Parcel GetParcel(int id)
         {
             if (!checkParcel(id))
-                throw new IDAL.DO.IdNotFoundException(id, "parcel");
-            Parcel p =DataSource.parcels.Find(parc=>parc.Id==id);
+                throw new DO.IdNotFoundException(id, "parcel");
+            Parcel p =Dal.DataSource.parcels.Find(parc=>parc.Id==id);
             return p;
         }
 
@@ -124,7 +124,7 @@ namespace DalObject
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkParcel(int id)
         {
-            return DataSource.parcels.Any(parc => parc.Id == id);
+            return Dal.DataSource.parcels.Any(parc => parc.Id == id);
         }
 
       

@@ -1,14 +1,14 @@
-﻿using IDAL.DO;
+﻿using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DalObject.DataSource;
-using IDAL;
-namespace DalObject
+using static Dal.DataSource;
+using DalApi;
+namespace Dal
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     { 
         /// <summary>
         /// constructor, produce the data base

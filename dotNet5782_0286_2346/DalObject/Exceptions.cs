@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDAL.DO
+namespace DO
 {
         [Serializable]
         public class ExistIdException : Exception//when trying to add an id of station/drone/parcel and it allready exists 
