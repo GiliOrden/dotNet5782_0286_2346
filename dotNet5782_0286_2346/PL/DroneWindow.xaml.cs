@@ -36,10 +36,10 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.IBL bl, ref IBL.BO.DroneForList selectedDrone)//second constructor for update
+        public DroneWindow(ref IBL.IBL bl,  IBL.BO.DroneForList selectedDrone)//second constructor for update
         {
             droneWindowBL = bl;
-            drone = selectedDrone;
+            drone = selectedDrone;           
             InitializeComponent();
             MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
             DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
@@ -99,10 +99,10 @@ namespace PL
                 Close();
                 new DroneListWindow(ref droneWindowBL).Show();
             }
-            catch (ExistIdException ex)
+            catch (ExistIdException )
             {
                 idTextBox.BorderBrush = Brushes.Red;
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show($"The drone id is already existed,\nPlease check this data field","Error",MessageBoxButton.OK,MessageBoxImage.Error);
             }
 
         }
@@ -140,17 +140,11 @@ namespace PL
 
         private void updateButton_Click(object sender, RoutedEventArgs e)//this is a func for 'click' event
         {
-            try
-            {
+
                 droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
-                MessageBox.Show("The drone was successfully updeted");
-                DroneWindow dw = new DroneWindow(ref droneWindowBL, ref drone);
-            }
-            catch (IdNotFoundException ex)
-            {
-                modelTextBox.BorderBrush = Brushes.Red;
-                MessageBox.Show(ex.Message);
-            }
+                MessageBox.Show($"The drone was successfully updated","Success",MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+                new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
 
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
@@ -159,17 +153,20 @@ namespace PL
             {
                 droneWindowBL.SendDroneToCharge(drone.Id);
                 MessageBox.Show("The drone was sent to charging");
-
+                this.Close();
+                new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
             }
-            catch (NoBatteryException ex)
+            catch (NoBatteryException)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"The drone id is already existed,\nPlease check this data field", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
-            MessageBox.Show("The drone was released from charging!");
+            MessageBox.Show("The drone was released from charging");
+            this.Close();
+            new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
         }
 
         private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
@@ -178,42 +175,33 @@ namespace PL
             {
                 droneWindowBL.AssignParcelToDrone(drone.Id);
                 MessageBox.Show("The drone was assigned to parcel!");
+                this.Close();
+                new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
             }
-            catch (NoBatteryException ex)
+            catch (NoBatteryException)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("The drone battery is to low,\nPlease send it to charge","Error",MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (DroneMaxWeightIsLowException ex)
+            catch(DroneMaxWeightIsLowException)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("The maximum weight that the drone can carry is not compatible with any package", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void collectParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
-            try
-            {
-                droneWindowBL.CollectingParcelByDrones(drone.Id);
-                MessageBox.Show("The parcel was collected!");
-            }
-            catch (DroneCanNotCollectParcelException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+          droneWindowBL.CollectParcelByDrone(drone.Id);
+          MessageBox.Show("The parcel was collected successfully","Success",MessageBoxButton.OK,MessageBoxImage.Information);
+          this.Close();
+          new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
         }
 
         private void supplyParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
         {
-            try
-            {
-                droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
-                MessageBox.Show("The drone was supplied to customer!");
-                DroneStatusComboBox.DataContext = drone;
-            }
-            catch (DroneCanNotSupplyDeliveryToCustomerException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+          droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
+          MessageBox.Show("The drone was supplied to customer", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+          this.Close();
+          new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -229,12 +217,9 @@ namespace PL
 
         private void Window_Activated(object sender, EventArgs e)
         {
-
+          
         }
 
-        //private void modelSelectionChanged(object sender, RoutedEventArgs e)
-        //{
-        //    //modelTextBox.SelectedItem = modelTextBox.Text;
-        //}
+
     }
 }

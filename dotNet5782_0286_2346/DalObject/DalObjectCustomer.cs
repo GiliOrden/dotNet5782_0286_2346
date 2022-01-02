@@ -1,26 +1,26 @@
-﻿using IDAL.DO;
+﻿using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DalObject.DataSource;
-using IDAL;
-namespace DalObject
+using static Dal.DataSource;
+using DalApi;
+namespace Dal
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
         public void AddCustomer(Customer c)
         {
             if(checkCustomer(c.Id))
-                throw new IDAL.DO.ExistIdException(c.Id, "customer");
+                throw new  DO.ExistIdException(c.Id, "customer");
             customers.Add(c);
         }
 
         public Customer GetCustomer(int id)
         {
             if (!checkCustomer(id))
-                throw new IDAL.DO.IdNotFoundException(id, "customer");
+                throw new DO.IdNotFoundException(id, "customer");
             Customer c = DataSource.customers.Find(cust=>cust.Id==id);
             return c;
         }

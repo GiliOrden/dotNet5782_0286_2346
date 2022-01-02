@@ -1,14 +1,15 @@
-﻿using IDAL.DO;
+﻿using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DalObject.DataSource;
-using IDAL;
+using static Dal.DataSource;
+
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
 
         /// <summary>
@@ -18,7 +19,7 @@ namespace DalObject
         public void AddStation(Station s)
         {
             if (checkStation(s.Id))
-                throw new IDAL.DO.ExistIdException(s.Id, "station");
+                throw new DO.ExistIdException(s.Id, "station");
             stations.Add(s);
         }
 
@@ -30,8 +31,8 @@ namespace DalObject
         public Station GetBaseStation(int id)
         {
             if (!checkStation(id))
-                throw new IDAL.DO.IdNotFoundException(id, "station");
-            Station s = DataSource.stations.Find(stat => stat.Id == id);
+                throw new DO.IdNotFoundException(id, "station");
+            Station s = Dal.DataSource.stations.Find(stat => stat.Id == id);
             return s;
         }
 
@@ -51,7 +52,7 @@ namespace DalObject
         {
             if (!checkStation(id))
                 throw new IdNotFoundException(id, "station");
-            DataSource.stations.RemoveAll(station => station.Id == id);
+           Dal.DataSource.stations.RemoveAll(station => station.Id == id);
         }
         /// <summary>
         /// the function check an ID
@@ -60,7 +61,7 @@ namespace DalObject
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkStation(int id)
         {
-            return DataSource.stations.Any(sta => sta.Id ==id);
+            return Dal.DataSource.stations.Any(sta => sta.Id ==id);
         }
 
 

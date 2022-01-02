@@ -1,14 +1,14 @@
-﻿using IDAL.DO;
+﻿using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DalObject.DataSource;
-using IDAL;
+using static Dal.DataSource;
+using DalApi;
 namespace DalObject
 {
-    public partial class DalObject : IDal
+    internal partial class DalObject : IDal
     {
 
         public IEnumerable<DroneCharge> GetListOfBusyChargeSlots()

@@ -28,7 +28,7 @@ namespace BL
         }
 
 
-        public void CollectingParcelByDrones(int id)
+        public void CollectParcelByDrone(int id)
         {
             int parcelId;
             foreach (DroneForList d in dronesBL)

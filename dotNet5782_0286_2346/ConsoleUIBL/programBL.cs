@@ -259,7 +259,7 @@ namespace ConsoleUI_BL
                 case UpdateOptions.CollectParcelByDrone:
                     Console.WriteLine("Please enter the drone ID");
                     int.TryParse(Console.ReadLine(), out id1);
-                    bl.CollectingParcelByDrones(id1);
+                    bl.CollectParcelByDrone(id1);
                     Console.WriteLine("Succeeded");
                     break;
                 case UpdateOptions.SupplyParcelByDrone:
