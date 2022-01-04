@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IDAL;
+using BlApi;
+using BO;
 
 namespace BL
 {
-    public partial class BL : IBL.IBL
+    public partial class BL : IBL
     {
         public void AddParcel(Parcel p)
         {
@@ -75,10 +75,10 @@ namespace BL
             }
         }
 
-        public IEnumerable<IBL.BO.ParcelForList> GetListOfNotAssociatedParcels()
+        public IEnumerable<BO.ParcelForList> GetListOfNotAssociatedParcels()
         {
             return from parcel in dl.GetParcelsByPredicate(p => p.DroneId == null)
-                   select new IBL.BO.ParcelForList
+                   select new BO.ParcelForList
                    {
                        Id = parcel.Id,
                        SenderName = dl.GetCustomer(parcel.SenderId).Name,
@@ -89,11 +89,11 @@ namespace BL
                    };
         }
 
-        public IEnumerable<IBL.BO.ParcelForList> GetListOfParcels()
+        public IEnumerable<BO.ParcelForList> GetListOfParcels()
         {
              var parcels =
                 from parcel in dl.GetListOfParcels()
-                select new IBL.BO.ParcelForList
+                select new BO.ParcelForList
                 {
                     Id = parcel.Id,
                     SenderName = dl.GetCustomer(parcel.SenderId).Name,
