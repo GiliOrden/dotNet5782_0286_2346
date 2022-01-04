@@ -23,7 +23,7 @@ namespace BL
         Random rand = new Random(DateTime.Now.Millisecond);
         static readonly IBL instance = new BL();
         public static IBL Instance { get => instance; }
-        public BL()//ctor
+        BL()//ctor
         {
             dalDrones = dl.GetListOfDrones();
             dronePowerConsumption = dl.GetDronePowerConsumption();

@@ -44,7 +44,7 @@ namespace BL
                 dl.AddCustomer(customer);
          }
 
-        public IEnumerable<BO.CustomerForList> GetListOfCustomers()
+       public IEnumerable<BO.CustomerForList> GetListOfCustomers()
         {
             IEnumerable<BO.CustomerForList> customers =
                 from customer in dl.GetListOfCustomers()
@@ -84,7 +84,7 @@ namespace BL
             return customerForList;
         }
 
-        public BO.Customer GetCustomer(int id)
+        public  BO.Customer GetCustomer(int id)
         {
             BO.Customer c = new BO.Customer();
             try
