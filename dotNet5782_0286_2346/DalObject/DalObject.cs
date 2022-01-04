@@ -20,6 +20,5 @@ namespace Dal
 
             DataSource.Initialize();
         }
-
     }
 }
