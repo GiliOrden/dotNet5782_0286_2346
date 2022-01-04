@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using DalApi.IDal;
+
 
 namespace BL
 {
@@ -23,9 +23,9 @@ namespace BL
             {
                 dl.AddStation(dalStation);
             }
-            catch (IDal.DO.ExistIdException ex)
+            catch (DO.ExistIdException ex)
             {
-                throw new BO.ExistIdException(ex.ID, ex.EntityName);
+                throw new ExistIdException(ex.ID, ex.EntityName);
             }
         }
 
@@ -34,13 +34,13 @@ namespace BL
         {
             try
             {
-                IDAL.DO.Station s = dl.GetBaseStation(id);
+                DO.Station s = dl.GetBaseStation(id);
                 if (name != "")
                     s.Name = name;
                 if (numOfChargeSlots !=0)
                 {
  
-                    foreach (IDAL.DO.DroneCharge droneCharge in dl.GetListOfBusyChargeSlots())
+                    foreach (DO.DroneCharge droneCharge in dl.GetListOfBusyChargeSlots())
                     {
                         if (droneCharge.StationId == id)
                             numOfChargeSlots--;
@@ -51,7 +51,7 @@ namespace BL
                 dl.DeleteStation(id);
                 dl.AddStation(s);
             }
-            catch (IDAL.DO.IdNotFoundException ex)
+            catch (DO.IdNotFoundException ex)
             {
                 throw new IdNotFoundException(ex.ID, ex.EntityName);
             }
@@ -79,7 +79,7 @@ namespace BL
         private int getNumberOfInaccessibleChargingSlots(int id)
         {
             int numOfInaccessibleChargingSlots = 0;
-            foreach (IDAL.DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
+            foreach (DO.DroneCharge droneCharger in dl.GetListOfBusyChargeSlots())
             {
                 if (droneCharger.StationId == id)
                     numOfInaccessibleChargingSlots++;
@@ -109,7 +109,7 @@ namespace BL
             try
             {
                 BO.DroneInCharging droneInCharging = new();
-                IDAL.DO.Station sDal = dl.GetBaseStation(id);
+                DO.Station sDal = dl.GetBaseStation(id);
                 s.ID = sDal.Id;
                 s.Name = sDal.Name;
                 s.Location = new BO.Location();
@@ -118,7 +118,7 @@ namespace BL
                 s.ChargeSlots = sDal.ChargeSlots;
                 s.DroneInChargingList = GetdronesInChargingPerStation(id, s.Location);
             }
-            catch (IDAL.DO.IdNotFoundException ex)
+            catch (DO.IdNotFoundException ex)
             {
                 throw new IdNotFoundException(ex.ID, "station");
             }
@@ -132,12 +132,12 @@ namespace BL
         /// <param name="customer"></param>
         /// <param name="minDistance"></param>
         /// <returns> the ID of the station that is closest to the customer</returns>
-        private int getClosestStation(IDAL.DO.Customer customer, ref double minDistance)
+        private int getClosestStation(DO.Customer customer, ref double minDistance)
         {
             int idOfStation = 0;
             double distance;
             minDistance = 10000;
-            foreach (IDAL.DO.Station baseStation in dl.GetListOfBaseStations())
+            foreach (DO.Station baseStation in dl.GetListOfBaseStations())
             {
                 distance = DistanceBetweenPlaces(baseStation.Longitude, baseStation.Latitude, customer.Longitude, customer.Latitude);
                 if (distance < minDistance)

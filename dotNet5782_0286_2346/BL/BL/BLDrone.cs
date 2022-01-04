@@ -27,12 +27,12 @@ namespace BL
             }
             catch (DO.ExistIdException ex)
             {
-                throw new IBL.BO.ExistIdException(ex.ID, ex.EntityName);
+                throw new ExistIdException(ex.ID, ex.EntityName);
             }
             catch (DO.IdNotFoundException ex)
             {
                 dl.DeleteDrone(drone.Id);
-                throw new IBL.BO.IdNotFoundException(ex.ID, ex.EntityName);
+                throw new IdNotFoundException(ex.ID, ex.EntityName);
             }
         }
 

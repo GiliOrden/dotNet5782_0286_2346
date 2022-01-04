@@ -9,7 +9,7 @@ using static Dal.DataSource;
 
 namespace DalObject
 {
-    internal partial class DalObject : IDal
+     partial class DalObject : IDal
     {
 
         /// <summary>

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using IDAL;
-using DalObject;
+
 using System.Runtime.Serialization;
+using DalApi;
+using DO;
+
 namespace ConsoleUI
 {
     class Program
@@ -26,8 +27,8 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            
-            IDal dl = new DalObject.DalObject();
+
+            IDal dl = DalFactory.GetDal();
             MenuOptions mo;
             int userChoise;
             Console.WriteLine("press 1 to add an item");

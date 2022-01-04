@@ -13,15 +13,15 @@ namespace Dal
         public void AddCustomer(Customer c)
         {
             if(checkCustomer(c.Id))
-                throw new  DO.ExistIdException(c.Id, "customer");
+                throw new  ExistIdException(c.Id, "customer");
             customers.Add(c);
         }
 
         public Customer GetCustomer(int id)
         {
             if (!checkCustomer(id))
-                throw new DO.IdNotFoundException(id, "customer");
-            Customer c = DataSource.customers.Find(cust=>cust.Id==id);
+                throw new IdNotFoundException(id, "customer");
+            Customer c = customers.Find(cust=>cust.Id==id);
             return c;
         }
 
@@ -30,7 +30,7 @@ namespace Dal
         /// </summary>
         public IEnumerable<Customer>GetListOfCustomers()
         {
-            return from customer in DataSource.customers
+            return from customer in customers
                    select customer;
         }
 
@@ -41,16 +41,17 @@ namespace Dal
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkCustomer(int id)
         {
-            return DataSource.customers.Any(cust => cust.Id == id);
+            return customers.Any(cust => cust.Id == id);
         }
 
         public void DeleteCustomer(int id)
         {
            if (!checkCustomer(id))
                 throw new IdNotFoundException(id, "customer");
-            DataSource.customers.RemoveAll(cus => cus.Id == id);
+            customers.RemoveAll(cus => cus.Id == id);
         }
-        
+
+
     }
 }
 

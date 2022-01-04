@@ -64,7 +64,7 @@ namespace BL
             customerForList.ID = customer.Id;
             customerForList.Name = customer.Name;
             customerForList.Phone = customer.Phone;
-            foreach (IDAL.DO.Parcel parc in dl.GetListOfParcels())
+            foreach (DO.Parcel parc in dl.GetListOfParcels())
             {
                 if (parc.SenderId == customerForList.ID)
                 {

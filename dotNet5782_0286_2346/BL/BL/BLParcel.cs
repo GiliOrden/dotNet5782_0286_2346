@@ -11,20 +11,17 @@ namespace BL
     public partial class BL : IBL
     {
         public void AddParcel(Parcel p)
-        {
-           
-                IDAL.DO.Parcel parcel = new();
-                parcel.SenderId = p.Sender.ID;
-                parcel.TargetId = p.Receiver.ID;
-                parcel.Weight = (IDAL.DO.WeightCategories)p.Weight;
-                parcel.Priority = (IDAL.DO.Priorities)p.Priority;
-                parcel.DroneId = 0;//supposed to be null
-                parcel.Requested = DateTime.Now;
-                parcel.Scheduled = null;
-                parcel.PickedUp = null;
-                parcel.Delivered = null;
-                dl.AddParcel(parcel);
-          
+        {  
+         DO.Parcel parcel = new();
+         parcel.SenderId = p.Sender.ID;
+         parcel.TargetId = p.Receiver.ID;
+         parcel.Weight = (DO.WeightCategories)p.Weight;
+         parcel.Priority = (DO.Priorities)p.Priority;
+         parcel.DroneId = 0;//supposed to be null
+         parcel.Requested = DateTime.Now;
+         parcel.Scheduled = null;
+         parcel.PickedUp = null;
+         dl.AddParcel(parcel);
         }
 
 
@@ -111,7 +108,7 @@ namespace BL
             p.Receiver = new();
             p.Drone = new();
             p.Drone.Location = new();
-            IDAL.DO.Parcel p2 = dl.GetParcel(id);
+            DO.Parcel p2 = dl.GetParcel(id);
             p.Id = p2.Id;
             p.Weight = (EnumsBL.WeightCategories)p2.Weight;
             p.Priority = (EnumsBL.Priorities)p2.Priority;
@@ -185,7 +182,7 @@ namespace BL
         /// <returns>status of the parcel </returns>
         private EnumsBL.ParcelStatuses StatusOfParcel(int parcelId)
         {
-            IDAL.DO.Parcel p = dl.GetParcel(parcelId);
+            DO.Parcel p = dl.GetParcel(parcelId);
             if (p.Scheduled == null)//only definited!
                 return EnumsBL.ParcelStatuses.Defined;
             if (p.PickedUp == null)//PickedUp==null, the parcel did not picked up
@@ -204,7 +201,7 @@ namespace BL
         /// <returns>CustomerInParcel</returns>
         private CustomerInParcel OtherSideCustomerInParcel(int parcelId, int customerId)
         {
-            IDAL.DO.Parcel p = dl.GetParcel(parcelId);
+            DO.Parcel p = dl.GetParcel(parcelId);
             CustomerInParcel customerInParcel = new();
             if (p.SenderId == customerId)
             {
