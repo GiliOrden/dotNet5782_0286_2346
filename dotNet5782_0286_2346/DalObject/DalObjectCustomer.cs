@@ -8,7 +8,7 @@ using static Dal.DataSource;
 using DalApi;
 namespace Dal
 {
-    internal partial class DalObject : IDal
+    sealed partial class DalObject : IDal
     {
         public void AddCustomer(Customer c)
         {

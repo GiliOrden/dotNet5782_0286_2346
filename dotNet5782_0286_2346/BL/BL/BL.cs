@@ -8,11 +8,8 @@ using BlApi;
 using DalApi;
 namespace BL
 {
-    internal partial class BL : IBL
+    sealed partial class BL : IBL
     {
-        static readonly IBL instance = new BL();
-        public static IBL Instance { get => instance; }
-
         internal IDal dl = DalFactory.GetDal();
 
         internal double chargingRatePerHour;
@@ -21,16 +18,13 @@ namespace BL
         internal double mediumWeightCarrierPowerConsumption;
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
-
-       
         List<BO.DroneForList> dronesBL = new();
         IEnumerable<DO.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
-
+        static readonly IBL instance = new BL();
+        public static IBL Instance { get => instance; }
         public BL()//ctor
         {
-
-            
             dalDrones = dl.GetListOfDrones();
             dronePowerConsumption = dl.GetDronePowerConsumption();
             emptyDronePowerConsumption = dronePowerConsumption[0];

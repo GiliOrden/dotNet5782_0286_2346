@@ -1,4 +1,6 @@
-﻿using BO;
+﻿using BL;
+using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,10 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL droneWindowBL;
+        IBL droneWindowBL;
         DroneForList drone;
-        public DroneWindow(ref IBL.IBL bl)//first constructor for adding
+
+        public DroneWindow(ref IBL bl)//first constructor for adding
         {
             droneWindowBL = bl;
             InitializeComponent();
@@ -37,7 +40,7 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.IBL bl,  IBL.BO.DroneForList selectedDrone)//second constructor for update
+        public DroneWindow(ref IBL bl,  DroneForList selectedDrone)//second constructor for update
         {
             droneWindowBL = bl;
             drone = selectedDrone;           
@@ -98,7 +101,7 @@ namespace PL
                 droneWindowBL.AddDrone(drone, idOfStation);
                 MessageBox.Show("The drone was successfully added");
                 Close();
-                new DroneListWindow(ref droneWindowBL).Show();
+                new DroneListWindow(ref  droneWindowBL).Show();
             }
             catch (ExistIdException)
             {

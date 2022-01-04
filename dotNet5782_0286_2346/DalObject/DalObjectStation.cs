@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static Dal.DataSource;
 
-namespace DalObject
+namespace Dal
 {
-     partial class DalObject : IDal
+     sealed partial class DalObject : IDal
     {
 
         /// <summary>

@@ -9,7 +9,7 @@ using BO;
 
 namespace BL
 {
-    sealed class BL : IBL
+    sealed partial class BL : IBL
     {
 
         public void AddCustomer(BO.Customer c)
@@ -96,8 +96,8 @@ namespace BL
                 c.Location = new BO.Location();
                 c.Location.Latitude = c2.Latitude;
                 c.Location.Longitude = c2.Longitude;
-                c.ListOfParcelsFromMe = dl.GetParcelsFromMe(id) ;
-                c.ListOfParcelsIntendedToME = dl.GetParcelsIntendedToME(id);
+                c.ListOfParcelsFromMe = GetParcelsFromMe(c.Id);
+                c.ListOfParcelsIntendedToME = GetParcelsIntendedToMe(c.Id);
             }
             catch (IdNotFoundException ex)
             {
@@ -107,8 +107,6 @@ namespace BL
             return c;
 
         }
-
-
     };
 }
 

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Dal.DataSource;
 using DalApi;
-namespace DalObject
+namespace Dal
 {
     internal partial class DalObject : IDal
     {

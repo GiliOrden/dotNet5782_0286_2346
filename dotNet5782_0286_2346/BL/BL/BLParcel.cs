@@ -8,7 +8,7 @@ using BO;
 
 namespace BL
 {
-    public partial class BL : IBL
+    sealed partial class BL : IBL
     {
         public void AddParcel(Parcel p)
         {  
@@ -142,7 +142,7 @@ namespace BL
         /// </summary>
         /// <param name="cstId"></param>
         /// <returns></returns>
-        private IEnumerable<ParcelAtCustomer> GetParcelsIntendedToME(int cstId)
+        private IEnumerable<ParcelAtCustomer> GetParcelsIntendedToMe(int cstId)
         {
             return from parc in dl.GetParcelsByPredicate(parc => parc.TargetId == cstId)
                    let prc = dl.GetParcel(parc.Id)

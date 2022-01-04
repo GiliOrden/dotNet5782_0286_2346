@@ -78,8 +78,8 @@ namespace DalApi
         void SupplyDeliveryToCustomer(int id);
         DO.Parcel GetParcel(int id);
         IEnumerable<Parcel> GetListOfParcels();
-            
-         IEnumerable<Parcel> GetParcelsByPredicate(Predicate<Parcel> predicate);
+
+        IEnumerable<Parcel> GetParcelsByPredicate(Predicate<Parcel> predicate);
         #endregion
 
     }

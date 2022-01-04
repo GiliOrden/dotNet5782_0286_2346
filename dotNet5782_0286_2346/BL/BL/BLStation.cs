@@ -8,7 +8,7 @@ using BlApi;
 
 namespace BL
 {
-    public partial class BL : IBL
+    sealed partial class BL : IBL
     {
 
         public void AddBaseStation(BO.Station station)

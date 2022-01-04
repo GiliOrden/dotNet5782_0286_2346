@@ -8,7 +8,7 @@ using BO;
 
 namespace BL
 {
-    public partial class BL : IBL
+    sealed partial class BL : IBL
     {
        public void AddDrone(BO.DroneForList drone, int idOfStation)
         {
