@@ -5,8 +5,5 @@
     
     <RootNamespace />
   </PropertyGroup>
-	<ItemGroup>
-		<Folder Include="DO\" />
-	</ItemGroup>
 
 </Project>

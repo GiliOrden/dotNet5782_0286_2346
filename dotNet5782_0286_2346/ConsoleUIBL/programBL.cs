@@ -66,27 +66,27 @@ namespace ConsoleUI_BL
 
                     }
                 }
-                catch (IBL.BO.ExistIdException ex)
+                catch (BO.ExistIdException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch (IBL.BO.IdNotFoundException ex)
+                catch (BO.IdNotFoundException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch (IBL.BO.NoBatteryException ex)
+                catch (BO.NoBatteryException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch (IBL.BO.DroneCanNotCollectParcelException ex)
+                catch (BO.DroneCanNotCollectParcelException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch (IBL.BO.DroneCanNotSupplyDeliveryToCustomerException ex)
+                catch (BO.DroneCanNotSupplyDeliveryToCustomerException ex)
                 {
                     Console.WriteLine(ex);
                 }
-                catch (IBL.BO.DroneMaxWeightIsLowException ex)
+                catch (BO.DroneMaxWeightIsLowException ex)
                 {
                     Console.WriteLine(ex);
                 }
@@ -109,7 +109,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function adds items according to user request
         /// </summary>
-        public static void AddingOptions(ref IBL.IBL bl)
+        public static void AddingOptions(ref IBL bl)
         {
             int ans;
             double ans2;
@@ -195,7 +195,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function updates items according to user request
         /// </summary>
-        public static void UpdatingOptions(ref IBL.IBL bl)
+        public static void UpdatingOptions(ref IBL bl)
         {
             UpdateOptions update;
             int userChoise;
@@ -276,7 +276,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function display an object according to user request
         /// </summary>
-        public static void GetObject(ref IBL.IBL bl)
+        public static void GetObject(ref IBL bl)
         {
             int ans;
             DisplayOptions show;
@@ -336,7 +336,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function show lists of items according to user request
         /// </summary>
-        public static void DisplayingListsOptions(ref IBL.IBL bl)
+        public static void DisplayingListsOptions(ref IBL bl)
         {
             int ans;
             Console.WriteLine("press 1 to view the list of base stations");
@@ -388,7 +388,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// the function recieve(not as parameter) coordinates of any point and prints distance from any base or client
         /// </summary>
-        public static void FindingDistance(ref IBL.IBL bl)
+        public static void FindingDistance(ref IBL bl)
         {
             int ans, longitude, latitude, id;
             bool check;
@@ -406,19 +406,19 @@ namespace ConsoleUI_BL
                     if (!check) Console.WriteLine("Write only with numbers");
                     Console.WriteLine("Enter the ID of the customer");
                     int.TryParse(Console.ReadLine(), out id);
-                    Customer c = bl.GetCustomer(id);
-                    Console.WriteLine($"The distance from the customer:{BL.BL.DistanceBetweenPlaces(c.Location.Longitude, c.Location.Latitude, longitude, latitude)}");
-                    break;//
-                case FindDistances.StationDistance:
-                    Console.WriteLine("Enter the location (longitude & latitude) ");
-                    check = int.TryParse(Console.ReadLine(), out longitude);
-                    if (!check) Console.WriteLine("Write only with numbers");
-                    check = int.TryParse(Console.ReadLine(), out latitude);
-                    if (!check) Console.WriteLine("Write only with numbers");
-                    Console.WriteLine("Enter the station's Id");
-                    int.TryParse(Console.ReadLine(), out id);
-                    Station s = bl.GetBaseStation(id);
-                    Console.WriteLine($"The distance from the station is:{BL.BL.DistanceBetweenPlaces(s.Location.Longitude, s.Location.Latitude, longitude, latitude)}");
+                //    Customer c = bl.GetCustomer(id);
+                //    Console.WriteLine($"The distance from the customer:{BL.BL.DistanceBetweenPlaces(c.Location.Longitude, c.Location.Latitude, longitude, latitude)}");
+                //    break;//
+                //case FindDistances.StationDistance:
+                //    Console.WriteLine("Enter the location (longitude & latitude) ");
+                //    check = int.TryParse(Console.ReadLine(), out longitude);
+                //    if (!check) Console.WriteLine("Write only with numbers");
+                //    check = int.TryParse(Console.ReadLine(), out latitude);
+                //    if (!check) Console.WriteLine("Write only with numbers");
+                //    Console.WriteLine("Enter the station's Id");
+                //    int.TryParse(Console.ReadLine(), out id);
+                //    Station s = bl.GetBaseStation(id);
+                //    Console.WriteLine($"The distance from the station is:{BL.BL.DistanceBetweenPlaces(s.Location.Longitude, s.Location.Latitude, longitude, latitude)}");
                     break;
                 default:
                     Console.WriteLine("Wrong number");

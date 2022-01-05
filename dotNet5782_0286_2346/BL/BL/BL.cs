@@ -11,7 +11,7 @@ namespace BL
     sealed partial class BL : IBL
     {
         internal IDal dl = DalFactory.GetDal();
-
+        
         internal double chargingRatePerHour;
         internal double emptyDronePowerConsumption;
         internal double lightWeightCarrierPowerConsumption;
@@ -22,7 +22,8 @@ namespace BL
         IEnumerable<DO.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
         static readonly IBL instance = new BL();
-        public static IBL Instance { get => instance; }
+        public static IBL Instance { get => instance; }//in the pdf it was written it should be internal but in the git examole no
+        static BL(){}
         BL()//ctor
         {
             dalDrones = dl.GetListOfDrones();
