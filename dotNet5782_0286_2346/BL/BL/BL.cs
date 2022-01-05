@@ -19,7 +19,7 @@ namespace BL
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
         List<BO.DroneForList> dronesBL = new();
-        IEnumerable<DO.Drone> dalDrones;
+        IEnumerable<dl.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
         static readonly IBL instance = new BL();
         public static IBL Instance { get => instance; }//in the pdf it was written it should be internal but in the git examole no

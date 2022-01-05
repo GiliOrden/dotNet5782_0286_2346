@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BlApi;
 using BO;
 
-
 namespace BL
 {
     sealed partial class BL : IBL
