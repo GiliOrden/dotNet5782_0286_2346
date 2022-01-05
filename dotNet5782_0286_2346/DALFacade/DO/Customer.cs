@@ -31,9 +31,6 @@ namespace DO
                           Latitude: {latitude}";
 
         }
-
-
-
     }
 }
 

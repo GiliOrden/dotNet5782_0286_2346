@@ -1,7 +1,8 @@
 {
   "profiles": {
     "PL": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
     }
   }
 }
