@@ -6,8 +6,4 @@
     <RootNamespace />
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ConsoleUI\ConsoleUI.csproj" />
-  </ItemGroup>
-
 </Project>
