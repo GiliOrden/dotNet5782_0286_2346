@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using BlApi;
 using BO;
 
-
 namespace BL
 {
-    sealed class BL : IBL
+    internal partial class BL : IBL
     {
 
         public void AddCustomer(BO.Customer c)

@@ -25,7 +25,7 @@ namespace BL
 
        
         List<BO.DroneForList> dronesBL = new();
-        IEnumerable<DO.Drone> dalDrones;
+        IEnumerable<dl.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
 
         public BL()//ctor
