@@ -4,16 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BlApi;
 using DalApi;
 namespace BL
 {
-    internal partial class BL : IBL
+    sealed partial class BL : IBL
     {
-        static readonly IBL instance = new BL();
-        public static IBL Instance { get => instance; }
-
         internal IDal dl = DalFactory.GetDal();
 
         internal double chargingRatePerHour;
@@ -22,16 +18,13 @@ namespace BL
         internal double mediumWeightCarrierPowerConsumption;
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
-
-       
         List<BO.DroneForList> dronesBL = new();
         IEnumerable<dl.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
-
-        public BL()//ctor
+        static readonly IBL instance = new BL();
+        public static IBL Instance { get => instance; }
+        BL()//ctor
         {
-
-            
             dalDrones = dl.GetListOfDrones();
             dronePowerConsumption = dl.GetDronePowerConsumption();
             emptyDronePowerConsumption = dronePowerConsumption[0];
@@ -86,11 +79,11 @@ namespace BL
                        way = DistanceBetweenPlaces(sender.Longitude, sender.Latitude, receiver.Longitude, receiver.Latitude) + minDistance;
                     }
                     
-                    if (parcel.Weight == IDAL.DO.WeightCategories.Light)
+                    if (parcel.Weight == DO.WeightCategories.Light)
                         minCharge = lightWeightCarrierPowerConsumption * way;
-                    else if (parcel.Weight == IDAL.DO.WeightCategories.Medium)
+                    else if (parcel.Weight ==DO.WeightCategories.Medium)
                         minCharge = mediumWeightCarrierPowerConsumption * way;
-                    else if (parcel.Weight == IDAL.DO.WeightCategories.Heavy)
+                    else if (parcel.Weight ==DO.WeightCategories.Heavy)
                         minCharge = heavyWeightCarrierPowerConsumption * way; 
                     droneForList.Battery = rand.Next((int)(minCharge+1), 100);
                 }
@@ -100,7 +93,7 @@ namespace BL
                 {
                     
                     index = rand.Next(dl.GetListOfBaseStations().Count());
-                    IDAL.DO.Station station = dl.GetListOfBaseStations().ElementAt(index);
+                    DO.Station station = dl.GetListOfBaseStations().ElementAt(index);
                     droneForList.Location.Longitude = station.Longitude;
                     droneForList.Location.Latitude =station.Latitude;
                     dl.SendDroneToCharge(droneForList.Id,station.Id);

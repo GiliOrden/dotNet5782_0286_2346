@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using static Dal.DataSource;
 using DalApi;
+using System.Runtime.CompilerServices;
 namespace Dal
 {
-    sealed internal partial class DalObject : IDal
+    sealed  partial class DalObject : IDal
     {
         static readonly IDal instance = new DalObject();
         public static IDal Instance { get => instance; }
+        static DalObject() { }
         /// <summary>
         /// constructor, produce the data base
         /// </summary>        
@@ -19,6 +21,5 @@ namespace Dal
         {
          DataSource.Initialize();
         }
-
     }
 }

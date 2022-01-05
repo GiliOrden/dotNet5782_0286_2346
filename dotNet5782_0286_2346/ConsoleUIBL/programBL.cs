@@ -1,11 +1,11 @@
-﻿using IBL;
-using IBL.BO;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BlApi;
+using BO;
 namespace ConsoleUI_BL
 {
     class ProgramBL
@@ -25,7 +25,7 @@ namespace ConsoleUI_BL
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            IBL.IBL bl = new BL.BL();
+            IBL bl = BlFactory.GetBl();        
             MenuOptions mo;
             int userChoise;
             Console.WriteLine("press 1 to add an item");
@@ -90,7 +90,7 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex);
                 }
-                catch (IBL.BO.DroneStatusException ex)
+                catch (BO.DroneStatusException ex)
                 {
                     Console.WriteLine(ex);
                 }

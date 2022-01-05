@@ -8,7 +8,7 @@ using BO;
 
 namespace BL
 {
-    internal partial class BL : IBL
+    sealed partial class BL : IBL
     {
 
         public void AddCustomer(BO.Customer c)
@@ -43,7 +43,7 @@ namespace BL
                 dl.AddCustomer(customer);
          }
 
-        public IEnumerable<BO.CustomerForList> GetListOfCustomers()
+       public IEnumerable<BO.CustomerForList> GetListOfCustomers()
         {
             IEnumerable<BO.CustomerForList> customers =
                 from customer in dl.GetListOfCustomers()
@@ -63,7 +63,7 @@ namespace BL
             customerForList.ID = customer.Id;
             customerForList.Name = customer.Name;
             customerForList.Phone = customer.Phone;
-            foreach (IDAL.DO.Parcel parc in dl.GetListOfParcels())
+            foreach (DO.Parcel parc in dl.GetListOfParcels())
             {
                 if (parc.SenderId == customerForList.ID)
                 {
@@ -83,7 +83,7 @@ namespace BL
             return customerForList;
         }
 
-        public BO.Customer GetCustomer(int id)
+        public  BO.Customer GetCustomer(int id)
         {
             BO.Customer c = new BO.Customer();
             try
@@ -95,8 +95,8 @@ namespace BL
                 c.Location = new BO.Location();
                 c.Location.Latitude = c2.Latitude;
                 c.Location.Longitude = c2.Longitude;
-                c.ListOfParcelsFromMe = dl.GetParcelsFromMe(id) ;
-                c.ListOfParcelsIntendedToME = dl.GetParcelsIntendedToME(id);
+                c.ListOfParcelsFromMe = GetParcelsFromMe(c.Id);
+                c.ListOfParcelsIntendedToME = GetParcelsIntendedToMe(c.Id);
             }
             catch (IdNotFoundException ex)
             {
@@ -106,8 +106,6 @@ namespace BL
             return c;
 
         }
-
-
     };
 }
 

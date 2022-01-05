@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using BlApi;
+
 namespace PL
 {
     /// <summary>
@@ -22,22 +24,17 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-       
-        private IBL.IBL bl;
+        internal IBL bl = BlFactory.GetBl();
+
         public MainWindow()
         {
             InitializeComponent();
-            bl = new BL.BL();
+            
         }
-
-        
-
         private void ShowDronesList_Click(object sender, RoutedEventArgs e)
         {
-            DroneListWindow dw = new DroneListWindow(ref bl);
+            DroneListWindow dw = new DroneListWindow(ref bl) ;
             dw.Show();
         }
-
-
     }
 }

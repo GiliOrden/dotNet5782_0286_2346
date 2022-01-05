@@ -19,11 +19,10 @@ namespace Dal
            internal static double HeavyWeightCarrierPowerConsumption=0.08;
            internal static double ChargingRatePerHour=25;
         }
-
-        internal static List<Drone>drones = new List<Drone>();//creat list of drones
-        internal static List<Station>stations = new List<Station>();//creat list of stations
-        internal static List<Customer>customers = new List<Customer>();//creat list of customers
-        internal static List<Parcel> parcels = new List<Parcel>();//creat list of parcels
+        internal static List<Drone>drones = new List<Drone>();//create list of drones
+        internal static List<Station>stations = new List<Station>();//create list of stations
+        internal static List<Customer>customers = new List<Customer>();//create list of customers
+        internal static List<Parcel> parcels = new List<Parcel>();//create list of parcels
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
         /// <summary>
         /// current time
@@ -76,6 +75,7 @@ namespace Dal
                  });               
             }
         }
+
         /// <summary>
         ///  creates randomal customers
         /// </summary>

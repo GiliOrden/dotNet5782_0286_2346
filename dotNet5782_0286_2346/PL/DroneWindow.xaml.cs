@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BL;
+using BlApi;
+using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL.BO;
+
 namespace PL
 {
     /// <summary>
@@ -19,15 +22,16 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL droneWindowBL;
+        IBL droneWindowBL;
         DroneForList drone;
-        public DroneWindow(ref IBL.IBL bl)//first constructor for adding
+
+        public DroneWindow(ref IBL bl)//first constructor for adding
         {
             droneWindowBL = bl;
             InitializeComponent();
             updateButton.Visibility = Visibility.Collapsed;
-            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
-            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
+            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.DroneStatuses));
+            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             stationsListBox.ItemsSource = bl.GetListOfBaseStations();
             stationsListBox.SelectedValuePath = "ID";
             idTextBox.TextChanged += addButton_isEnable;
@@ -36,13 +40,13 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL.IBL bl,  IBL.BO.DroneForList selectedDrone)//second constructor for update
+        public DroneWindow(ref IBL bl,  DroneForList selectedDrone)//second constructor for update
         {
             droneWindowBL = bl;
             drone = selectedDrone;           
             InitializeComponent();
-            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
-            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
+            MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
+            DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.DroneStatuses));
             droneWindowGrid.DataContext = selectedDrone;
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
@@ -92,14 +96,14 @@ namespace PL
                 drone.Id = int.Parse(idTextBox.Text);
                 drone.Model = modelTextBox.Text;
                 drone.MaxWeight = (EnumsBL.WeightCategories?)MaxWeightComboBox.SelectedItem;
-                StationForList station = (IBL.BO.StationForList)stationsListBox.SelectedItem;
+                StationForList station = (BO.StationForList)stationsListBox.SelectedItem;
                 idOfStation = station.ID;
                 droneWindowBL.AddDrone(drone, idOfStation);
                 MessageBox.Show("The drone was successfully added");
                 Close();
-                new DroneListWindow(ref droneWindowBL).Show();
+                new DroneListWindow(ref  droneWindowBL).Show();
             }
-            catch (ExistIdException )
+            catch (ExistIdException)
             {
                 idTextBox.BorderBrush = Brushes.Red;
                 MessageBox.Show($"The drone id is already existed,\nPlease check this data field","Error",MessageBoxButton.OK,MessageBoxImage.Error);

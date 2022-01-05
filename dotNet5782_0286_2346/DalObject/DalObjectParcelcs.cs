@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static Dal.DataSource;
 using DalApi;
-namespace DalObject
+using System.Runtime.CompilerServices;
+namespace Dal
 {
-    internal partial class DalObject : IDal
+    sealed partial class DalObject : IDal
     {
 
         /// <summary>

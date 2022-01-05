@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlApi;
+using BO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,32 +22,31 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
-        private IBL.IBL droneListWindowBL;
-        ObservableCollection<IBL.BO.DroneForList> dronesObservableCollection;
-        public DroneListWindow(ref IBL.IBL bl)
+        IBL droneListWindowBL;
+        ObservableCollection<DroneForList> dronesObservableCollection;
+        public DroneListWindow(ref IBL bl)
         {
             InitializeComponent();
             droneListWindowBL = bl;
-            dronesObservableCollection = new ObservableCollection<IBL.BO.DroneForList>(droneListWindowBL.GetListOfDrones());
+            dronesObservableCollection = new ObservableCollection<DroneForList>(droneListWindowBL.GetListOfDrones());
             DroneListView.ItemsSource = dronesObservableCollection;
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.DroneStatuses));
-            WeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.EnumsBL.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(EnumsBL.DroneStatuses));
+            WeightSelector.ItemsSource = Enum.GetValues(typeof(EnumsBL.WeightCategories));
         }
 
         private void statusSelectorAndWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusSelector.SelectedItem != null && WeightSelector.SelectedItem != null)
             {
-                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (IBL.BO.EnumsBL.DroneStatuses)StatusSelector.SelectedItem && drone.MaxWeight == (IBL.BO.EnumsBL.WeightCategories)WeightSelector.SelectedItem);
+                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (EnumsBL.DroneStatuses)StatusSelector.SelectedItem && drone.MaxWeight == (EnumsBL.WeightCategories)WeightSelector.SelectedItem);
             }
             else if (StatusSelector.SelectedItem != null)
             {
-                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (IBL.BO.EnumsBL.DroneStatuses)StatusSelector.SelectedItem);
+                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (EnumsBL.DroneStatuses)StatusSelector.SelectedItem);
             }
             else if (WeightSelector.SelectedItem != null)
             {
-
-                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.MaxWeight == (IBL.BO.EnumsBL.WeightCategories)WeightSelector.SelectedItem);
+                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.MaxWeight == (EnumsBL.WeightCategories)WeightSelector.SelectedItem);
             }
 
             DroneListView.Items.Refresh();
@@ -54,7 +55,7 @@ namespace PL
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
         {
-            IBL.BO.DroneForList drone = DroneListView.SelectedItem as IBL.BO.DroneForList;
+            DroneForList drone = DroneListView.SelectedItem as DroneForList;
             
             if (drone != null)
             {

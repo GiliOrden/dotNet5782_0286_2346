@@ -26,7 +26,7 @@ namespace BL
     {
         public int ID;
         public string EntityName;
-        public string Message;
+       
         public IdNotFoundException(int id, string entity) : base() { ID = id; EntityName = entity; }
         public IdNotFoundException(int id, string entity, string message) : base(message) { ID = id; EntityName = entity; }
         public IdNotFoundException(int id, string entity, string message, Exception innerException) : base(message, innerException)
