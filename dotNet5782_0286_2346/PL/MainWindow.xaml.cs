@@ -37,6 +37,7 @@ namespace PL
             dw.Show();
         }
 
+
         private void baseStationsButton_Click(object sender, RoutedEventArgs e)
         {
             BaseStaionsListWindow bw = new BaseStaionsListWindow(ref bl);
@@ -48,7 +49,6 @@ namespace PL
             CustomersListWindow cw = new CustomersListWindow(ref bl);
             cw.ShowDialog();
         }
-
         private void ShowParcelsList_Click(object sender, RoutedEventArgs e)
         {
             ParcelListWindow pw = new ParcelListWindow(ref bl);
