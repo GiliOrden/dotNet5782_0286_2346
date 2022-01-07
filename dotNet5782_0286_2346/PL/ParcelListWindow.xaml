@@ -1,0 +1,34 @@
+﻿<Window x:Class="PL.ParcelListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ParcelListWindow" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,19,215,25" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Width="SizeToHeader" Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn x:Name="parcelStatusColumn" Width="SizeToHeader" Header="Parcel Status" Binding="{Binding ParcelStatus}"/>
+                <DataGridTextColumn x:Name="priorityColumn" Width="SizeToHeader" Header="Priority" Binding="{Binding Priority}"/>
+                <DataGridTextColumn x:Name="receiverNameColumn" Width="SizeToHeader" Header="Receiver Name" Binding="{Binding ReceiverName}"/>
+                <DataGridTextColumn x:Name="senderNameColumn" Width="SizeToHeader" Header="Sender Name" Binding="{Binding SenderName}"/>
+                <DataGridTextColumn x:Name="weightColumn" Width="SizeToHeader" Header="Weight" Binding="{Binding Weight}"/>
+            </DataGrid.Columns>
+
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+        </DataGrid>
+        <Button Content="Group by sender" HorizontalAlignment="Left" Margin="635,74,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
+        <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="635,149,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupByReceiver_Click"/>
+    </Grid>
+
+</Window>
