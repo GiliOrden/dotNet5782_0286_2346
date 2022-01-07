@@ -41,5 +41,10 @@ namespace PL
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("ReceiverName");
             view.GroupDescriptions.Add(groupDescription);
         }
+
+        private void WeightSelectComboBox(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
