@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BO;
 namespace PL
 {
     /// <summary>
@@ -26,6 +26,22 @@ namespace PL
             InitializeComponent();
             bL = bl;
             customerForListDataGrid.DataContext = bL.GetListOfCustomers();
+        }
+
+        private void customerForListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CustomerForList customer = customerForListDataGrid.SelectedItem as CustomerForList;
+            if (customer != null)
+            {
+                CustomerWindow cw = new CustomerWindow(ref bL, customer.ID);
+                cw.ShowDialog();
+            }
+        }
+
+        private void addCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerWindow cw = new CustomerWindow(ref bL);
+            cw.ShowDialog();
         }
     }
 }

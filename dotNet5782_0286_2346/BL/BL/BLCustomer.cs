@@ -38,9 +38,9 @@ namespace BL
                 if (name != "")
                     customer.Name = name;
                 if (phone != "")
-                    customer.Phone = phone;
-                dl.DeleteCustomer(id);
-                dl.AddCustomer(customer);
+               customer.Phone = phone;
+          dl.DeleteCustomer(id);
+          dl.AddCustomer(customer);
          }
 
        public IEnumerable<BO.CustomerForList> GetListOfCustomers()
