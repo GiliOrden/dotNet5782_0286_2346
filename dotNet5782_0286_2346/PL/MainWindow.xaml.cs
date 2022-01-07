@@ -48,5 +48,11 @@ namespace PL
             CustomersListWindow cw = new CustomersListWindow(ref bl);
             cw.ShowDialog();
         }
+
+        private void ShowParcelsList_Click(object sender, RoutedEventArgs e)
+        {
+            ParcelListWindow pw = new ParcelListWindow(ref bl);
+            pw.Show();
+        }
     }
 }

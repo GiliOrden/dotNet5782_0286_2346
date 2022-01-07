@@ -27,7 +27,6 @@
         </Grid>
 
         <ListView x:Name="DroneListView" Grid.Row="1" SelectionChanged="DroneListView_SelectionChanged">
-
         </ListView>
         <Image  Source="/row-drones-delivery-cardboard-packages-260nw-226006975.jpg" Stretch="UniformToFill" HorizontalAlignment="Left" Height="544" Margin="175,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="577">
 

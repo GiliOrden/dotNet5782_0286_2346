@@ -40,7 +40,7 @@
         </Grid>
         <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="507,560,0,0"  IsEnabled="False"  VerticalAlignment="Top" Height="32" Width="104" Click="addButton_Click"/>
         <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="655,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="cancelButton_Click" />
-        <Button x:Name="updateButton" Content="UpDate"  HorizontalAlignment="Left" Margin="507,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="updateButton_Click" />
+        <Button x:Name="updateButton" Content="Update"  HorizontalAlignment="Left" Margin="507,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="updateButton_Click" />
         <TextBlock x:Name="chooseStationTextBox" HorizontalAlignment="Left" Margin="35,498,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Text="Please choose station for initial charging: "/>
         <ListBox x:Name="stationsListBox"   Margin="35,519,545,18"/>
         <Button x:Name="sendToChargeButton" Content="Send to charge " Visibility="Collapsed" HorizontalAlignment="Left"  Margin="380,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="sendToChargeButton_Click"/>
