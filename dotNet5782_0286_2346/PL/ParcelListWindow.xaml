@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ParcelListWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,19,215,25" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,54,215,25" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Width="SizeToHeader" Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn x:Name="parcelStatusColumn" Width="SizeToHeader" Header="Parcel Status" Binding="{Binding ParcelStatus}"/>
@@ -29,6 +29,8 @@
         </DataGrid>
         <Button Content="Group by sender" HorizontalAlignment="Left" Margin="635,74,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
         <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="635,149,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupByReceiver_Click"/>
+        <ComboBox Name="WeightSelect" HorizontalAlignment="Left" Margin="350,24,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,1.55" Height="25" SelectionChanged="WeightSelectComboBox"/>
+        
     </Grid>
 
 </Window>
