@@ -14,11 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\..\..\..\..\.nuget\packages\materialdesignthemes\4.3.0\lib\netcoreapp3.1\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

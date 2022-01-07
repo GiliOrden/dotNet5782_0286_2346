@@ -15,6 +15,10 @@ namespace BO
         public EnumsBL.DroneStatuses? DroneStatus { get; set; }
         public int IdOfTheDeliveredParcel { get; set; }//the id of the parcel the drone need to send
         public Location Location { get; set; }
+
+
+
+
         public override string ToString()
         {
             return this.ToStringProperty();

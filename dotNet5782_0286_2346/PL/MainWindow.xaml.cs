@@ -36,5 +36,17 @@ namespace PL
             DroneListWindow dw = new DroneListWindow(ref bl) ;
             dw.Show();
         }
+
+        private void baseStationsButton_Click(object sender, RoutedEventArgs e)
+        {
+            BaseStaionsListWindow bw = new BaseStaionsListWindow(ref bl);
+            bw.ShowDialog();
+        }
+
+        private void customersButton_Click(object sender, RoutedEventArgs e)
+        {
+            CustomersListWindow cw = new CustomersListWindow(ref bl);
+            cw.ShowDialog();
+        }
     }
 }

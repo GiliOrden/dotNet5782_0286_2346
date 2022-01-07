@@ -24,7 +24,6 @@ namespace PL
     {
         IBL droneWindowBL;
         DroneForList drone;
-
         public DroneWindow(ref IBL bl)//first constructor for adding
         {
             droneWindowBL = bl;
