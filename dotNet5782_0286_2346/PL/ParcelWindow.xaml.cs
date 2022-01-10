@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,14 +49,43 @@ namespace PL
             UpdateParcel.Visibility = Visibility.Collapsed;
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
-            //אמורות להופיע ID של המוכר והקונה לבחירה ובנוסף כל שאר האפשרויות צריכות להיות חסומות.
+            senderListBox.ItemsSource = bl.GetListOfCustomers();
+            receiverListBox.ItemsSource= bl.GetListOfCustomers();
+            senderListBox.SelectionChanged += addButton_isEnable;
+            receiverListBox.SelectionChanged += addButton_isEnable;
+            priorityComboBox.SelectionChanged += addButton_isEnable;
+            weightComboBox.SelectionChanged += addButton_isEnable;
         }
 
-
-        private void idTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-
+            if (weightComboBox.SelectedItem != null && priorityComboBox.SelectedItem != null && receiverListBox.SelectedItem != null && senderListBox.SelectedItem != null)
+                AddParcel.IsEnabled = true;
         }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            //int idOfSender, idOfReceiver;
+            //new ObservableCollection<BO.ParcelForList>
+            BO.Parcel parcel = new();
+            parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
+            parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
+            parcel.Sender = new();
+            BO.CustomerForList cust= (BO.CustomerForList)senderListBox.SelectedItem;
+            parcel.Sender.ID = cust.ID;
+            parcel.Sender.Name = cust.Name;
+            parcel.Receiver = new();
+            BO.CustomerForList cust2 = (BO.CustomerForList)receiverListBox.SelectedItem;
+            parcel.Receiver.ID = cust2.ID;
+            parcel.Receiver.Name = cust2.Name;
+            parc.AddParcel(parcel);
+            MessageBox.Show("The parcel was successfully added");
+            Close();
+
+            //var ParcelCollection = new ObservableCollection<BO.ParcelForList>(parc.GetListOfParcels());
+            //ParcelListWindow.parcelForListDataGrid.DataContext = ParcelCollection;
+            //new ParcelListWindow(ref parc).Show();
+        }  
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -64,5 +94,7 @@ namespace PL
             //this.Close();
             //new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
         }
+
+        
     }
 }

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ParcelListWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,54,215,25" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False"  >
+        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,54,215,25" ItemsSource="{Binding }" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionChanged="ParcelView_SelectionChanged"  >
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Width="SizeToHeader" Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn x:Name="parcelStatusColumn" Width="SizeToHeader" Header="Parcel Status" Binding="{Binding ParcelStatus}"/>

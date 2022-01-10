@@ -34,7 +34,7 @@
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Drone:" Height="26" Width="45"/>
             <ListBox x:Name="droneListBox" Width="100" VerticalAlignment="Center" IsEnabled="false" Grid.Row="3" Margin="3,0,0,0" ItemsSource="{Binding}" Height="125" HorizontalAlignment="Left" DisplayMemberPath="Drone" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Id:" Height="26" Width="23"/>
-            <TextBox x:Name="idTextBox" Width="97" VerticalAlignment="Center" IsEnabled="false" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Height="22" HorizontalAlignment="Left" Grid.Column="1" TextChanged="idTextBox_TextChanged" Margin="6,0,0,0"/>
+            <TextBox x:Name="idTextBox" Width="97" VerticalAlignment="Center" IsEnabled="false" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Height="22" HorizontalAlignment="Left" Grid.Column="1" Margin="6,0,0,0"/>
             <Label VerticalAlignment="Center" Grid.Row="5" HorizontalAlignment="Center" Content="Parcel Creation Time:" Height="26" Width="121"/>
             <DatePicker x:Name="parcelCreationTimeDatePicker" VerticalAlignment="Center" IsEnabled="false" SelectedDate="{Binding ParcelCreationTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="1" Height="24" Width="102"/>
             <Label VerticalAlignment="Center" Grid.Row="6" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Priority:" Height="26" Width="50"/>
@@ -46,9 +46,9 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Receiver:" Height="26" Width="57"/>
-            <ListBox x:Name="receiverListBox" Width="100" VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0" ItemsSource="{Binding}" Height="75" HorizontalAlignment="Left" DisplayMemberPath="Receiver" Grid.Column="1"/>
+            <ListBox x:Name="receiverListBox" Width="100" VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0"  Height="75" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Sender:" Height="26" Width="50"/>
-            <ListBox x:Name="senderListBox" Width="100" VerticalAlignment="Center" Grid.Row="8" Margin="3,0,0,0" ItemsSource="{Binding}" Height="75" HorizontalAlignment="Left" DisplayMemberPath="Sender" Grid.Column="1"/>
+            <ListBox x:Name="senderListBox" Width="100" VerticalAlignment="Center" Grid.Row="8" Margin="3,0,0,0"  Height="75" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Weight:" Height="26" Width="50"/>
             <ComboBox x:Name="weightComboBox" Width="97" VerticalAlignment="Top" Grid.Row="9"  Height="22" HorizontalAlignment="Left"  Grid.Column="1" Margin="8,0,0,0" SelectedItem="{Binding Weight}">
                 <ComboBox.ItemsPanel>
@@ -59,6 +59,7 @@
             </ComboBox>
         </Grid>
         <Button x:Name="UpdateParcel" Content="update" HorizontalAlignment="Left" Margin="375,354,0,0" VerticalAlignment="Top" Height="30" Width="65" Click="updateButton_Click"/>
+        <Button x:Name="AddParcel" Content="Add" HorizontalAlignment="Left" Margin="375,434,0,0" VerticalAlignment="Top" Height="25" Width="65" IsEnabled="False" Click="addButton_Click" />
 
     </Grid>
 
