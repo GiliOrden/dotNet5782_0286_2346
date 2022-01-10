@@ -215,7 +215,32 @@ namespace BL
             }
             return customerInParcel;
         }
+        public IEnumerable<BO.ParcelForList> GetParcelsByPredicate(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status)
+        {
+            return from parc in dl.GetParcelsByPredicate(parc => predicatFanc(weight, status, parc))
+                   let prc = dl.GetParcel(parc.Id)
+                   select new BO.ParcelForList
+                   {
+                       Id = prc.Id,
+                       SenderName = dl.GetCustomer(prc.SenderId).Name,
+                       ReceiverName = dl.GetCustomer(prc.TargetId).Name,
+                       Weight = (EnumsBL.WeightCategories)prc.Weight,
+                       Priority = (EnumsBL.Priorities)prc.Priority,
+                       ParcelStatus = StatusOfParcel(prc.Id)
+                   };
+           
+        }
+        public bool predicatFanc(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status, DO.Parcel parc)
+        {
+            if (weight != null && status != null)
+              return parc.Weight == (DO.WeightCategories)weight&& StatusOfParcel(parc.Id) == (EnumsBL.ParcelStatuses)status; 
+            else if(weight != null) 
+                return parc.Weight == (DO.WeightCategories)weight; 
+            return StatusOfParcel(parc.Id) == (EnumsBL.ParcelStatuses)status;
+        }
 
+        
+        
     };
 
 

@@ -136,6 +136,6 @@ namespace Dal
                    where predicate(pac)
                    select pac;
         }
-
+        
     }
 }

@@ -151,7 +151,7 @@ namespace BL
             return dist;
         }
 
-    };
-
+        
+    }
 
 }
