@@ -143,12 +143,10 @@ namespace PL
 
         private void updateButton_Click(object sender, RoutedEventArgs e)//this is a func for 'click' event
         {
-
-                droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
-                MessageBox.Show($"The drone was successfully updated","Success",MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
-                new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
-
+           droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
+           MessageBox.Show($"The drone was successfully updated","Success",MessageBoxButton.OK, MessageBoxImage.Information);
+           this.Close();
+           new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
