@@ -76,5 +76,10 @@ namespace PL
         {
             Close();
         }
+
+        private void GroupByStatus_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

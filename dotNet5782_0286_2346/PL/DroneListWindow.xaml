@@ -31,6 +31,7 @@
         <Image  Source="/row-drones-delivery-cardboard-packages-260nw-226006975.jpg" Stretch="UniformToFill" HorizontalAlignment="Left" Height="544" Margin="175,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="577">
 
         </Image>
+        <Button Content="Group by status" HorizontalAlignment="Left" Margin="655,485,0,0" Grid.Row="1" VerticalAlignment="Top" Click="GroupByStatus_Click"/>
 
     </Grid>
 </Window>

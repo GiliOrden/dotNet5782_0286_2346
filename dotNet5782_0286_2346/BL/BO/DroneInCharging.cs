@@ -11,6 +11,7 @@ namespace BO
     {
         public int Id { get; set; }
         public double Battery { get; set; }
+        //public DateTime? StartCharging { get; set; }
 
         public override string ToString()
         {

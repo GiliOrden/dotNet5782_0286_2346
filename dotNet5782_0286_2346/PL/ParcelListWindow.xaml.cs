@@ -94,8 +94,15 @@ namespace PL
                 pw.ShowDialog();
                 parcelForListDataGrid.ItemsSource = null;
                 parcelForListDataGrid.ItemsSource = parc.GetListOfParcels();//update the parcel collection in the parcelListWindow
-                
+                //GroupBySender.
             }
+        }
+
+        private void RefreshButton(object sender, RoutedEventArgs e)
+        {
+            ParcelListWindow pw = new ParcelListWindow(ref parc);
+            pw.Show();
+            Close();
         }
     }
 }
