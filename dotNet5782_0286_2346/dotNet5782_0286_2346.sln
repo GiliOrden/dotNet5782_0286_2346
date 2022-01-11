@@ -29,7 +29,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{5B3E7482-AF38-4538-B637-2E603E8422E0}"
 	ProjectSection(SolutionItems) = preProject
 		xml\BatteryAndRowNumbers.xml = xml\BatteryAndRowNumbers.xml
+		xml\CustomersXml.xml = xml\CustomersXml.xml
 		xml\dal-config.xml = xml\dal-config.xml
+		xml\DroneChargesXml.xml = xml\DroneChargesXml.xml
+		xml\DronesXml.xml = xml\DronesXml.xml
+		xml\ParcelsXml.xml = xml\ParcelsXml.xml
+		xml\StationsXml.xml = xml\StationsXml.xml
 	EndProjectSection
 EndProject
 Global

@@ -24,6 +24,14 @@ namespace Dal
         internal static List<Customer>customers = new List<Customer>();//create list of customers
         internal static List<Parcel> parcels = new List<Parcel>();//create list of parcels
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
+
+
+        static string droneChargesPath = @"DroneChargesXml.xml"; //XElement
+        static string dronesPath = @"DronesXml.xml"; //XMLSerializer
+        static string customersPath = @"CustomersXml.xml"; //XMLSerializer
+        static string parcelsPath = @"ParcelsXml.xml"; //XMLSerializer
+        static string  stationsPath = @"StationsXml.xml"; //XMLSerializer
+        private readonly string configPath = "BatteryAndRowNumbers.xml";
         /// <summary>
         /// current time
         /// </summary>
@@ -187,7 +195,13 @@ namespace Dal
             CreateStations(rand.Next(2,4));
             createCustomers(rand.Next(10, 14));
             createParcels(rand.Next(10, 100));
-            
+
+            XMLTools.SaveListToXMLSerializer(stations, stationsPath);
+            XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
+            XMLTools.SaveListToXMLSerializer(customers, customersPath);
+            XMLTools.SaveListToXMLSerializer(drones, dronesPath);
+
+
         }       
     }
 }
