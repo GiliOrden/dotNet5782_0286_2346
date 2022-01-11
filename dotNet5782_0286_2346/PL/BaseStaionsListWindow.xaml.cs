@@ -60,11 +60,6 @@ namespace PL
 
         private void groupByNumberOfAvailableChargeSlotsButton_Click(object sender, RoutedEventArgs e)
         {
-
-            //stationForListDataGrid.DataContext = from station in bL.GetListOfBaseStations()
-            //                                     group station by station.AvailableChargingPositions into gs
-            //                                     select gs;
-
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(stationForListDataGrid.DataContext);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("AvailableChargingPositions");
             view.GroupDescriptions.Add(groupDescription);
