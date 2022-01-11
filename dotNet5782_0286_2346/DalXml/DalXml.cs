@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using DalApi;
 using DO;
 
@@ -60,29 +61,81 @@ namespace Dal
 
         public void AddCustomer(Customer c)
         {
-            throw new NotImplementedException();
+            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
+
+            XElement cus = (from customer in customersRootElem.Elements()
+                             where int.Parse(customer.Element("Id").Value) == c.Id
+                             select customer).FirstOrDefault();
+
+            if (cus != null)
+                throw new ExistIdException(c.Id, "customer");
+
+            XElement personElem = new XElement("Customer",
+                                  new XElement("Id", c.Id.ToString()),
+                                  new XElement("Name", c.Name),
+                                  new XElement("Phone", c.Phone),
+                                  new XElement("Longitude", c.Longitude.ToString()),
+                                  new XElement("Latitude", c.Latitude.ToString()));
+
+            customersRootElem.Add(personElem);
+
+            XMLTools.SaveListToXMLElement(customersRootElem, customersPath);
         }
 
         public Customer GetCustomer(int id)
         {
-            //    List<Customer> customersList = XMLTools.LoadListFromXMLSerializer<Customer>(customersPath);
-            //    Customer c = customersList.Find(cust => cust.Id == id);
-            //    if (CheckCustomer(customersList,id))
-            //        return c; 
-            //    else
-            //        throw new IdNotFoundException(id, "customer");
+            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
 
-            throw new NotImplementedException();
+            Customer c = (from cus in customersRootElem.Elements()
+                        where int.Parse(cus.Element("Id").Value) == id
+                        select new Customer()
+                        {
+                            Id = Int32.Parse(cus.Element("Id").Value),
+                            Name = cus.Element("Name").Value,
+                            Phone = cus.Element("Phone").Value,
+                            Longitude = Int32.Parse(cus.Element("Longitude").Value),
+                            Latitude = Int32.Parse(cus.Element("Latitude").Value)
+                        }
+                        ).FirstOrDefault();
+
+            if (!CheckCustomer(id))
+                throw new IdNotFoundException(id, "customer");
+
+            return c;
         }
 
         public IEnumerable<Customer> GetListOfCustomers()
         {
-            throw new NotImplementedException();
+            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
+
+            return (from cus in customersRootElem.Elements()
+                    select new Customer()
+                    {
+                        Id = Int32.Parse(cus.Element("Id").Value),
+                            Name = cus.Element("Name").Value,
+                            Phone = cus.Element("Phone").Value,
+                            Longitude = Int32.Parse(cus.Element("Longitude").Value),
+                            Latitude = Int32.Parse(cus.Element("Latitude").Value)
+                    }
+                   );
         }
 
         public void DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
+
+            XElement cus = (from c in customersRootElem.Elements()
+                            where int.Parse(c.Element("Id").Value) == id
+                            select c).FirstOrDefault();
+
+            if (cus != null)
+            {
+                cus.Remove(); //<==>   Remove per from personsRootElem
+
+                XMLTools.SaveListToXMLElement(customersRootElem, customersPath);
+            }
+            else
+                throw new IdNotFoundException(id, "customer");
         }
 
         /// <summary>
@@ -90,11 +143,16 @@ namespace Dal
         /// </summary>
         /// <param name="id">ID of customer</param:>
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
-        private bool CheckCustomer(List<Customer>lst ,int id)
+        private bool CheckCustomer(int id)
         {
-            //return lst.Exists(cust => cust.Id == id);
-
-            throw new NotImplementedException();
+            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
+            XElement cus = (from c in customersRootElem.Elements()
+                            where int.Parse(c.Element("Id").Value) == id
+                            select c).FirstOrDefault();
+            if (cus != null)
+                return true;
+            return false;
+            
         }
 
         public void AddDrone(Drone d)
