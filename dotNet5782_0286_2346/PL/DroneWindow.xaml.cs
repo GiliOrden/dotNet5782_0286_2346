@@ -39,35 +39,35 @@ namespace PL
             stationsListBox.SelectionChanged += addButton_isEnable;
         }
 
-        public DroneWindow(ref IBL bl,  DroneForList selectedDrone)//second constructor for update
+        public DroneWindow(ref IBL bl, int idOfTheSelectedDrone)//second constructor for update
         {
             droneWindowBL = bl;
-            drone = selectedDrone;           
+            drone = bl.GetDroneForList(idOfTheSelectedDrone);           
             InitializeComponent();
             MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.DroneStatuses));
-            droneWindowGrid.DataContext = selectedDrone;
+            droneWindowGrid.DataContext = drone;
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
             chooseStationTextBox.Visibility = Visibility.Collapsed;
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
-            if (selectedDrone.DroneStatus == EnumsBL.DroneStatuses.Available)
+            if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
             {
                 sendToChargeButton.Visibility = Visibility.Visible;
                 sendDroneToDeliveryButton.Visibility = Visibility.Visible;
             }
-            if (selectedDrone.DroneStatus == EnumsBL.DroneStatuses.Maintenance)
+            if (drone.DroneStatus == EnumsBL.DroneStatuses.Maintenance)
             {
                 releaseDroneFromChargeButton.Visibility = Visibility.Visible;
             }
-            if (selectedDrone.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
+            if (drone.DroneStatus == EnumsBL.DroneStatuses.OnDelivery)
             {
-                if (droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).CollectionTime == null)
+                if (droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel).CollectionTime == null)
                 {
                     collectParcelButton.Visibility = Visibility.Visible;
                 }
-                else if (droneWindowBL.GetParcel(selectedDrone.IdOfTheDeliveredParcel).DeliveryTime == null)
+                else if (droneWindowBL.GetParcel(drone.IdOfTheDeliveredParcel).DeliveryTime == null)
                 {
                     supplyParcelButton.Visibility = Visibility.Visible;
                 }
@@ -110,7 +110,7 @@ namespace PL
 
         }
 
-        private void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)
+        internal void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
             if (text == null) return;
@@ -146,7 +146,7 @@ namespace PL
            droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
            MessageBox.Show($"The drone was successfully updated","Success",MessageBoxButton.OK, MessageBoxImage.Information);
            this.Close();
-           new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+           new DroneWindow(ref droneWindowBL, drone.Id).Show();
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -155,7 +155,7 @@ namespace PL
                 droneWindowBL.SendDroneToCharge(drone.Id);
                 MessageBox.Show("The drone was sent to charging");
                 this.Close();
-                new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+                new DroneWindow(ref droneWindowBL,drone.Id).Show();
             }
             catch (NoBatteryException)
             {
@@ -167,7 +167,7 @@ namespace PL
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
             MessageBox.Show("The drone was released from charging");
             this.Close();
-            new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+            new DroneWindow(ref droneWindowBL, drone.Id).Show();
         }
 
         private void sendDroneToDeliveryButton_Click(object sender, RoutedEventArgs e)
@@ -177,7 +177,7 @@ namespace PL
                 droneWindowBL.AssignParcelToDrone(drone.Id);
                 MessageBox.Show("The drone was assigned to parcel!");
                 this.Close();
-                new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+                new DroneWindow(ref droneWindowBL,drone.Id).Show();
             }
             catch (NoBatteryException)
             {
@@ -194,7 +194,7 @@ namespace PL
           droneWindowBL.CollectParcelByDrone(drone.Id);
           MessageBox.Show("The parcel was collected successfully","Success",MessageBoxButton.OK,MessageBoxImage.Information);
           this.Close();
-          new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+          new DroneWindow(ref droneWindowBL, drone.Id).Show();
         }
 
         private void supplyParcelButton_Click(object sender, RoutedEventArgs e)//doesn't need exeption either, the id have chacked in 'sendDroneToDelivery'
@@ -202,7 +202,7 @@ namespace PL
           droneWindowBL.SupplyDeliveryToCustomer(drone.Id);
           MessageBox.Show("The drone was supplied to customer", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
           this.Close();
-          new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+          new DroneWindow(ref droneWindowBL,drone.Id).Show();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

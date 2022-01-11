@@ -52,7 +52,7 @@ namespace Dal
             customers.RemoveAll(cus => cus.Id == id);
         }
 
-
+        
     }
 }
 

@@ -20,7 +20,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="idTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox x:Name="idTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" TextChanged="addButton_isEnable" PreviewKeyDown="TextBoxOnlyNumbersPreviewKeyDown"/>
             <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBox x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Content="Phone:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
@@ -30,26 +30,30 @@
             <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
             <TextBox x:Name="longitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Location.Longitude, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <DataGrid x:Name="parcelsIntendedToCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="31,132,571,228" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DataGrid x:Name="parcelsIntendedToCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="33,75,503,250" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="otherSideIDColumn2" Binding="{Binding OtherSide.ID}" Header="OtherSideID" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="otherSideNameColumn2" Binding="{Binding OtherSide.Name}" Header="OtherSideName" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="parcelsfromCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="31,234,571,126" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DataGrid x:Name="parcelsfromCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="31,234,503,95" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn1" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="idColumn1" Binding="{Binding Id}" Header="Id" Width="Auto"/>
                 <DataGridTextColumn x:Name="priorityColumn1" Binding="{Binding Priority}" Header="Priority" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="statusColumn1" Binding="{Binding Status}" Header="Status" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="weightColumn1" Binding="{Binding Weight}" Header="Weight" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="otherSideIDColumn1" Binding="{Binding OtherSide.ID}" Header="OtherSideID" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="otherSideNameColumn1" Binding="{Binding OtherSide.Name}" Header="OtherSideName" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Parcels from customer:" HorizontalAlignment="Left" Margin="33,208,0,0" VerticalAlignment="Top"/>
-        <Label Content="Parcels intended to customer:" HorizontalAlignment="Left" Margin="33,101,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.547,0.722"/>
-        <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="608,379,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.939,0.939" Click="addButton_Click"/>
-        <Button x:Name="updateButton" Content="Update" HorizontalAlignment="Left" Margin="608,379,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.939,0.939"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="673,379,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="parcelsFromCustomerLabel" Content="Parcels from customer:" HorizontalAlignment="Left" Margin="33,208,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="parcelsIntendedToCustomerLabel"  Content="Parcels intended to customer:" HorizontalAlignment="Left" Margin="31,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.547,0.722"/>
+        <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="559,379,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.939,0.939" Click="addButton_Click"/>
+        <Button x:Name="updateButton" Content="Update" HorizontalAlignment="Left" Margin="559,379,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.939,0.939" Click="updateButton_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="673,379,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
     </Grid>
 </Window>

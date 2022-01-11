@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     sealed partial class BL : IBL
     {
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(BO.Station station)
         {
             DO.Station dalStation = new();
@@ -29,7 +30,7 @@ namespace BL
             }
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStation(int id, string name="", int numOfChargeSlots=0)
         {
             try
@@ -45,8 +46,7 @@ namespace BL
                         if (droneCharge.StationId == id)
                             numOfChargeSlots--;
                     }
-                    s.ChargeSlots = numOfChargeSlots;
-                    
+                    s.ChargeSlots = numOfChargeSlots;                    
                 }
                 dl.DeleteStation(id);
                 dl.AddStation(s);
@@ -57,6 +57,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.StationForList> GetListOfBaseStations()
         {
             IEnumerable<BO.StationForList> stationsBO =
@@ -87,7 +88,7 @@ namespace BL
             return numOfInaccessibleChargingSlots;
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.StationForList> GetListOfStationsWithAvailableChargeSlots()
         {
             IEnumerable<BO.StationForList> stationsWithAvailableChargeSlots =
@@ -102,7 +103,7 @@ namespace BL
             return stationsWithAvailableChargeSlots;
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station GetBaseStation(int id)
         {
             BO.Station s = new();

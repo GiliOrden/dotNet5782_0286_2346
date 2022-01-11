@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace BL
 {
     sealed partial class BL : IBL

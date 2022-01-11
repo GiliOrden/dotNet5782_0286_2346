@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
+
 
 namespace BL
 {
     sealed partial class BL : IBL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel p)
         {  
          DO.Parcel parcel = new();
@@ -24,7 +27,7 @@ namespace BL
          dl.AddParcel(parcel);
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectParcelByDrone(int id)
         {
             int parcelId;
@@ -48,6 +51,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SupplyDeliveryToCustomer(int droneId)
         {
             foreach (DroneForList d in dronesBL)
@@ -72,6 +76,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.ParcelForList> GetListOfNotAssociatedParcels()
         {
             return from parcel in dl.GetParcelsByPredicate(p => p.DroneId == null)
@@ -86,6 +91,7 @@ namespace BL
                    };
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.ParcelForList> GetListOfParcels()
         {
              var parcels =
@@ -101,6 +107,8 @@ namespace BL
                 };
             return parcels;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
             Parcel p = new();

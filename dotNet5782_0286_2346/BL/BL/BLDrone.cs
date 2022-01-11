@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     sealed partial class BL : IBL
     {
-       public void AddDrone(BO.DroneForList drone, int idOfStation)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void AddDrone(BO.DroneForList drone, int idOfStation)
         {
             try
             {
@@ -36,22 +38,27 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int id, string newModel)
         {
-            try
+            lock (dl)
             {
-                DO.Drone d = dl.GetDrone(id);
-                dronesBL.Find(drone => drone.Id == id).Model = newModel;
-                d.Model = newModel;
-                dl.DeleteDrone(id);
-                dl.AddDrone(d);
-            }
-            catch (DO.IdNotFoundException ex)
-            {
-                throw new IdNotFoundException(ex.ID, ex.EntityName);
+                try
+                {
+                    DO.Drone d = dl.GetDrone(id);
+                    dronesBL.Find(drone => drone.Id == id).Model = newModel;
+                    d.Model = newModel;
+                    dl.DeleteDrone(id);
+                    dl.AddDrone(d);
+                }
+                catch (DO.IdNotFoundException ex)
+                {
+                    throw new IdNotFoundException(ex.ID, ex.EntityName);
+                }
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneFromCharge(int id, DateTime releaseTime)
         {
             BO.DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == id);
@@ -67,6 +74,7 @@ namespace BL
             dl.ReleaseDroneFromCharge(id);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignParcelToDrone(int idOfDrone)
         {
             int idOfParcel = 0;
@@ -176,7 +184,7 @@ namespace BL
             return parcelsWithMaxWeightPossibleToDrone;
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int id)
         {
             BO.Drone drone = GetDrone(id);
@@ -218,19 +226,22 @@ namespace BL
                 throw new DroneStatusException(id,"available");
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.DroneForList> GetListOfDrones()
         {
             return from drone in dronesBL
                    select drone;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.DroneForList> GetDronesByPredicate(Predicate<BO.DroneForList> predicate)
         {
             return from drone in dronesBL
                    where predicate(drone)
                    select drone;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone GetDrone(int id)
         {
             BO.Drone d = new();
@@ -276,6 +287,9 @@ namespace BL
             d.ParcelInTransfer = parcelInTransfer;
             return d;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.DroneForList GetDroneForList(int id)
         {
             return dronesBL.Find(drone => drone.Id == id);

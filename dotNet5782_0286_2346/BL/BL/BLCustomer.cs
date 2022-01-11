@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     sealed partial class BL : IBL
     {
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(BO.Customer c)
         {
             DO.Customer customer = new();
@@ -30,20 +31,30 @@ namespace BL
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int id, string name, string phone)
         {
             if (!dl.GetListOfCustomers().Any(cus => cus.Id == id))
                 throw new IdNotFoundException(id, "customer");
+          lock (dl)
+          { 
             DO.Customer customer = dl.GetCustomer(id);
-                if (name != "")
-                    customer.Name = name;
-                if (phone != "")
-               customer.Phone = phone;
-          dl.DeleteCustomer(id);
-          dl.AddCustomer(customer);
-         }
+            if (name != "")
+            {
 
-       public IEnumerable<BO.CustomerForList> GetListOfCustomers()
+                customer.Name = name;
+            }
+            if (phone != "")
+            {
+                customer.Phone = phone;
+            }
+            dl.DeleteCustomer(id);
+            dl.AddCustomer(customer);
+          }
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<BO.CustomerForList> GetListOfCustomers()
         {
             IEnumerable<BO.CustomerForList> customers =
                 from customer in dl.GetListOfCustomers()
@@ -83,7 +94,8 @@ namespace BL
             return customerForList;
         }
 
-        public  BO.Customer GetCustomer(int id)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public BO.Customer GetCustomer(int id)
         {
             BO.Customer c = new BO.Customer();
             try

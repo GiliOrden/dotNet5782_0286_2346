@@ -10,10 +10,10 @@
     <Grid>
             <DataGrid x:Name="customerForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="53,79,43,72" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="customerForListDataGrid_SelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width=""/>
-                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
                     <DataGridTextColumn x:Name="onTheWayToCustomerParcelsColumn" Binding="{Binding OnTheWayToCustomerParcels}" Header="On The Way To Customer Parcels" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Phone}" Header="Phone" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="phoneColumn" Binding="{Binding Phone}" Header="Phone" Width="Auto"/>
                     <DataGridTextColumn x:Name="receivedParcelsColumn" Binding="{Binding ReceivedParcels}" Header="Received Parcels" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="sentAndDeliveredParcelsColumn" Binding="{Binding SentAndDeliveredParcels}" Header="Sent And Delivered Parcels" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="sentButNotDeliveredParcelsColumn" Binding="{Binding SentButNotDeliveredParcels}" Header="Sent But Not Delivered Parcels" Width="SizeToHeader"/>
