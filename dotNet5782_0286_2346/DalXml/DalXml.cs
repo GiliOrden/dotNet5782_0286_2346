@@ -156,6 +156,11 @@ namespace Dal
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteParcel(int id)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
