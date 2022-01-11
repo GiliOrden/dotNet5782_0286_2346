@@ -16,8 +16,8 @@ namespace BO
         public Priorities Priority { get; set; }
         public CustomerInParcel Sender { get; set; }
         public CustomerInParcel Receiver { get; set; }
-        public BO.Location Source { get; set; }
-        public BO.Location Destination { get; set; }
+        public Location Source { get; set; }
+        public Location Destination { get; set; }
         public double TransportDistance { get; set; }
 
         public override string ToString()
