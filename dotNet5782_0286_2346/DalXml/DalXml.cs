@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using DalApi;
 using DO;
 
@@ -22,32 +23,50 @@ namespace Dal
         string customersPath = @"CustomersXml.xml"; //XMLSerializer
         string parcelsPath = @"ParcelsXml.xml"; //XMLSerializer
         string stationsPath = @"StationsXml.xml"; //XMLSerializer
-        private readonly string configPath = "config.xml";
+        private readonly string configPath = "BatteryAndRowNumbers.xml";
 
         public void AddStation(Station s)
         {
-            throw new NotImplementedException();
+            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
+            if (checkStation(stations,s.Id))
+                throw new DO.ExistIdException(s.Id, "station");
+            stations.Add(s);
+            XMLTools.SaveListToXMLSerializer(stations, stationsPath);
         }
 
         public Station GetBaseStation(int id)
         {
-            throw new NotImplementedException();
+            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
+            if (checkStation(stations, id))
+                throw new DO.ExistIdException(id, "station");
+            Station s = stations.Find(stat => stat.Id == id);
+            return s;
         }
 
         public IEnumerable<Station> GetListOfBaseStations()
         {
-            throw new NotImplementedException();
+            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
+            return from baseStation in stations
+                   select baseStation;
         }
 
         public IEnumerable<Station> GetStationsByPredicate(Predicate<Station> predicate)
         {
-            throw new NotImplementedException();
+            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
+            return from stat in stations
+                   where predicate(stat)
+                   select stat;
         }
 
         public void DeleteStation(int id)
         {
-            throw new NotImplementedException();
+            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
+            if (checkStation(stations, id))
+                throw new DO.ExistIdException(id, "station");
+            stations.RemoveAll(station => station.Id == id);
+            XMLTools.SaveListToXMLSerializer(stations, stationsPath);
         }
+
         /// <summary>
         /// the function check an ID
         /// </summary>
@@ -184,8 +203,13 @@ namespace Dal
 
         public void DeleteDrone(int id)
         {
-            throw new NotImplementedException();
+            List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (!checkDrone(dronesList,id))
+                throw new IdNotFoundException(id, "drone");
+            dronesList.RemoveAll(dron => dron.Id == id);
+            XMLTools.SaveListToXMLSerializer(dronesList, dronesPath);
         }
+
         /// <summary>
         /// the function check an ID
         /// </summary>
@@ -198,47 +222,119 @@ namespace Dal
 
         public IEnumerable<DroneCharge> GetListOfBusyChargeSlots()
         {
-            throw new NotImplementedException();
+            List<DroneCharge> droneChargesList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargesPath);
+            return from DroneCharge in droneChargesList
+                   select DroneCharge;
         }
 
         public int AddParcel(Parcel p)
         {
-            throw new NotImplementedException();
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            XDocument doc = XDocument.Load("BatteryAndRowNumbers.xml");
+            XElement codeOfParcel = doc.Descendants("codeOfParcel").First();
+            int code = (int)codeOfParcel;
+            p.Id = code;
+            parcels.Add(p);
+            code++;
+            codeOfParcel.Value=code.ToString();
+            doc.Save("BatteryAndRowNumbers.xml");
+            XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
+            return p.Id;
         }
 
         public void AssignParcelToDrone(int parcelId, int droneId)
         {
-            throw new NotImplementedException();
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (!checkDrone(dronesList,droneId))
+                throw new DO.IdNotFoundException(droneId, "drone");
+            Drone d = dronesList.Find(drone => drone.Id == droneId);
+            if (!checkParcel(parcels,parcelId))
+                throw new DO.IdNotFoundException(parcelId, "parcel");
+            foreach (Parcel parcel in parcels)
+            {
+                if (parcel.Id == parcelId)
+                {
+                    Parcel p = parcel;
+                    p.DroneId = d.Id;
+                    p.Scheduled = DateTime.Now;
+                    parcels.Add(p);
+                    parcels.Remove(parcel);
+                    break;
+                }
+            }
+            XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
         }
 
         public void CollectParcelByDrone(int id)
         {
-            throw new NotImplementedException();
+            Parcel p,parcel;
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (!checkParcel(parcels,id))
+                throw new DO.IdNotFoundException(id, "parcel");
+            parcel = parcels.Find(parcel => parcel.Id == id);
+            p = parcel;
+            p.PickedUp = DateTime.Now;
+            parcels.Remove(parcel);
+            parcels.Add(p);
+            XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
         }
 
         public void SupplyDeliveryToCustomer(int id)
         {
-            throw new NotImplementedException();
+            Parcel parcel1, parcel2;
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (!checkParcel(parcels,id))
+                throw new DO.IdNotFoundException(id, "parcel");
+            parcel2 = parcels.Find(parcel => parcel.Id == id);
+            parcel1 = parcel2;
+            parcel1.Delivered = DateTime.Now;
+            parcels.Remove(parcel2);
+            parcels.Add(parcel1);
+            XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
         }
 
         public Parcel GetParcel(int id)
         {
-            throw new NotImplementedException();
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (!checkParcel(parcels,id))
+                throw new DO.IdNotFoundException(id, "parcel");
+            Parcel p =parcels.Find(parc => parc.Id == id);
+            return p;
         }
 
         public IEnumerable<Parcel> GetListOfParcels()
         {
-            throw new NotImplementedException();
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            return from Parcel parc in parcels
+                   select parc;
         }
 
         public IEnumerable<Parcel> GetParcelsByPredicate(Predicate<Parcel> predicate)
         {
-            throw new NotImplementedException();
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            return from pac in parcels
+                   where predicate(pac)
+                   select pac;
         }
 
         public void DeleteParcel(int id)
         {
-            throw new NotImplementedException();
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (!checkParcel(parcels,id))
+                throw new DO.IdNotFoundException(id, "parcel");
+            parcels.RemoveAll(parc => parc.Id == id);
+            XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
+
+        }
+        /// <summary>
+        /// the function check an ID
+        /// </summary>
+        /// <param name="id">ID of customer</param:>
+        /// <returns>true if the id exists in the list otherwise it returns false </returns>
+        private bool checkParcel(List<Parcel> lst, int id)
+        {
+           return lst.Exists(parc => parc.Id == id);
         }
         #endregion
     }

@@ -7,7 +7,7 @@
 		<HeavyBatteryUsing>0.08</HeavyBatteryUsing>
 		<ChargingRate>25</ChargingRate>
 	</BatteryUsages>
-	<RowNumbers>
-		<codeOfParcel>1</codeOfParcel>
-	</RowNumbers>
+	
+	<codeOfParcel>1</codeOfParcel>
+	
 </data-config>

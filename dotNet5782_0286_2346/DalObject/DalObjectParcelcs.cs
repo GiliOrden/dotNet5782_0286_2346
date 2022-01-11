@@ -55,20 +55,14 @@ namespace Dal
         /// <param name="id">the id of parcel</param>
         public void CollectParcelByDrone(int id)
         {
-            Parcel p;
+            Parcel parcel1,parcel2;
             if (!checkParcel(id))
                 throw new DO.IdNotFoundException(id, "parcel");
-            foreach (Parcel parcel in parcels)
-            {
-                if (parcel.Id == id)
-                {
-                    p = parcel;
-                    p.PickedUp = DateTime.Now;
-                    parcels.Add(p);
-                    parcels.Remove(parcel);
-                    break;
-                }
-            }
+            parcel2 = parcels.Find(parcel => parcel.Id == id);
+            parcel1 = parcel2;
+            parcel1.PickedUp = DateTime.Now;
+            parcels.Remove(parcel2);
+            parcels.Add(parcel1);
         }
 
         /// <summary>
@@ -77,20 +71,14 @@ namespace Dal
         /// <param name="id">the id of parcel</param>
         public void SupplyDeliveryToCustomer(int id)
         {
-            Parcel p;
+            Parcel parcel1, parcel2;
             if (!checkParcel(id))
                 throw new DO.IdNotFoundException(id, "parcel");
-            foreach (Parcel parcel in parcels)
-            {
-                if (parcel.Id == id)
-                {
-                    p = parcel;
-                    p.Delivered = DateTime.Now;
-                    parcels.Add(p);
-                    parcels.Remove(parcel);
-                    break;
-                }
-            }
+            parcel2 = parcels.Find(parcel => parcel.Id == id);
+            parcel1 = parcel2;
+            parcel1.Delivered = DateTime.Now;
+            parcels.Remove(parcel2);
+            parcels.Add(parcel1);
         }
 
 
