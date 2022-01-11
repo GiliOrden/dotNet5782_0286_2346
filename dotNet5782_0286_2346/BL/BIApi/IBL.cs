@@ -187,6 +187,7 @@ namespace BlApi
         /// <param name="parc">check if it's wight/status equal to the parameters</param>
         /// <returns></returns>
         bool predicatFanc(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status, DO.Parcel parc);
+        void DeleteParcel(int id);
     }
     #endregion
 

@@ -58,8 +58,14 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
         </Grid>
-        <Button x:Name="UpdateParcel" Content="update" HorizontalAlignment="Left" Margin="375,354,0,0" VerticalAlignment="Top" Height="30" Width="65" Click="updateButton_Click"/>
+        <Button x:Name="UpdateParcel" Content="update" HorizontalAlignment="Left" Margin="400,354,0,0" VerticalAlignment="Top" Height="30" Width="65" Click="updateButton_Click"/>
         <Button x:Name="AddParcel" Content="Add" HorizontalAlignment="Left" Margin="375,434,0,0" VerticalAlignment="Top" Height="25" Width="65" IsEnabled="False" Click="addButton_Click" />
+        <Button x:Name="DeleteParcel" Content="Delete parcel" HorizontalAlignment="Left" Margin="372,477,0,0" VerticalAlignment="Top" Height="30" Width="80" IsEnabled="False" Click="deleteButton_Click"/>
+        <Button x:Name="CollectParcel"  Content="Collect parcel" HorizontalAlignment="Left" Margin="355,277,0,0" VerticalAlignment="Top" Height="20" Width="93" IsEnabled="False" Click="CollectButton_Click"/>
+        <Button x:Name="SupplyParcel"  Content="Supply parcel" HorizontalAlignment="Left" Margin="355,314,0,0" VerticalAlignment="Top" Width="97" IsEnabled="False" Click="SupplyButton_Click"/>
+        <Button x:Name="ShowDrone" Content="Show drone" HorizontalAlignment="Left" Margin="300,159,0,0" VerticalAlignment="Top" Click="ShowDroneButton_Click"/>
+        <Button x:Name="ShowSender" Content="Show sender" HorizontalAlignment="Left" Margin="300,434,0,0" VerticalAlignment="Top" Click="ShowSenderButton_Click"/>
+        <Button x:Name="ShowReceiver" Content="Show receiver" HorizontalAlignment="Left" Margin="300,354,0,0" VerticalAlignment="Top" Click="ShowReceiverButton_Click"/>
 
     </Grid>
 

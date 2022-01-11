@@ -68,6 +68,7 @@ namespace BL
                     }
                     else
                         throw new DroneCanNotSupplyDeliveryToCustomerException(droneId, d.IdOfTheDeliveredParcel);
+                    break;
                 }
             }
         }
@@ -186,10 +187,10 @@ namespace BL
             if (p.Scheduled == null)//only definited!
                 return EnumsBL.ParcelStatuses.Defined;
             if (p.PickedUp == null)//PickedUp==null, the parcel did not picked up
-                return EnumsBL.ParcelStatuses.Delivered;
+                return EnumsBL.ParcelStatuses. Associated;
             if (p.Delivered == null)
                 return EnumsBL.ParcelStatuses.Collected;
-            return EnumsBL.ParcelStatuses.Associated;
+            return EnumsBL.ParcelStatuses.Delivered;
         }
 
         /// <summary>
@@ -238,9 +239,16 @@ namespace BL
                 return parc.Weight == (DO.WeightCategories)weight; 
             return StatusOfParcel(parc.Id) == (EnumsBL.ParcelStatuses)status;
         }
+        /// <summary>
+        /// this function deletes a parcel from the list
+        /// </summary>
+        /// <param name="id">the parcel's id</param>
+        public void DeleteParcel(int id)
+        {
+            dl.DeleteParcel(id);
+        }
 
-        
-        
+
     };
 
 

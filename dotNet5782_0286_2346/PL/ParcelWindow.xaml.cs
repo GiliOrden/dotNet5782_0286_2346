@@ -22,9 +22,11 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         IBL parc;
-        public ParcelWindow(ref IBL bl, BO.Parcel p)//update window
+        BO.Parcel parcel;
+        public ParcelWindow(ref IBL bl, BO.Parcel p, BO.EnumsBL.ParcelStatuses parcelStatus)//update/delete parcel window
         {
             parc = bl;
+            parcel = p;
             InitializeComponent();
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
@@ -40,6 +42,30 @@ namespace PL
             droneListBox.Items.Add(item3);
 
             gridOfParcel.DataContext = p;
+            AddParcel.Visibility = Visibility.Collapsed;
+            if (BO.EnumsBL.ParcelStatuses.Defined== parcelStatus)//the botton for delete parcel
+            {
+                DeleteParcel.IsEnabled = true;
+                SupplyParcel.Visibility = Visibility.Collapsed;
+                CollectParcel.Visibility = Visibility.Collapsed;
+                ShowDrone.Visibility = Visibility.Collapsed;
+            }
+            else if (BO.EnumsBL.ParcelStatuses.Associated == parcelStatus)
+            {
+                CollectParcel.IsEnabled = true;
+                SupplyParcel.Visibility = Visibility.Collapsed;
+            }
+           else if (BO.EnumsBL.ParcelStatuses.Collected == parcelStatus)
+            {
+                CollectParcel.Visibility = Visibility.Collapsed;
+                SupplyParcel.IsEnabled = true;
+            }
+            else if (BO.EnumsBL.ParcelStatuses.Delivered == parcelStatus)
+            {
+                SupplyParcel.Visibility = Visibility.Collapsed;
+                CollectParcel.Visibility = Visibility.Collapsed;
+                ShowDrone.Visibility = Visibility.Collapsed;
+            }
         }
 
         public ParcelWindow(ref IBL bl)//adding window
@@ -47,6 +73,10 @@ namespace PL
             parc = bl;
             InitializeComponent();
             UpdateParcel.Visibility = Visibility.Collapsed;
+            DeleteParcel.Visibility = Visibility.Collapsed;
+            SupplyParcel.Visibility = Visibility.Collapsed;
+            CollectParcel.Visibility = Visibility.Collapsed;
+            ShowDrone.Visibility = Visibility.Collapsed;
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             senderListBox.ItemsSource = bl.GetListOfCustomers();
@@ -82,9 +112,7 @@ namespace PL
             MessageBox.Show("The parcel was successfully added");
             Close();
 
-            //var ParcelCollection = new ObservableCollection<BO.ParcelForList>(parc.GetListOfParcels());
-            //ParcelListWindow.parcelForListDataGrid.DataContext = ParcelCollection;
-            //new ParcelListWindow(ref parc).Show();
+            
         }  
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
@@ -95,6 +123,83 @@ namespace PL
             //new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
         }
 
-        
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            parc.DeleteParcel(parcel.Id);
+            MessageBox.Show("The parcel was successfully deleted");
+            Close();
+        }
+
+        private void CollectButton_Click(object sender, RoutedEventArgs e)
+        {
+            parc.CollectParcelByDrone(parcel.Drone.Id);//problem associated
+            MessageBox.Show("The parcel was successfully collected");
+            Close();
+        }
+
+        private void SupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            parc.SupplyDeliveryToCustomer(parcel.Drone.Id);
+            MessageBox.Show("The parcel was successfully supplied");
+            Close();
+        }
+
+        private void ShowDroneButton_Click(object sender, RoutedEventArgs e) // need to fix the  DroneWindow to be for BO.Drone type. then it will work
+        {
+            BO.Drone drone = parc.GetDrone(parcel.Drone.Id);
+
+            //if (drone != null)     
+            //{
+            //    DroneWindow dw = new DroneWindow(ref parc, drone);
+            //    dw.ShowDialog();
+            //    //Close();
+            //}
+
+        }
+
+        private void ShowSenderButton_Click(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            if (parcel != null)
+            {
+                id = parcel.Sender.ID;
+                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                cw.ShowDialog();
+            }
+               
+            else if (senderListBox.SelectedItem != null)
+            {
+                BO.CustomerForList cust = senderListBox.SelectedItem as BO.CustomerForList;
+                id = cust.ID;
+                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                cw.ShowDialog();
+            }
+            else
+                MessageBox.Show("You didn't choose a customer");
+           
+        }
+
+        private void ShowReceiverButton_Click(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            if (parcel != null)
+            {
+                id = parcel.Receiver.ID;
+                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                cw.ShowDialog();
+            }
+
+            else if (receiverListBox.SelectedItem != null)
+            {
+                BO.CustomerForList cust = receiverListBox.SelectedItem as BO.CustomerForList;
+                id = cust.ID;
+                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                cw.ShowDialog();
+            }
+            else
+                MessageBox.Show("You didn't choose a customer");
+
+        }
+    
     }
 }

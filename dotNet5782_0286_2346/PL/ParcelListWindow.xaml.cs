@@ -64,10 +64,13 @@ namespace PL
             BO.ParcelForList p = parcelForListDataGrid.SelectedItem as BO.ParcelForList;
             if (p != null)
             {
-                BO.Parcel p2= new BO.Parcel();
+                BO.Parcel p2 = new BO.Parcel();
                 p2 = parc.GetParcel(p.Id);
-                ParcelWindow pw = new ParcelWindow(ref parc, p2);
+                ParcelWindow pw = new ParcelWindow(ref parc, p2, p.ParcelStatus);
                 pw.ShowDialog();
+                parcelForListDataGrid.ItemsSource = null;
+                parcelForListDataGrid.ItemsSource = parc.GetListOfParcels();//update the parcel collection in the parcelListWindow
+
             }
         }
 
@@ -87,8 +90,11 @@ namespace PL
             {
                 BO.Parcel p2 = new BO.Parcel();
                 p2 = parc.GetParcel(p.Id);
-                ParcelWindow pw = new ParcelWindow(ref parc, p2);
+                ParcelWindow pw = new ParcelWindow(ref parc, p2,p.ParcelStatus);
                 pw.ShowDialog();
+                parcelForListDataGrid.ItemsSource = null;
+                parcelForListDataGrid.ItemsSource = parc.GetListOfParcels();//update the parcel collection in the parcelListWindow
+                
             }
         }
     }

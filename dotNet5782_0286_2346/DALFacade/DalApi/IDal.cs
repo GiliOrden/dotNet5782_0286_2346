@@ -80,6 +80,7 @@ namespace DalApi
         IEnumerable<Parcel> GetListOfParcels();
 
         IEnumerable<Parcel> GetParcelsByPredicate(Predicate<Parcel> predicate);
+        void DeleteParcel(int id);
         #endregion
 
     }
