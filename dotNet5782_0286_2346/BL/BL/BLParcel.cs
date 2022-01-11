@@ -72,6 +72,7 @@ namespace BL
                     }
                     else
                         throw new DroneCanNotSupplyDeliveryToCustomerException(droneId, d.IdOfTheDeliveredParcel);
+                    break;
                 }
             }
         }
@@ -194,10 +195,10 @@ namespace BL
             if (p.Scheduled == null)//only definited!
                 return EnumsBL.ParcelStatuses.Defined;
             if (p.PickedUp == null)//PickedUp==null, the parcel did not picked up
-                return EnumsBL.ParcelStatuses.Delivered;
+                return EnumsBL.ParcelStatuses. Associated;
             if (p.Delivered == null)
                 return EnumsBL.ParcelStatuses.Collected;
-            return EnumsBL.ParcelStatuses.Associated;
+            return EnumsBL.ParcelStatuses.Delivered;
         }
 
         /// <summary>
@@ -223,6 +224,38 @@ namespace BL
             }
             return customerInParcel;
         }
+        public IEnumerable<BO.ParcelForList> GetParcelsByPredicate(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status)
+        {
+            return from parc in dl.GetParcelsByPredicate(parc => predicatFanc(weight, status, parc))
+                   let prc = dl.GetParcel(parc.Id)
+                   select new BO.ParcelForList
+                   {
+                       Id = prc.Id,
+                       SenderName = dl.GetCustomer(prc.SenderId).Name,
+                       ReceiverName = dl.GetCustomer(prc.TargetId).Name,
+                       Weight = (EnumsBL.WeightCategories)prc.Weight,
+                       Priority = (EnumsBL.Priorities)prc.Priority,
+                       ParcelStatus = StatusOfParcel(prc.Id)
+                   };
+           
+        }
+        public bool predicatFanc(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status, DO.Parcel parc)
+        {
+            if (weight != null && status != null)
+              return parc.Weight == (DO.WeightCategories)weight&& StatusOfParcel(parc.Id) == (EnumsBL.ParcelStatuses)status; 
+            else if(weight != null) 
+                return parc.Weight == (DO.WeightCategories)weight; 
+            return StatusOfParcel(parc.Id) == (EnumsBL.ParcelStatuses)status;
+        }
+        /// <summary>
+        /// this function deletes a parcel from the list
+        /// </summary>
+        /// <param name="id">the parcel's id</param>
+        public void DeleteParcel(int id)
+        {
+            dl.DeleteParcel(id);
+        }
+
 
     };
 

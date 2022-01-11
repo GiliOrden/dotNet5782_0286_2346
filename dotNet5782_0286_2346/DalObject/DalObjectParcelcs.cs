@@ -136,6 +136,24 @@ namespace Dal
                    where predicate(pac)
                    select pac;
         }
+        /// <summary>
+        /// this function deletes a parcel from the list
+        /// </summary>
+        /// <param name="id">the parcel's id</param>
+        public void DeleteParcel(int id)
+        {
+            if (!checkParcel(id))
+                throw new DO.IdNotFoundException(id, "parcel");
+            foreach (Parcel parcel in parcels)
+            {
+                if (parcel.Id == id)
+                {
+                   parcels.Remove(parcel);
+                    break;
+                }
+            }
+        }
+
 
     }
 }

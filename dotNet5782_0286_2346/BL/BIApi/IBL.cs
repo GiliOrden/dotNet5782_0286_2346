@@ -97,6 +97,7 @@ namespace BlApi
         IEnumerable<DroneForList> GetListOfDrones();
 
         IEnumerable<BO.DroneForList> GetDronesByPredicate(Predicate<BO.DroneForList> predicate);
+        
         /// <summary>
         /// The function search and returns DroneForList object
         /// </summary>
@@ -170,7 +171,24 @@ namespace BlApi
         /// </summary>
         /// <returns>list of parcels that hasn't been assigned to a drone</returns>
         IEnumerable<ParcelForList> GetListOfNotAssociatedParcels();
-        #endregion
+        /// <summary>
+        /// returns list of parcels which theres' wight/status equal to the parameters
+        /// </summary>
+        /// <param name="weight">tipe of wight, it can be also null</param>
+        /// <param name="status">tipe of statusParcel, it can be also null</param>
+        /// <returns>list of parcels which theres' wight/status equal to the parameters</returns>
+        IEnumerable<BO.ParcelForList> GetParcelsByPredicate(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status);
 
+        /// <summary>
+        /// an help function for 'GetParcelsByPredicate' func to select which pridicate it needs, return true if the case is correct
+        /// </summary>
+        /// <param name="weight">tipe of wight, it can be also null.  </param>
+        /// <param name="status">tipe of statusParcel, it can be also null</param>
+        /// <param name="parc">check if it's wight/status equal to the parameters</param>
+        /// <returns></returns>
+        bool predicatFanc(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status, DO.Parcel parc);
+        void DeleteParcel(int id);
     }
+    #endregion
+
 }

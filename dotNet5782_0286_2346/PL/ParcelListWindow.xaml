@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="450" Width="800">
+        Title="ParcelListWindow" Height="450" Width="800" x:Name="parcelListWindow">
     <Grid>
-        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,54,215,25" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+        <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,54,215,25" ItemsSource="{Binding }" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionChanged="ParcelView_SelectionChanged"  >
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Width="SizeToHeader" Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn x:Name="parcelStatusColumn" Width="SizeToHeader" Header="Parcel Status" Binding="{Binding ParcelStatus}"/>
@@ -27,10 +27,14 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
         </DataGrid>
-        <Button Content="Group by sender" HorizontalAlignment="Left" Margin="635,74,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
+        <Button x:Name="GroupBySender" Content="Group by sender" HorizontalAlignment="Left" Margin="635,74,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
         <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="635,149,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupByReceiver_Click"/>
-        <ComboBox Name="WeightSelect" HorizontalAlignment="Left" Margin="350,24,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,1.55" Height="25" SelectionChanged="WeightSelectComboBox"/>
-        
+        <ComboBox Name="WeightSelect" HorizontalAlignment="Left" Margin="505,26,0,0" VerticalAlignment="Top" Width="45" RenderTransformOrigin="0.5,1.55" Height="25" SelectionChanged="WeightSelectComboBox"/>
+        <ComboBox Name="ParcelStatusSelect" HorizontalAlignment="Left" Margin="100,26,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="WeightSelectComboBox"/>
+        <Button Content="Update parcel" HorizontalAlignment="Left" Margin="635,254,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="UpdateParcel"/>
+        <Button Content="Add parcel" HorizontalAlignment="Left" Margin="635,324,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="AddParcel"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="676,377,0,0" VerticalAlignment="Top" Click="RefreshButton"/>
+
     </Grid>
 
 </Window>
