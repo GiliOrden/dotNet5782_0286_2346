@@ -32,22 +32,22 @@
         </Grid>
         <DataGrid x:Name="parcelsIntendedToCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="33,75,503,250" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="otherSideIDColumn2" Binding="{Binding OtherSide.ID}" Header="OtherSideID" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="otherSideNameColumn2" Binding="{Binding OtherSide.Name}" Header="OtherSideName" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="Auto"/>
+                <DataGridTextColumn x:Name="priorityColumn" Binding="{Binding Priority}" Header="Priority" Width="Auto"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="Auto"/>
+                <DataGridTextColumn x:Name="weightColumn" Binding="{Binding Weight}" Header="Weight" Width="Auto"/>
+                <DataGridTextColumn x:Name="otherSideIDColumn2" Binding="{Binding OtherSide.ID}" Header="OtherSideID" Width="Auto"/>
+                <DataGridTextColumn x:Name="otherSideNameColumn2" Binding="{Binding OtherSide.Name}" Header="OtherSideName" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="parcelsfromCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="31,234,503,95" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn1" Binding="{Binding Id}" Header="Id" Width="Auto"/>
-                <DataGridTextColumn x:Name="priorityColumn1" Binding="{Binding Priority}" Header="Priority" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="statusColumn1" Binding="{Binding Status}" Header="Status" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="weightColumn1" Binding="{Binding Weight}" Header="Weight" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="otherSideIDColumn1" Binding="{Binding OtherSide.ID}" Header="OtherSideID" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="otherSideNameColumn1" Binding="{Binding OtherSide.Name}" Header="OtherSideName" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="priorityColumn1" Binding="{Binding Priority}" Header="Priority" Width="Auto"/>
+                <DataGridTextColumn x:Name="statusColumn1" Binding="{Binding Status}" Header="Status" Width="Auto"/>
+                <DataGridTextColumn x:Name="weightColumn1" Binding="{Binding Weight}" Header="Weight" Width="Auto"/>
+                <DataGridTextColumn x:Name="otherSideIDColumn1" Binding="{Binding OtherSide.ID}" Header="OtherSideID" Width="Auto"/>
+                <DataGridTextColumn x:Name="otherSideNameColumn1" Binding="{Binding OtherSide.Name}" Header="OtherSideName" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label x:Name="parcelsFromCustomerLabel" Content="Parcels from customer:" HorizontalAlignment="Left" Margin="33,208,0,0" VerticalAlignment="Top"/>
