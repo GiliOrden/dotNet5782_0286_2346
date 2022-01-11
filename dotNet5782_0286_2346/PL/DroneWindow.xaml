@@ -47,6 +47,6 @@
         <Button x:Name="collectParcelButton" Content="collect parcel" Visibility="Collapsed" Height="32" Width="104" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Click="collectParcelButton_Click"/>
         <Button x:Name="supplyParcelButton" Content="supply parcel" Height="32" Visibility="Collapsed"  Width="104" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Click="supplyParcelButton_Click"/>
         <Button x:Name="sendDroneToDeliveryButton" Content="send to delivery" Visibility="Collapsed" Height="32" Width="104" HorizontalAlignment="Left" Margin="255,560,0,0" VerticalAlignment="Top" Click="sendDroneToDeliveryButton_Click"/>
-        <Button x:Name="showParcelInTransferButton"  Content="Show parcel in transfer" HorizontalAlignment="Left" Margin="289,560,0,0" VerticalAlignment="Top" Click="showParcelButton_Click" />
+        <Button x:Name="showParcelInTransferButton"  Content="Show parcel in transfer" HorizontalAlignment="Left" Margin="35,403,0,0" VerticalAlignment="Top" Click="showParcelButton_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>

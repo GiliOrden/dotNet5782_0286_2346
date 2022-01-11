@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,16 @@ namespace PL
     /// </summary>
     public partial class ParcelInTransferWindow : Window
     {
-        public ParcelInTransferWindow()
+       
+        public ParcelInTransferWindow(ref IBL bL ,int id)
         {
             InitializeComponent();
+            parcelInTransferGrid.DataContext = bL.GetDrone(id).ParcelInTransfer;
+        }
+
+        private void closeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

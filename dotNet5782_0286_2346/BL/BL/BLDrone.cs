@@ -247,9 +247,6 @@ namespace BL
             BO.Drone d = new();
             if (!dronesBL.Any(drone => drone.Id == id))
                 throw new IdNotFoundException(id, "drone");
-            BO.ParcelInTransfer parcelInTransfer= new();
-            parcelInTransfer.Sender = new();
-            parcelInTransfer.Receiver = new();
             BO.DroneForList d2 = dronesBL.Find(drone => drone.Id == id);
             d.Id = d2.Id;
             d.Model = d2.Model;
@@ -260,6 +257,9 @@ namespace BL
             d.Location = d2.Location;
             if (d.DroneStatus == BO.EnumsBL.DroneStatuses.OnDelivery)
             {
+                BO.ParcelInTransfer parcelInTransfer = new();
+                parcelInTransfer.Sender = new();
+                parcelInTransfer.Receiver = new();
                 DO.Parcel p = dl.GetParcel(d2.IdOfTheDeliveredParcel);
                 parcelInTransfer.Id = p.Id;
                 if (p.PickedUp == null)
@@ -283,8 +283,9 @@ namespace BL
                 parcelInTransfer.Sender.Name = dl.GetCustomer(p.SenderId).Name;
                 parcelInTransfer.Receiver.ID = p.TargetId;
                 parcelInTransfer.Receiver.Name = dl.GetCustomer(p.TargetId).Name;
+                d.ParcelInTransfer = parcelInTransfer;
             }
-            d.ParcelInTransfer = parcelInTransfer;
+
             return d;
         }
 

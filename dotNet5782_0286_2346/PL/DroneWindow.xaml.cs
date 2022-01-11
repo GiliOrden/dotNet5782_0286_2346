@@ -38,6 +38,7 @@ namespace PL
             modelTextBox.TextChanged += addButton_isEnable;
             MaxWeightComboBox.SelectionChanged += addButton_isEnable;
             stationsListBox.SelectionChanged += addButton_isEnable;
+            showParcelInTransferButton.Visibility = Visibility.Collapsed;
         }
 
         public DroneWindow(ref IBL bl, int idOfTheSelectedDrone)//second constructor for update
@@ -74,9 +75,9 @@ namespace PL
                     supplyParcelButton.Visibility = Visibility.Visible;
                 }
             }
-            if(drone.ParcelInTransfer==null)
+            if(drone.ParcelInTransfer!=null)
             {
-                showParcelInTransferButton.Visibility = Visibility.Hidden;
+                showParcelInTransferButton.Visibility = Visibility.Visible;
             }
 
         }
@@ -229,7 +230,8 @@ namespace PL
 
         private void showParcelButton_Click(object sender, RoutedEventArgs e)
         {
-             
+            ParcelInTransferWindow pw = new(ref droneWindowBL, droneForLst.Id);
+            pw.Show();
         }
     }
 }
