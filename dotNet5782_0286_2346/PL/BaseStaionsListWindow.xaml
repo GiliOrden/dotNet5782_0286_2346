@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BaseStaionsListWindow" Height="534" Width="800">
     <Grid>
-        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="76,67,102,153" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="stationForListDataGrid_SelectionChanged">
+        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="stationForListDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
@@ -31,8 +31,8 @@
         </DataGrid>
         <Button Content="Add station" HorizontalAlignment="Left" Margin="565,375,0,0" VerticalAlignment="Top" Click="addButton_Click"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="689,375,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
-        <Button Content="Group by stations with available charge slots" HorizontalAlignment="Left" Margin="24,457,0,0" VerticalAlignment="Top" Click="groupByStationsWithAvailableChargeSlotesButton_Click"/>
-        <Button Content="Group by number of available charge slots " HorizontalAlignment="Left" Margin="29,385,0,0" VerticalAlignment="Top" Click="groupByNumberOfAvailableChargeSlotsButton_Click"/>
+        <Button Content="Group by stations with available charge slots" HorizontalAlignment="Left" Margin="540,30,0,0" VerticalAlignment="Top" Click="groupByStationsWithAvailableChargeSlotesButton_Click" Background="#FFE0D3F6" Width="91"/>
+        <Button Content="Group by number of available charge slots " HorizontalAlignment="Left" Margin="334,30,0,0" VerticalAlignment="Top" Click="groupByNumberOfAvailableChargeSlotsButton_Click" Background="#FFE0D3F6" Width="96"/>
         <Button Content="Refresh" HorizontalAlignment="Left" Margin="464,375,0,0" VerticalAlignment="Top" Click="refreshButton_Click"/>
     </Grid>
 
