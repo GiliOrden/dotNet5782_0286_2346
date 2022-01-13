@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BO;
 namespace PL
 {
     /// <summary>
@@ -20,11 +20,14 @@ namespace PL
     /// </summary>
     public partial class ParcelInTransferWindow : Window
     {
-       
+        ParcelInTransfer parcel;
         public ParcelInTransferWindow(ref IBL bL ,int id)
         {
             InitializeComponent();
-            parcelInTransferGrid.DataContext = bL.GetDrone(id).ParcelInTransfer;
+            parcel= bL.GetDrone(id).ParcelInTransfer;
+            parcelInTransferGrid.DataContext = parcel;
+            IsOnTheWayCheckBox.IsChecked = parcel.OnTheWay;
+            IsOnTheWayCheckBox.IsEnabled = false;
         }
 
         private void closeButton_Click(object sender, RoutedEventArgs e)

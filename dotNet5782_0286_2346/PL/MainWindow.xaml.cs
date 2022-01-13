@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using BlApi;
+using BO;
 
 namespace PL
 {
@@ -30,6 +31,10 @@ namespace PL
         {
             InitializeComponent();
             
+        }
+        ~MainWindow()
+        {
+
         }
         private void ShowDronesList_Click(object sender, RoutedEventArgs e)
         {
@@ -53,6 +58,14 @@ namespace PL
         {
             ParcelListWindow pw = new ParcelListWindow(ref bl);
             pw.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach(DroneForList drone in bl.GetDronesByPredicate(drone=>drone.DroneStatus==EnumsBL.DroneStatuses.Maintenance))
+            {
+                bl.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+            }
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Dal
         {
             if (!checkParcel(id))
                 throw new DO.IdNotFoundException(id, "parcel");
-            Parcel p =Dal.DataSource.parcels.Find(parc=>parc.Id==id);
+            Parcel p =parcels.Find(parc=>parc.Id==id);
             return p;
         }
 

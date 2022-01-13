@@ -21,7 +21,8 @@ namespace BL
         internal double mediumWeightCarrierPowerConsumption;
         internal double heavyWeightCarrierPowerConsumption;
         double[] dronePowerConsumption;
-        List<BO.DroneForList> dronesBL = new();
+        List<BO.DroneForList> dronesBL = new List<BO.DroneForList>();
+        
         IEnumerable<DO.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
         static readonly IBL instance = new BL();
