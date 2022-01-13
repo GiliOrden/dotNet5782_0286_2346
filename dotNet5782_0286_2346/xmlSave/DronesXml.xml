@@ -35,9 +35,4 @@
     <Model>Drony7</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
-  <Drone>
-    <Id>765</Id>
-    <Model>good</Model>
-    <MaxWeight>Light</MaxWeight>
-  </Drone>
 </ArrayOfDrone>

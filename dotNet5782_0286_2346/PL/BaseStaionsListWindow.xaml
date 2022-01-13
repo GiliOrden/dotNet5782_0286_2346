@@ -5,31 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Title="BaseStaionsListWindow" Height="534" Width="800">
         Title="BaseStaionsListWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
-        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="76,67,102,153" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="stationForListDataGrid_SelectionChanged">
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
-                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
-                    <DataGridTextColumn x:Name="availableChargingPositionsColumn" Binding="{Binding AvailableChargingPositions}" Header="Available Charging Positions" Width="SizeToHeader"/>
-                    <DataGridTextColumn x:Name="inaccessibleChargingPositionsColumn" Binding="{Binding InaccessibleChargingPositions}" Header="Inaccessible Charging Positions" Width="SizeToHeader"/>
-                </DataGrid.Columns>
-                <DataGrid.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding AvailableChargingPositions}"/>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </DataGrid.GroupStyle>
+        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="stationForListDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
+                <DataGridTextColumn x:Name="availableChargingPositionsColumn" Binding="{Binding AvailableChargingPositions}" Header="Available Charging Positions" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="inaccessibleChargingPositionsColumn" Binding="{Binding InaccessibleChargingPositions}" Header="Inaccessible Charging Positions" Width="SizeToHeader"/>
+            </DataGrid.Columns>
 
-            </DataGrid>
-            <Button Content="Add station" HorizontalAlignment="Left" Margin="565,375,0,0" VerticalAlignment="Top" Click="addButton_Click"/>
-            <Button Content="Cancel" HorizontalAlignment="Left" Margin="689,375,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
-            <Button Content="Group by stations with available charge slots" HorizontalAlignment="Left" Margin="24,369,0,0" VerticalAlignment="Top" Click="groupByStationsWithAvailableChargeSlotesButton_Click"/>
-            <Button Content="Group by number of available charge slots " HorizontalAlignment="Left" Margin="24,306,0,0" VerticalAlignment="Top" Click="groupByNumberOfAvailableChargeSlotsButton_Click"/>
-            <Button Content="Refresh" HorizontalAlignment="Left" Margin="464,375,0,0" VerticalAlignment="Top" Click="refreshButton_Click"/>
-        </Grid>
-   
+
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}" Background="LightBlue"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+
+
+
+        </DataGrid>
+        <Button Content="Add station" HorizontalAlignment="Left" Margin="565,375,0,0" VerticalAlignment="Top" Click="addButton_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="689,375,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
+        <Button Content="Group by stations with available charge slots" HorizontalAlignment="Left" Margin="540,30,0,0" VerticalAlignment="Top" Click="groupByStationsWithAvailableChargeSlotesButton_Click" Background="#FFE0D3F6" Width="91"/>
+        <Button Content="Group by number of available charge slots " HorizontalAlignment="Left" Margin="334,30,0,0" VerticalAlignment="Top" Click="groupByNumberOfAvailableChargeSlotsButton_Click" Background="#FFE0D3F6" Width="96"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="464,375,0,0" VerticalAlignment="Top" Click="refreshButton_Click"/>
+    </Grid>
+
 </Window>

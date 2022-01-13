@@ -1,6 +1,30 @@
 <?xml version="1.0"?>
 <ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Parcel>
+    <Id>1</Id>
+    <SenderId>234678954</SenderId>
+    <TargetId>123987456</TargetId>
+    <Weight>Medium</Weight>
+    <Priority>Regular</Priority>
+    <DroneId>1</DroneId>
+    <Requested>2022-01-12T00:00:00+02:00</Requested>
+    <Scheduled>2022-01-12T00:50:50.5331791+02:00</Scheduled>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
+    <Id>2</Id>
+    <SenderId>123987456</SenderId>
+    <TargetId>246987246</TargetId>
+    <Weight>Medium</Weight>
+    <Priority>Emergency</Priority>
+    <DroneId>2</DroneId>
+    <Requested>2022-01-12T00:00:00+02:00</Requested>
+    <Scheduled>2022-01-12T00:50:50.5345628+02:00</Scheduled>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
+  </Parcel>
+  <Parcel>
     <Id>3</Id>
     <SenderId>246987246</SenderId>
     <TargetId>309390876</TargetId>
@@ -1006,30 +1030,6 @@
     <Requested>2022-01-12T00:50:50.534993+02:00</Requested>
     <Scheduled xsi:nil="true" />
     <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>2</Id>
-    <SenderId>123987456</SenderId>
-    <TargetId>246987246</TargetId>
-    <Weight>Medium</Weight>
-    <Priority>Emergency</Priority>
-    <DroneId>2</DroneId>
-    <Requested>2022-01-12T00:00:00+02:00</Requested>
-    <Scheduled>2022-01-12T00:50:50.5345628+02:00</Scheduled>
-    <PickedUp>2022-01-13T20:32:54.9825775+02:00</PickedUp>
-    <Delivered xsi:nil="true" />
-  </Parcel>
-  <Parcel>
-    <Id>1</Id>
-    <SenderId>234678954</SenderId>
-    <TargetId>123987456</TargetId>
-    <Weight>Medium</Weight>
-    <Priority>Regular</Priority>
-    <DroneId>1</DroneId>
-    <Requested>2022-01-12T00:00:00+02:00</Requested>
-    <Scheduled>2022-01-12T00:50:50.5331791+02:00</Scheduled>
-    <PickedUp>2022-01-13T20:35:04.3867911+02:00</PickedUp>
     <Delivered xsi:nil="true" />
   </Parcel>
 </ArrayOfParcel>
