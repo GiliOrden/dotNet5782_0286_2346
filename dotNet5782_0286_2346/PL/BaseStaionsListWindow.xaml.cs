@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Text.RegularExpressions;
 namespace PL
 {
     /// <summary>
@@ -53,9 +53,14 @@ namespace PL
 
         private void groupByStationsWithAvailableChargeSlotesButton_Click(object sender, RoutedEventArgs e)
         {
-            stationForListDataGrid.DataContext=from station in bL.GetListOfBaseStations()
-                                                group station by  station.AvailableChargingPositions > 0 into gs
-                                                select gs;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(stationForListDataGrid.DataContext);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("InaccessibleChargingPositions");
+            view.GroupDescriptions.Add(groupDescription);
+
+
+            //stationForListDataGrid.DataContext=from station in bL.GetListOfBaseStations()
+            //                                    group station by  station.AvailableChargingPositions > 0 into gs
+            //                                    select gs;
         }
 
         private void groupByNumberOfAvailableChargeSlotsButton_Click(object sender, RoutedEventArgs e)
@@ -70,5 +75,11 @@ namespace PL
             this.Close();
             new BaseStaionsListWindow(ref bL).Show();
         }
+
+        //private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        //{
+        //    Regex regex = new Regex("[^0-9]+");
+        //    e.Handled = regex.IsMatch(e.Text);
+        //}
     }
 }

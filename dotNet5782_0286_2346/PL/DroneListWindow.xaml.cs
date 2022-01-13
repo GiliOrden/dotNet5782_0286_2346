@@ -28,7 +28,8 @@ namespace PL
         {
             InitializeComponent();
             droneListWindowBL = bl;
-            DroneListView.ItemsSource = bl.GetListOfDrones();
+            droneForListDataGrid.DataContext = bl.GetListOfDrones();
+            droneForListDataGrid.IsReadOnly=true;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(EnumsBL.DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(EnumsBL.WeightCategories));
         }
@@ -37,24 +38,24 @@ namespace PL
         {
             if (StatusSelector.SelectedItem != null && WeightSelector.SelectedItem != null)
             {
-                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (EnumsBL.DroneStatuses)StatusSelector.SelectedItem && drone.MaxWeight == (EnumsBL.WeightCategories)WeightSelector.SelectedItem);
+                droneForListDataGrid.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (EnumsBL.DroneStatuses)StatusSelector.SelectedItem && drone.MaxWeight == (EnumsBL.WeightCategories)WeightSelector.SelectedItem);
             }
             else if (StatusSelector.SelectedItem != null)
             {
-                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (EnumsBL.DroneStatuses)StatusSelector.SelectedItem);
+                droneForListDataGrid.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.DroneStatus == (EnumsBL.DroneStatuses)StatusSelector.SelectedItem);
             }
             else if (WeightSelector.SelectedItem != null)
             {
-                DroneListView.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.MaxWeight == (EnumsBL.WeightCategories)WeightSelector.SelectedItem);
+                droneForListDataGrid.ItemsSource = droneListWindowBL.GetDronesByPredicate(drone => drone.MaxWeight == (EnumsBL.WeightCategories)WeightSelector.SelectedItem);
             }
 
-            DroneListView.Items.Refresh();
+            droneForListDataGrid.Items.Refresh();
         }
 
 
-        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
+        private void DroneView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
         {
-            DroneForList drone = DroneListView.SelectedItem as DroneForList;
+            DroneForList drone = droneForListDataGrid.SelectedItem as DroneForList;
             
             if (drone != null)
             {
@@ -77,7 +78,11 @@ namespace PL
 
         private void GroupByStatus_Click(object sender, RoutedEventArgs e)
         {
-
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(droneForListDataGrid.DataContext);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("DroneStatus");
+            view.GroupDescriptions.Add(groupDescription);
         }
+
+        
     }
 }

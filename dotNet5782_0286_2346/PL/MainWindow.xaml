@@ -15,9 +15,9 @@
         Title="MainWindow" Height="734" Width="1097">
 
     <Grid ShowGridLines="True" Name="MainGrid" RenderTransformOrigin="0.475,0.491" Margin="0,0,10,0">
-        <Image  Source="/2021-02-04T165145Z_2126501675_MT1CVMD41217305_RTRMADP_3_FEATURE-VACCINE-DRONE.jpg" Stretch="UniformToFill"/>
+        <Image  Source="/2021-02-04T165145Z_2126501675_MT1CVMD41217305_RTRMADP_3_FEATURE-VACCINE-DRONE.jpg" Stretch="UniformToFill" Opacity="0.8"/>
 
-        <Image Source="/2021-02-04T165145Z_2126501675_MT1CVMD41217305_RTRMADP_3_FEATURE-VACCINE-DRONE.jpg" Stretch="UniformToFill"/>
+        
 
         <Button Content="show Drones' List" HorizontalAlignment="Left" Margin="126,550,0,0" VerticalAlignment="Top" Height="78" Width="259" FontWeight="Bold" FontSize="20" Click="ShowDronesList_Click" />
         <Button Content="Base stations" HorizontalAlignment="Left" Margin="126,281,0,0" VerticalAlignment="Top"  Height="78" Width="259" Click="baseStationsButton_Click" RenderTransformOrigin="-3.273,-3.247"/>
