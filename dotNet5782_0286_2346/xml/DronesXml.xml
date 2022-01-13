@@ -40,4 +40,9 @@
     <Model>good</Model>
     <MaxWeight>Light</MaxWeight>
   </Drone>
+  <Drone>
+    <Id>555</Id>
+    <Model>yttt</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
 </ArrayOfDrone>
