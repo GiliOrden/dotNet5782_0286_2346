@@ -283,14 +283,14 @@ namespace Dal
         public int AddParcel(Parcel p)
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-            XDocument doc = XDocument.Load("BatteryAndRowNumbers.xml");
+            XDocument doc = XDocument.Load(@"xml\BatteryAndRowNumbers.xml");
             XElement codeOfParcel = doc.Descendants("codeOfParcel").First();
             int code = (int)codeOfParcel;
             p.Id = code;
             parcels.Add(p);
             code++;
             codeOfParcel.Value=code.ToString();
-            doc.Save("BatteryAndRowNumbers.xml");
+            doc.Save(@"xml\BatteryAndRowNumbers.xml");
             XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
             return p.Id;
         }
