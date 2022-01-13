@@ -12,7 +12,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="734" Width="1097">
+        Title="MainWindow" Height="734" Width="1097" Closing="Window_Closing">
 
     <Grid ShowGridLines="True" Name="MainGrid" RenderTransformOrigin="0.475,0.491" Margin="0,0,10,0">
         <Image  Source="/2021-02-04T165145Z_2126501675_MT1CVMD41217305_RTRMADP_3_FEATURE-VACCINE-DRONE.jpg" Stretch="UniformToFill" Opacity="0.8"/>

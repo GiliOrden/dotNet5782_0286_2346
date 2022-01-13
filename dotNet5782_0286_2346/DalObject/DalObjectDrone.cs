@@ -54,7 +54,7 @@ namespace Dal
             dc.StationId = idStation;
             dc.StartOfCharging = DateTime.Now;
             droneCharges.Add(dc);
-            Station s = Dal.DataSource.stations.Find(stat => stat.Id == idStation);
+            Station s = stations.Find(stat => stat.Id == idStation);         
             s.ChargeSlots--;
             stations.RemoveAll(stat => stat.Id == idStation);
             stations.Add(s);
@@ -66,7 +66,7 @@ namespace Dal
         /// <param name="id">the drone id</param>
         public void ReleaseDroneFromCharge(int id)
         {
-            if (!Dal.DataSource.drones.Any(dron => dron.Id == id))
+            if (!drones.Any(dron => dron.Id == id))
                 throw new DO.IdNotFoundException(id, "drone");
             Station s;
             foreach (DroneCharge charger in droneCharges)
@@ -94,7 +94,7 @@ namespace Dal
         {
             if (!checkDrone(id))
                 throw new IdNotFoundException(id, "drone");
-            Dal.DataSource.drones.RemoveAll(dron => dron.Id == id);
+           drones.RemoveAll(dron => dron.Id == id);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Dal
         {
             if (!checkDrone(id))
                 throw new DO.IdNotFoundException(id, "drone");
-            Drone d = Dal.DataSource.drones.Find(drone => drone.Id == id);
+            Drone d = drones.Find(drone => drone.Id == id);
             return d;
         }
 
@@ -117,7 +117,7 @@ namespace Dal
         /// <returns></returns>
         public IEnumerable<Drone> GetListOfDrones()
         {
-            return from drone in Dal.DataSource.drones
+            return from drone in drones
                    select drone; ;
         }
 
@@ -128,7 +128,7 @@ namespace Dal
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkDrone(int id)
         {
-            return Dal.DataSource.drones.Any(drone => drone.Id == id);
+            return drones.Any(drone => drone.Id == id);
         }
     }
 }

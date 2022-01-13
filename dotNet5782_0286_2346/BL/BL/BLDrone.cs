@@ -21,6 +21,8 @@ namespace BL
                 dalDrone.Model = drone.Model;
                 dalDrone.MaxWeight = (DO.WeightCategories)drone.MaxWeight;
                 dl.AddDrone(dalDrone);
+                if (dl.GetBaseStation(idOfStation).ChargeSlots == 0)
+                    throw new NoAvailableChargeSlots(idOfStation);
                 dl.SendDroneToCharge(dalDrone.Id, idOfStation);
                 drone.Battery = rand.Next(20, 41);
                 drone.DroneStatus = BO.EnumsBL.DroneStatuses.Maintenance;
@@ -188,32 +190,32 @@ namespace BL
         public void SendDroneToCharge(int id)
         {
             BO.Drone drone = GetDrone(id);
-            
             if (drone.DroneStatus == BO.EnumsBL.DroneStatuses.Available)
             {
-                DO.Station minDistanceStation = new();
-                double minDis = 1000000;
-                foreach (DO.Station s in dl.GetStationsByPredicate(stat=>stat.ChargeSlots>0))
+                DO.Station closestStation = new();
+                double minDis = 1000000;              
+                foreach (DO.Station s in dl.GetStationsByPredicate(stat => stat.ChargeSlots > 0))
                 {
                     double distance = DistanceBetweenPlaces(s.Longitude, s.Latitude, drone.Location.Longitude, drone.Location.Latitude);
                     if (distance < minDis)
-                    {                       
-                      minDis = distance;
-                      minDistanceStation = s;
+                    {
+                        minDis = distance;
+                        closestStation = s;
                     }
                 }
+                
                 if (emptyDronePowerConsumption * minDis < drone.Battery)
                 {
                     BO.DroneForList d = new();
                     d.Id = drone.Id;
                     d.Model = drone.Model;
                     d.MaxWeight = drone.MaxWeight;
-                    d.Battery=drone.Battery - emptyDronePowerConsumption * minDis;
+                    d.Battery = drone.Battery - emptyDronePowerConsumption * minDis;
                     d.Location = new();
-                    d.Location.Latitude  = minDistanceStation.Latitude;
-                    d.Location.Longitude = minDistanceStation.Longitude;
+                    d.Location.Latitude = closestStation.Latitude;
+                    d.Location.Longitude = closestStation.Longitude;
                     d.DroneStatus = BO.EnumsBL.DroneStatuses.Maintenance;
-                    dl.SendDroneToCharge(drone.Id, minDistanceStation.Id);
+                    dl.SendDroneToCharge(drone.Id, closestStation.Id);
                     dronesBL.RemoveAll(dr => dr.Id == id);
                     dronesBL.Add(d);
                 }
@@ -222,8 +224,9 @@ namespace BL
                     throw new NoBatteryException(drone.Id);
                 }
             }
-            else 
-                throw new DroneStatusException(id,"available");
+            else
+                throw new DroneStatusException(id, "available");
+
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -263,9 +266,9 @@ namespace BL
                 DO.Parcel p = dl.GetParcel(d2.IdOfTheDeliveredParcel);
                 parcelInTransfer.Id = p.Id;
                 if (p.PickedUp == null)
-                    parcelInTransfer.Status = false;
+                    parcelInTransfer.OnTheWay = false;
                 else
-                    parcelInTransfer.Status = true;
+                    parcelInTransfer.OnTheWay = true;
                 parcelInTransfer.Weight = (BO.EnumsBL.WeightCategories)p.Weight;
                 parcelInTransfer.Priority = (BO.EnumsBL.Priorities)p.Priority;
                 double lat1 = dl.GetCustomer(p.SenderId).Latitude;

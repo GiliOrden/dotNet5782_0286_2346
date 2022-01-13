@@ -92,6 +92,17 @@ namespace BO
         public DroneMaxWeightIsLowException(int droneId, int parcelId, string message, Exception inner) : base(message, inner) { DroneID = droneId; }
 
         public override string ToString() => base.ToString() + $"Drone:{DroneID} can't carry any parcel becuse its max weight is too low, please try another drone. ";
+
+    }
+    [Serializable]
+    public class NoAvailableChargeSlots : Exception
+    {
+        public int StationId;
+        public NoAvailableChargeSlots(int stationId) : base() { StationId = stationId; }
+        public NoAvailableChargeSlots(int stationId, string message) : base(message) { StationId = stationId; }
+        public NoAvailableChargeSlots(int stationId, string message, Exception inner) : base(message, inner) { StationId = stationId; }
+
+        public override string ToString() => base.ToString() + $"Station:{StationId} has no availlable charge slots,please try another station. ";
     }
 
 }   

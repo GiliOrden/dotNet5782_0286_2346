@@ -11,7 +11,7 @@ namespace BO
     public class ParcelInTransfer
     {
         public int Id { get; set; }
-        public bool Status { get; set; }//no- Waiting for collection /yes- on the way to the destination
+        public bool OnTheWay { get; set; }//no- Waiting for collection /yes- on the way to the destination
         public WeightCategories Weight { get; set; }
         public Priorities Priority { get; set; }
         public CustomerInParcel Sender { get; set; }

@@ -37,7 +37,7 @@ namespace Dal
         public Station GetBaseStation(int id)
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
-            if (checkStation(stations, id))
+            if (!checkStation(stations, id))
                 throw new DO.ExistIdException(id, "station");
             Station s = stations.Find(stat => stat.Id == id);
             return s;
@@ -62,7 +62,7 @@ namespace Dal
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
             if (checkStation(stations, id))
-                throw new DO.ExistIdException(id, "station");
+                throw new DO.IdNotFoundException(id, "station");
             stations.RemoveAll(station => station.Id == id);
             XMLTools.SaveListToXMLSerializer(stations, stationsPath);
         }
@@ -80,15 +80,14 @@ namespace Dal
         public void AddCustomer(Customer c)
         {
             XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
-
             XElement cus = (from customer in customersRootElem.Elements()
-                             where int.Parse(customer.Element("Id").Value) == c.Id
-                             select customer).FirstOrDefault();
+                            where int.Parse(customer.Element("Id").Value) == c.Id
+                            select customer).FirstOrDefault();
 
             if (cus != null)
                 throw new ExistIdException(c.Id, "customer");
 
-            XElement personElem = new XElement("Customer",
+            XElement personElem = new XElement("Customer", 
                                   new XElement("Id", c.Id.ToString()),
                                   new XElement("Name", c.Name),
                                   new XElement("Phone", c.Phone),
@@ -102,40 +101,37 @@ namespace Dal
 
         public Customer GetCustomer(int id)
         {
-            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
-
-            Customer c = (from cus in customersRootElem.Elements()
-                        where int.Parse(cus.Element("Id").Value) == id
-                        select new Customer()
-                        {
-                            Id = Int32.Parse(cus.Element("Id").Value),
-                            Name = cus.Element("Name").Value,
-                            Phone = cus.Element("Phone").Value,
-                            Longitude = Int32.Parse(cus.Element("Longitude").Value),
-                            Latitude = Int32.Parse(cus.Element("Latitude").Value)
-                        }
-                        ).FirstOrDefault();
 
             if (!CheckCustomer(id))
                 throw new IdNotFoundException(id, "customer");
-
+            XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
+            Customer c = (from cus in customersRootElem.Elements()
+                         where int.Parse(cus.Element("Id").Value) == id
+                         select new Customer()
+                         {
+                            Id = Int32.Parse(cus.Element("Id").Value),
+                            Name = cus.Element("Name").Value,
+                            Phone = cus.Element("Phone").Value,
+                            Longitude = double.Parse(cus.Element("Longitude").Value),
+                            Latitude = double.Parse(cus.Element("Latitude").Value)
+                         }
+                        ).FirstOrDefault();
             return c;
         }
 
         public IEnumerable<Customer> GetListOfCustomers()
         {
             XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
-
-            return (from cus in customersRootElem.Elements()
-                    select new Customer()
-                    {
-                        Id = Int32.Parse(cus.Element("Id").Value),
-                            Name = cus.Element("Name").Value,
-                            Phone = cus.Element("Phone").Value,
-                            Longitude = Int32.Parse(cus.Element("Longitude").Value),
-                            Latitude = Int32.Parse(cus.Element("Latitude").Value)
-                    }
-                   );
+            return from cus in customersRootElem.Elements()
+                   select new Customer()
+                   {
+                       Id = Int32.Parse(cus.Element("Id").Value),
+                       Name = cus.Element("Name").Value,
+                       Phone = cus.Element("Phone").Value,
+                       Longitude = double.Parse(cus.Element("Longitude").Value),
+                       Latitude = double.Parse(cus.Element("Latitude").Value)
+                   };
+                   
         }
 
         public void DeleteCustomer(int id)
@@ -169,8 +165,7 @@ namespace Dal
                             select c).FirstOrDefault();
             if (cus != null)
                 return true;
-            return false;
-            
+            return false;            
         }
 
         public void AddDrone(Drone d)
@@ -188,6 +183,7 @@ namespace Dal
             List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
             List<Station> stationsList = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
             List<DroneCharge> droneChargesList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargesPath);
+            
             if (!checkDrone(dronesList,idDrone))
                 throw new DO.IdNotFoundException(idDrone, "drone");
             if (!checkStation(stationsList,idStation))
@@ -308,18 +304,13 @@ namespace Dal
             Drone d = dronesList.Find(drone => drone.Id == droneId);
             if (!checkParcel(parcels,parcelId))
                 throw new DO.IdNotFoundException(parcelId, "parcel");
-            foreach (Parcel parcel in parcels)
-            {
-                if (parcel.Id == parcelId)
-                {
-                    Parcel p = parcel;
-                    p.DroneId = d.Id;
-                    p.Scheduled = DateTime.Now;
-                    parcels.Add(p);
-                    parcels.Remove(parcel);
-                    break;
-                }
-            }
+            Parcel parcel1 ,parcel2;
+            parcel2 = parcels.Find(parc => parc.Id == parcelId);
+            parcel1 = parcel2;
+            parcel1.DroneId = d.Id;
+            parcel1.Scheduled = DateTime.Now;
+            parcels.Add(parcel1);
+            parcels.Remove(parcel2);
             XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
         }
 
