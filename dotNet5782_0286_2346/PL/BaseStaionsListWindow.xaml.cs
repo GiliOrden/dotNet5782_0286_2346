@@ -1,3 +1,4 @@
+﻿
 ﻿using BlApi;
 using BO;
 using System;
@@ -34,14 +35,14 @@ namespace PL
             StationForList station = stationForListDataGrid.SelectedItem as StationForList;
             if (station != null)
             {
-                new StationWindow(ref bL,station.ID).Show();               
-            }           
+                new StationWindow(ref bL, station.ID).Show();
+            }
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            MainWindow mw=new();
+            MainWindow mw = new();
             mw.Show();
         }
 
@@ -56,11 +57,6 @@ namespace PL
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(stationForListDataGrid.DataContext);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("InaccessibleChargingPositions");
             view.GroupDescriptions.Add(groupDescription);
-
-
-            //stationForListDataGrid.DataContext=from station in bL.GetListOfBaseStations()
-            //                                    group station by  station.AvailableChargingPositions > 0 into gs
-            //                                    select gs;
         }
 
         private void groupByNumberOfAvailableChargeSlotsButton_Click(object sender, RoutedEventArgs e)

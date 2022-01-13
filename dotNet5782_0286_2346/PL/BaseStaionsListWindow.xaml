@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="BaseStaionsListWindow" Height="534" Width="800">
-        Title="BaseStaionsListWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
         <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="stationForListDataGrid_SelectionChanged">
             <DataGrid.Columns>
