@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800">
+        Title="CustomerWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
         <Grid x:Name="customerGrid" DataContext="{Binding}" HorizontalAlignment="Center" Margin="0,141,0,0" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>

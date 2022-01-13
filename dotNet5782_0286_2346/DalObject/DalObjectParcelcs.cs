@@ -15,7 +15,7 @@ namespace Dal
         /// <summary>
         /// Adding customer element to the customers list
         /// </summary>
-        /// <param name="p">element ,Parcel tipe, we adding the list</param>
+        /// <param name="p">element ,Parcel type, we adding the list</param>
         public int AddParcel(Parcel p)
         {
             p.Id = Config.CodeOfParcel++;

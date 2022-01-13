@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelListWindow" Height="450" Width="800" x:Name="parcelListWindow">
+        Title="ParcelListWindow" Height="505" Width="954" x:Name="parcelListWindow">
     <Grid>
         <DataGrid x:Name="parcelForListDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="30,54,215,25" ItemsSource="{Binding }" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionChanged="ParcelView_SelectionChanged"  >
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Width="SizeToHeader" Header="Id" Binding="{Binding Id}"/>
-                <DataGridTextColumn x:Name="parcelStatusColumn" Width="SizeToHeader" Header="Parcel Status" Binding="{Binding ParcelStatus}"/>
-                <DataGridTextColumn x:Name="priorityColumn" Width="SizeToHeader" Header="Priority" Binding="{Binding Priority}"/>
-                <DataGridTextColumn x:Name="receiverNameColumn" Width="SizeToHeader" Header="Receiver Name" Binding="{Binding ReceiverName}"/>
-                <DataGridTextColumn x:Name="senderNameColumn" Width="SizeToHeader" Header="Sender Name" Binding="{Binding SenderName}"/>
-                <DataGridTextColumn x:Name="weightColumn" Width="SizeToHeader" Header="Weight" Binding="{Binding Weight}"/>
+                <DataGridTextColumn x:Name="idColumn" Width="Auto" Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn x:Name="parcelStatusColumn" Width="Auto" Header="Parcel Status" Binding="{Binding ParcelStatus}"/>
+                <DataGridTextColumn x:Name="priorityColumn" Width="Auto" Header="Priority" Binding="{Binding Priority}"/>
+                <DataGridTextColumn x:Name="receiverNameColumn" Width="Auto" Header="Receiver Name" Binding="{Binding ReceiverName}"/>
+                <DataGridTextColumn x:Name="senderNameColumn" Width="Auto" Header="Sender Name" Binding="{Binding SenderName}"/>
+                <DataGridTextColumn x:Name="weightColumn" Width="Auto" Header="Weight" Binding="{Binding Weight}"/>
             </DataGrid.Columns>
 
             <DataGrid.GroupStyle>
@@ -27,13 +27,16 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
         </DataGrid>
-        <Button x:Name="GroupBySender" Content="Group by sender" HorizontalAlignment="Left" Margin="635,74,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
-        <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="635,149,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupByReceiver_Click"/>
+        <Button x:Name="GroupBySender" Content="Group by sender" HorizontalAlignment="Left" Margin="744,79,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
+        <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="784,143,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupByReceiver_Click"/>
         <ComboBox Name="WeightSelect" HorizontalAlignment="Left" Margin="505,26,0,0" VerticalAlignment="Top" Width="45" RenderTransformOrigin="0.5,1.55" Height="25" SelectionChanged="WeightSelectComboBox"/>
         <ComboBox Name="ParcelStatusSelect" HorizontalAlignment="Left" Margin="100,26,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="WeightSelectComboBox"/>
-        <Button Content="Update parcel" HorizontalAlignment="Left" Margin="635,254,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="UpdateParcel"/>
-        <Button Content="Add parcel" HorizontalAlignment="Left" Margin="635,324,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="AddParcel"/>
-        <Button Content="Refresh" HorizontalAlignment="Left" Margin="676,377,0,0" VerticalAlignment="Top" Click="RefreshButton"/>
+        <Button Content="Update parcel" HorizontalAlignment="Left" Margin="739,210,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="UpdateParcel"/>
+        <Button Content="Add parcel" HorizontalAlignment="Left" Margin="804,279,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="AddParcel"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="759,350,0,0" VerticalAlignment="Top" Click="RefreshButton"/>
+        <Label x:Name="selectStatusLabel"  Content="select status:" HorizontalAlignment="Left" Margin="20,25,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.406,-8.098"/>
+        <Label Content="select weight:" HorizontalAlignment="Left" Margin="397,27,0,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="829,404,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
 
     </Grid>
 

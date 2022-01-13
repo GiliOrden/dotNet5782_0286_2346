@@ -95,17 +95,17 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BO.ParcelForList> GetListOfParcels()
         {
-             var parcels =
-                from parcel in dl.GetListOfParcels()
-                select new BO.ParcelForList
-                {
-                    Id = parcel.Id,
-                    SenderName = dl.GetCustomer(parcel.SenderId).Name,
-                    ReceiverName = dl.GetCustomer(parcel.TargetId).Name,
-                    Weight = (EnumsBL.WeightCategories)parcel.Weight,
-                    Priority = (EnumsBL.Priorities)parcel.Priority,
-                    ParcelStatus=StatusOfParcel(parcel.Id)
-                };
+            var parcels =
+            from parcel in dl.GetListOfParcels()
+            select new BO.ParcelForList
+            {
+                Id = parcel.Id,
+                SenderName = dl.GetCustomer(parcel.SenderId).Name,
+                ReceiverName = dl.GetCustomer(parcel.TargetId).Name,
+                Weight = (EnumsBL.WeightCategories)parcel.Weight,
+                Priority = (EnumsBL.Priorities)parcel.Priority,
+                ParcelStatus = StatusOfParcel(parcel.Id)
+            };
             return parcels;
         }
 

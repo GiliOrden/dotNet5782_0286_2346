@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomersListWindow" Height="450" Width="800">
+        Title="CustomersListWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
     <Grid>
             <DataGrid x:Name="customerForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="53,79,43,72" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="customerForListDataGrid_SelectionChanged">

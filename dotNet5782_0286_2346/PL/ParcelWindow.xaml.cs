@@ -21,11 +21,11 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
-        IBL parc;
+        IBL bL;
         BO.Parcel parcel;
         public ParcelWindow(ref IBL bl, BO.Parcel p, BO.EnumsBL.ParcelStatuses parcelStatus)//update/delete parcel window
         {
-            parc = bl;
+            bL = bl;
             parcel = p;
             InitializeComponent();
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
@@ -70,7 +70,7 @@ namespace PL
 
         public ParcelWindow(ref IBL bl)//adding window
         {
-            parc = bl;
+            bL = bl;
             InitializeComponent();
             UpdateParcel.Visibility = Visibility.Collapsed;
             DeleteParcel.Visibility = Visibility.Collapsed;
@@ -101,18 +101,17 @@ namespace PL
             parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
             parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
             parcel.Sender = new();
-            BO.CustomerForList cust= (BO.CustomerForList)senderListBox.SelectedItem;
+            BO.CustomerForList cust = (BO.CustomerForList)senderListBox.SelectedItem;
             parcel.Sender.ID = cust.ID;
             parcel.Sender.Name = cust.Name;
             parcel.Receiver = new();
             BO.CustomerForList cust2 = (BO.CustomerForList)receiverListBox.SelectedItem;
             parcel.Receiver.ID = cust2.ID;
             parcel.Receiver.Name = cust2.Name;
-            parc.AddParcel(parcel);
-            MessageBox.Show("The parcel was successfully added");
-            Close();
-
-            
+            bL.AddParcel(parcel);
+            MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
+            new ParcelListWindow(ref bL).Show();
         }  
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
@@ -125,28 +124,28 @@ namespace PL
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            parc.DeleteParcel(parcel.Id);
+            bL.DeleteParcel(parcel.Id);
             MessageBox.Show("The parcel was successfully deleted");
             Close();
         }
 
         private void CollectButton_Click(object sender, RoutedEventArgs e)
         {
-            parc.CollectParcelByDrone(parcel.Drone.Id);//problem associated
+            bL.CollectParcelByDrone(parcel.Drone.Id);//problem associated
             MessageBox.Show("The parcel was successfully collected");
             Close();
         }
 
         private void SupplyButton_Click(object sender, RoutedEventArgs e)
         {
-            parc.SupplyDeliveryToCustomer(parcel.Drone.Id);
+            bL.SupplyDeliveryToCustomer(parcel.Drone.Id);
             MessageBox.Show("The parcel was successfully supplied");
             Close();
         }
 
         private void ShowDroneButton_Click(object sender, RoutedEventArgs e) // need to fix the  DroneWindow to be for BO.Drone type. then it will work
         {
-            BO.Drone drone = parc.GetDrone(parcel.Drone.Id);
+            BO.Drone drone = bL.GetDrone(parcel.Drone.Id);
 
             //if (drone != null)     
             //{
@@ -163,7 +162,7 @@ namespace PL
             if (parcel != null)
             {
                 id = parcel.Sender.ID;
-                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                CustomerWindow cw = new CustomerWindow(ref bL, id);
                 cw.ShowDialog();
             }
                
@@ -171,7 +170,7 @@ namespace PL
             {
                 BO.CustomerForList cust = senderListBox.SelectedItem as BO.CustomerForList;
                 id = cust.ID;
-                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                CustomerWindow cw = new CustomerWindow(ref bL, id);
                 cw.ShowDialog();
             }
             else
@@ -185,7 +184,7 @@ namespace PL
             if (parcel != null)
             {
                 id = parcel.Receiver.ID;
-                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                CustomerWindow cw = new CustomerWindow(ref bL, id);
                 cw.ShowDialog();
             }
 
@@ -193,7 +192,7 @@ namespace PL
             {
                 BO.CustomerForList cust = receiverListBox.SelectedItem as BO.CustomerForList;
                 id = cust.ID;
-                CustomerWindow cw = new CustomerWindow(ref parc, id);
+                CustomerWindow cw = new CustomerWindow(ref bL, id);
                 cw.ShowDialog();
             }
             else

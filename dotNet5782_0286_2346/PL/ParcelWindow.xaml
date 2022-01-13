@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParcelWindow" Height="594" Width="500">
+        Title="ParcelWindow" Height="594" Width="500" Background="AliceBlue">
 
     <Grid Margin="10,0,-0.4,-6">
         <Grid x:Name="gridOfParcel" VerticalAlignment="Top" Margin="50,50,0,50" HorizontalAlignment="Left" Width="250">
