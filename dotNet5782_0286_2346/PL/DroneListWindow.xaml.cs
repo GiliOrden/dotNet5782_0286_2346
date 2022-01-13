@@ -79,7 +79,7 @@ namespace PL
         private void GroupByStatus_Click(object sender, RoutedEventArgs e)
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(droneForListDataGrid.DataContext);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("SenderName");
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("DroneStatus");
             view.GroupDescriptions.Add(groupDescription);
         }
 
