@@ -27,13 +27,12 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
         </DataGrid>
-        <Button x:Name="GroupBySender" Content="Group by sender" HorizontalAlignment="Left" Margin="635,74,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupBySender_Click"/>
-        <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="635,149,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="GroupByReceiver_Click"/>
+        <Button x:Name="GroupBySender" Content="Group by sender" HorizontalAlignment="Left" Margin="385,16,0,0" VerticalAlignment="Top" Height="35" Width="95" Click="GroupBySender_Click" Background="#FFE0D3F6"/>
+        <Button Content="Group by receiver" HorizontalAlignment="Left" Margin="260,16,0,0" VerticalAlignment="Top" Height="35" Width="90" Click="GroupByReceiver_Click" Background="#FFE0D3F6"/>
         <ComboBox Name="WeightSelect" HorizontalAlignment="Left" Margin="505,26,0,0" VerticalAlignment="Top" Width="45" RenderTransformOrigin="0.5,1.55" Height="25" SelectionChanged="WeightSelectComboBox"/>
         <ComboBox Name="ParcelStatusSelect" HorizontalAlignment="Left" Margin="100,26,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="WeightSelectComboBox"/>
-        <Button Content="Update parcel" HorizontalAlignment="Left" Margin="635,254,0,0" VerticalAlignment="Top" Height="35" Width="120" Click="UpdateParcel"/>
-        <Button Content="Add parcel" HorizontalAlignment="Left" Margin="635,324,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="AddParcel"/>
-        <Button Content="Refresh" HorizontalAlignment="Left" Margin="676,377,0,0" VerticalAlignment="Top" Click="RefreshButton"/>
+        <Button Content="Add parcel" HorizontalAlignment="Left" Margin="640,369,0,0" VerticalAlignment="Top" Height="40" Width="120" Click="AddParcel"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="600,21,0,0" VerticalAlignment="Top" Click="RefreshButton"/>
 
     </Grid>
 

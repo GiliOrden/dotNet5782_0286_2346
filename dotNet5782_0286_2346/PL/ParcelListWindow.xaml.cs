@@ -59,20 +59,20 @@ namespace PL
             parcelForListDataGrid.Items.Refresh();
         }
 
-        private void UpdateParcel(object sender, RoutedEventArgs e)
-        {
-            BO.ParcelForList p = parcelForListDataGrid.SelectedItem as BO.ParcelForList;
-            if (p != null)
-            {
-                BO.Parcel p2 = new BO.Parcel();
-                p2 = parc.GetParcel(p.Id);
-                ParcelWindow pw = new ParcelWindow(ref parc, p2, p.ParcelStatus);
-                pw.ShowDialog();
-                parcelForListDataGrid.ItemsSource = null;
-                parcelForListDataGrid.ItemsSource = parc.GetListOfParcels();//update the parcel collection in the parcelListWindow
+        //private void UpdateParcel(object sender, RoutedEventArgs e)
+        //{
+        //    BO.ParcelForList p = parcelForListDataGrid.SelectedItem as BO.ParcelForList;
+        //    if (p != null)
+        //    {
+        //        BO.Parcel p2 = new BO.Parcel();
+        //        p2 = parc.GetParcel(p.Id);
+        //        ParcelWindow pw = new ParcelWindow(ref parc, p2, p.ParcelStatus);
+        //        pw.ShowDialog();
+        //        parcelForListDataGrid.ItemsSource = null;
+        //        parcelForListDataGrid.ItemsSource = parc.GetListOfParcels();//update the parcel collection in the parcelListWindow
 
-            }
-        }
+        //    }
+        //}
 
         private void AddParcel(object sender, RoutedEventArgs e)
         {
