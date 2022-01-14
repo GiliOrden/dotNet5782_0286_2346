@@ -62,7 +62,8 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            foreach(DroneForList drone in bl.GetDronesByPredicate(drone=>drone.DroneStatus==EnumsBL.DroneStatuses.Maintenance))
+            MessageBox.Show("Closing called");
+            foreach (DroneForList drone in bl.GetDronesByPredicate(drone=>drone.DroneStatus==EnumsBL.DroneStatuses.Maintenance))
             {
                 bl.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
             }

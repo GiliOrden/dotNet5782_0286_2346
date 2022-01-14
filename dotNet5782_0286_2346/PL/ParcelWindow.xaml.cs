@@ -1,3 +1,4 @@
+﻿
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace PL
 
             gridOfParcel.DataContext = p;
             AddParcel.Visibility = Visibility.Collapsed;
-            if (BO.EnumsBL.ParcelStatuses.Defined== parcelStatus)//the botton for delete parcel
+            if (BO.EnumsBL.ParcelStatuses.Defined == parcelStatus)//the botton for delete parcel
             {
                 DeleteParcel.IsEnabled = true;
                 SupplyParcel.Visibility = Visibility.Collapsed;
@@ -55,7 +56,7 @@ namespace PL
                 CollectParcel.IsEnabled = true;
                 SupplyParcel.Visibility = Visibility.Collapsed;
             }
-           else if (BO.EnumsBL.ParcelStatuses.Collected == parcelStatus)
+            else if (BO.EnumsBL.ParcelStatuses.Collected == parcelStatus)
             {
                 CollectParcel.Visibility = Visibility.Collapsed;
                 SupplyParcel.IsEnabled = true;
@@ -83,7 +84,7 @@ namespace PL
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             senderListBox.ItemsSource = bl.GetListOfCustomers();
-            receiverListBox.ItemsSource= bl.GetListOfCustomers();
+            receiverListBox.ItemsSource = bl.GetListOfCustomers();
             senderListBox.SelectionChanged += addButton_isEnable;
             receiverListBox.SelectionChanged += addButton_isEnable;
             priorityComboBox.SelectionChanged += addButton_isEnable;
@@ -116,7 +117,7 @@ namespace PL
             MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
             new ParcelListWindow(ref bL).Show();
-        }  
+        }
 
         //private void updateButton_Click(object sender, RoutedEventArgs e)
         //{
@@ -169,7 +170,7 @@ namespace PL
                 CustomerWindow cw = new CustomerWindow(ref bL, id);
                 cw.ShowDialog();
             }
-               
+
             else if (senderListBox.SelectedItem != null)
             {
                 BO.CustomerForList cust = senderListBox.SelectedItem as BO.CustomerForList;
@@ -179,7 +180,7 @@ namespace PL
             }
             else
                 MessageBox.Show("You didn't choose a customer");
-           
+
         }
 
         private void ShowReceiverButton_Click(object sender, RoutedEventArgs e)

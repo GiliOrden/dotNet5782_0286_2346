@@ -57,12 +57,12 @@ namespace PL
         }
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            int id;
-            int.TryParse(chargeSlotsTextBox.Text, out id);
-            bL.UpdateBaseStation(station.ID, nameTextBox.Text, id);
+            int numOfChageSlots;
+            int.TryParse(chargeSlotsTextBox.Text, out numOfChageSlots);
+            bL.UpdateBaseStation(station.ID, nameTextBox.Text, numOfChageSlots);
             MessageBox.Show("The station is updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
-            new CustomerWindow(ref bL,station.ID).Show();
+            new BaseStaionsListWindow(ref bL).Show();
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)

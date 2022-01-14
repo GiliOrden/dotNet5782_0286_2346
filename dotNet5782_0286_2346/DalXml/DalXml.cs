@@ -18,9 +18,9 @@ namespace Dal
         #endregion
 
         #region DS XML Files
-        string droneChargesPath = @"DroneChargesXml.xml"; //XElement
+        string customersPath = @"CustomersXml.xml"; //XElement
         string dronesPath = @"DronesXml.xml"; //XMLSerializer
-        string customersPath = @"CustomersXml.xml"; //XMLSerializer
+        string droneChargesPath = @"DroneChargesXml.xml"; //XMLSerializer 
         string parcelsPath = @"ParcelsXml.xml"; //XMLSerializer
         string stationsPath = @"StationsXml.xml"; //XMLSerializer
         private readonly string configPath = "BatteryAndRowNumbers.xml";

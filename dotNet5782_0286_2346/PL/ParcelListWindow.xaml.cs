@@ -1,3 +1,4 @@
+﻿
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,11 @@ namespace PL
     {
         IBL bL;
         public ParcelListWindow(ref IBL bl)
-        {           
+        {
             InitializeComponent();
             bL = bl;
             parcelForListDataGrid.DataContext = bL.GetListOfParcels();
-            WeightSelect.ItemsSource= Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
+            WeightSelect.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             ParcelStatusSelect.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.ParcelStatuses));
         }
 
@@ -47,12 +48,12 @@ namespace PL
 
         private void WeightSelectComboBox(object sender, SelectionChangedEventArgs e)
         {
-           if(WeightSelect.SelectedItem != null && ParcelStatusSelect.SelectedItem != null)
-                 parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
-           else if (WeightSelect.SelectedItem != null)
+            if (WeightSelect.SelectedItem != null && ParcelStatusSelect.SelectedItem != null)
+                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
+            else if (WeightSelect.SelectedItem != null)
                 parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, null);
-           else if(ParcelStatusSelect.SelectedItem != null)
-                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate(null,(BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
+            else if (ParcelStatusSelect.SelectedItem != null)
+                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate(null, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
             parcelForListDataGrid.Items.Refresh();
         }
 

@@ -90,7 +90,7 @@ namespace PL
 
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text.Length != 0 && modelTextBox != null && MaxWeightComboBox != null && stationsListBox.SelectedItem != null)
+            if (idTextBox.Text.Length != 0 && modelTextBox.Text.Length !=0 && MaxWeightComboBox.SelectedItem != null && stationsListBox.SelectedItem != null)
                 addButton.IsEnabled = true;
         }
         private void addButton_Click(object sender, RoutedEventArgs e)
@@ -161,19 +161,19 @@ namespace PL
             try
             {
                 droneWindowBL.SendDroneToCharge(drone.Id);
-                MessageBox.Show("The drone was sent to charging");
+                MessageBox.Show("The drone was sent to charging", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 new DroneWindow(ref droneWindowBL,drone.Id).Show();
             }
             catch (NoBatteryException)
             {
-                MessageBox.Show($"The drone id is already existed,\nPlease check this data field", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"The drone battery is too low", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
-            MessageBox.Show("The drone was released from charging");
+            MessageBox.Show("The drone was released from charging", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
             new DroneWindow(ref droneWindowBL, drone.Id).Show();
         }
@@ -183,7 +183,7 @@ namespace PL
             try
             {
                 droneWindowBL.AssignParcelToDrone(drone.Id);
-                MessageBox.Show("The drone was assigned to parcel!");
+                MessageBox.Show("The drone was assigned to parcel!","Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 new DroneWindow(ref droneWindowBL,drone.Id).Show();
             }
