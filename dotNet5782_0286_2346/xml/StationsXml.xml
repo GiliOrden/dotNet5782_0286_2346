@@ -3,22 +3,22 @@
   <Station>
     <Id>91</Id>
     <Name>DegelReuven7Haifa</Name>
-    <ChargeSlots>0</ChargeSlots>
+    <ChargeSlots>-8</ChargeSlots>
     <Longitude>32.92459804156078</Longitude>
     <Latitude>35.78756005050966</Latitude>
   </Station>
   <Station>
-    <Id>20</Id>
-    <Name>Hatikva6Jerusalem</Name>
-    <ChargeSlots>-3</ChargeSlots>
-    <Longitude>32.49706546403331</Longitude>
-    <Latitude>34.77223008660238</Latitude>
-  </Station>
-  <Station>
     <Id>92</Id>
     <Name>Jabotinsky174PetachTikwa</Name>
-    <ChargeSlots>3</ChargeSlots>
+    <ChargeSlots>-14</ChargeSlots>
     <Longitude>32.10465347767093</Longitude>
     <Latitude>34.11741699139468</Latitude>
+  </Station>
+  <Station>
+    <Id>20</Id>
+    <Name>Hatikva6Jerusalem</Name>
+    <ChargeSlots>-26</ChargeSlots>
+    <Longitude>32.49706546403331</Longitude>
+    <Latitude>34.77223008660238</Latitude>
   </Station>
 </ArrayOfStation>

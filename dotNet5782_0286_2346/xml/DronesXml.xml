@@ -45,4 +45,14 @@
     <Model>yttt</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
+  <Drone>
+    <Id>987</Id>
+    <Model>kjhgf</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>87654</Id>
+    <Model>לחיעכג</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drone>
 </ArrayOfDrone>

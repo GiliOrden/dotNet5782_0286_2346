@@ -30,7 +30,7 @@ namespace PL
             InitializeComponent();
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
-            
+
             ListBoxItem item = new ListBoxItem();
             item.Content = p.Sender;
             senderListBox.Items.Add(item);
@@ -72,7 +72,10 @@ namespace PL
         {
             bL = bl;
             InitializeComponent();
-            UpdateParcel.Visibility = Visibility.Collapsed;
+            priorityComboBox.IsEnabled = true;
+            receiverListBox.IsEnabled = true;
+            senderListBox.IsEnabled = true;
+            weightComboBox.IsEnabled = true;
             DeleteParcel.Visibility = Visibility.Collapsed;
             SupplyParcel.Visibility = Visibility.Collapsed;
             CollectParcel.Visibility = Visibility.Collapsed;
@@ -98,6 +101,7 @@ namespace PL
             //int idOfSender, idOfReceiver;
             //new ObservableCollection<BO.ParcelForList>
             BO.Parcel parcel = new();
+
             parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
             parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
             parcel.Sender = new();
@@ -114,13 +118,13 @@ namespace PL
             new ParcelListWindow(ref bL).Show();
         }  
 
-        private void updateButton_Click(object sender, RoutedEventArgs e)
-        {
-            //droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
-            //MessageBox.Show($"The parcel was successfully updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            //this.Close();
-            //new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
-        }
+        //private void updateButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
+        //    //MessageBox.Show($"The parcel was successfully updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        //    //this.Close();
+        //    //new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
+        //}
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -147,12 +151,12 @@ namespace PL
         {
             BO.Drone drone = bL.GetDrone(parcel.Drone.Id);
 
-            //if (drone != null)     
-            //{
-            //    DroneWindow dw = new DroneWindow(ref parc, drone);
-            //    dw.ShowDialog();
-            //    //Close();
-            //}
+            if (drone != null)
+            {
+                DroneWindow dw = new DroneWindow(ref bL, drone.Id);
+                dw.ShowDialog();
+                //Close();
+            }
 
         }
 
@@ -199,6 +203,10 @@ namespace PL
                 MessageBox.Show("You didn't choose a customer");
 
         }
-    
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

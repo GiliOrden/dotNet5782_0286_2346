@@ -84,7 +84,7 @@ namespace PL
             {
                 BO.Parcel p2 = new BO.Parcel();
                 p2 = bL.GetParcel(p.Id);
-                ParcelWindow pw = new ParcelWindow(ref bL, p2,p.ParcelStatus);
+                ParcelWindow pw = new ParcelWindow(ref bL, p2, p.ParcelStatus);
                 pw.ShowDialog();
                 parcelForListDataGrid.ItemsSource = null;
                 parcelForListDataGrid.ItemsSource = bL.GetListOfParcels();//update the parcel collection in the parcelListWindow
