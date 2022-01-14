@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="CustomersListWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
-    <Grid>
+        <Grid>
             <DataGrid x:Name="customerForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="53,79,43,72" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="customerForListDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
@@ -19,7 +19,8 @@
                     <DataGridTextColumn x:Name="sentButNotDeliveredParcelsColumn" Binding="{Binding SentButNotDeliveredParcels}" Header="Sent But Not Delivered Parcels" Width="SizeToHeader"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Add customer" HorizontalAlignment="Left" Margin="604,379,0,0" VerticalAlignment="Top" Click="addCustomerButton_Click"/>
+            <Button Content="Add customer" HorizontalAlignment="Left" Margin="511,378,0,0" VerticalAlignment="Top" Click="addCustomerButton_Click"/>
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="651,378,0,0" VerticalAlignment="Top" Width="92" Click="cancelButton_Click"/>
 
         </Grid>
     </Grid>

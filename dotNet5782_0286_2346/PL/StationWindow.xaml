@@ -41,7 +41,7 @@
             <Button x:Name="addButton" Content="Add " HorizontalAlignment="Left" Margin="562,378,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.335,0.304" Width="78" Click="addButton_Click"/>
             <Button Content="Cancel" HorizontalAlignment="Left" Margin="684,378,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
             <Label x:Name="dronesLabel" Content="Drones in Charging:" HorizontalAlignment="Left" Margin="50,110,0,0" VerticalAlignment="Top"/>
-
+            <Label x:Name="fillFieldsLabel" Content="please fill the fields:" HorizontalAlignment="Center" Margin="0,79,0,0" VerticalAlignment="Top" Visibility="Collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
         </Grid>
     </Grid>
 </Window>

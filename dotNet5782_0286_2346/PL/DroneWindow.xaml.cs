@@ -39,6 +39,7 @@ namespace PL
             MaxWeightComboBox.SelectionChanged += addButton_isEnable;
             stationsListBox.SelectionChanged += addButton_isEnable;
             showParcelInTransferButton.Visibility = Visibility.Collapsed;
+            fillFieldsLabel.Visibility = Visibility.Visible;
         }
 
         public DroneWindow(ref IBL bl, int idOfTheSelectedDrone)//second constructor for update
@@ -105,7 +106,7 @@ namespace PL
                 StationForList station = (BO.StationForList)stationsListBox.SelectedItem;
                 idOfStation = station.ID;
                 droneWindowBL.AddDrone(droneForLst, idOfStation);
-                MessageBox.Show("The drone was successfully added");
+                MessageBox.Show("The drone was successfully added","Success",MessageBoxButton.OK,MessageBoxImage.Information);
                 Close();
                 new DroneListWindow(ref  droneWindowBL).Show();
             }
@@ -153,7 +154,7 @@ namespace PL
            droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
            MessageBox.Show($"The drone was successfully updated","Success",MessageBoxButton.OK, MessageBoxImage.Information);
            this.Close();
-           new DroneWindow(ref droneWindowBL, drone.Id).Show();
+           new DroneWindow(ref droneWindowBL).Show();
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {

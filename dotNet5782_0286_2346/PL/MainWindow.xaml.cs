@@ -67,5 +67,11 @@ namespace PL
                 bl.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
             }
         }
+
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+
+        }
     }
 }

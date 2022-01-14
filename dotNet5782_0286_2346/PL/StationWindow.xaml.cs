@@ -46,10 +46,11 @@ namespace PL
             chargeSlotsTextBox.TextChanged += addButton_isEnable;
             longitudeTextBox.TextChanged += addButton_isEnable;
             latitudeTextBox.TextChanged += addButton_isEnable;
+            fillFieldsLabel.Visibility = Visibility.Visible;
         }
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text.Length != 0 && nameTextBox.Text != null && chargeSlotsTextBox.Text != null && longitudeTextBox.Text != null && latitudeTextBox.Text != null)
+            if (idTextBox.Text.Length != 0 && nameTextBox.Text.Length!=0 && chargeSlotsTextBox.Text.Length != 0 && longitudeTextBox.Text.Length != 0&& latitudeTextBox.Text.Length != 0)
                 addButton.IsEnabled = true;
             else
                 addButton.IsEnabled = false;
@@ -82,7 +83,7 @@ namespace PL
                 double.TryParse(latitudeTextBox.Text, out latitude);
                 station.Location.Latitude = latitude;
                 bL.AddBaseStation(station);
-                MessageBox.Show("The station was successfully added");
+                MessageBox.Show("The station was successfully added","Success",MessageBoxButton.OK,MessageBoxImage.Information);
                 Close();
                 new BaseStaionsListWindow(ref bL).Show();
             }

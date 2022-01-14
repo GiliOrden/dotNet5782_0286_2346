@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
     <Id>325152347</Id>
@@ -20,13 +20,6 @@
     <Phone>0553869562</Phone>
     <Longitude>32.57961859175918</Longitude>
     <Latitude>34.20128647354492</Latitude>
-  </Customer>
-  <Customer>
-    <Id>246987246</Id>
-    <Name>Brurya</Name>
-    <Phone>0531913212</Phone>
-    <Longitude>30.59060828783112</Longitude>
-    <Latitude>35.49830661537047</Latitude>
   </Customer>
   <Customer>
     <Id>309390876</Id>
@@ -83,5 +76,26 @@
     <Phone>0542201302</Phone>
     <Longitude>32.85587603475707</Longitude>
     <Latitude>35.57835357928572</Latitude>
+  </Customer>
+  <Customer>
+    <Id>246987246</Id>
+    <Name>neiya</Name>
+    <Phone>053456</Phone>
+    <Longitude>30.59060828783112</Longitude>
+    <Latitude>35.49830661537047</Latitude>
+  </Customer>
+  <Customer>
+    <Id>325152346</Id>
+    <Name>yyy</Name>
+    <Phone>666666</Phone>
+    <Longitude>33</Longitude>
+    <Latitude>77</Latitude>
+  </Customer>
+  <Customer>
+    <Id>565656565</Id>
+    <Name>rtr</Name>
+    <Phone>0546</Phone>
+    <Longitude>36</Longitude>
+    <Latitude>33</Latitude>
   </Customer>
 </ArrayOfCustomer>
