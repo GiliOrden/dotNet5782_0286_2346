@@ -105,5 +105,10 @@ namespace PL
             DroneInCharging drone = droneInChargingDataGrid.SelectedItem as DroneInCharging;
             new DroneWindow(ref bL, drone.Id).Show();
         }
+
+        private void idTextBox_TextChanged()
+        {
+
+        }
     }
 }

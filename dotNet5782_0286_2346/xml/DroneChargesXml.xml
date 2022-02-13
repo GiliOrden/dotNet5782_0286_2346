@@ -5,5 +5,24 @@
     <StationId>444</StationId>
     <StartOfCharging>2022-01-12T00:50:50.5349763+02:00</StartOfCharging>
   </DroneCharge>
-
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-02-03T18:08:50.4186411+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-02-03T18:08:50.4493067+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-02-13T16:15:36.2671546+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-02-13T16:15:36.2970799+02:00</StartOfCharging>
+  </DroneCharge>
 </ArrayOfDroneCharge>
