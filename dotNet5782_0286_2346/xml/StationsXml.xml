@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
+    <Id>92</Id>
+    <Name>Jabotinsky174PetachTikwa</Name>
+    <ChargeSlots>11</ChargeSlots>
+    <Longitude>32.10465347767093</Longitude>
+    <Latitude>34.11741699139468</Latitude>
+  </Station>
+  <Station>
     <Id>20</Id>
     <Name>Hatikva6Jerusalem</Name>
-    <ChargeSlots>16</ChargeSlots>
+    <ChargeSlots>15</ChargeSlots>
     <Longitude>32.49706546403331</Longitude>
     <Latitude>34.77223008660238</Latitude>
   </Station>
   <Station>
     <Id>91</Id>
     <Name>DegelReuven7Haifa</Name>
-    <ChargeSlots>15</ChargeSlots>
+    <ChargeSlots>14</ChargeSlots>
     <Longitude>32.92459804156078</Longitude>
     <Latitude>35.78756005050966</Latitude>
-  </Station>
-  <Station>
-    <Id>92</Id>
-    <Name>Jabotinsky174PetachTikwa</Name>
-    <ChargeSlots>12</ChargeSlots>
-    <Longitude>32.10465347767093</Longitude>
-    <Latitude>34.11741699139468</Latitude>
   </Station>
 </ArrayOfStation>
