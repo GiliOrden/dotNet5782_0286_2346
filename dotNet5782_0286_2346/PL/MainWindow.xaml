@@ -14,9 +14,22 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="734" Width="1097" >
-    <Slider Width="120"/>
-
-
+    <TabControl>
+        <TabItem Header="Register">
+            <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="79*"/>
+                    <ColumnDefinition Width="1012*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Customer">
+            <Grid Background="White"/>
+        </TabItem>
+        <TabItem Header="Manager">
+            <Grid Background="White"/>
+        </TabItem>
+    </TabControl>
 </Window>
 
   
