@@ -24,6 +24,7 @@ namespace Dal
         internal static List<Customer>customers = new List<Customer>();//create list of customers
         internal static List<Parcel> parcels = new List<Parcel>();//create list of parcels
         internal static List<DroneCharge> droneCharges = new List<DroneCharge>();
+        internal static List<User> users = new List<User>();
 
 
         /// <summary>
@@ -178,17 +179,24 @@ namespace Dal
                 });
             }
         }
-
+        public static void createUsers()
+        {
+            users.Add(new User() { Name = "Manager", Password = "1212gr" ,Status=UserStatuses.Manager});
+            for(int i=0;i<customers.Count ;i++)
+            {
+                users.Add(new User() { Name = customers[i].Name, Password = string.Format("{0}",i) ,Status=UserStatuses.Customer});
+            }
+        }
         /// <summary>
         /// Initializing initial elements in lists
         /// </summary>
         public static void Initialize()
-        {
-           
+        {          
             createDrones(rand.Next(5, 8));
             CreateStations(rand.Next(2,4));
             createCustomers(rand.Next(10, 14));
             createParcels(rand.Next(10, 100));
+            createUsers();
         }       
     }
 }

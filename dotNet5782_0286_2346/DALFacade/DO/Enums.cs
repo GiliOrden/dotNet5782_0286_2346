@@ -9,5 +9,6 @@ using System.Threading.Tasks;
     {
         public enum WeightCategories { Light, Medium, Heavy }
         public enum Priorities { Regular, Fast,Emergency }
+        public enum UserStatuses {Manager,Worker,Customer}
     }
 

@@ -33,7 +33,32 @@ namespace DO
             : base(info, context) { }
         public override string ToString() => base.ToString() + $",The {EntityName} Id:{ID} isn't found";
         }
-
+    [Serializable]
+    public class UserNotFoundException : Exception//When trying to look for a user and he does not exist 
+    {
+        public string Password;
+        public string UserName;
+        public UserNotFoundException(string password, string entity) : base() { Password = password; UserName = entity; }
+        public UserNotFoundException(string password, string entity, string message) : base(message) { Password = password; UserName = entity; }
+        public UserNotFoundException(string password, string entity, string message, Exception innerException) : base(message, innerException)
+        { Password = password; UserName = entity; }
+        protected UserNotFoundException(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
+        public override string ToString() => base.ToString() + $"The user{UserName} Pass:{Password} isn't found";
+    }
+    [Serializable]
+    public class ExistUserException : Exception//when trying to add a user and he allready exists  
+    {
+        public string Password;
+        public string UserName;
+        public ExistUserException(string password, string entity) : base() { Password=password ; UserName = entity; }
+        public ExistUserException(string password, string entity, string message) : base(message) { Password = password; UserName = entity; }
+        public ExistUserException(string password, string entity, string message, Exception innerException) : base(message, innerException)
+        { Password = password; UserName = entity; }
+        protected ExistUserException(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
+        public override string ToString() => base.ToString() + $"The user name {UserName} or the password {Password}are already exists in the system.";
+    }
     [Serializable]
     public class XMLFileLoadCreateException : Exception
     {

@@ -42,11 +42,13 @@
         <Button x:Name="updateButton" Content="Update"  HorizontalAlignment="Left" Margin="507,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="updateButton_Click" />
         <TextBlock x:Name="chooseStationTextBox" HorizontalAlignment="Left" Margin="35,498,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Text="Please choose station for initial charging: "/>
         <ListBox x:Name="stationsListBox"   Margin="35,519,545,18"/>
-        <Button x:Name="sendToChargeButton" Content="Send to charge " Visibility="Collapsed" HorizontalAlignment="Left"  Margin="380,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="sendToChargeButton_Click"/>
-        <Button x:Name="releaseDroneFromChargeButton" Content="releaseFromCharge" Visibility="Collapsed" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="releaseDroneFromChargeButton_Click"/>
-        <Button x:Name="collectParcelButton" Content="collect parcel" Visibility="Collapsed" Height="32" Width="104" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Click="collectParcelButton_Click"/>
-        <Button x:Name="supplyParcelButton" Content="supply parcel" Height="32" Visibility="Collapsed"  Width="104" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Click="supplyParcelButton_Click"/>
-        <Button x:Name="sendDroneToDeliveryButton" Content="send to delivery" Visibility="Collapsed" Height="32" Width="104" HorizontalAlignment="Left" Margin="255,560,0,0" VerticalAlignment="Top" Click="sendDroneToDeliveryButton_Click"/>
-        <Button x:Name="showParcelInTransferButton"  Content="Show parcel in transfer" HorizontalAlignment="Left" Margin="35,403,0,0" VerticalAlignment="Top" Click="showParcelButton_Click" Visibility="Collapsed"/>
+        <Button x:Name="sendToChargeButton" Content="Send to charge " Visibility="collapsed" HorizontalAlignment="Left"  Margin="327,506,0,0" VerticalAlignment="Top" Height="32" Width="127" Click="sendToChargeButton_Click"/>
+        <Button x:Name="releaseDroneFromChargeButton" Content="ReleaseFromCharge" Visibility="Collapsed" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="releaseDroneFromChargeButton_Click"/>
+        <Button x:Name="collectParcelButton" Content="Collect parcel" Visibility="Collapsed" Height="32" Width="104" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Click="collectParcelButton_Click"/>
+        <Button x:Name="supplyParcelButton" Content="Supply parcel" Height="32" Visibility="Collapsed"  Width="104" HorizontalAlignment="Left" Margin="380,560,0,0" VerticalAlignment="Top" Click="supplyParcelButton_Click"/>
+        <Button x:Name="sendDroneToDeliveryButton" Content="Send to delivery" Visibility="collapsed" Height="32" Width="140" HorizontalAlignment="Left" Margin="327,560,0,0" VerticalAlignment="Top" Click="sendDroneToDeliveryButton_Click"/>
+        <Button x:Name="showParcelInTransferButton"  Content="Show parcel in transfer" HorizontalAlignment="Left" Margin="35,403,0,0" VerticalAlignment="Top" Click="showParcelButton_Click" Visibility="collapsed"/>
+
+        <Label x:Name="fillFieldsLabel" Content="please fill the fields:" HorizontalAlignment="Left" Margin="240,131,0,0" VerticalAlignment="Top" Visibility="collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
     </Grid>
 </Window>

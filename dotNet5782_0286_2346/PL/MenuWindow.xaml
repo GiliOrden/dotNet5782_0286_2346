@@ -1,0 +1,27 @@
+﻿<Window x:Class="PL.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MenuWindow" Height="734" Width="1097" Closing="Window_Closing">
+    <Grid ShowGridLines="True" Name="MainGrid" RenderTransformOrigin="0.475,0.491" Margin="0,0,10,0">
+            <Image  Source="/2021-02-04T165145Z_2126501675_MT1CVMD41217305_RTRMADP_3_FEATURE-VACCINE-DRONE.jpg" Stretch="UniformToFill" Opacity="0.8"/>
+            <Button Content="Drones" HorizontalAlignment="Left" Margin="126,550,0,0" VerticalAlignment="Top" Height="78" Width="259" FontWeight="Bold" FontSize="20" Click="ShowDronesList_Click" />
+            <Button Content="Base stations" HorizontalAlignment="Left" Margin="126,0,0,0" VerticalAlignment="Center"  Height="78" Width="259" Click="baseStationsButton_Click" RenderTransformOrigin="-3.273,-3.247"/>
+            <Button Content="Customers" HorizontalAlignment="Left" Margin="128,223,0,0" VerticalAlignment="Top" Click="customersButton_Click" Width="258" Height="54"/>
+            <Button Content="Parcels" HorizontalAlignment="Left" Margin="127,442,0,0" VerticalAlignment="Top" Height="80" Width="259" FontWeight="Bold" FontSize="20" Click="ShowParcelsList_Click"/>
+            <Label Content="main menu" HorizontalAlignment="Left" Margin="170,144,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" FontSize="32" Width="171" RenderTransformOrigin="-0.119,0.709"/>
+            <TextBlock HorizontalAlignment="Left" Margin="495,336,0,0" Text="Delivery" VerticalAlignment="Top" TextWrapping="Wrap" FontWeight="Bold" FontStyle="Italic" FontSize="70" Width="294"/>
+            <TextBlock HorizontalAlignment="Left" Margin="681,442,0,0" Text="Drones" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" FontSize="70" Width="294"/>
+            <Button Content="Exit" HorizontalAlignment="Left" Margin="828,589,0,0" VerticalAlignment="Top" Width="170" Click="exitButton_Click" Height="50" RenderTransformOrigin="0.485,0.375"/>
+        </Grid>
+</Window>

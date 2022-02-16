@@ -34,14 +34,19 @@ namespace PL
             if (customer != null)
             {
                 CustomerWindow cw = new CustomerWindow(ref bL, customer.ID);
-                cw.ShowDialog();
+                cw.Show();
             }
         }
 
         private void addCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             CustomerWindow cw = new CustomerWindow(ref bL);
-            cw.ShowDialog();
+            cw.Show();
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

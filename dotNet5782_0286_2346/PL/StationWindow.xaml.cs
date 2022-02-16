@@ -46,22 +46,23 @@ namespace PL
             chargeSlotsTextBox.TextChanged += addButton_isEnable;
             longitudeTextBox.TextChanged += addButton_isEnable;
             latitudeTextBox.TextChanged += addButton_isEnable;
+            fillFieldsLabel.Visibility = Visibility.Visible;
         }
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text.Length != 0 && nameTextBox.Text != null && chargeSlotsTextBox.Text != null && longitudeTextBox.Text != null && latitudeTextBox.Text != null)
+            if (idTextBox.Text.Length != 0 && nameTextBox.Text.Length!=0 && chargeSlotsTextBox.Text.Length != 0 && longitudeTextBox.Text.Length != 0&& latitudeTextBox.Text.Length != 0)
                 addButton.IsEnabled = true;
             else
                 addButton.IsEnabled = false;
         }
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
-            int id;
-            int.TryParse(chargeSlotsTextBox.Text, out id);
-            bL.UpdateBaseStation(station.ID, nameTextBox.Text, id);
+            int numOfChageSlots;
+            int.TryParse(chargeSlotsTextBox.Text, out numOfChageSlots);
+            bL.UpdateBaseStation(station.ID, nameTextBox.Text, numOfChageSlots);
             MessageBox.Show("The station is updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
-            new CustomerWindow(ref bL,station.ID).Show();
+            new BaseStaionsListWindow(ref bL).Show();
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
@@ -82,7 +83,7 @@ namespace PL
                 double.TryParse(latitudeTextBox.Text, out latitude);
                 station.Location.Latitude = latitude;
                 bL.AddBaseStation(station);
-                MessageBox.Show("The station was successfully added");
+                MessageBox.Show("The station was successfully added","Success",MessageBoxButton.OK,MessageBoxImage.Information);
                 Close();
                 new BaseStaionsListWindow(ref bL).Show();
             }
@@ -103,6 +104,11 @@ namespace PL
         {
             DroneInCharging drone = droneInChargingDataGrid.SelectedItem as DroneInCharging;
             new DroneWindow(ref bL, drone.Id).Show();
+        }
+
+        private void idTextBox_TextChanged()
+        {
+
         }
     }
 }

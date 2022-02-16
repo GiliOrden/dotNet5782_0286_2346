@@ -34,6 +34,7 @@ namespace PL
             idTextBox.IsEnabled = false;
             longitudeTextBox.IsEnabled = false;
             latitudeTextBox.IsEnabled = false;
+            customerDetailsLabel.Visibility = Visibility.Visible;
         }
         public CustomerWindow(ref IBL bl)
         {
@@ -44,6 +45,7 @@ namespace PL
             updateButton.Visibility = Visibility.Collapsed;
             parcelsFromCustomerLabel.Visibility = Visibility.Collapsed;
             parcelsIntendedToCustomerLabel.Visibility = Visibility.Collapsed;
+            fillFieldsLabel.Visibility = Visibility.Visible;
             addButton.IsEnabled = false;
             idTextBox.TextChanged += addButton_isEnable;
             nameTextBox.TextChanged += addButton_isEnable;
@@ -84,7 +86,7 @@ namespace PL
                 bL.UpdateCustomer(id, nameTextBox.Text, phoneTextBox.Text);
                 MessageBox.Show( "The customer is updated", "Success",MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-                new CustomerWindow(ref bL, customer.Id).Show();
+                new CustomersListWindow(ref bL).Show();
             }
             catch(IdNotFoundException ex)
             {
@@ -99,7 +101,7 @@ namespace PL
 
         private void addButton_isEnable(object sender, TextChangedEventArgs e)
         {
-            if (idTextBox.Text.Length == 9 && nameTextBox.Text != null && phoneTextBox.Text != null && longitudeTextBox.Text != null && latitudeTextBox.Text != null)
+            if (idTextBox.Text.Length == 9 && nameTextBox.Text.Length != 0 && phoneTextBox.Text.Length !=0 && longitudeTextBox.Text.Length != 0 && latitudeTextBox.Text.Length !=0)
                 addButton.IsEnabled = true;
             else
                 addButton.IsEnabled = false;

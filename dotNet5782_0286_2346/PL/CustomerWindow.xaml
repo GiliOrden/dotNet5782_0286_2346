@@ -55,5 +55,7 @@
         <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="559,379,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.939,0.939" Click="addButton_Click"/>
         <Button x:Name="updateButton" Content="Update" HorizontalAlignment="Left" Margin="559,379,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.939,0.939" Click="updateButton_Click"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="673,379,0,0" VerticalAlignment="Top" Click="cancelButton_Click"/>
+        <Label x:Name="fillFieldsLabel" Content="please fill the fields:" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Visibility="Collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
+        <Label x:Name="customerDetailsLabel" Content="customer details:" HorizontalAlignment="Center" Margin="0,95,0,0" VerticalAlignment="Top" Visibility="Collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
     </Grid>
 </Window>

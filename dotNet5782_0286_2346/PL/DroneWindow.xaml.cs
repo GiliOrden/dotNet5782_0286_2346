@@ -39,6 +39,7 @@ namespace PL
             MaxWeightComboBox.SelectionChanged += addButton_isEnable;
             stationsListBox.SelectionChanged += addButton_isEnable;
             showParcelInTransferButton.Visibility = Visibility.Collapsed;
+            fillFieldsLabel.Visibility = Visibility.Visible;
         }
 
         public DroneWindow(ref IBL bl, int idOfTheSelectedDrone)//second constructor for update
@@ -89,7 +90,7 @@ namespace PL
 
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text.Length != 0 && modelTextBox != null && MaxWeightComboBox != null && stationsListBox.SelectedItem != null)
+            if (idTextBox.Text.Length != 0 && modelTextBox.Text.Length !=0 && MaxWeightComboBox.SelectedItem != null && stationsListBox.SelectedItem != null)
                 addButton.IsEnabled = true;
         }
         private void addButton_Click(object sender, RoutedEventArgs e)
@@ -105,7 +106,7 @@ namespace PL
                 StationForList station = (BO.StationForList)stationsListBox.SelectedItem;
                 idOfStation = station.ID;
                 droneWindowBL.AddDrone(droneForLst, idOfStation);
-                MessageBox.Show("The drone was successfully added");
+                MessageBox.Show("The drone was successfully added","Success",MessageBoxButton.OK,MessageBoxImage.Information);
                 Close();
                 new DroneListWindow(ref  droneWindowBL).Show();
             }
@@ -153,26 +154,26 @@ namespace PL
            droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
            MessageBox.Show($"The drone was successfully updated","Success",MessageBoxButton.OK, MessageBoxImage.Information);
            this.Close();
-           new DroneWindow(ref droneWindowBL, drone.Id).Show();
+           new DroneWindow(ref droneWindowBL).Show();
         }
         private void sendToChargeButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 droneWindowBL.SendDroneToCharge(drone.Id);
-                MessageBox.Show("The drone was sent to charging");
+                MessageBox.Show("The drone was sent to charging", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 new DroneWindow(ref droneWindowBL,drone.Id).Show();
             }
             catch (NoBatteryException)
             {
-                MessageBox.Show($"The drone id is already existed,\nPlease check this data field", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"The drone battery is too low", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void releaseDroneFromChargeButton_Click(object sender, RoutedEventArgs e)
         {
             droneWindowBL.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
-            MessageBox.Show("The drone was released from charging");
+            MessageBox.Show("The drone was released from charging", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
             new DroneWindow(ref droneWindowBL, drone.Id).Show();
         }
@@ -182,7 +183,7 @@ namespace PL
             try
             {
                 droneWindowBL.AssignParcelToDrone(drone.Id);
-                MessageBox.Show("The drone was assigned to parcel!");
+                MessageBox.Show("The drone was assigned to parcel!","Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 new DroneWindow(ref droneWindowBL,drone.Id).Show();
             }

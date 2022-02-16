@@ -18,17 +18,18 @@ namespace Dal
         #endregion
 
         #region DS XML Files
-        string droneChargesPath = @"DroneChargesXml.xml"; //XElement
+        string customersPath = @"CustomersXml.xml"; //XElement
         string dronesPath = @"DronesXml.xml"; //XMLSerializer
-        string customersPath = @"CustomersXml.xml"; //XMLSerializer
+        string droneChargesPath = @"DroneChargesXml.xml"; //XMLSerializer 
         string parcelsPath = @"ParcelsXml.xml"; //XMLSerializer
         string stationsPath = @"StationsXml.xml"; //XMLSerializer
+        string usersPath = @"UsersXml.xml";
         private readonly string configPath = "BatteryAndRowNumbers.xml";
-
+        #region Station
         public void AddStation(Station s)
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
-            if (checkStation(stations,s.Id))
+            if (checkStation(stations, s.Id))
                 throw new DO.ExistIdException(s.Id, "station");
             stations.Add(s);
             XMLTools.SaveListToXMLSerializer(stations, stationsPath);
@@ -76,7 +77,56 @@ namespace Dal
         {
             return lst.Exists(station => station.Id == id);
         }
+        #endregion
+        #region User
+        public void AddUser(User u)
+        {
+            List<User> users = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+            if (checkUser(users, u.Name, u.Password))
+                throw new ExistUserException(u.Password, u.Name);
+            users.Add(u);
+            XMLTools.SaveListToXMLSerializer(users, usersPath);
+        }
+        public User GetUser(string name, string password)
+        {
+            List<User> users = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+            if (!checkUser(users, name, password))
+                throw new UserNotFoundException(password, name);
+            User u = users.Find(user => user.Name == name);
+            return u;
+        }
 
+        public IEnumerable<User> GetListOfUsers()
+        {
+            List<User> users = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+            return from user in users
+                   select user;
+        }
+
+
+
+        public void DeleteUser(string name,string password)
+        {
+            List<User> users = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
+            if (!checkUser(users,name, password))
+                throw new UserNotFoundException(password, name);
+            users.RemoveAll(user => user.Name == name);
+            XMLTools.SaveListToXMLSerializer(users, usersPath);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lst"></param>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private bool checkUser(List<User> lst, string name, string password)
+        {
+            return lst.Exists(user => user.Name == name || user.Password == password);
+        }
+        #endregion
+
+        #region Customer
         public void AddCustomer(Customer c)
         {
             XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
@@ -87,7 +137,7 @@ namespace Dal
             if (cus != null)
                 throw new ExistIdException(c.Id, "customer");
 
-            XElement personElem = new XElement("Customer", 
+            XElement personElem = new XElement("Customer",
                                   new XElement("Id", c.Id.ToString()),
                                   new XElement("Name", c.Name),
                                   new XElement("Phone", c.Phone),
@@ -106,15 +156,15 @@ namespace Dal
                 throw new IdNotFoundException(id, "customer");
             XElement customersRootElem = XMLTools.LoadListFromXMLElement(customersPath);
             Customer c = (from cus in customersRootElem.Elements()
-                         where int.Parse(cus.Element("Id").Value) == id
-                         select new Customer()
-                         {
-                            Id = Int32.Parse(cus.Element("Id").Value),
-                            Name = cus.Element("Name").Value,
-                            Phone = cus.Element("Phone").Value,
-                            Longitude = double.Parse(cus.Element("Longitude").Value),
-                            Latitude = double.Parse(cus.Element("Latitude").Value)
-                         }
+                          where int.Parse(cus.Element("Id").Value) == id
+                          select new Customer()
+                          {
+                              Id = Int32.Parse(cus.Element("Id").Value),
+                              Name = cus.Element("Name").Value,
+                              Phone = cus.Element("Phone").Value,
+                              Longitude = double.Parse(cus.Element("Longitude").Value),
+                              Latitude = double.Parse(cus.Element("Latitude").Value)
+                          }
                         ).FirstOrDefault();
             return c;
         }
@@ -131,7 +181,7 @@ namespace Dal
                        Longitude = double.Parse(cus.Element("Longitude").Value),
                        Latitude = double.Parse(cus.Element("Latitude").Value)
                    };
-                   
+
         }
 
         public void DeleteCustomer(int id)
@@ -165,13 +215,16 @@ namespace Dal
                             select c).FirstOrDefault();
             if (cus != null)
                 return true;
-            return false;            
+            return false;
         }
 
+        #endregion
+
+        #region Drone
         public void AddDrone(Drone d)
         {
-           List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
-           if (checkDrone(dronesList,d.Id))
+            List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (checkDrone(dronesList, d.Id))
                 throw new ExistIdException(d.Id, "drone");
             dronesList.Add(d);
             XMLTools.SaveListToXMLSerializer(dronesList, dronesPath);
@@ -183,10 +236,10 @@ namespace Dal
             List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
             List<Station> stationsList = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
             List<DroneCharge> droneChargesList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargesPath);
-            
-            if (!checkDrone(dronesList,idDrone))
+
+            if (!checkDrone(dronesList, idDrone))
                 throw new DO.IdNotFoundException(idDrone, "drone");
-            if (!checkStation(stationsList,idStation))
+            if (!checkStation(stationsList, idStation))
                 throw new DO.IdNotFoundException(idStation, "station");
             dc.DroneId = idDrone;
             dc.StationId = idStation;
@@ -205,7 +258,7 @@ namespace Dal
             List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
             List<Station> stationsList = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
             List<DroneCharge> droneChargesList = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargesPath);
-            if (!checkDrone(dronesList,id))
+            if (!checkDrone(dronesList, id))
                 throw new DO.IdNotFoundException(id, "drone");
             Station s;
             foreach (DroneCharge charger in droneChargesList)
@@ -257,7 +310,7 @@ namespace Dal
         public void DeleteDrone(int id)
         {
             List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
-            if (!checkDrone(dronesList,id))
+            if (!checkDrone(dronesList, id))
                 throw new IdNotFoundException(id, "drone");
             dronesList.RemoveAll(dron => dron.Id == id);
             XMLTools.SaveListToXMLSerializer(dronesList, dronesPath);
@@ -279,7 +332,9 @@ namespace Dal
             return from DroneCharge in droneChargesList
                    select DroneCharge;
         }
+        #endregion
 
+        #region Parcel
         public int AddParcel(Parcel p)
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -289,7 +344,7 @@ namespace Dal
             p.Id = code;
             parcels.Add(p);
             code++;
-            codeOfParcel.Value=code.ToString();
+            codeOfParcel.Value = code.ToString();
             doc.Save(@"xml\BatteryAndRowNumbers.xml");
             XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
             return p.Id;
@@ -299,12 +354,12 @@ namespace Dal
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
             List<Drone> dronesList = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
-            if (!checkDrone(dronesList,droneId))
+            if (!checkDrone(dronesList, droneId))
                 throw new DO.IdNotFoundException(droneId, "drone");
             Drone d = dronesList.Find(drone => drone.Id == droneId);
-            if (!checkParcel(parcels,parcelId))
+            if (!checkParcel(parcels, parcelId))
                 throw new DO.IdNotFoundException(parcelId, "parcel");
-            Parcel parcel1 ,parcel2;
+            Parcel parcel1, parcel2;
             parcel2 = parcels.Find(parc => parc.Id == parcelId);
             parcel1 = parcel2;
             parcel1.DroneId = d.Id;
@@ -316,9 +371,9 @@ namespace Dal
 
         public void CollectParcelByDrone(int id)
         {
-            Parcel p,parcel;
+            Parcel p, parcel;
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-            if (!checkParcel(parcels,id))
+            if (!checkParcel(parcels, id))
                 throw new DO.IdNotFoundException(id, "parcel");
             parcel = parcels.Find(parcel => parcel.Id == id);
             p = parcel;
@@ -332,7 +387,7 @@ namespace Dal
         {
             Parcel parcel1, parcel2;
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-            if (!checkParcel(parcels,id))
+            if (!checkParcel(parcels, id))
                 throw new DO.IdNotFoundException(id, "parcel");
             parcel2 = parcels.Find(parcel => parcel.Id == id);
             parcel1 = parcel2;
@@ -345,9 +400,9 @@ namespace Dal
         public Parcel GetParcel(int id)
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-            if (!checkParcel(parcels,id))
+            if (!checkParcel(parcels, id))
                 throw new DO.IdNotFoundException(id, "parcel");
-            Parcel p =parcels.Find(parc => parc.Id == id);
+            Parcel p = parcels.Find(parc => parc.Id == id);
             return p;
         }
 
@@ -369,7 +424,7 @@ namespace Dal
         public void DeleteParcel(int id)
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
-            if (!checkParcel(parcels,id))
+            if (!checkParcel(parcels, id))
                 throw new DO.IdNotFoundException(id, "parcel");
             parcels.RemoveAll(parc => parc.Id == id);
             XMLTools.SaveListToXMLSerializer(parcels, parcelsPath);
@@ -382,8 +437,9 @@ namespace Dal
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkParcel(List<Parcel> lst, int id)
         {
-           return lst.Exists(parc => parc.Id == id);
+            return lst.Exists(parc => parc.Id == id);
         }
         #endregion
     }
 }
+#endregion
