@@ -31,49 +31,9 @@
     <StartOfCharging>2022-01-13T23:10:40.5437017+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>765</DroneId>
-    <StationId>91</StationId>
-    <StartOfCharging>2022-01-14T00:06:56.8979741+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
     <DroneId>987</DroneId>
     <StationId>20</StationId>
     <StartOfCharging>2022-01-14T00:06:56.9133086+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>765</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T00:07:36.7386707+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>5</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T00:09:46.6354322+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>765</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T00:09:46.6693513+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>5</DroneId>
-    <StationId>91</StationId>
-    <StartOfCharging>2022-01-14T01:10:12.9503934+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>5</DroneId>
-    <StationId>91</StationId>
-    <StartOfCharging>2022-01-14T01:51:16.2939677+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>7</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T01:52:28.737713+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>765</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T01:52:28.7479596+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
     <DroneId>5</DroneId>
@@ -81,24 +41,9 @@
     <StartOfCharging>2022-01-14T01:55:56.2131104+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>7</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T03:18:59.632322+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>555</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:18:59.6570969+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
     <DroneId>5</DroneId>
     <StationId>20</StationId>
     <StartOfCharging>2022-01-14T03:19:57.2311229+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>765</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:19:57.265596+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
     <DroneId>5</DroneId>
@@ -106,64 +51,9 @@
     <StartOfCharging>2022-01-14T03:21:57.9456642+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>765</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:21:57.9920993+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>555</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T03:21:58.0043066+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>6</DroneId>
-    <StationId>91</StationId>
-    <StartOfCharging>2022-01-14T03:24:29.1853987+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>7</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:24:29.2043119+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>555</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T03:27:33.5026449+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
     <DroneId>5</DroneId>
     <StationId>20</StationId>
     <StartOfCharging>2022-01-14T03:29:40.2157943+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>6</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:29:40.2536857+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>7</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T03:29:40.2725288+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>555</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:29:40.2881537+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>6</DroneId>
-    <StationId>91</StationId>
-    <StartOfCharging>2022-01-14T03:30:39.1889575+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>7</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:30:39.2114305+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>7</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T03:32:49.9290687+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
     <DroneId>5</DroneId>
@@ -186,11 +76,6 @@
     <StartOfCharging>2022-01-14T03:46:01.9916926+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>6</DroneId>
-    <StationId>91</StationId>
-    <StartOfCharging>2022-01-14T03:46:02.0089673+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
     <DroneId>7</DroneId>
     <StationId>20</StationId>
     <StartOfCharging>2022-01-14T03:46:02.0204444+02:00</StartOfCharging>
@@ -199,11 +84,6 @@
     <DroneId>765</DroneId>
     <StationId>20</StationId>
     <StartOfCharging>2022-01-14T03:46:02.0328988+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>555</DroneId>
-    <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T03:46:02.0463467+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
     <DroneId>6</DroneId>
@@ -271,11 +151,6 @@
     <StartOfCharging>2022-01-14T04:07:42.8022631+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>87654</DroneId>
-    <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T04:07:42.8337125+02:00</StartOfCharging>
-  </DroneCharge>
-  <DroneCharge>
     <DroneId>5</DroneId>
     <StationId>91</StationId>
     <StartOfCharging>2022-01-14T04:08:51.2715338+02:00</StartOfCharging>
@@ -296,13 +171,388 @@
     <StartOfCharging>2022-01-14T04:08:51.3290171+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>87654</DroneId>
+    <DroneId>7</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T04:12:39.9209954+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T04:23:17.0616237+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T04:26:35.038173+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
     <StationId>20</StationId>
-    <StartOfCharging>2022-01-14T04:08:51.341074+02:00</StartOfCharging>
+    <StartOfCharging>2022-01-14T04:32:18.3754443+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:32:18.391097+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T04:32:42.8733011+02:00</StartOfCharging>
   </DroneCharge>
   <DroneCharge>
     <DroneId>7</DroneId>
     <StationId>92</StationId>
-    <StartOfCharging>2022-01-14T04:12:39.9209954+02:00</StartOfCharging>
+    <StartOfCharging>2022-01-14T04:32:42.9132592+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:32:42.9293073+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:39:31.2485818+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:39:31.2742349+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:39:31.2884632+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:50:23.5429183+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T04:52:07.5835046+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:52:07.6223428+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T04:52:07.6398347+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T04:52:07.6801454+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:07:29.5539042+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:07:29.5822487+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:07:29.6067396+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:09:30.3919255+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:09:30.4123192+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:09:30.4320847+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:21:59.2482844+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:21:59.2817241+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:21:59.3033768+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:21:59.3201021+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:21:59.3417532+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:22:48.4080313+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:22:48.4318457+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:22:48.4590837+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:22:48.4812833+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:22:48.4999514+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:28:39.2356616+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:28:39.2724786+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:28:39.2872161+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:36:26.8148815+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:36:26.8390966+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:36:26.8514119+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T05:36:26.8626523+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T05:37:03.570291+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:37:03.5984276+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T05:37:03.617401+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T11:42:08.2371382+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:21:14.9245881+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:21:14.9521585+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:21:14.9746857+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T12:28:05.0786234+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:28:05.1127529+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:28:05.1283317+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:28:05.1387759+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:28:05.1530292+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:29:05.1250594+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:29:05.147658+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:29:05.163391+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>237</StationId>
+    <StartOfCharging>2022-01-14T12:32:27.3703442+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:32:27.3988926+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:32:27.4140645+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>237</StationId>
+    <StartOfCharging>2022-01-14T12:32:27.4327366+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:35:42.7068471+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:35:42.7326419+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>876</StationId>
+    <StartOfCharging>2022-01-14T12:38:19.1085711+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>6</DroneId>
+    <StationId>876</StationId>
+    <StartOfCharging>2022-01-14T12:38:19.1337847+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:38:19.1499542+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:38:19.1727941+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>91</StationId>
+    <StartOfCharging>2022-01-14T12:43:15.7629877+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:43:15.8291246+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:43:15.8519637+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:43:15.8810629+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>237</StationId>
+    <StartOfCharging>2022-01-14T12:44:25.6710022+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>876</StationId>
+    <StartOfCharging>2022-01-14T12:44:25.712045+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:44:32.130612+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:44:32.1869873+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>20</StationId>
+    <StartOfCharging>2022-01-14T12:44:32.208456+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>555</DroneId>
+    <StationId>92</StationId>
+    <StartOfCharging>2022-01-14T12:44:32.2313947+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>87654</DroneId>
+    <StationId>237</StationId>
+    <StartOfCharging>2022-01-14T12:44:32.2469391+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>5</DroneId>
+    <StationId>237</StationId>
+    <StartOfCharging>2022-01-14T12:49:47.2886984+02:00</StartOfCharging>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>765</DroneId>
+    <StationId>876</StationId>
+    <StartOfCharging>2022-01-14T12:49:47.3543976+02:00</StartOfCharging>
   </DroneCharge>
 </ArrayOfDroneCharge>
