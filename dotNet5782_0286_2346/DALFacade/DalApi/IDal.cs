@@ -82,6 +82,15 @@ namespace DalApi
         IEnumerable<Parcel> GetParcelsByPredicate(Predicate<Parcel> predicate);
         void DeleteParcel(int id);
         #endregion
+        #region User
+        void AddUser(User u);
+        User GetUser(string name,string password);
+        /// <summary>
+        /// the function returns list of users
+        /// </summary>
+        IEnumerable<User> GetListOfUsers();
+        void DeleteUser(string name, string password);
+        #endregion
 
     }
 }

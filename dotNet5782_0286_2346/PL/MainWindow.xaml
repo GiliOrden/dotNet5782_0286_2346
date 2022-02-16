@@ -13,23 +13,18 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="734" Width="1097" >
-    <TabControl>
-        <TabItem Header="Register">
-            <Grid Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="79*"/>
-                    <ColumnDefinition Width="1012*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Customer">
-            <Grid Background="White"/>
-        </TabItem>
-        <TabItem Header="Manager">
-            <Grid Background="White"/>
-        </TabItem>
-    </TabControl>
+        Title="MainWindow" Height="734" Width="1097">
+    <Grid ShowGridLines="True" Name="MainGrid" RenderTransformOrigin="0.475,0.491" Margin="0,0,10,0">
+        <PasswordBox HorizontalAlignment="Left" Margin="414,336,0,0" VerticalAlignment="Top" Width="276"/>
+        <Label Content="Welcome!" HorizontalAlignment="Left" Margin="391,120,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" FontSize="70" Width="328"/>
+        <Label Content="Please enter a password:" HorizontalAlignment="Left" Margin="414,282,0,0" VerticalAlignment="Top" Height="35" Width="305" FontWeight="Bold" FontStyle="Italic" FontSize="25"/>
+        <Label Content="Don't have a password yet? Click here to register" HorizontalAlignment="Left" Margin="414,431,0,0" VerticalAlignment="Top" />
+        <Button Content="Register" Margin="414,472,409,202" Click="RegisterButton_Click" />
+
+    </Grid>
 </Window>
+
+
+
 
   

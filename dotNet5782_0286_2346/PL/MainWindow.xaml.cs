@@ -32,6 +32,10 @@ namespace PL
             InitializeComponent();
             
         }
-       
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

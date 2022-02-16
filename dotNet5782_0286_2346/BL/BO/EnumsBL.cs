@@ -11,6 +11,7 @@ namespace BO
         public enum Priorities { Regular, Fast, Emergency }
 
         public enum ParcelStatuses { Defined, Associated, Collected, Delivered }
+        public enum UserStatuses { Manager, Worker, Customer }
 
     }
 }
