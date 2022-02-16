@@ -181,7 +181,7 @@ namespace Dal
         }
         public static void createUsers()
         {
-            users.Add(new User() { Name = "Manager", Password = "1212gr" ,Status=UserStatuses.Manager});
+            users.Add(new User() { Name = "Manager", Password = "gr1212" ,Status=UserStatuses.Manager});
             for(int i=0;i<customers.Count ;i++)
             {
                 users.Add(new User() { Name = customers[i].Name, Password = string.Format("{0}",i) ,Status=UserStatuses.Customer});

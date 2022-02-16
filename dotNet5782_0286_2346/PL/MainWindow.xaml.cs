@@ -26,16 +26,48 @@ namespace PL
     public partial class MainWindow : Window
     {
         internal IBL bl = BlFactory.GetBl();
-
+        User u;
         public MainWindow()
         {
             InitializeComponent();
+            EnterButton.IsEnabled = false;
             
+            PasswordBox.PasswordChanged += EnterButtonIsEnable;
+            UserNameTextBox.TextChanged += EnterButtonIsEnable;
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            RegisterWindow rw = new(ref bl);
+            rw.ShowDialog();
+            this.Close();
+        }
 
+        private void EnterButtonIsEnable(object sender, RoutedEventArgs e)
+        {
+            if (PasswordBox.Password != "" && UserNameTextBox.Text != "")
+                EnterButton.IsEnabled = true;
+        }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                u = bl.GetUser(UserNameTextBox.Text, PasswordBox.Password.ToString());
+                if(u.Status==EnumsBL.UserStatuses.Manager||u.Status==EnumsBL.UserStatuses.Worker)
+                {
+                    MenuWindow mw = new(ref bl);
+                    mw.Show();
+                }
+                else { //customer interface
+                       }
+            }
+            catch(UserNotFoundException ex)
+            {
+                PasswordBox.BorderBrush = Brushes.Red;
+                UserNameTextBox.BorderBrush = Brushes.Red;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

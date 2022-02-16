@@ -20,10 +20,11 @@ namespace PL
     /// </summary>
     public partial class MenuWindow : Window
     {
-        internal IBL bl = BlFactory.GetBl();
-        public MenuWindow()
+        IBL bl;
+        public MenuWindow(ref IBL Bl)
         {
             InitializeComponent();
+            bl = Bl;
         }
         private void ShowDronesList_Click(object sender, RoutedEventArgs e)
         {

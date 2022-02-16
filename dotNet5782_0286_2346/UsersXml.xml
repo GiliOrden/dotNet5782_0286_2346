@@ -2,7 +2,7 @@
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<User>
 		<Name>Manager</Name>
-		<PassWord>1212gr</PassWord>
+		<PassWord>gr1212</PassWord>
 		<Status>Manager</Status>
 	</User>
 	<User>
