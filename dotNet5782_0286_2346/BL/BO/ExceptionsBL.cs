@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using static BO.EnumsBL;
 
 namespace BO
 {
@@ -104,5 +105,44 @@ namespace BO
 
         public override string ToString() => base.ToString() + $"Station:{StationId} has no availlable charge slots,please try another station. ";
     }
+}
+[Serializable]
+public class UserNotFoundException : Exception//When trying to look for a user and he does not exist 
+{
+    public string Password;
+    public string UserName;
+    public UserNotFoundException(string password, string name) : base() { Password = password; UserName = name; }
+    public UserNotFoundException(string password, string name, string message) : base(message) { Password = password; UserName = name; }
+    public UserNotFoundException(string password, string name, string message, Exception innerException) : base(message, innerException)
+    { Password = password; UserName = name; }
+    protected UserNotFoundException(SerializationInfo info, StreamingContext context)
+    : base(info, context) { }
+    public override string ToString() => base.ToString() + $"The user{UserName} Pass:{Password} isn't found";
+}
+[Serializable]
+public class ExistUserException : Exception//when trying to add a user and he allready exists  
+{
+    public string Password;
+    public string UserName;
+    public ExistUserException(string password, string name) : base() { Password = password; UserName = name; }
+    public ExistUserException(string password, string name, string message) : base(message) { Password = password; UserName = name; }
+    public ExistUserException(string password, string name, string message, Exception innerException) : base(message, innerException)
+    { Password = password; UserName = name; }
+    protected ExistUserException(SerializationInfo info, StreamingContext context)
+    : base(info, context) { }
+    public override string ToString() => base.ToString() + $"The user name {UserName} or the password {Password}are already exists in the system.";
+}
 
-}   
+[Serializable]
+public class InvalidPasswordException : Exception//when trying to add a user and he allready exists  
+{
+    public string Password;
+    public UserStatuses Status;
+    public InvalidPasswordException(string password,UserStatuses status) : base() { Password = password; Status = status; }
+    public InvalidPasswordException(string password, UserStatuses status, string message) : base(message) { Password = password; Status = status; }
+    public InvalidPasswordException(string password, UserStatuses status, string message, Exception innerException) : base(message, innerException)
+    { Password = password; Status = status; }
+    protected InvalidPasswordException(SerializationInfo info, StreamingContext context)
+    : base(info, context) { }
+    public override string ToString() => base.ToString() + $"The user status: {Status} does not match the password {Password}.";
+}

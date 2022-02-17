@@ -21,8 +21,8 @@ namespace Dal
         public User GetUser(string name,string password)
         {
             if (!checkUser(name,password))
-                throw new UserNotFoundException(password,name);
-            User  u= users.Find(user => user.Name==name);
+                throw new UserNotFoundException(password, name,"the user wasn't found");
+            User  u= users.Find(user => user.Name==name&&user.Password==password);
             return u;
         }
 
@@ -40,7 +40,7 @@ namespace Dal
         /// <returns>true if the id exists in the list otherwise it returns false </returns>
         private bool checkUser(string name,string pass)
         {
-            return users.Any(user => user.Name ==name||user.Password==pass);
+            return users.Any(user => user.Name ==name&&user.Password==pass);
         }
 
         public void DeleteUser(string name,string password)

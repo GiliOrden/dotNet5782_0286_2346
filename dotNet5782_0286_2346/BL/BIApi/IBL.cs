@@ -182,12 +182,17 @@ namespace BlApi
         /// <summary>
         /// an help function for 'GetParcelsByPredicate' func to select which pridicate it needs, return true if the case is correct
         /// </summary>
-        /// <param name="weight">type of wight, it can be also null.  </param>
+        /// <param name="weight">type of weight, it can be also null.  </param>
         /// <param name="status">type of statusParcel, it can be also null</param>
         /// <param name="parc">check if it's wight/status equal to the parameters</param>
         /// <returns></returns>
         bool predicatFanc(EnumsBL.WeightCategories? weight, EnumsBL.ParcelStatuses? status, DO.Parcel parc);
         void DeleteParcel(int id);
+        #region User
+        void AddUser(User u);
+        IEnumerable<User> GetListOfUsers();
+        User GetUser(string name, string password);
+        #endregion
     }
     #endregion
 
