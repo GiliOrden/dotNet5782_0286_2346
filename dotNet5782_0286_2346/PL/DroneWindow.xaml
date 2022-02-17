@@ -50,5 +50,7 @@
         <Button x:Name="showParcelInTransferButton"  Content="Show parcel in transfer" HorizontalAlignment="Left" Margin="35,403,0,0" VerticalAlignment="Top" Click="showParcelButton_Click" Visibility="collapsed"/>
 
         <Label x:Name="fillFieldsLabel" Content="please fill the fields:" HorizontalAlignment="Left" Margin="240,131,0,0" VerticalAlignment="Top" Visibility="collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
+        <Button x:Name="AutomaticButton" Content="Automatic" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,560,0,0" VerticalAlignment="Top" Height="32" Width="112" Click="Automatic_Click"/>
+        <ProgressBar x:Name="BatteryProgressBar" HorizontalAlignment="Left" Height="18" Margin="345,274,0,0" VerticalAlignment="Top" Width="117" Minimum="0" Maximum="100" Value="{Binding Battery, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  />
     </Grid>
 </Window>

@@ -51,9 +51,11 @@ namespace PL
             MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.DroneStatuses));
             droneWindowGrid.DataContext = drone;
+            AutomaticButton.Visibility = Visibility.Visible;
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
             chooseStationTextBox.Visibility = Visibility.Collapsed;
+            
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
             if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
@@ -233,6 +235,11 @@ namespace PL
         {
             ParcelInTransferWindow pw = new(ref droneWindowBL, droneForLst.Id);
             pw.Show();
+        }
+
+        private void Automatic_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
