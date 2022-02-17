@@ -47,7 +47,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.User GetUser(string name,string password)
         {
-           User u = new BO.User();
+            User u = new BO.User();
             try
             {
                 DO.User u1 = dl.GetUser(name,password);
@@ -55,9 +55,9 @@ namespace BL
                 u.Password = u.Password;
                 u.Status = u.Status;
             }
-            catch (UserNotFoundException ex)
+            catch (DO.UserNotFoundException ex)
             {
-                throw new UserNotFoundException(ex.Password,ex.UserName);
+                throw new UserNotFoundException(ex.Password,ex.UserName,ex.Message);
             }
 
             return u;

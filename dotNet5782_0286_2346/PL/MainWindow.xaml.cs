@@ -30,8 +30,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            EnterButton.IsEnabled = false;
-            
+            EnterButton.IsEnabled = false;           
             PasswordBox.PasswordChanged += EnterButtonIsEnable;
             UserNameTextBox.TextChanged += EnterButtonIsEnable;
         }
@@ -59,7 +58,7 @@ namespace PL
                     MenuWindow mw = new(ref bl);
                     mw.Show();
                 }
-                else { //customer interface
+                else { 
                        }
             }
             catch(UserNotFoundException ex)

@@ -21,7 +21,7 @@ namespace Dal
         public User GetUser(string name,string password)
         {
             if (!checkUser(name,password))
-                throw new UserNotFoundException(password,name);
+                throw new UserNotFoundException(password, name,"the user wasn't found");
             User  u= users.Find(user => user.Name==name&&user.Password==password);
             return u;
         }
