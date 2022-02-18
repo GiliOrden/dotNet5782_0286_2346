@@ -29,13 +29,14 @@
             <Label Content="Max Weight:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
             <ComboBox x:Name="MaxWeightComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2"  VerticalAlignment="Center" Width="120" SelectedItem="{Binding MaxWeight}"/>
             <Label Content="Battery:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBox x:Name="batteryTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" IsEnabled="false" Text="{Binding Battery, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <ProgressBar x:Name="BatteryProgressBar" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" Height="26" Margin="6,0,0,0" VerticalAlignment="Center" Width="117" Minimum="0" Maximum="100"   />
+
             <Label Content="Drone status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
             <ComboBox x:Name="DroneStatusComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" IsEnabled="false" VerticalAlignment="Center" Width="120" SelectedItem="{Binding DroneStatus}" />
             <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center" />
-            <TextBox x:Name="longitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" IsEnabled="false" VerticalAlignment="Center" Width="120" Text="{Binding Location.Longitude, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <TextBox x:Name="longitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" IsEnabled="false" VerticalAlignment="Center" Width="120" />
             <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-            <TextBox x:Name="latitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="7" IsEnabled="false"  VerticalAlignment="Center" Width="120" Text="{Binding Location.Latitude, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <TextBox x:Name="latitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="7" IsEnabled="false"  VerticalAlignment="Center" Width="120" />
         </Grid>
         <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="507,560,0,0"  IsEnabled="False"  VerticalAlignment="Top" Height="32" Width="104" Click="addButton_Click"/>
         <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="655,560,0,0" VerticalAlignment="Top" Height="32" Width="104" Click="cancelButton_Click" />
@@ -50,7 +51,7 @@
         <Button x:Name="showParcelInTransferButton"  Content="Show parcel in transfer" HorizontalAlignment="Left" Margin="35,403,0,0" VerticalAlignment="Top" Click="showParcelButton_Click" Visibility="collapsed"/>
 
         <Label x:Name="fillFieldsLabel" Content="please fill the fields:" HorizontalAlignment="Left" Margin="240,131,0,0" VerticalAlignment="Top" Visibility="collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
-        <Button x:Name="AutomaticButton" Content="Automatic" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,560,0,0" VerticalAlignment="Top" Height="32" Width="112" Click="Automatic_Click"/>
-        <ProgressBar x:Name="BatteryProgressBar" HorizontalAlignment="Left" Height="18" Margin="345,274,0,0" VerticalAlignment="Top" Width="117" Minimum="0" Maximum="100" Value="{Binding Battery, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  />
+        <Button x:Name="AutomaticButton" Content="Automatic" HorizontalAlignment="Left"  Margin="635,52,0,0"  VerticalAlignment="Top" Height="32" Width="112" Click="Automatic_Click"/>
+        <Button x:Name="StopAutomaticButton" Content="Stop" HorizontalAlignment="Left" Margin="635,102,0,0"  VerticalAlignment="Top" Width="110" Click="StopAutomatic_Click"/>
     </Grid>
 </Window>

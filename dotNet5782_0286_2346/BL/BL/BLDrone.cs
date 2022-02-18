@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BlApi;
 using BO;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace BL
 {
@@ -68,8 +69,8 @@ namespace BL
                 throw new IdNotFoundException(id, "drone");
             if (drone.DroneStatus != BO.EnumsBL.DroneStatuses.Maintenance)
                 throw new DroneStatusException(id, "in maintenance");
-            TimeSpan chargingTime = dl.GetListOfBusyChargeSlots().FirstOrDefault(dc => dc.DroneId == id).StartOfCharging - releaseTime;
-            drone.Battery = drone.Battery + chargingTime.TotalMinutes/60 * chargingRatePerHour;
+            TimeSpan chargingTime = releaseTime- dl.GetListOfBusyChargeSlots().FirstOrDefault(dc => dc.DroneId == id).StartOfCharging  ;
+            drone.Battery = drone.Battery + chargingTime.TotalMinutes/1 * chargingRatePerHour*10;//לחלק ל60 זה אמור להיות!! לא 10
             if (drone.Battery > 100)
                 drone.Battery = 100;
             drone.DroneStatus = BO.EnumsBL.DroneStatuses.Available;
@@ -297,6 +298,46 @@ namespace BL
         public BO.DroneForList GetDroneForList(int id)
         {
             return dronesBL.Find(drone => drone.Id == id);
+        }
+
+        public Drone Simulator(int id , BackgroundWorker automatic)
+        {
+            BO.Drone drone = GetDrone(id);
+            if (drone.DroneStatus == BO.EnumsBL.DroneStatuses.Maintenance)
+            {
+                ReleaseDroneFromCharge(id, DateTime.Now);//updating the battery
+                BO.Drone drone1 = GetDrone(id);
+                if (drone1.Battery < 100)
+                {
+                    SendDroneToCharge(id);//we will continue charging untill battery=100
+                }
+            }
+            else if (drone.DroneStatus == BO.EnumsBL.DroneStatuses.Available)
+            {
+                if (drone.Battery < 21)
+                    SendDroneToCharge(id);
+                else
+                {
+                    AssignParcelToDrone(id);
+                    drone.DroneStatus = BO.EnumsBL.DroneStatuses.OnDelivery;
+                }
+                    
+
+            }
+            else if (drone.DroneStatus == BO.EnumsBL.DroneStatuses.OnDelivery)
+            {//OnDelivery
+                if (drone.ParcelInTransfer.OnTheWay == false)
+                {
+                    CollectParcelByDrone(id);
+                    drone.ParcelInTransfer.OnTheWay = true;
+                }
+                else //drone.ParcelInTransfer.OnTheWay == true
+                {
+                    SupplyDeliveryToCustomer(id);
+                    drone.DroneStatus = BO.EnumsBL.DroneStatuses.Available;
+                }
+            }
+            return drone;
         }
 
     }
