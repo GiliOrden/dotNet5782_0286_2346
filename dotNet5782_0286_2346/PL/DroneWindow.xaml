@@ -52,6 +52,6 @@
 
         <Label x:Name="fillFieldsLabel" Content="please fill the fields:" HorizontalAlignment="Left" Margin="240,131,0,0" VerticalAlignment="Top" Visibility="collapsed" FontWeight="Bold" FontStyle="Italic" FontSize="25" />
         <Button x:Name="AutomaticButton" Content="Automatic" HorizontalAlignment="Left"  Margin="635,52,0,0"  VerticalAlignment="Top" Height="32" Width="112" Click="Automatic_Click"/>
-        <Button x:Name="StopAutomaticButton" Content="Stop" HorizontalAlignment="Left" Margin="635,102,0,0"  VerticalAlignment="Top" Width="110" Click="StopAutomatic_Click"/>
+        <Button x:Name="StopAutomaticButton" Content="Stop" HorizontalAlignment="Left" Margin="635,102,0,0"  VerticalAlignment="Top" Width="110" Click="StopAutomatic_Click" Visibility="collapsed"/>
     </Grid>
 </Window>

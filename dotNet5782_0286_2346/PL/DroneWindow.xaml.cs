@@ -146,8 +146,17 @@ namespace PL
 
         private void Automatic_Click(object sender, RoutedEventArgs e)
         {
-            //AutomaticButton.Visibility = Visibility.Collapsed;
-            //updateButton.Visibility = Visibility.Collapsed;
+            AutomaticButton.Visibility = Visibility.Collapsed;
+            updateButton.Visibility = Visibility.Collapsed;
+            sendToChargeButton.Visibility = Visibility.Collapsed;
+            releaseDroneFromChargeButton.Visibility = Visibility.Collapsed;
+            collectParcelButton.Visibility = Visibility.Collapsed;
+            supplyParcelButton.Visibility = Visibility.Collapsed;
+            sendDroneToDeliveryButton.Visibility = Visibility.Collapsed;
+            showParcelInTransferButton.Visibility = Visibility.Collapsed;
+            StopAutomaticButton.Visibility = Visibility.Visible;
+            StopAutomaticButton.Background = Brushes.Red;
+
             stopAuto = false;
             if (automatic.IsBusy != true)
             {
@@ -158,6 +167,7 @@ namespace PL
 
         private void StopAutomatic_Click(object sender, RoutedEventArgs e)
         {
+            StopAutomaticButton.Background = Brushes.Gray;
             stopAuto = true;
             if (automatic.WorkerSupportsCancellation == true)
                 automatic.CancelAsync();
