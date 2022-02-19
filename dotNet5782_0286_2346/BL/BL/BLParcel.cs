@@ -43,6 +43,7 @@ namespace BL
                         senderLocation.Longitude = dl.GetCustomer(dl.GetParcel(parcelId).SenderId).Longitude;
                         d.Battery -= DistanceBetweenPlaces(senderLocation.Longitude, senderLocation.Latitude, d.Location.Longitude, d.Location.Latitude) * emptyDronePowerConsumption;
                         d.Location = senderLocation;
+                        
                         dl.CollectParcelByDrone(parcelId);
                     }
                     else

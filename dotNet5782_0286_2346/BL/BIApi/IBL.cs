@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +64,12 @@ namespace BlApi
         void SupplyDeliveryToCustomer(int droneId);
 
         /// <summary>
+        /// this function assign parcel to drone accroding the priority, wight, location of theparcel 
+        /// </summary>
+        /// <param name="idOfDrone">drone id</param>
+        void AssignParcelToDrone(int idOfDrone);
+
+        /// <summary>
         /// This function return a drone from the customers collection by its id
         /// </summary>
         /// <param name="id">id of the drone</param>
@@ -104,6 +111,12 @@ namespace BlApi
         /// <param name="id">the id of the drone</param>
         /// <returns>DroneForList drone</returns>
         DroneForList GetDroneForList(int id);
+
+        /// <summary>
+        /// func for the automatic process!
+        /// </summary>
+        /// <param name="id">id of a drone</param>
+        Drone Simulator(int id, BackgroundWorker automatic);
         #endregion
 
         #region Location
@@ -153,12 +166,6 @@ namespace BlApi
         /// <param name="id">id of a parcel</param>
         /// <returns>id's parcel value</returns>
         BO.Parcel GetParcel(int id);
-
-        /// <summary>
-        /// this function assign parcel to drone accroding the priority, wight, location of theparcel 
-        /// </summary>
-        /// <param name="idOfDrone">drone id</param>
-        void AssignParcelToDrone(int idOfDrone);
 
         /// <summary>
         /// this function retuns the all list of parcels

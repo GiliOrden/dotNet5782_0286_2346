@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Threading;
 
 namespace PL
 {
@@ -25,6 +27,8 @@ namespace PL
         IBL droneWindowBL;
         Drone drone;
         DroneForList droneForLst;
+        BackgroundWorker automatic;
+        bool stopAuto=true;//if the automatic is work- it will be false
         public DroneWindow(ref IBL bl)//first constructor for adding
         {
             droneWindowBL = bl;
@@ -39,11 +43,14 @@ namespace PL
             MaxWeightComboBox.SelectionChanged += addButton_isEnable;
             stationsListBox.SelectionChanged += addButton_isEnable;
             showParcelInTransferButton.Visibility = Visibility.Collapsed;
+            AutomaticButton.Visibility = Visibility.Collapsed;
+            StopAutomaticButton.Visibility = Visibility.Collapsed;
             fillFieldsLabel.Visibility = Visibility.Visible;
         }
 
         public DroneWindow(ref IBL bl, int idOfTheSelectedDrone)//second constructor for update
         {
+            
             droneWindowBL = bl;
             drone = bl.GetDrone(idOfTheSelectedDrone);
             droneForLst = bl.GetDroneForList(idOfTheSelectedDrone);
@@ -51,9 +58,20 @@ namespace PL
             MaxWeightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             DroneStatusComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.DroneStatuses));
             droneWindowGrid.DataContext = drone;
+            AutomaticButton.Visibility = Visibility.Visible;
             addButton.Visibility = Visibility.Collapsed;
             stationsListBox.Visibility = Visibility.Collapsed;
             chooseStationTextBox.Visibility = Visibility.Collapsed;
+            BatteryProgressBar.Value = drone.Battery;
+            longitudeTextBox.Text = drone.Location.Longitude.ToString();
+            latitudeTextBox.Text = drone.Location.Latitude.ToString();
+            automatic = new();
+            automatic.DoWork += Automatic_DoWork;
+            automatic.ProgressChanged += Automatic_ProgressChanged;
+            automatic.RunWorkerCompleted += Automatic_RunWorkerCompleted;
+            automatic.WorkerReportsProgress = true;//flag
+            //automatic.WorkerSupportsCancellation = true;//flag
+
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
             if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
@@ -81,6 +99,78 @@ namespace PL
                 showParcelInTransferButton.Visibility = Visibility.Visible;
             }
 
+        }
+
+        private void Automatic_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.Cursor = Cursors.Arrow;
+        }
+
+        private void Automatic_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            Drone drone1 = droneWindowBL.GetDrone(e.ProgressPercentage);
+           
+            DroneStatusComboBox.SelectedItem = drone1.DroneStatus;
+           
+            BatteryProgressBar.Value = drone1.Battery;
+            longitudeTextBox.Text = drone1.Location.Longitude.ToString();
+            latitudeTextBox.Text = drone1.Location.Latitude.ToString();
+            //if (drone.DroneStatus== EnumsBL.DroneStatuses.Maintenance)
+            //{
+            //    //BatteryProgressBar.Value = drone.Battery + 1;
+            //    //צריך גם מיקום?
+            //}
+
+        }
+
+        private void Automatic_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
+            while(stopAuto!=true)
+            {
+                if (automatic.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                   break;
+                }
+                else
+                {
+                    Thread.Sleep(500);
+                    drone=droneWindowBL.Simulator(drone.Id, automatic);
+                    Drone drone1 = droneWindowBL.GetDrone(drone.Id);
+                    if (automatic.WorkerReportsProgress == true)
+                        automatic.ReportProgress(drone.Id);
+                }
+            }
+        }
+
+        private void Automatic_Click(object sender, RoutedEventArgs e)
+        {
+            AutomaticButton.Visibility = Visibility.Collapsed;
+            updateButton.Visibility = Visibility.Collapsed;
+            sendToChargeButton.Visibility = Visibility.Collapsed;
+            releaseDroneFromChargeButton.Visibility = Visibility.Collapsed;
+            collectParcelButton.Visibility = Visibility.Collapsed;
+            supplyParcelButton.Visibility = Visibility.Collapsed;
+            sendDroneToDeliveryButton.Visibility = Visibility.Collapsed;
+            showParcelInTransferButton.Visibility = Visibility.Collapsed;
+            StopAutomaticButton.Visibility = Visibility.Visible;
+            StopAutomaticButton.Background = Brushes.Red;
+
+            stopAuto = false;
+            if (automatic.IsBusy != true)
+            {
+                //this.Cursor = Cursors.Wait;
+                automatic.RunWorkerAsync(drone.DroneStatus);
+            }
+        }
+
+        private void StopAutomatic_Click(object sender, RoutedEventArgs e)
+        {
+            StopAutomaticButton.Background = Brushes.Gray;
+            stopAuto = true;
+            if (automatic.WorkerSupportsCancellation == true)
+                automatic.CancelAsync();
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -234,5 +324,7 @@ namespace PL
             ParcelInTransferWindow pw = new(ref droneWindowBL, droneForLst.Id);
             pw.Show();
         }
+
+        
     }
 }
