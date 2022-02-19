@@ -115,12 +115,7 @@ namespace PL
             BatteryProgressBar.Value = drone1.Battery;
             longitudeTextBox.Text = drone1.Location.Longitude.ToString();
             latitudeTextBox.Text = drone1.Location.Latitude.ToString();
-            //if (drone.DroneStatus== EnumsBL.DroneStatuses.Maintenance)
-            //{
-            //    //BatteryProgressBar.Value = drone.Battery + 1;
-            //    //צריך גם מיקום?
-            //}
-
+            
         }
 
         private void Automatic_DoWork(object sender, DoWorkEventArgs e)

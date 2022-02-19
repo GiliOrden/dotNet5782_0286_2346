@@ -53,17 +53,7 @@ namespace PL
         }
 
 
-        private void DroneView_SelectionChanged(object sender, SelectionChangedEventArgs e)//update drone
-        {
-            DroneForList drone = droneForListDataGrid.SelectedItem as DroneForList;
-            
-            if (drone != null)
-            {
-                DroneWindow dw = new DroneWindow(ref droneListWindowBL, drone.Id);
-                dw.ShowDialog();
-                Close();
-            }
-        }
+        
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)//add drone
         {
@@ -83,6 +73,16 @@ namespace PL
             view.GroupDescriptions.Add(groupDescription);
         }
 
-        
+        private void DroneView_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            DroneForList drone = droneForListDataGrid.SelectedItem as DroneForList;
+
+            if (drone != null)
+            {
+                DroneWindow dw = new DroneWindow(ref droneListWindowBL, drone.Id);
+                dw.ShowDialog();
+                Close();
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@
         </Image>
 
         <Button Content="Group by status" HorizontalAlignment="Left" Margin="571,471,0,0" Grid.Row="1" VerticalAlignment="Top" Click="GroupByStatus_Click" Width="157"/>
-        <DataGrid x:Name="droneForListDataGrid" Margin="50,46,195,163" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding }" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionChanged="DroneView_SelectionChanged">
+        <DataGrid x:Name="droneForListDataGrid" Margin="50,46,195,163" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding }" EnableRowVirtualization="True" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Width="Auto" Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn x:Name="modelColumn" Width="Auto" Header="Model" Binding="{Binding Model}"/>
@@ -61,6 +61,7 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
         </DataGrid>
+        <Button Content="Show Item" HorizontalAlignment="Left" Margin="571,410,0,0" Grid.Row="1" VerticalAlignment="Top" Click="DroneView_SelectionChanged" Width="157"/>
 
 
     </Grid>
