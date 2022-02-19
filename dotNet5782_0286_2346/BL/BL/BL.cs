@@ -26,7 +26,7 @@ namespace BL
         IEnumerable<DO.Drone> dalDrones;
         Random rand = new Random(DateTime.Now.Millisecond);
         static readonly IBL instance = new BL();
-        public static IBL Instance { get => instance; }//in the pdf it was written it should be internal but in the git examole no
+        public static IBL Instance { get => instance; }
         static BL(){}
         BL()//ctor
         {
@@ -50,7 +50,7 @@ namespace BL
                 droneForList.MaxWeight = (BO.EnumsBL.WeightCategories)drone.MaxWeight;
                 droneForList.Location = new BO.Location();
                 //If there are parcels that have not yet been delivered but the drone has already been associated the drone status is OnDelivery
-                droneForList.DroneStatus = (dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==null)) ? BO.EnumsBL.DroneStatuses.OnDelivery : (BO.EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
+                droneForList.DroneStatus = dl.GetListOfParcels().Any(parc => parc.DroneId == drone.Id && parc.Delivered==null) ? BO.EnumsBL.DroneStatuses.OnDelivery : (BO.EnumsBL.DroneStatuses)rand.Next(2);//Random value between available and maintenance
                 if (droneForList.DroneStatus == BO.EnumsBL.DroneStatuses.OnDelivery)
                 {
                     DO.Parcel parcel = dl.GetListOfParcels().FirstOrDefault(parc => parc.DroneId == droneForList.Id&& parc.Delivered == null);

@@ -12,6 +12,7 @@ namespace BO
 
         public enum ParcelStatuses { Defined, Associated, Collected, Delivered }
         public enum UserStatuses { Manager, Worker, Customer }
+        public enum CompanyStatuses { Manager, Worker }
 
     }
 }

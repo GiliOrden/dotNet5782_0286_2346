@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         internal IBL bl = BlFactory.GetBl();
-        User u;
+        User user;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,10 +35,10 @@ namespace PL
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            RegisterWindow rw = new(ref bl);
-            rw.ShowDialog();
-            this.Close();
+        { 
+           RegisterWindow rw = new(ref bl);
+           rw.ShowDialog();
+           this.Close();
         }
 
         private void EnterButtonIsEnable(object sender, RoutedEventArgs e)
@@ -52,20 +51,25 @@ namespace PL
         {
             try
             {
-                u = bl.GetUser(UserNameTextBox.Text, PasswordBox.Password.ToString());
-                if(u.Status==EnumsBL.UserStatuses.Manager||u.Status==EnumsBL.UserStatuses.Worker)
+                user = bl.GetUser(UserNameTextBox.Text, PasswordBox.Password.ToString());
+                if(user.Status==EnumsBL.UserStatuses.Manager||user.Status==EnumsBL.UserStatuses.Worker)
                 {
-                    MenuWindow mw = new(ref bl);
+                    MenuWindow mw = new(ref bl,ref user);
                     mw.Show();
+                    this.Close();
                 }
-                else { 
-                       }
+                else 
+                {
+                    CustomerInterfaceWindow ci = new(ref bl, user);
+                    ci.ShowDialog();
+                    this.Close();
+                }
             }
             catch(UserNotFoundException ex)
             {
                 PasswordBox.BorderBrush = Brushes.Red;
                 UserNameTextBox.BorderBrush = Brushes.Red;
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -53,7 +53,7 @@ namespace BL
             }
             catch (DO.IdNotFoundException ex)
             {
-                throw new IdNotFoundException(ex.ID, ex.EntityName);
+                throw new ExistIdExceptionException(ex.ID, ex.EntityName);
             }
         }
 
@@ -121,7 +121,7 @@ namespace BL
             }
             catch (DO.IdNotFoundException ex)
             {
-                throw new IdNotFoundException(ex.ID, "station");
+                throw new ExistIdExceptionException(ex.ID, "station");
             }
 
             return s;

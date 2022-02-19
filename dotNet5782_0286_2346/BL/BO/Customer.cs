@@ -12,9 +12,7 @@ namespace BO
         public string Name { get; set; }
         public string Phone { get; set; }
         public Location Location { get; set; }
-
         public IEnumerable<ParcelAtCustomer> ListOfParcelsFromMe { get; set; }
-
         public IEnumerable<ParcelAtCustomer> ListOfParcelsIntendedToME { get; set; }
         public override string ToString()
         {

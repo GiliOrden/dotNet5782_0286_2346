@@ -21,10 +21,14 @@ namespace PL
     public partial class MenuWindow : Window
     {
         IBL bl;
-        public MenuWindow(ref IBL Bl)
+        User user;
+        public MenuWindow(ref IBL Bl,ref User u)
         {
             InitializeComponent();
             bl = Bl;
+            user = u;
+            if (u.Status == EnumsBL.UserStatuses.Manager)
+                addUserButton.Visibility = Visibility.Visible;
         }
         private void ShowDronesList_Click(object sender, RoutedEventArgs e)
         {
@@ -52,17 +56,21 @@ namespace PL
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBox.Show("Closing called");
             foreach (DroneForList drone in bl.GetDronesByPredicate(drone => drone.DroneStatus == EnumsBL.DroneStatuses.Maintenance))
             {
-                bl.ReleaseDroneFromCharge(drone.Id, DateTime.Now);
+                bl.ReleaseDroneFromCharge(drone.Id,new DateTime(2022,3,18));
             }
         }
-
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
 
+        }
+
+        private void addUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindow rw = new(ref bl, ref user);
+            rw.ShowDialog();
         }
     }
 }

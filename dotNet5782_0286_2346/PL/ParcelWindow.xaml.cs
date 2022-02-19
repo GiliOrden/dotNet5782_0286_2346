@@ -1,5 +1,5 @@
-﻿
-﻿using BlApi;
+﻿﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,20 +31,12 @@ namespace PL
             InitializeComponent();
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
-
-            ListBoxItem item = new ListBoxItem();
-            item.Content = p.Sender;
-            senderListBox.Items.Add(item);
-            ListBoxItem item2 = new ListBoxItem();
-            item2.Content = p.Receiver;
-            receiverListBox.Items.Add(item2);
-            ListBoxItem item3 = new ListBoxItem();
-            item3.Content = p.Drone;
-            droneListBox.Items.Add(item3);
-
+            senderListBox.Items.Add(parcel.Sender);
+            receiverListBox.Items.Add(parcel.Receiver);
+            droneListBox.Items.Add(parcel.Drone);
             gridOfParcel.DataContext = p;
-            AddParcel.Visibility = Visibility.Collapsed;
-            if (BO.EnumsBL.ParcelStatuses.Defined == parcelStatus)//the botton for delete parcel
+            AddParcelButton.Visibility = Visibility.Collapsed;
+            if (BO.EnumsBL.ParcelStatuses.Defined == parcelStatus)//the botton for delete parcel wiil be abled
             {
                 DeleteParcel.IsEnabled = true;
                 SupplyParcel.Visibility = Visibility.Collapsed;
@@ -90,19 +82,43 @@ namespace PL
             priorityComboBox.SelectionChanged += addButton_isEnable;
             weightComboBox.SelectionChanged += addButton_isEnable;
         }
+        public ParcelWindow(ref IBL bl,User user)//customer interface
+        {
+            bL = bl;
+            InitializeComponent();
+            priorityComboBox.IsEnabled = true;
+            receiverListBox.IsEnabled = true;
+            senderListBox.IsEnabled =true;//change
+            weightComboBox.IsEnabled = true;
+            DeleteParcel.Visibility = Visibility.Collapsed;
+            SupplyParcel.Visibility = Visibility.Collapsed;
+            CollectParcel.Visibility = Visibility.Collapsed;
+            ShowDrone.Visibility = Visibility.Collapsed;
+            priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
+            weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
+            ListBoxItem item = new ListBoxItem();
+            item.Content = bl.GetListOfCustomers().FirstOrDefault(customer=>customer.Name==user.Name);
+            senderListBox.Items.Add(item);
+            receiverListBox.ItemsSource = bl.GetListOfCustomers();
+            receiverListBox.SelectionChanged +=addMyParcelButton_isEnable;
+            priorityComboBox.SelectionChanged +=addMyParcelButton_isEnable;
+            weightComboBox.SelectionChanged +=addMyParcelButton_isEnable;
+        }
 
         private void addButton_isEnable(object sender, RoutedEventArgs e)
         {
             if (weightComboBox.SelectedItem != null && priorityComboBox.SelectedItem != null && receiverListBox.SelectedItem != null && senderListBox.SelectedItem != null)
-                AddParcel.IsEnabled = true;
+                AddParcelButton.IsEnabled = true;
+        }
+        private void addMyParcelButton_isEnable(object sender, RoutedEventArgs e)//for customer interface
+        {
+            if (weightComboBox.SelectedItem != null && priorityComboBox.SelectedItem != null && receiverListBox.SelectedItem != null )
+                AddParcelButton.IsEnabled = true;
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private void addParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            //int idOfSender, idOfReceiver;
-            //new ObservableCollection<BO.ParcelForList>
             BO.Parcel parcel = new();
-
             parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
             parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
             parcel.Sender = new();
@@ -117,15 +133,8 @@ namespace PL
             MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
             new ParcelListWindow(ref bL).Show();
+            
         }
-
-        //private void updateButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //droneWindowBL.UpdateDrone(drone.Id, modelTextBox.Text);
-        //    //MessageBox.Show($"The parcel was successfully updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    //this.Close();
-        //    //new DroneWindow(ref droneWindowBL, droneWindowBL.GetDroneForList(drone.Id)).Show();
-        //}
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -209,5 +218,7 @@ namespace PL
         {
             Close();
         }
+
+
     }
 }

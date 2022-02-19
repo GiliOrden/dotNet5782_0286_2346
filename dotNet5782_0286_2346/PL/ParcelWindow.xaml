@@ -104,7 +104,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
         </Grid>
-        <Button x:Name="AddParcel" Content="Add" HorizontalAlignment="Left" Margin="277,525,0,0" VerticalAlignment="Top" Height="24" Width="64" IsEnabled="False" Click="addButton_Click" />
+        <Button x:Name="AddParcelButton" Content="Add" HorizontalAlignment="Left" Margin="277,525,0,0" VerticalAlignment="Top" Height="24" Width="64" IsEnabled="False" Click="addParcelButton_Click" />
         <Button x:Name="DeleteParcel" Content="Delete" HorizontalAlignment="Left" Margin="277,523,0,0" VerticalAlignment="Top" Height="30" Width="80" IsEnabled="False" Click="deleteButton_Click" RenderTransformOrigin="0.162,0.368"/>
         <Button x:Name="CollectParcel"  Content="Collect parcel" HorizontalAlignment="Left" Margin="339,45,0,0" VerticalAlignment="Top" Height="33" Width="113" IsEnabled="False" Click="CollectButton_Click"/>
         <Button x:Name="SupplyParcel"  Content="Supply parcel" HorizontalAlignment="Left" Margin="339,50,0,0" VerticalAlignment="Top" Width="117" IsEnabled="False" Click="SupplyButton_Click" Height="32"/>
@@ -112,7 +112,6 @@
         <Button x:Name="ShowSender" Content="Show sender" HorizontalAlignment="Left" Margin="317,407,0,0" VerticalAlignment="Top" Click="ShowSenderButton_Click" Background="#FFE0D3F6"/>
         <Button x:Name="ShowReceiver" Content="Show receiver" HorizontalAlignment="Left" Margin="317,349,0,0" VerticalAlignment="Top" Click="ShowReceiverButton_Click" Background="#FFE0D3F6"/>
         <Button Content="cancel" HorizontalAlignment="Left" Margin="396,521,0,0" VerticalAlignment="Top" Click="cancel_Click"/>
-
     </Grid>
 
 </Window>

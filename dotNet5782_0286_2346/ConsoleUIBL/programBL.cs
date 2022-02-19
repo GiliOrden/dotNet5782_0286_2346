@@ -70,7 +70,7 @@ namespace ConsoleUI_BL
                 {
                     Console.WriteLine(ex);
                 }
-                catch (BO.IdNotFoundException ex)
+                catch (BO.ExistIdExceptionException ex)
                 {
                     Console.WriteLine(ex);
                 }
