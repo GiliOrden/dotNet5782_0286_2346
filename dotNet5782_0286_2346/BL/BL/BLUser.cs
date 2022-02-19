@@ -18,21 +18,16 @@ namespace BL
            DO.User user = new();
             try
             {
-                if (u.Password.StartsWith("gr") && u.Status == UserStatuses.Customer || !u.Password.StartsWith("gr") && u.Status == UserStatuses.Worker || !u.Password.StartsWith("gr") && u.Status == UserStatuses.Manager)
-                    throw new InvalidPasswordException(u.Password,u.Status);
                 user.Name = u.Name;
                 user.Password = u.Password;
                 user.Status = (DO.UserStatuses)u.Status;
                 dl.AddUser(user);
             }
-            catch (ExistUserException ex)
+            catch (DO.ExistUserException ex)
             {
-                throw new ExistUserException(ex.Password, ex.UserName);
+                throw new ExistUserException(ex.Password, ex.UserName,ex.ToString());
             }
-
         }
-
-
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> GetListOfUsers()
@@ -43,7 +38,6 @@ namespace BL
             return users;
         }
 
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.User GetUser(string name,string password)
         {
@@ -52,16 +46,14 @@ namespace BL
             {
                 DO.User u1 = dl.GetUser(name,password);
                 u.Name = u1.Name;
-                u.Password = u.Password;
-                u.Status = u.Status;
+                u.Password = u1.Password;
+                u.Status = (EnumsBL.UserStatuses)u1.Status;
             }
             catch (DO.UserNotFoundException ex)
             {
-                throw new UserNotFoundException(ex.Password,ex.UserName,ex.Message);
+                throw new UserNotFoundException(ex.Password,ex.UserName);
             }
-
             return u;
-
         }
     };
 }

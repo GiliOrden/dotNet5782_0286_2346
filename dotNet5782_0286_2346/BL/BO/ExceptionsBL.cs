@@ -19,20 +19,20 @@ namespace BO
         public ExistIdException(int id, string entity, string message, Exception inner) : base(message, inner) { ID = id; EntityName = entity; }
         protected ExistIdException(SerializationInfo info, StreamingContext context)
         : base(info, context) { }
-        public override string ToString() => base.ToString() + $"The {EntityName} Id: {ID} ,is already exists.";
+        public override string ToString() => base.ToString() + $"The {EntityName} id:{ID} is already existed,\nPlease check this data field";
     }
 
     [Serializable]
-    public class IdNotFoundException : Exception//When trying to look for an id of station/drone/parcel and it does not exist 
+    public class ExistIdExceptionException : Exception//When trying to look for an id of station/drone/parcel and it does not exist 
     {
         public int ID;
         public string EntityName;
        
-        public IdNotFoundException(int id, string entity) : base() { ID = id; EntityName = entity; }
-        public IdNotFoundException(int id, string entity, string message) : base(message) { ID = id; EntityName = entity; }
-        public IdNotFoundException(int id, string entity, string message, Exception innerException) : base(message, innerException)
+        public ExistIdExceptionException(int id, string entity) : base() { ID = id; EntityName = entity; }
+        public ExistIdExceptionException(int id, string entity, string message) : base(message) { ID = id; EntityName = entity; }
+        public ExistIdExceptionException(int id, string entity, string message, Exception innerException) : base(message, innerException)
         { ID = id; EntityName = entity; }
-        protected IdNotFoundException(SerializationInfo info, StreamingContext context)
+        protected ExistIdExceptionException(SerializationInfo info, StreamingContext context)
         : base(info, context) { }
         public override string ToString() => base.ToString() + $",The {EntityName} Id isn't found";
     }
@@ -117,7 +117,7 @@ public class UserNotFoundException : Exception//When trying to look for a user a
     { Password = password; UserName = name; }
     protected UserNotFoundException(SerializationInfo info, StreamingContext context)
     : base(info, context) { }
-    public override string ToString() => base.ToString() + $"The user{UserName} Pass:{Password} isn't found";
+    public override string ToString() => base.ToString() + $"The user {UserName} Pass:{Password} isn't exist.please check these fields";
 }
 [Serializable]
 public class ExistUserException : Exception//when trying to add a user and he allready exists  
@@ -133,16 +133,4 @@ public class ExistUserException : Exception//when trying to add a user and he al
     public override string ToString() => base.ToString() + $"The user name {UserName} or the password {Password}are already exists in the system.";
 }
 
-[Serializable]
-public class InvalidPasswordException : Exception//when trying to add a user and he allready exists  
-{
-    public string Password;
-    public UserStatuses Status;
-    public InvalidPasswordException(string password,UserStatuses status) : base() { Password = password; Status = status; }
-    public InvalidPasswordException(string password, UserStatuses status, string message) : base(message) { Password = password; Status = status; }
-    public InvalidPasswordException(string password, UserStatuses status, string message, Exception innerException) : base(message, innerException)
-    { Password = password; Status = status; }
-    protected InvalidPasswordException(SerializationInfo info, StreamingContext context)
-    : base(info, context) { }
-    public override string ToString() => base.ToString() + $"The user status: {Status} does not match the password {Password}.";
-}
+

@@ -7,6 +7,39 @@
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid x:Name="customerGrid" DataContext="{Binding}" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Id(9 digits):" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="idTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" TextChanged="RegisterButton_isEnable2" />
+            <Label Content="Name\Username:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Phone:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox x:Name="phoneTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Phone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBox x:Name="latitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Location.Latitude, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBox x:Name="longitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Location.Longitude, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+        <Grid x:Name="userGrid" DataContext="{Binding}" >
+        <TextBox Name="passwordTextBox" HorizontalAlignment="Left" Margin="433,169,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="password:" HorizontalAlignment="Left" Margin="339,170,0,0" VerticalAlignment="Top"/>
+        <Button Name="RegisterButton" Content="Register" HorizontalAlignment="Left" Margin="451,260,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+        <Label Content="Please fill in the details:" HorizontalAlignment="Left" Margin="70,79,0,0" VerticalAlignment="Top" FontSize="20" FontStyle="Italic" Width="234" FontWeight="Bold"/>
+        <Label Content="*All fileds are required" HorizontalAlignment="Left" Margin="70,119,0,0" VerticalAlignment="Top" Height="31" Width="124" FontSize="10"/>
+        <TextBox Name="usernameTextBox"  HorizontalAlignment="Left" Margin="433,144,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Name="userNameLabel" Content="Username" HorizontalAlignment="Left" Margin="339,142,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="statusSelector" HorizontalAlignment="Left" Margin="433,0,0,0" VerticalAlignment="Center" Width="120"/>
+        <Label Name="statusLabel" Content="Status:" HorizontalAlignment="Left" Margin="348,0,0,0" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Window>

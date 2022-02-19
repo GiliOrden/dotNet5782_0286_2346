@@ -70,10 +70,10 @@ namespace PL
                 this.Close();
                 new CustomersListWindow(ref bL).ShowDialog();
             }
-            catch(IdNotFoundException )
-           {
+            catch(ExistIdException )
+            {
                 idTextBox.BorderBrush = Brushes.Red;
-                MessageBox.Show($"The station id is already existed,\nPlease check this data field", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"The customer id is already existed,\nPlease check this data field", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -88,7 +88,7 @@ namespace PL
                 this.Close();
                 new CustomersListWindow(ref bL).Show();
             }
-            catch(IdNotFoundException ex)
+            catch(ExistIdExceptionException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

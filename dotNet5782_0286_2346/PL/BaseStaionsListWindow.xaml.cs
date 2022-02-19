@@ -30,14 +30,14 @@ namespace PL
             stationForListDataGrid.DataContext = bl.GetListOfBaseStations();
         }
 
-        private void stationForListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            StationForList station = stationForListDataGrid.SelectedItem as StationForList;
-            if (station != null)
-            {
-                new StationWindow(ref bL, station.ID).Show();
-            }
-        }
+        //private void stationForListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    StationForList station = stationForListDataGrid.SelectedItem as StationForList;
+        //    if (station != null)
+        //    {
+        //        new StationWindow(ref bL, station.ID).Show();
+        //    }
+        //}
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +70,15 @@ namespace PL
         {
             this.Close();
             new BaseStaionsListWindow(ref bL).Show();
+        }
+
+        private void stationForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            StationForList station = stationForListDataGrid.SelectedItem as StationForList;
+            if (station != null)
+            {
+                new StationWindow(ref bL, station.ID).Show();
+            }
         }
 
         //private void PreviewTextInput(object sender, TextCompositionEventArgs e)

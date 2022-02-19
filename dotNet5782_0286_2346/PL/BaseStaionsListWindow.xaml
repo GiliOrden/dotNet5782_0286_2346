@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BaseStaionsListWindow" Height="534" Width="800">
     <Grid>
-        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="stationForListDataGrid_SelectionChanged">
+        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected"  MouseDoubleClick="stationForListDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>

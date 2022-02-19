@@ -87,6 +87,7 @@ namespace Dal
             users.Add(u);
             XMLTools.SaveListToXMLSerializer(users, usersPath);
         }
+
         public User GetUser(string name, string password)
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
@@ -103,8 +104,6 @@ namespace Dal
                    select user;
         }
 
-
-
         public void DeleteUser(string name,string password)
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(usersPath);
@@ -113,13 +112,14 @@ namespace Dal
             users.RemoveAll(user => user.Name == name);
             XMLTools.SaveListToXMLSerializer(users, usersPath);
         }
+
         /// <summary>
-        /// 
+        /// the function check if the user details are already exist
         /// </summary>
-        /// <param name="lst"></param>
-        /// <param name="name"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="lst">list of users</param>
+        /// <param name="name">the name of the user</param>
+        /// <param name="pass">the password of the user</param>
+        /// <returns>true if the name or the password are already exists</returns
         private bool checkUser(List<User> lst, string name, string password)
         {
             return lst.Exists(user => user.Name == name || user.Password == password);

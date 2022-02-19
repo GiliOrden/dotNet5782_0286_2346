@@ -36,7 +36,7 @@ namespace BL
             catch (DO.IdNotFoundException ex)
             {
                 dl.DeleteDrone(drone.Id);
-                throw new IdNotFoundException(ex.ID, ex.EntityName);
+                throw new ExistIdExceptionException(ex.ID, ex.EntityName);
             }
         }
 
@@ -55,7 +55,7 @@ namespace BL
                 }
                 catch (DO.IdNotFoundException ex)
                 {
-                    throw new IdNotFoundException(ex.ID, ex.EntityName);
+                    throw new ExistIdExceptionException(ex.ID, ex.EntityName);
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace BL
         {
             BO.DroneForList drone = dronesBL.FirstOrDefault(drone => drone.Id == id);
             if (drone == null)
-                throw new IdNotFoundException(id, "drone");
+                throw new ExistIdException(id, "drone");
             if (drone.DroneStatus != BO.EnumsBL.DroneStatuses.Maintenance)
                 throw new DroneStatusException(id, "in maintenance");
             TimeSpan chargingTime = dl.GetListOfBusyChargeSlots().FirstOrDefault(dc => dc.DroneId == id).StartOfCharging - releaseTime;
@@ -85,7 +85,7 @@ namespace BL
             double minDistance = 100000;
 
             if (drone == null)
-                throw new IdNotFoundException(idOfDrone, "drone");
+                throw new ExistIdExceptionException(idOfDrone, "drone");
             if (drone.DroneStatus != BO.EnumsBL.DroneStatuses.Available)
                 throw new DroneStatusException(idOfDrone, "available");
 
@@ -249,7 +249,7 @@ namespace BL
         {
             BO.Drone d = new();
             if (!dronesBL.Any(drone => drone.Id == id))
-                throw new IdNotFoundException(id, "drone");
+                throw new ExistIdExceptionException(id, "drone");
             BO.DroneForList d2 = dronesBL.Find(drone => drone.Id == id);
             d.Id = d2.Id;
             d.Model = d2.Model;

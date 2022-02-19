@@ -35,7 +35,7 @@ namespace BL
         public void UpdateCustomer(int id, string name, string phone)
         {
             if (!dl.GetListOfCustomers().Any(cus => cus.Id == id))
-                throw new IdNotFoundException(id, "customer");
+                throw new ExistIdExceptionException(id, "customer");
           lock (dl)
           { 
             DO.Customer customer = dl.GetCustomer(id);
@@ -110,9 +110,9 @@ namespace BL
                 c.ListOfParcelsFromMe = GetParcelsFromMe(c.Id);
                 c.ListOfParcelsIntendedToME = GetParcelsIntendedToMe(c.Id);
             }
-            catch (IdNotFoundException ex)
+            catch (ExistIdExceptionException ex)
             {
-                throw new IdNotFoundException(ex.ID, "customer");
+                throw new ExistIdExceptionException(ex.ID, "customer");
             }
 
             return c;
