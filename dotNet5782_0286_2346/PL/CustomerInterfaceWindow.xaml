@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="CustomerInterfaceWindow" Height="450" Width="800">
     <Grid Name="customerGrid" DataContext="{Binding}">
-        <Button Content="Add Parcel" HorizontalAlignment="Left" Margin="64,64,0,0" VerticalAlignment="Top" Click="AddParcelButton_Click"/>
-        <Label Content="Hi!" HorizontalAlignment="Left" Margin="243,32,0,0" VerticalAlignment="Top"/>
+        <Button Content="Add Parcel" HorizontalAlignment="Left" Margin="64,74,0,0" VerticalAlignment="Top" Click="AddParcelButton_Click" Width="125"/>
+        <Label Content="Hello" HorizontalAlignment="Left" Margin="64,18,0,0" VerticalAlignment="Top" FontSize="25" FontStyle="Italic" FontWeight="Bold" Width="84"/>
+        <Label Name="userNameLabel"  Content="{Binding}" HorizontalAlignment="Left" Margin="156,26,0,0" VerticalAlignment="Top"  FontSize="25" FontStyle="Italic" FontWeight="Bold" Width="84" Height="24"/>
+        <Button Name="showParcelsButton" Content="Show Parcels" HorizontalAlignment="Left" Margin="64,142,0,0" VerticalAlignment="Top" Width="125" Click="showParcelsButton_Click"/>
+        
+
 
     </Grid>
 </Window>

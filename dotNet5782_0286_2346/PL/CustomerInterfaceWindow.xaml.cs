@@ -31,13 +31,18 @@ namespace PL
             user = u;
             customer = bl.GetCustomer(bl.GetListOfCustomers().FirstOrDefault(cust => cust.Name == u.Name).ID);
             customerGrid.DataContext = customer;
-            
+            userNameLabel.DataContext = u.Name;
         }
 
         private void AddParcelButton_Click(object sender, RoutedEventArgs e)
         {
             ParcelWindow pw = new(ref bl, user);
             pw.Show();
+        }
+
+        private void showParcelsButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

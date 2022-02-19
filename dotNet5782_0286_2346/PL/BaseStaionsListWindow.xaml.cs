@@ -72,7 +72,7 @@ namespace PL
             new BaseStaionsListWindow(ref bL).Show();
         }
 
-        private void stationForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void StationForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             StationForList station = stationForListDataGrid.SelectedItem as StationForList;
             if (station != null)
