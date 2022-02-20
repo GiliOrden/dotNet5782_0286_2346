@@ -46,16 +46,16 @@ namespace PL
             view.GroupDescriptions.Add(groupDescription);
         }
 
-        private void WeightSelectComboBox(object sender, SelectionChangedEventArgs e)
-        {
-            if (WeightSelect.SelectedItem != null && ParcelStatusSelect.SelectedItem != null)
-                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
-            else if (WeightSelect.SelectedItem != null)
-                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, null);
-            else if (ParcelStatusSelect.SelectedItem != null)
-                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate(null, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
-            parcelForListDataGrid.Items.Refresh();
-        }
+        //private void WeightSelectComboBox(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (WeightSelect.SelectedItem != null && ParcelStatusSelect.SelectedItem != null)
+        //        parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
+        //    else if (WeightSelect.SelectedItem != null)
+        //        parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, null);
+        //    else if (ParcelStatusSelect.SelectedItem != null)
+        //        parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate(null, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
+        //    parcelForListDataGrid.Items.Refresh();
+        //}
 
         //private void UpdateParcel(object sender, RoutedEventArgs e)
         //{
@@ -104,6 +104,18 @@ namespace PL
                 parcelForListDataGrid.ItemsSource = bL.GetListOfParcels();//update the parcel collection in the parcelListWindow
 
             }
+        }
+
+        private void StatusAndWeightSelectComboBox(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (WeightSelect.SelectedItem != null && ParcelStatusSelect.SelectedItem != null)
+                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
+            else if (WeightSelect.SelectedItem != null)
+                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, null);
+            else if (ParcelStatusSelect.SelectedItem != null)
+                parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate(null, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
+            parcelForListDataGrid.Items.Refresh();
         }
     }
 }
