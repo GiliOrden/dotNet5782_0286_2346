@@ -32,8 +32,8 @@ namespace PL
             customer = bl.GetCustomer(bl.GetListOfCustomers().FirstOrDefault(cust => cust.Name == u.Name).ID);
             customerGrid.DataContext = customer;
             userNameLabel.DataContext = u.Name;
-            ListOfParcels.DataContext = bl.GetListOfCustomerParcels(customer);
-            ListOfParcels.Visibility = Visibility.Hidden;
+            parcelForListDataGrid.DataContext = bl.GetListOfCustomerParcels(customer);
+            parcelForListDataGrid.Visibility = Visibility.Hidden;
         }
 
         private void AddParcelButton_Click(object sender, RoutedEventArgs e)
@@ -44,7 +44,12 @@ namespace PL
 
         private void showParcelsButton_Click(object sender, RoutedEventArgs e)
         {
-            ListOfParcels.Visibility = Visibility.Visible;
+            parcelForListDataGrid.Visibility = Visibility.Visible;
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

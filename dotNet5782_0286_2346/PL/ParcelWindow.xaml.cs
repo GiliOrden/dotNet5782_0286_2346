@@ -100,9 +100,9 @@ namespace PL
             item.Content = bl.GetListOfCustomers().FirstOrDefault(customer=>customer.Name==user.Name);
             senderListBox.Items.Add(item);
             receiverListBox.ItemsSource = bl.GetListOfCustomers();
-            receiverListBox.SelectionChanged +=addMyParcelButton_isEnable;
-            priorityComboBox.SelectionChanged +=addMyParcelButton_isEnable;
-            weightComboBox.SelectionChanged +=addMyParcelButton_isEnable;
+            receiverListBox.SelectionChanged +=addButton_isEnable;
+            priorityComboBox.SelectionChanged +=addButton_isEnable;
+            weightComboBox.SelectionChanged +=addButton_isEnable;
         }
 
         private void addButton_isEnable(object sender, RoutedEventArgs e)
@@ -110,29 +110,26 @@ namespace PL
             if (weightComboBox.SelectedItem != null && priorityComboBox.SelectedItem != null && receiverListBox.SelectedItem != null && senderListBox.SelectedItem != null)
                 AddParcelButton.IsEnabled = true;
         }
-        private void addMyParcelButton_isEnable(object sender, RoutedEventArgs e)//for customer interface
-        {
-            if (weightComboBox.SelectedItem != null && priorityComboBox.SelectedItem != null && receiverListBox.SelectedItem != null )
-                AddParcelButton.IsEnabled = true;
-        }
+
 
         private void addParcelButton_Click(object sender, RoutedEventArgs e)
         {
-            BO.Parcel parcel = new();
-            parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
-            parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
-            parcel.Sender = new();
-            BO.CustomerForList cust = (BO.CustomerForList)senderListBox.SelectedItem;
-            parcel.Sender.ID = cust.ID;
-            parcel.Sender.Name = cust.Name;
-            parcel.Receiver = new();
-            BO.CustomerForList cust2 = (BO.CustomerForList)receiverListBox.SelectedItem;
-            parcel.Receiver.ID = cust2.ID;
-            parcel.Receiver.Name = cust2.Name;
-            bL.AddParcel(parcel);
-            MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
-            new ParcelListWindow(ref bL).Show();
+
+                BO.Parcel parcel = new();
+                parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
+                parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
+                parcel.Sender = new();
+                BO.CustomerForList cust = (BO.CustomerForList)senderListBox.SelectedItem;
+                parcel.Sender.ID = cust.ID;
+                parcel.Sender.Name = cust.Name;
+                parcel.Receiver = new();
+                BO.CustomerForList cust2 = (BO.CustomerForList)receiverListBox.SelectedItem;
+                parcel.Receiver.ID = cust2.ID;
+                parcel.Receiver.Name = cust2.Name;
+                bL.AddParcel(parcel);
+                MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+                new ParcelListWindow(ref bL).Show();
             
         }
 

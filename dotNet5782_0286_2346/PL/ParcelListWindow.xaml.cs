@@ -102,14 +102,7 @@ namespace PL
                 pw.ShowDialog();
                 parcelForListDataGrid.ItemsSource = null;
                 parcelForListDataGrid.ItemsSource = bL.GetListOfParcels();//update the parcel collection in the parcelListWindow
-                                                                          
-                //DroneForList drone = droneForListDataGrid.SelectedItem as DroneForList;
-                //if (drone != null)
-                //{
-                //    DroneWindow dw = new DroneWindow(ref droneListWindowBL, drone.Id);
-                //    dw.ShowDialog();
-                //    Close();
-                //}
+
             }
         }
     }
