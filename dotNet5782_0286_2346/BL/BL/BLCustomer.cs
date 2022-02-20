@@ -118,6 +118,20 @@ namespace BL
             return c;
 
         }
+        public IEnumerable<BO.ParcelForList> GetListOfCustomerParcels(Customer cust)
+        {
+            return from parc in dl.GetParcelsByPredicate(parc => parc.SenderId == cust.Id || parc.TargetId == cust.Id)
+                   let prc = dl.GetParcel(parc.Id)
+                   select new BO.ParcelForList
+                   {
+                       Id = prc.Id,
+                       SenderName = dl.GetCustomer(prc.SenderId).Name,
+                       ReceiverName = dl.GetCustomer(prc.TargetId).Name,
+                       Weight = (EnumsBL.WeightCategories)prc.Weight,
+                       Priority = (EnumsBL.Priorities)prc.Priority,
+                       ParcelStatus = StatusOfParcel(prc.Id)
+                   };
+        }
     };
 }
 

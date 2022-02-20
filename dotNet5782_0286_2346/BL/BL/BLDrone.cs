@@ -70,7 +70,7 @@ namespace BL
             if (drone.DroneStatus != BO.EnumsBL.DroneStatuses.Maintenance)
                 throw new DroneStatusException(id, "in maintenance");
             TimeSpan chargingTime = releaseTime- dl.GetListOfBusyChargeSlots().FirstOrDefault(dc => dc.DroneId == id).StartOfCharging  ;
-            drone.Battery = drone.Battery + chargingTime.TotalMinutes/1 * chargingRatePerHour*10;//לחלק ל60 זה אמור להיות!! לא 10
+            drone.Battery = drone.Battery + chargingTime.TotalMinutes/1 * chargingRatePerHour*10;// רק בגלל הסימולטור:לחלק ל60 זה אמור להיות!! לא 10
             if (drone.Battery > 100)
                 drone.Battery = 100;
             drone.DroneStatus = BO.EnumsBL.DroneStatuses.Available;
@@ -321,8 +321,7 @@ namespace BL
                     AssignParcelToDrone(id);
                     drone.DroneStatus = BO.EnumsBL.DroneStatuses.OnDelivery;
                 }
-                    
-
+ 
             }
             else if (drone.DroneStatus == BO.EnumsBL.DroneStatuses.OnDelivery)
             {//OnDelivery

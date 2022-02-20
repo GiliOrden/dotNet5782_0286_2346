@@ -150,10 +150,16 @@ namespace BlApi
         /// </summary>
         /// <returns>returns all the list of customers</returns>
         IEnumerable<CustomerForList> GetListOfCustomers();
+        /// <summary>
+        /// the function search an d returns a list of parcels from\to a customer
+        /// </summary>
+        /// <param name="cust">customer</param>
+        /// <returns>list of parcels from\to the customer</returns>
+        IEnumerable<BO.ParcelForList> GetListOfCustomerParcels(Customer cust);
         #endregion
 
         #region Parcel
-        
+
         /// <summary>
         /// this function add a new parcel to parcels list
         /// </summary>

@@ -5,14 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerInterfaceWindow" Height="450" Width="800">
+        Title="CustomerInterfaceWindow" Height="615" Width="937">
     <Grid Name="customerGrid" DataContext="{Binding}">
         <Button Content="Add Parcel" HorizontalAlignment="Left" Margin="64,74,0,0" VerticalAlignment="Top" Click="AddParcelButton_Click" Width="125"/>
         <Label Content="Hello" HorizontalAlignment="Left" Margin="64,18,0,0" VerticalAlignment="Top" FontSize="25" FontStyle="Italic" FontWeight="Bold" Width="84"/>
-        <Label Name="userNameLabel"  Content="{Binding}" HorizontalAlignment="Left" Margin="156,26,0,0" VerticalAlignment="Top"  FontSize="25" FontStyle="Italic" FontWeight="Bold" Width="84" Height="24"/>
+        <Label Name="userNameLabel"  Content="{Binding}" HorizontalAlignment="Left" Margin="135,18,0,0" VerticalAlignment="Top"  FontSize="25" FontStyle="Italic" FontWeight="Bold" Width="189" Height="41"/>
         <Button Name="showParcelsButton" Content="Show Parcels" HorizontalAlignment="Left" Margin="64,142,0,0" VerticalAlignment="Top" Width="125" Click="showParcelsButton_Click"/>
-        
+        <ListView    Margin="245,90,20,-36" Background="#FF212529" Foreground="Black" IsSynchronizedWithCurrentItem="True" AlternationCount="10"                                        
+                            FontFamily="Fonts\RoadRage-Regular.ttf #Road Rage" FontSize="10" BorderThickness="0"  Name="ListOfParcels" DataContext="{Binding}"  >
+            <ListView.View  >
+                <GridView     AllowsColumnReorder="true">
+                    <GridViewColumn>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="Id" Width="auto" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=ParcelStatus}" Header="ParcelStatus" Width="auto"   />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Priority}"  Header="Priority" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Sender}"  Header="Sender" Width="auto" />
+                    <GridViewColumn  DisplayMemberBinding="{Binding Path=Receiver}"  Header="Receiver" Width="auto"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Weight}" x:Name="MaxWeight" Header="MaxWeight" Width="auto"/>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                        <Border BorderThickness="0,0,0,1" BorderBrush="#FF212529" Background="#FF212529">
+                                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="BorderBrush" Value="#FF212529" />
+                            <Setter Property="Background" Value="#FF212529" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontWeight" Value="Bold" />
 
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
 
+                </GridView>
+
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

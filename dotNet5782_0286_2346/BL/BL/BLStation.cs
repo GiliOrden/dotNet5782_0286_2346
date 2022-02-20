@@ -164,7 +164,6 @@ namespace BL
                    {
                        Id = dronesInCharging.Id,
                        Battery = dronesInCharging.Battery
-                       //StartCharging= dronesInCharging.StartCharging
                    };
             return drones;
         }
