@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{5B3E7482-AF3
 		xml\DronesXml.xml = xml\DronesXml.xml
 		xml\ParcelsXml.xml = xml\ParcelsXml.xml
 		xml\StationsXml.xml = xml\StationsXml.xml
-		UsersXml.xml = UsersXml.xml
+		xml\UsersXml.xml = xml\UsersXml.xml
 	EndProjectSection
 EndProject
 Global
