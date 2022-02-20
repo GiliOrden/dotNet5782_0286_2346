@@ -92,7 +92,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Receiver:" Height="26" Width="57"/>
-            <ListBox x:Name="receiverListBox" IsEnabled="false" ItemTemplate="{StaticResource CustomerDataTemplate}" VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0"  Height="55" Grid.Column="1" RenderTransformOrigin="1,0.507"/>
+            <ListBox x:Name="receiverListBox"  IsEnabled="false" DataContext="{Binding}" ItemTemplate="{StaticResource CustomerDataTemplate}" VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0"  Height="55" Grid.Column="1" RenderTransformOrigin="1,0.507"/>
             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Sender:" Height="26" Width="50"/>
             <ListBox x:Name="senderListBox" IsEnabled="false" Width="126" ItemTemplate="{StaticResource CustomerDataTemplate}"  VerticalAlignment="Center" Grid.Row="8"  Height="55" HorizontalAlignment="Center" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Weight:" Height="26" Width="50"/>
