@@ -111,7 +111,6 @@ namespace PL
                 AddParcelButton.IsEnabled = true;
         }
 
-
         private void addParcelButton_Click(object sender, RoutedEventArgs e)
         {
 
