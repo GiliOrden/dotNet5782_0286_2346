@@ -36,7 +36,7 @@ namespace PL
             droneListBox.Items.Add(parcel.Drone);
             gridOfParcel.DataContext = p;
             AddParcelButton.Visibility = Visibility.Collapsed;
-            if (BO.EnumsBL.ParcelStatuses.Defined == parcelStatus)//the botton for delete parcel wiil be abled
+            if (BO.EnumsBL.ParcelStatuses.Defined == parcelStatus)//the botton for delete parcel will be abled
             {
                 DeleteParcel.IsEnabled = true;
                 SupplyParcel.Visibility = Visibility.Collapsed;
@@ -82,7 +82,7 @@ namespace PL
             priorityComboBox.SelectionChanged += addButton_isEnable;
             weightComboBox.SelectionChanged += addButton_isEnable;
         }
-        public ParcelWindow(ref IBL bl,User user)//customer interface
+        public ParcelWindow(ref IBL bl,User user)//ctor for customer interface 
         {
             bL = bl;
             InitializeComponent();
@@ -161,7 +161,6 @@ namespace PL
             {
                 DroneWindow dw = new DroneWindow(ref bL, drone.Id);
                 dw.ShowDialog();
-                //Close();
             }
 
         }
