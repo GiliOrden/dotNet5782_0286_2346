@@ -70,8 +70,6 @@ namespace PL
             automatic.ProgressChanged += Automatic_ProgressChanged;
             automatic.RunWorkerCompleted += Automatic_RunWorkerCompleted;
             automatic.WorkerReportsProgress = true;//flag
-            //automatic.WorkerSupportsCancellation = true;//flag
-
             idTextBox.IsEnabled = false;
             MaxWeightComboBox.IsEnabled = false;
             if (drone.DroneStatus == EnumsBL.DroneStatuses.Available)
@@ -108,14 +106,11 @@ namespace PL
 
         private void Automatic_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Drone drone1 = droneWindowBL.GetDrone(e.ProgressPercentage);
-           
-            DroneStatusComboBox.SelectedItem = drone1.DroneStatus;
-           
+            Drone drone1 = droneWindowBL.GetDrone(e.ProgressPercentage);          
+            DroneStatusComboBox.SelectedItem = drone1.DroneStatus;         
             BatteryProgressBar.Value = drone1.Battery;
             longitudeTextBox.Text = drone1.Location.Longitude.ToString();
-            latitudeTextBox.Text = drone1.Location.Latitude.ToString();
-            
+            latitudeTextBox.Text = drone1.Location.Latitude.ToString();            
         }
 
         private void Automatic_DoWork(object sender, DoWorkEventArgs e)
@@ -132,7 +127,6 @@ namespace PL
                 {
                     Thread.Sleep(500);
                     drone=droneWindowBL.Simulator(drone.Id, automatic);
-                    Drone drone1 = droneWindowBL.GetDrone(drone.Id);
                     if (automatic.WorkerReportsProgress == true)
                         automatic.ReportProgress(drone.Id);
                 }
@@ -155,8 +149,7 @@ namespace PL
             stopAuto = false;
             if (automatic.IsBusy != true)
             {
-                //this.Cursor = Cursors.Wait;
-                automatic.RunWorkerAsync(drone.DroneStatus);
+                automatic.RunWorkerAsync();
             }
         }
 

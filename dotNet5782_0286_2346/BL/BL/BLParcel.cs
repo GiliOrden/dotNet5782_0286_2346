@@ -256,9 +256,5 @@ namespace BL
         {
             dl.DeleteParcel(id);
         }
-
-
     };
-
-
 }
