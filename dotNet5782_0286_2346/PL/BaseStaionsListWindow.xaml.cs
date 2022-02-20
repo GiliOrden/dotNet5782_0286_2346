@@ -66,13 +66,9 @@ namespace PL
             view.GroupDescriptions.Add(groupDescription);
         }
 
-        private void refreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            new BaseStaionsListWindow(ref bL).Show();
-        }
+        
 
-        private void StationForListDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Show_Item(object sender, RoutedEventArgs e)
         {
             StationForList station = stationForListDataGrid.SelectedItem as StationForList;
             if (station != null)
@@ -80,6 +76,15 @@ namespace PL
                 new StationWindow(ref bL, station.ID).Show();
             }
         }
+
+        private void refreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            BaseStaionsListWindow sw = new BaseStaionsListWindow(ref bL);
+            sw.Show();
+            Close();
+        }
+
+
 
         //private void PreviewTextInput(object sender, TextCompositionEventArgs e)
         //{

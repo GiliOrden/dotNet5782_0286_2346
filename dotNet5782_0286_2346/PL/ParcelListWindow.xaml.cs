@@ -77,21 +77,7 @@ namespace PL
             pw.Show();
         }
 
-        private void ParcelView_SelectionChanged(object sender, SelectionChangedEventArgs e)//using without button
-        {
-
-            BO.ParcelForList p = parcelForListDataGrid.SelectedItem as BO.ParcelForList;
-            if (p != null)
-            {
-                BO.Parcel p2 = new BO.Parcel();
-                p2 = bL.GetParcel(p.Id);
-                ParcelWindow pw = new ParcelWindow(ref bL, p2, p.ParcelStatus);
-                pw.ShowDialog();
-                parcelForListDataGrid.ItemsSource = null;
-                parcelForListDataGrid.ItemsSource = bL.GetListOfParcels();//update the parcel collection in the parcelListWindow
-                //GroupBySender.
-            }
-        }
+        
 
         private void RefreshButton(object sender, RoutedEventArgs e)
         {
@@ -103,6 +89,28 @@ namespace PL
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Show_Item(object sender, RoutedEventArgs e)
+        {
+            BO.ParcelForList p = parcelForListDataGrid.SelectedItem as BO.ParcelForList;
+            if (p != null)
+            {
+                BO.Parcel p2 = new BO.Parcel();
+                p2 = bL.GetParcel(p.Id);
+                ParcelWindow pw = new ParcelWindow(ref bL, p2, p.ParcelStatus);
+                pw.ShowDialog();
+                parcelForListDataGrid.ItemsSource = null;
+                parcelForListDataGrid.ItemsSource = bL.GetListOfParcels();//update the parcel collection in the parcelListWindow
+                                                                          
+                //DroneForList drone = droneForListDataGrid.SelectedItem as DroneForList;
+                //if (drone != null)
+                //{
+                //    DroneWindow dw = new DroneWindow(ref droneListWindowBL, drone.Id);
+                //    dw.ShowDialog();
+                //    Close();
+                //}
+            }
         }
     }
 }

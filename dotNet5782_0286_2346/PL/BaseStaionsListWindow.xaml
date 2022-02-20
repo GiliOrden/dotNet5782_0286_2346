@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BaseStaionsListWindow" Height="534" Width="800">
     <Grid>
-        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected"  MouseDoubleClick="StationForListDataGrid_MouseDoubleClick" >
+        <DataGrid x:Name="stationForListDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="60,67,60,153" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns  >
                 <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto" />
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
@@ -34,6 +34,7 @@
         <Button Content="Group by stations with available charge slots" HorizontalAlignment="Left" Margin="540,30,0,0" VerticalAlignment="Top" Click="groupByStationsWithAvailableChargeSlotesButton_Click" Background="#FFE0D3F6" Width="91"/>
         <Button Content="Group by number of available charge slots " HorizontalAlignment="Left" Margin="334,30,0,0" VerticalAlignment="Top" Click="groupByNumberOfAvailableChargeSlotsButton_Click" Background="#FFE0D3F6" Width="96"/>
         <Button Content="Refresh" HorizontalAlignment="Left" Margin="464,375,0,0" VerticalAlignment="Top" Click="refreshButton_Click"/>
+        <Button Content="Show Item" HorizontalAlignment="Center" Margin="0,375,0,0" VerticalAlignment="Top" Width="80" Click="Show_Item"/>
     </Grid>
 
 </Window>

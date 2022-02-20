@@ -28,16 +28,7 @@ namespace PL
             customerForListDataGrid.DataContext = bL.GetListOfCustomers();
         }
 
-        private void customerForListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            CustomerForList customer = customerForListDataGrid.SelectedItem as CustomerForList;
-            if (customer != null)
-            {
-                CustomerWindow cw = new CustomerWindow(ref bL, customer.ID);
-                cw.Show();
-            }
-        }
-
+       
         private void addCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             CustomerWindow cw = new CustomerWindow(ref bL);
@@ -47,6 +38,16 @@ namespace PL
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Show_Item(object sender, RoutedEventArgs e)
+        {
+            CustomerForList customer = customerForListDataGrid.SelectedItem as CustomerForList;
+            if (customer != null)
+            {
+                CustomerWindow cw = new CustomerWindow(ref bL, customer.ID);
+                cw.Show();
+            }
         }
     }
 }

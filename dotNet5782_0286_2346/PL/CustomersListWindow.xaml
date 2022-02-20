@@ -8,7 +8,7 @@
         Title="CustomersListWindow" Height="450" Width="800" Background="AliceBlue">
     <Grid>
         <Grid>
-            <DataGrid x:Name="customerForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="53,79,43,72" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="customerForListDataGrid_SelectionChanged">
+            <DataGrid x:Name="customerForListDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="53,79,43,72" RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="Auto"/>
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
@@ -21,6 +21,7 @@
             </DataGrid>
             <Button Content="Add customer" HorizontalAlignment="Left" Margin="511,378,0,0" VerticalAlignment="Top" Click="addCustomerButton_Click"/>
             <Button Content="Cancel" HorizontalAlignment="Left" Margin="651,378,0,0" VerticalAlignment="Top" Width="92" Click="cancelButton_Click"/>
+            <Button Content="Show Item" HorizontalAlignment="Left" Margin="390,378,0,0" VerticalAlignment="Top" Click="Show_Item"/>
 
         </Grid>
     </Grid>
