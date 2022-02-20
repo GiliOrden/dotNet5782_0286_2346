@@ -31,7 +31,7 @@
             <TextBox x:Name="longitudeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Location.Longitude, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
         <Grid DataContext="{Binding}">
-            <DataGrid x:Name="droneInChargingDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="50,139,584,175" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="droneInChargingDataGrid_SelectionChanged">
+            <DataGrid x:Name="droneInChargingDataGrid" DataContext="{Binding}" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="50,139,584,175" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="droneInChargingDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="batteryColumn" Binding="{Binding Battery}" Header="Battery" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="200"/>

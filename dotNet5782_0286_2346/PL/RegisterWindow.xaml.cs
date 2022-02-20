@@ -102,7 +102,8 @@ namespace PL
                 bL.AddUser(user);
                 MessageBox.Show("Hi! you are in,thanks for joining", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 CustomerInterfaceWindow ci = new(ref bL, user);
-                ci.ShowDialog();
+                ci.Show();
+                this.Close();
             }
             catch (ExistIdException ex)
             {

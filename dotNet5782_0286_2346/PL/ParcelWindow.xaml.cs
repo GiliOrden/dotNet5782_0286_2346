@@ -24,17 +24,18 @@ namespace PL
     {
         IBL bL;
         BO.Parcel parcel;
+        User myUser;
         public ParcelWindow(ref IBL bl, BO.Parcel p, BO.EnumsBL.ParcelStatuses parcelStatus)//update/delete parcel window
         {
             bL = bl;
             parcel = p;
             InitializeComponent();
-            priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
-            weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
+            priorityComboBox.Items.Add(parcel.Priority);
+            weightComboBox.Items.Add(parcel.Weight);
             senderListBox.Items.Add(parcel.Sender);
             receiverListBox.Items.Add(parcel.Receiver);
             droneListBox.Items.Add(parcel.Drone);
-            gridOfParcel.DataContext = p;
+            gridOfParcel.DataContext = parcel;
             AddParcelButton.Visibility = Visibility.Collapsed;
             if (BO.EnumsBL.ParcelStatuses.Defined == parcelStatus)//the botton for delete parcel will be abled
             {
@@ -85,15 +86,17 @@ namespace PL
         public ParcelWindow(ref IBL bl,User user)//ctor for customer interface 
         {
             bL = bl;
+            myUser = user;
             InitializeComponent();
             priorityComboBox.IsEnabled = true;
             receiverListBox.IsEnabled = true;
-            senderListBox.IsEnabled =true;//change
+            senderListBox.IsEnabled =true;
             weightComboBox.IsEnabled = true;
             DeleteParcel.Visibility = Visibility.Collapsed;
             SupplyParcel.Visibility = Visibility.Collapsed;
             CollectParcel.Visibility = Visibility.Collapsed;
             ShowDrone.Visibility = Visibility.Collapsed;
+            ShowReceiver.Visibility = Visibility.Collapsed;
             priorityComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.Priorities));
             weightComboBox.ItemsSource = Enum.GetValues(typeof(BO.EnumsBL.WeightCategories));
             ListBoxItem item = new ListBoxItem();
@@ -114,22 +117,31 @@ namespace PL
         private void addParcelButton_Click(object sender, RoutedEventArgs e)
         {
 
-                BO.Parcel parcel = new();
-                parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
-                parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
-                parcel.Sender = new();
-                BO.CustomerForList cust = (BO.CustomerForList)senderListBox.SelectedItem;
+            BO.Parcel parcel = new();
+            parcel.Weight = (BO.EnumsBL.WeightCategories)weightComboBox.SelectedItem;
+            parcel.Priority = (BO.EnumsBL.Priorities)priorityComboBox.SelectedItem;
+            parcel.Sender = new();
+            if (myUser == null)
+            {
+                BO.CustomerForList cust = (BO.CustomerForList)senderListBox.SelectedValue;
                 parcel.Sender.ID = cust.ID;
                 parcel.Sender.Name = cust.Name;
-                parcel.Receiver = new();
-                BO.CustomerForList cust2 = (BO.CustomerForList)receiverListBox.SelectedItem;
-                parcel.Receiver.ID = cust2.ID;
-                parcel.Receiver.Name = cust2.Name;
-                bL.AddParcel(parcel);
-                MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
-                new ParcelListWindow(ref bL).Show();
-            
+            }
+            else
+            {
+                BO.CustomerForList cust = bL.GetListOfCustomers().FirstOrDefault(cust=>cust.Name==myUser.Name);
+                parcel.Sender.ID = cust.ID;
+                parcel.Sender.Name = cust.Name;
+            }
+            parcel.Receiver = new();
+            BO.CustomerForList cust2 = (BO.CustomerForList)receiverListBox.SelectedItem;
+            parcel.Receiver.ID = cust2.ID;
+            parcel.Receiver.Name = cust2.Name;
+            bL.AddParcel(parcel);
+            MessageBox.Show("The parcel was successfully added", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
+            if(myUser==null)
+            new ParcelListWindow(ref bL).Show();           
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
@@ -153,7 +165,7 @@ namespace PL
             Close();
         }
 
-        private void ShowDroneButton_Click(object sender, RoutedEventArgs e) // need to fix the  DroneWindow to be for BO.Drone type. then it will work
+        private void ShowDroneButton_Click(object sender, RoutedEventArgs e) 
         {
             BO.Drone drone = bL.GetDrone(parcel.Drone.Id);
 
@@ -177,8 +189,16 @@ namespace PL
 
             else if (senderListBox.SelectedItem != null)
             {
-                BO.CustomerForList cust = senderListBox.SelectedItem as BO.CustomerForList;
-                id = cust.ID;
+                if (myUser != null)
+                {
+                    BO.CustomerForList cust = bL.GetListOfCustomers().FirstOrDefault(cust => cust.Name == myUser.Name);
+                    id = cust.ID;
+                }
+                else
+                {
+                    BO.CustomerForList cust = senderListBox.SelectedItem as BO.CustomerForList;
+                    id = cust.ID;
+                }
                 CustomerWindow cw = new CustomerWindow(ref bL, id);
                 cw.ShowDialog();
             }
@@ -213,7 +233,6 @@ namespace PL
         {
             Close();
         }
-
 
     }
 }

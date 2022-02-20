@@ -106,7 +106,7 @@ namespace PL
             else
                 addButton.IsEnabled = false;
         }
-        internal void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)//i dont know why i should write it twice
+        internal void TextBoxOnlyNumbersPreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
             if (text == null) return;

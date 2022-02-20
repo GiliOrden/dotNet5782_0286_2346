@@ -29,7 +29,7 @@ namespace PL
             bL = bl;
             station = bL.GetBaseStation(id);
             stationGrid.DataContext = station;
-            droneInChargingDataGrid.DataContext = station.DroneInChargingList;
+            droneInChargingDataGrid.ItemsSource = station.DroneInChargingList;
             idTextBox.IsEnabled = false;
             addButton.Visibility = Visibility.Collapsed;
         }
@@ -106,9 +106,5 @@ namespace PL
             new DroneWindow(ref bL, drone.Id).Show();
         }
 
-        private void idTextBox_TextChanged()
-        {
-
-        }
     }
 }

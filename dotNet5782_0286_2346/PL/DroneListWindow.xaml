@@ -62,6 +62,7 @@
             </DataGrid.GroupStyle>
         </DataGrid>
         <Button Content="Show Item" HorizontalAlignment="Left" Margin="571,410,0,0" Grid.Row="1" VerticalAlignment="Top" Click="DroneView_SelectionChanged" Width="157"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="633,49,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33" Width="146" Click="RefreshButton_Click"/>
 
 
     </Grid>

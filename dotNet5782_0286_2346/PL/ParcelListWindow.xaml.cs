@@ -46,17 +46,6 @@ namespace PL
             view.GroupDescriptions.Add(groupDescription);
         }
 
-        //private void WeightSelectComboBox(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (WeightSelect.SelectedItem != null && ParcelStatusSelect.SelectedItem != null)
-        //        parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
-        //    else if (WeightSelect.SelectedItem != null)
-        //        parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate((BO.EnumsBL.WeightCategories)WeightSelect.SelectedItem, null);
-        //    else if (ParcelStatusSelect.SelectedItem != null)
-        //        parcelForListDataGrid.DataContext = bL.GetParcelsByPredicate(null, (BO.EnumsBL.ParcelStatuses)ParcelStatusSelect.SelectedItem);
-        //    parcelForListDataGrid.Items.Refresh();
-        //}
-
         private void AddParcel(object sender, RoutedEventArgs e)
         {
             ParcelWindow pw = new ParcelWindow(ref bL);
@@ -84,8 +73,6 @@ namespace PL
                 p2 = bL.GetParcel(p.Id);
                 ParcelWindow pw = new ParcelWindow(ref bL, p2, p.ParcelStatus);
                 pw.ShowDialog();
-                parcelForListDataGrid.ItemsSource = bL.GetListOfParcels();//update the parcel collection in the parcelListWindow
-
             }
         }
 

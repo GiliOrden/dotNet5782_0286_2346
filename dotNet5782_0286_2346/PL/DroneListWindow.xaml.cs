@@ -84,5 +84,12 @@ namespace PL
                 Close();
             }
         }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            DroneListWindow dw = new(ref droneListWindowBL);
+            dw.Show();
+            this.Close();
+        }
     }
 }

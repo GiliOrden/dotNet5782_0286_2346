@@ -54,7 +54,7 @@
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="10,0,-0.4,-6">
-        <Grid x:Name="gridOfParcel" VerticalAlignment="Top" Margin="50,50,0,50" HorizontalAlignment="Left" Width="250">
+        <Grid x:Name="gridOfParcel" VerticalAlignment="Top" Margin="-15,97,0,0" HorizontalAlignment="Left" Width="344" Height="466">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -92,9 +92,9 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Receiver:" Height="26" Width="57"/>
-            <ListBox x:Name="receiverListBox"  IsEnabled="false" DataContext="{Binding}" ItemTemplate="{StaticResource CustomerDataTemplate}" VerticalAlignment="Center" Grid.Row="7" Margin="3,0,0,0"  Height="55" Grid.Column="1" RenderTransformOrigin="1,0.507"/>
+            <ListBox x:Name="receiverListBox"  IsEnabled="false" DataContext="{Binding}" ItemTemplate="{StaticResource CustomerDataTemplate}" VerticalAlignment="Center" Grid.Row="7" Margin="10,0,-14,0"  Height="54" Grid.Column="1" RenderTransformOrigin="1,0.507"/>
             <Label VerticalAlignment="Center" Grid.Row="8" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Sender:" Height="26" Width="50"/>
-            <ListBox x:Name="senderListBox" IsEnabled="false" Width="126" ItemTemplate="{StaticResource CustomerDataTemplate}"  VerticalAlignment="Center" Grid.Row="8"  Height="55" HorizontalAlignment="Center" Grid.Column="1"/>
+            <ListBox x:Name="senderListBox" IsEnabled="false" Width="132" ItemTemplate="{StaticResource CustomerDataTemplate}"  VerticalAlignment="Center" Grid.Row="8"  Height="55" HorizontalAlignment="Center" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="9" Margin="3,0,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Weight:" Height="26" Width="50"/>
             <ComboBox x:Name="weightComboBox" IsEnabled="false" Width="97" VerticalAlignment="Top" Grid.Row="9"  Height="22" HorizontalAlignment="Left"  Grid.Column="1" Margin="8,0,0,0" SelectedItem="{Binding Weight}">
                 <ComboBox.ItemsPanel>
@@ -112,6 +112,7 @@
         <Button x:Name="ShowSender" Content="Show sender" HorizontalAlignment="Left" Margin="317,407,0,0" VerticalAlignment="Top" Click="ShowSenderButton_Click" Background="#FFE0D3F6"/>
         <Button x:Name="ShowReceiver" Content="Show receiver" HorizontalAlignment="Left" Margin="317,349,0,0" VerticalAlignment="Top" Click="ShowReceiverButton_Click" Background="#FFE0D3F6"/>
         <Button Content="cancel" HorizontalAlignment="Left" Margin="396,521,0,0" VerticalAlignment="Top" Click="cancel_Click"/>
+        <Label Content="Parcel details:" FontSize="20" FontStyle="Italic" FontWeight="Bold" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top"/>
     </Grid>
 
 </Window>

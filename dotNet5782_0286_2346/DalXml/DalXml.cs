@@ -23,8 +23,8 @@ namespace Dal
         string droneChargesPath = @"DroneChargesXml.xml"; //XMLSerializer 
         string parcelsPath = @"ParcelsXml.xml"; //XMLSerializer
         string stationsPath = @"StationsXml.xml"; //XMLSerializer
-        string usersPath = @"UsersXml.xml";
-        private readonly string configPath = "BatteryAndRowNumbers.xml";
+        string usersPath = @"UsersXml.xml";//XMLSerializer
+        private readonly string configPath = @"BatteryAndRowNumbers.xml";
         #region Station
         public void AddStation(Station s)
         {

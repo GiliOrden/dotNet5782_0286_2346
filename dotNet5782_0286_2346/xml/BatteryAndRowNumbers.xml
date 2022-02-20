@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <data-config>
-  <BatteryUsages>
-    <FreeBatteryUsing>0.01</FreeBatteryUsing>
-    <LightBatteryUsing>0.02</LightBatteryUsing>
-    <MediumBatteryUsing>0.03</MediumBatteryUsing>
-    <HeavyBatteryUsing>0.04</HeavyBatteryUsing>
-    <ChargingRate>25</ChargingRate>
-  </BatteryUsages>
-  <codeOfParcel>87</codeOfParcel>
+	<BatteryUsages>
+		<FreeBatteryUsing>0.01</FreeBatteryUsing>
+		<LightBatteryUsing>0.02</LightBatteryUsing>
+		<MediumBatteryUsing>0.03</MediumBatteryUsing>
+		<HeavyBatteryUsing>0.04</HeavyBatteryUsing>
+		<ChargingRate>25</ChargingRate>
+	</BatteryUsages>
+	<codeOfParcel>87</codeOfParcel>
 </data-config>
-
